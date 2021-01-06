@@ -4,11 +4,11 @@ module.exports = {
   siteTitle: "1998 MEDIA & DESIGN",
   siteShortTitle: "1998 MEDIA", // Used as logo text in header, footer, and splash screen
   siteDescription:
-    "A modern one-page portfolio with a clean yet expressive design.",
+    "The Official Website of 1998 MEDIA & DESIGN.",
   siteUrl: "https://1998.media/",
   siteLanguage: "en_US",
   siteIcon: "content/favicon.png", // Relative to gatsby-config file
-  seoTitleSuffix: "Portfolio Minimal", // SEO title syntax will be e.g. "Imprint - {seoTitleSuffix}"
+  seoTitleSuffix: "1998 MEDIA", // SEO title syntax will be e.g. "Imprint - {seoTitleSuffix}"
 
   // -- THEME SETTINGS -----
   colors: {
@@ -56,20 +56,20 @@ module.exports = {
   socialMedia: [
     {
       name: "Linkedin",
-      url: "https://www.linkedin.com/in/konstantin-muenster/",
+      url: "#",
     },
     {
       name: "Medium",
-      url: "https://konstantinmuenster.medium.com/",
+      url: "https://1998design.medium.com/",
     },
     {
       name: "Github",
       url:
-        "https://github.com/konstantinmuenster/gatsby-starter-portfolio-minimal",
+        "https://github.com/1998code",
     },
     {
       name: "Behance",
-      url: "https://www.behance.net/konstanmnster",
+      url: "https://www.behance.net/1998design",
     },
   ],
 
