@@ -5,7 +5,7 @@ module.exports = {
   siteShortTitle: "1998 MEDIA", // Used as logo text in header, footer, and splash screen
   siteDescription:
     "A modern one-page portfolio with a clean yet expressive design.",
-  siteUrl: "https://gatsby-starter-portfolio-minimal.netlify.app/",
+  siteUrl: "https://1998.media/",
   siteLanguage: "en_US",
   siteIcon: "content/favicon.png", // Relative to gatsby-config file
   seoTitleSuffix: "Portfolio Minimal", // SEO title syntax will be e.g. "Imprint - {seoTitleSuffix}"
@@ -45,10 +45,10 @@ module.exports = {
   // You can create your own Medium feed with this rss to json converter: https://rss2json.com/
   // To access your Medium RSS feed, just replace this url with your username: https://medium.com/feed/@{yourname}
   mediumRssFeed:
-    "https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fmedium.com%2Ffeed%2F%40konstantinmuenster",
+    "https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fmedium.com%2Ffeed%2F%401998design",
   // rssFeed: "https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.theguardian.com%2Finternational%2Frss",
 
-  shownArticles: 3,
+  shownArticles: 6,
 
   //-- SOCIAL MEDIA SETTINGS -----
   // There are icons available for the following platforms:
