@@ -55,7 +55,7 @@ module.exports = {
   // Medium, GitHub, LinkedIn, XING, Behance
   socialMedia: [
     {
-      name: "Linkedin",
+      name: "iMessage",
       url: "#",
     },
     {
@@ -70,6 +70,10 @@ module.exports = {
     {
       name: "Behance",
       url: "https://www.behance.net/1998design",
+    },
+    {
+      name: "Dribbble",
+      url: "https://dribbble.com/1998design",
     },
   ],
 
