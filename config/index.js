@@ -106,10 +106,6 @@ module.exports = {
     {
       name: "Privacy",
       url: "/privacy",
-    },
-    {
-      name: "Theme Credit to Konstantin. 🙏",
-      url: "#",
-    },
+    }
   ],
 }
