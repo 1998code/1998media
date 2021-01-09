@@ -1,6 +1,6 @@
 module.exports = {
   //-- SITE SETTINGS -----
-  author: "@konstantinmuenster",
+  author: "",
   siteTitle: "1998 MEDIA & DESIGN",
   siteShortTitle: "1998 MEDIA", // Used as logo text in header, footer, and splash screen
   siteDescription:
@@ -108,8 +108,8 @@ module.exports = {
       url: "/privacy",
     },
     {
-      name: "Imprint",
-      url: "/imprint",
+      name: "Theme Credit to Konstantin. 🙏",
+      url: "#",
     },
   ],
 }
