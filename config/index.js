@@ -1,6 +1,5 @@
 module.exports = {
   //-- SITE SETTINGS -----
-  author: "@konstantinmuenster",
   siteTitle: "1998 MEDIA & DESIGN",
   siteShortTitle: "1998 MEDIA", // Used as logo text in header, footer, and splash screen
   siteDescription:
@@ -56,7 +55,7 @@ module.exports = {
   socialMedia: [
     {
       name: "iMessage",
-      url: "#",
+      url: "https://bcrw.apple.com/urn:biz:0b908b93-eb72-4f51-a8de-55d1d58d5301?biz-intent-id=15672e94-a30a-42c0-bf8b-b2a79a99417e",
     },
     {
       name: "Medium",
@@ -85,11 +84,11 @@ module.exports = {
         url: "/#articles",
       },
       {
-        name: "About Me",
+        name: "About",
         url: "/#about",
       },
       {
-        name: "Features",
+        name: "Projects",
         url: "/#projects",
       },
     ],
