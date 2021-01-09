@@ -85,12 +85,8 @@ module.exports = {
         url: "/#about",
       },
       {
-        name: "Interests",
-        url: "/#interests",
-      },
-      {
-        name: "Articles",
-        url: "/#articles",
+        name: "PhotoBlog",
+        url: "https://photoblog.1998.media",
       },
       {
         name: "Projects",
