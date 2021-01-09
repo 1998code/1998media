@@ -1,5 +1,6 @@
 module.exports = {
   //-- SITE SETTINGS -----
+  author: "@konstantinmuenster",
   siteTitle: "1998 MEDIA & DESIGN",
   siteShortTitle: "1998 MEDIA", // Used as logo text in header, footer, and splash screen
   siteDescription:
@@ -80,12 +81,16 @@ module.exports = {
   navLinks: {
     menu: [
       {
-        name: "Articles",
-        url: "/#articles",
+        name: "Skills",
+        url: "/#skills",
       },
       {
         name: "About",
         url: "/#about",
+      },
+      {
+        name: "Articles",
+        url: "/#articles",
       },
       {
         name: "Projects",
