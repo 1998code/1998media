@@ -132,7 +132,7 @@ export const pageQuery = graphql`
         fileAbsolutePath: { regex: "/index/projects/" }
         frontmatter: { visible: { eq: true } }
       }
-      sort: { fields: [frontmatter___position], order: DSC }
+      sort: { fields: [frontmatter___position], order: DESC }
     ) {
       edges {
         node {
