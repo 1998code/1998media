@@ -64,6 +64,7 @@ const Footer = () => {
             <StyledLink key={key} to={url} $darkMode={darkMode}>
               {name}
             </StyledLink>
+            <h6>Theme Credit to Konstantin. 🙏</h6>
           ))}
         </div>
       </StyledContentWrapper>
