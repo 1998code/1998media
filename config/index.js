@@ -92,6 +92,10 @@ module.exports = {
         name: "Projects",
         url: "/#projects",
       },
+      {
+        name: "Sponsorship",
+        url: "https://github.com/sponsors/1998code",
+      },
     ],
     button: {
       name: "Contact",
