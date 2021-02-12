@@ -103,9 +103,9 @@ module.exports = {
     },
   },
   footerLinks: [
-    {
-      name: "Privacy",
-      url: "/privacy",
-    }
+//     {
+//       name: "Privacy",
+//       url: "/privacy",
+//     }
   ],
 }
