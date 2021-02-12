@@ -14,6 +14,7 @@ describe("IndexPage", () => {
     cy.get("#interests").should("exist")
     cy.get("#projects").should("exist")
     cy.get("#contact").should("exist")
+    cy.get("#partners").should("exist")
   })
 
   it("is animated", () => {

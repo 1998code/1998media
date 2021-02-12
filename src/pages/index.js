@@ -11,6 +11,7 @@ import About from "../components/sections/about"
 import Interests from "../components/sections/interests"
 import Projects from "../components/sections/projects"
 import Contact from "../components/sections/contact"
+import Partners from "../components/sections/partners"
 import { seoTitleSuffix } from "../../config"
 
 const IndexPage = ({ data }) => {
