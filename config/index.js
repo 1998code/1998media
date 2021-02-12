@@ -48,7 +48,7 @@ module.exports = {
     "https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fmedium.com%2Ffeed%2F%401998design",
   // rssFeed: "https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.theguardian.com%2Finternational%2Frss",
 
-  shownArticles: 6,
+  shownArticles: 9,
 
   //-- SOCIAL MEDIA SETTINGS -----
   // There are icons available for the following platforms:
