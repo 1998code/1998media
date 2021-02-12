@@ -180,5 +180,29 @@ export const pageQuery = graphql`
         }
       }
     }
+    partners: allMdx(
+      filter: { fileAbsolutePath: { regex: "/index/partners/" } }
+    ) {
+      edges {
+        node {
+          exports {
+            shownItems
+            partners {
+              name
+              icon {
+                childImageSharp {
+                  fixed(width: 20, height: 20, quality: 90) {
+                    ...GatsbyImageSharpFixed
+                  }
+                }
+              }
+            }
+          }
+          frontmatter {
+            title
+          }
+        }
+      }
+    }
   }
 `
