@@ -23,7 +23,7 @@ const IndexPage = ({ data }) => {
     isIntroDone: useSplashScreen ? false : true,
     // darkMode is initially disabled, a hook inside the Layout component
     // will check the user's preferences and switch to dark mode if needed
-    darkMode: false,
+    darkMode: true,
   }
 
   return (

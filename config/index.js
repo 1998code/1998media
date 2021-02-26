@@ -1,10 +1,9 @@
 module.exports = {
   //-- SITE SETTINGS -----
-  author: "",
+  author: "MING",
   siteTitle: "1998 MEDIA & DESIGN",
   siteShortTitle: "1998 MEDIA", // Used as logo text in header, footer, and splash screen
-  siteDescription:
-    "The Official Website of 1998 MEDIA & DESIGN.",
+  siteDescription: "The Official Website of 1998 MEDIA & DESIGN.",
   siteUrl: "https://1998.media/",
   siteLanguage: "en_US",
   siteIcon: "content/favicon.png", // Relative to gatsby-config file
@@ -56,7 +55,8 @@ module.exports = {
   socialMedia: [
     {
       name: "iMessage",
-      url: "https://bcrw.apple.com/urn:biz:0b908b93-eb72-4f51-a8de-55d1d58d5301?biz-intent-id=15672e94-a30a-42c0-bf8b-b2a79a99417e",
+      url:
+        "https://bcrw.apple.com/urn:biz:0b908b93-eb72-4f51-a8de-55d1d58d5301?biz-intent-id=15672e94-a30a-42c0-bf8b-b2a79a99417e",
     },
     {
       name: "Medium",
@@ -64,8 +64,7 @@ module.exports = {
     },
     {
       name: "Github",
-      url:
-        "https://github.com/1998code",
+      url: "https://github.com/1998code",
     },
     {
       name: "Behance",
@@ -103,9 +102,9 @@ module.exports = {
     },
   },
   footerLinks: [
-//     {
-//       name: "Privacy",
-//       url: "/privacy",
-//     }
+    //     {
+    //       name: "Privacy",
+    //       url: "/privacy",
+    //     }
   ],
 }
