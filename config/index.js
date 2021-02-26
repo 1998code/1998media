@@ -47,7 +47,7 @@ module.exports = {
     "https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fmedium.com%2Ffeed%2F%401998design",
   // rssFeed: "https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.theguardian.com%2Finternational%2Frss",
 
-  shownArticles: 9,
+  shownArticles: 12,
 
   //-- SOCIAL MEDIA SETTINGS -----
   // There are icons available for the following platforms:
@@ -92,6 +92,10 @@ module.exports = {
         url: "/#projects",
       },
       {
+        name: "Github",
+        url: "https://github.com/1998code",
+      },
+      {
         name: "Sponsorship",
         url: "https://github.com/sponsors/1998code",
       },
@@ -102,9 +106,9 @@ module.exports = {
     },
   },
   footerLinks: [
-    //     {
-    //       name: "Privacy",
-    //       url: "/privacy",
-    //     }
+    {
+      name: "Copyright © 2021 MING",
+      url: "#",
+    },
   ],
 }
