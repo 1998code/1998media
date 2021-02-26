@@ -71,10 +71,11 @@ module.exports = {
       },
     },
     {
-      resolve: "gatsby-plugin-i18n",
+      resolve: "gatsby-plugin-matomo",
       options: {
-        langKeyDefault: "en",
-        useLangKeyLayout: true,
+        siteId: "4",
+        matomoUrl: "https://stats.1998.media",
+        siteUrl: "https://1998.media",
       },
     },
   ],

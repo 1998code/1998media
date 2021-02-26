@@ -14,6 +14,7 @@
     "gatsby-plugin-gtag": "^1.0.13",
     "gatsby-plugin-i18n": "^1.0.1",
     "gatsby-plugin-manifest": "^2.8.0",
+    "gatsby-plugin-matomo": "^0.9.0",
     "gatsby-plugin-mdx": "^1.6.0",
     "gatsby-plugin-netlify": "^2.7.0",
     "gatsby-plugin-offline": "^3.6.0",
