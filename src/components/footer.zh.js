@@ -6,7 +6,7 @@ import ContentWrapper from "../styles/contentWrapper"
 import Context from "../context"
 import Logo from "./logo"
 import { lightTheme, darkTheme } from "../styles/theme"
-import { footerLinks } from "../../config"
+import { footerLinks } from "../../config/index.zh"
 
 const StyledFooter = styled.footer`
   width: 100%;
@@ -67,7 +67,7 @@ const Footer = () => {
           ))}
         </div>
         <a href="https://betteruptime.com/?ref=i41" target="_blank">
-          <img height="35px" class="rounded" src="./static/betteruptime-light.png"/>
+          <img height="35px" class="rounded" src="../static/betteruptime-light.png"/>
         </a>
       </StyledContentWrapper>
     </StyledFooter>

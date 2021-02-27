@@ -3,9 +3,9 @@ module.exports = {
   author: "MING",
   siteTitle: "1998 MEDIA & DESIGN",
   siteShortTitle: "1998 MEDIA", // Used as logo text in header, footer, and splash screen
-  siteDescription: "The Official Website of 1998 MEDIA & DESIGN.",
+  siteDescription: "官方網站 1998 MEDIA & DESIGN.",
   siteUrl: "https://1998.media/",
-  siteLanguage: "en_US",
+  siteLanguage: "zh",
   siteIcon: "content/favicon.png", // Relative to gatsby-config file
   seoTitleSuffix: "1998 MEDIA", // SEO title syntax will be e.g. "Imprint - {seoTitleSuffix}"
 
@@ -80,34 +80,34 @@ module.exports = {
   navLinks: {
     menu: [
       {
-        name: "About",
+        name: "關於",
         url: "/#about",
       },
       {
-        name: "PhotoBlog",
+        name: "藝廊",
         url: "https://photoblog.1998.media",
       },
       {
-        name: "Projects",
+        name: "專案",
         url: "/#projects",
       },
       {
-        name: "Sponsors",
+        name: "贊助",
         url: "https://github.com/sponsors/1998code",
       },
       {
-        name: "中",
-        url: "/zh",
+        name: "English",
+        url: "../",
       },
     ],
     button: {
-      name: "Contact",
+      name: "聯絡",
       url: "/#contact",
     },
   },
   footerLinks: [
     {
-      name: "Copyright © 2021 MING",
+      name: "版權所有 © 2021 MING",
       url: "#",
     },
   ],

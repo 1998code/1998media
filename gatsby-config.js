@@ -78,5 +78,12 @@ module.exports = {
         siteUrl: "https://1998.media",
       },
     },
+    {
+      resolve: 'gatsby-plugin-i18n',
+      options: {        
+        langKeyDefault: 'en',
+        useLangKeyLayout: true
+      },
+    },
   ],
 }
