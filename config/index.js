@@ -96,7 +96,7 @@ module.exports = {
         url: "https://github.com/sponsors/1998code",
       },
       {
-        name: "中",
+        name: "繁中",
         url: "/zh",
       },
     ],
