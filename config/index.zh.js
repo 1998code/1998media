@@ -81,7 +81,7 @@ module.exports = {
     menu: [
       {
         name: "關於",
-        url: "/#about",
+        url: "./#about",
       },
       {
         name: "藝廊",
@@ -89,7 +89,7 @@ module.exports = {
       },
       {
         name: "專案",
-        url: "/#projects",
+        url: "./#projects",
       },
       {
         name: "贊助",
@@ -102,7 +102,7 @@ module.exports = {
     ],
     button: {
       name: "聯絡",
-      url: "/#contact",
+      url: "./#contact",
     },
   },
   footerLinks: [
