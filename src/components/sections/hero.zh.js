@@ -10,7 +10,7 @@ import ContentWrapper from "../../styles/contentWrapper"
 import Underlining from "../../styles/underlining"
 import Social from "../social"
 import SplashScreen from "../splashScreen"
-import { lightTheme, darkTheme } from "../../styles/theme"
+import { lightTheme, darkTheme } from "../../styles/theme.zh"
 
 const StyledSection = styled.section`
   width: 100%;
