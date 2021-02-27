@@ -67,7 +67,7 @@ const Footer = () => {
           ))}
         </div>
         <a href="https://betteruptime.com/?ref=i41" target="_blank">
-          <img height="35px" class="rounded" src="../static/betteruptime-light.png"/>
+          <img height="35px" class="rounded" src="https://raw.githubusercontent.com/1998code/1998media/master/betteruptime-light.png"/>
         </a>
       </StyledContentWrapper>
     </StyledFooter>
