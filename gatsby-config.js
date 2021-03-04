@@ -25,6 +25,14 @@ module.exports = {
     `gatsby-plugin-offline`,
     `gatsby-plugin-netlify`,
     {
+      resolve: `gatsby-plugin-gtag`,
+      options: {
+        trackingId: `G-Y8TY2P86T3`,
+        head: true,
+        anonymize: false,
+      },
+    },
+    {
       resolve: `gatsby-plugin-manifest`,
       options: {
         name: siteTitle,
@@ -71,19 +79,11 @@ module.exports = {
       },
     },
     {
-      resolve: "gatsby-plugin-matomo",
-      options: {
-        siteId: "4",
-        matomoUrl: "https://stats.1998.media",
-        siteUrl: "https://1998.media",
-      },
-    },
-    {
       resolve: 'gatsby-plugin-i18n',
       options: {        
         langKeyDefault: 'en',
         useLangKeyLayout: true
-      },
-    },
+      }
+    }
   ],
 }
