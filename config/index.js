@@ -107,7 +107,7 @@ module.exports = {
   },
   footerLinks: [
     {
-      name: "Copyright © 2021 MING",
+      name: "© 2021 MING",
       url: "#",
     },
     {
