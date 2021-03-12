@@ -96,7 +96,7 @@ module.exports = {
         url: "https://github.com/sponsors/1998code",
       },
       {
-        name: "繁中",
+        name: "中",
         url: "/zh",
       },
     ],
@@ -109,6 +109,10 @@ module.exports = {
     {
       name: "Copyright © 2021 MING",
       url: "#",
+    },
+    {
+      name: "Status",
+      url: "https://status.1998.media",
     },
   ],
 }
