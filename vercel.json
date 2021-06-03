@@ -3,5 +3,8 @@
     "api/*": {
       "runtime": "vercel-php@0.4.0"
     }
-  }
+  },
+  "rewrites": [
+    { "source": "/:match*", "destination": "/api/:match*" }
+  ]
 }
