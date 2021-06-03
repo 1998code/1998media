@@ -32,41 +32,38 @@ if(isset($_GET['lang']) && !empty($_GET['lang'])){
     <meta property="og:type" content="website">
     <meta name="twitter:image" content="https://1998.media/assets/img/54872601.jpeg">
     <meta name="twitter:title" content="1998 MEDIA (Official Website)">
-    <link rel="icon" type="image/jpeg" sizes="460x460" href="/assets/img/54872601.jpeg">
-    <link rel="icon" type="image/jpeg" sizes="460x460" href="/assets/img/54872601.jpeg">
-    <link rel="icon" type="image/jpeg" sizes="460x460" href="/assets/img/54872601.jpeg">
-    <link rel="icon" type="image/jpeg" sizes="460x460" href="/assets/img/54872601.jpeg">
-    <link rel="icon" type="image/jpeg" sizes="460x460" href="/assets/img/54872601.jpeg">
+    <link rel="icon" type="image/jpeg" sizes="460x460" href="../assets/img/54872601.jpeg?h=cdcfc44abed6fdb5a8d54fad3122a87b">
+    <link rel="icon" type="image/jpeg" sizes="460x460" href="../assets/img/54872601.jpeg?h=cdcfc44abed6fdb5a8d54fad3122a87b">
+    <link rel="icon" type="image/jpeg" sizes="460x460" href="../assets/img/54872601.jpeg?h=cdcfc44abed6fdb5a8d54fad3122a87b">
+    <link rel="icon" type="image/jpeg" sizes="460x460" href="../assets/img/54872601.jpeg?h=cdcfc44abed6fdb5a8d54fad3122a87b">
+    <link rel="icon" type="image/jpeg" sizes="460x460" href="../assets/img/54872601.jpeg?h=cdcfc44abed6fdb5a8d54fad3122a87b">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css">
-    <link rel="manifest" href="/manifest.json?h=e2fa655b292aa0a9821c43f4313512be">
+    <link rel="manifest" href="../manifest.json?h=e2fa655b292aa0a9821c43f4313512be">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
-    <link rel="stylesheet" href="/assets/css/styles.min.css?h=c9b0d95e52b9b3ae307bf02f9bac669d">
+    <link rel="stylesheet" href="../assets/css/styles.min.css?h=c9b0d95e52b9b3ae307bf02f9bac669d">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
-    <script src="https://static.cdn-apple.com/businesschat/start-chat-button/2/index.js"></script>
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+<script src="https://static.cdn-apple.com/businesschat/start-chat-button/2/index.js"></script>
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 </head>
 
-<body onload="choosePic()">    
-    <script>
+<body onload="choosePic()">    <script>
         function changeLang(){
          document.getElementById('form_lang').submit();
         }
+        function choosePic() {
+           images = ["/assets/img/av1.png","/assets/img/av2.png","/assets/img/av3.png","/assets/img/av4.png","/assets/img/av5.png","/assets/img/av6.png",];
+
+           var random = images[Math.floor(Math.random()*images.length)];
+           document.getElementById('avatar').src= random;
+
+        }
     </script>
     <div class="d-none d-sm-flex d-md-flex d-lg-flex d-xl-flex d-xxl-flex justify-content-sm-end justify-content-lg-end align-items-lg-center justify-content-xxl-end align-items-xxl-center" style="height: 3vh;margin-bottom: -3vh;width: 100vw;"><a data-aos="fade" data-aos-duration="1000" data-aos-delay="3000" data-aos-once="true" href="https://alt.1998.media" style="color: rgba(255,255,255,0.5);text-decoration: none;font-family: futura;font-size: 10px;margin-right: 0.5vw;">alt version</a></div>
-    <section class="d-flex d-lg-flex align-items-center align-items-lg-center" style="height: 100vh;background: url(/assets/img/mesh-gradient.png?h=1489e3ae3c1a78e7c4683d180dbc4a10) no-repeat;background-size: cover;">
+    <section class="d-flex d-lg-flex align-items-center align-items-lg-center" style="height: 100vh;background: url(&quot;../assets/img/mesh-gradient.png?h=1489e3ae3c1a78e7c4683d180dbc4a10&quot;) no-repeat;background-size: cover;">
         <div class="container d-flex d-lg-flex flex-column justify-content-lg-center align-items-lg-start" style="height: 50vh;max-width: 75%;">
-            <div class="flex-grow-1"><img class="flex-grow-0" data-aos="fade" data-aos-duration="1000" data-aos-delay="500" data-aos-once="true" id="avatar" src="/assets/img/av1.png?h=7ea1e0bba9582d3e49cf424737e2fe36" style="width: 10vw;border-style: none;" onclick="choosePic()"></div>
-            <script>
-                function choosePic() {
-                images = ["/assets/img/av1.png","/assets/img/av2.png","/assets/img/av3.png","/assets/img/av4.png","/assets/img/av5.png","/assets/img/av6.png",];
-
-                var random = images[Math.floor(Math.random()*images.length)];
-                document.getElementById('avatar').src= random;
-
-                }
-            </script>
+            <div class="flex-grow-1"><img class="flex-grow-0" data-aos="fade" data-aos-duration="1000" data-aos-delay="500" data-aos-once="true" id="avatar" src="../assets/img/av1.png?h=7ea1e0bba9582d3e49cf424737e2fe36" style="width: 10vw;border-style: none;" onclick="choosePic()"></div>
             <h1 class="flex-grow-0" data-aos="fade" data-aos-duration="1000" data-aos-delay="1000" data-aos-once="true" style="color: rgba(108,117,125,0.5);"><span style="color: rgb(148,160,190);"><?= _Hello ?></span><span style="color: var(--bs-white);"><?= _Im ?><strong> <?= _MING ?>!</strong></span><br></h1>
             <h1 class="text-break flex-grow-1" data-aos="fade" data-aos-duration="1000" data-aos-delay="2000" data-aos-once="true" style="line-height: 55px;"><span style="color: rgb(33,37,41);"><strong><?= _UI ?> <?= _Designer ?></strong></span>&nbsp;<span style="color: rgba(108,117,125,0.5);"><strong>&amp;</strong></span>&nbsp;<span style="color: rgb(33,37,41);"><strong><?= _App ?> <?= _Developer ?></strong></span><br><span style="background: -webkit-linear-gradient(#ffffff, #00ffc2);-webkit-background-clip: text;-webkit-text-fill-color: transparent;"><strong> WWDC21 <?= _Scholar ?></strong><br /></span></h1>
             <div data-aos="fade" data-aos-duration="1000" data-aos-delay="2500" data-aos-once="true" class="apple-business-chat-banner-container" data-apple-business-id="0b908b93-eb72-4f51-a8de-55d1d58d5301" data-apple-icon-title="Any questions? I am here to help." data-apple-banner-context="Chat with me via iMessage. Available for iPhone / iPad / Mac user." data-apple-business-intent-id="15672e94-a30a-42c0-bf8b-b2a79a99417e" data-apple-banner-background-color="rgba(255,255,255,0.5)" data-apple-banner-cta="Questions? I can help." style="border-radius:15px!important"></div><i class="fas fa-arrow-down d-flex d-lg-flex flex-grow-1 align-items-end my-auto align-items-lg-end" data-aos="fade" data-aos-duration="1000" data-aos-delay="3000" data-aos-once="true" style="font-size: 25px;color: rgba(108,117,125,0.5);"></i>
@@ -96,18 +93,18 @@ if(isset($_GET['lang']) && !empty($_GET['lang'])){
     <section data-aos="fade-up" style="margin-top: 5%;font-family: futura;margin-bottom: 5%;">
         <div class="container" style="max-width: 75%;"><h1 style="margin-bottom: 3vw;"><strong><?= _About ?></strong></h1>
             <div class="row">
-                <div class="col-xxl-12 d-flex d-sm-flex d-md-flex d-xxl-flex flex-column justify-content-center justify-content-sm-center justify-content-md-center align-items-md-start justify-content-xxl-center align-items-xxl-start" style="background: url(/assets/img/johannes-plenio-IoY8fvDGCNs-unsplash.jpg?h=9ce8dfc7dba1f7685731a15a8a8e27f9) center / cover no-repeat;border-radius: 25px;padding: 3vw;margin-bottom: 1.5vh;border: 5px solid rgb(255,255,255);height: 50vh;">
+                <div class="col-xxl-12 d-flex d-sm-flex d-md-flex d-xxl-flex flex-column justify-content-center justify-content-sm-center justify-content-md-center align-items-md-start justify-content-xxl-center align-items-xxl-start" style="background: url(&quot;../assets/img/johannes-plenio-IoY8fvDGCNs-unsplash.jpg?h=9ce8dfc7dba1f7685731a15a8a8e27f9&quot;) center / cover no-repeat;border-radius: 25px;padding: 3vw;margin-bottom: 1.5vh;border: 5px solid rgb(255,255,255);height: 50vh;">
                     <h2 style="color: rgb(255,255,255);">Who am I</h2>
                     <p style="color: rgb(255,255,255);">An outgoing &amp; motivated person with unlimited creativity, studying within a great IT environment. Eager to work in a large and professional MNC in Design and Programming related industry in the future.</p>
                 </div>
             </div>
             <div class="row">
-                <div class="col-xxl-5 d-md-flex d-xxl-flex flex-column justify-content-md-center align-items-md-start justify-content-xxl-center align-items-xxl-start" style="background: url(/assets/img/mymind-tZCrFpSNiIQ-unsplash.jpg?h=0408858ea21758a14f1feda2b3e56c90) bottom / cover no-repeat;border-radius: 25px;padding: 3vw;border: 5px solid rgb(255,255,255);">
+                <div class="col-xxl-5 d-md-flex d-xxl-flex flex-column justify-content-md-center align-items-md-start justify-content-xxl-center align-items-xxl-start" style="background: url(&quot;../assets/img/mymind-tZCrFpSNiIQ-unsplash.jpg?h=0408858ea21758a14f1feda2b3e56c90&quot;) bottom / cover no-repeat;border-radius: 25px;padding: 3vw;border: 5px solid rgb(255,255,255);">
                     <h2>My Education Level</h2>
                     <h3 style="color: rgb(0,0,0);">Bachelor's degree</h3>
                     <p>A science student graduated at The Hong Kong Polytechnic University and City University of Hong Kong. Passed Korean TOPIK language exam in 2018.<br></p>
                 </div>
-                <div class="col-xxl-7 d-lg-flex d-xxl-flex flex-column justify-content-lg-center align-items-lg-start justify-content-xxl-center align-items-xxl-start" style="background: url(/assets/img/asoggetti-cfKC0UOZHJo-unsplash.jpg?h=141c0dbe4ed31d499999b6ffb8f9f106) top / cover no-repeat;border-radius: 25px;padding: 3vw;border: 5px solid rgb(255,255,255);">
+                <div class="col-xxl-7 d-lg-flex d-xxl-flex flex-column justify-content-lg-center align-items-lg-start justify-content-xxl-center align-items-xxl-start" style="background: url(&quot;../assets/img/asoggetti-cfKC0UOZHJo-unsplash.jpg?h=141c0dbe4ed31d499999b6ffb8f9f106&quot;) top / cover no-repeat;border-radius: 25px;padding: 3vw;border: 5px solid rgb(255,255,255);">
                     <h2>What I Do</h2>
                     <div class="row" style="width: 100%;">
                         <div class="col">
@@ -156,7 +153,7 @@ if(isset($_GET['lang']) && !empty($_GET['lang'])){
                             </div>
                         </div>
                     </div>
-                    <h2 style="margin-bottom: 20px;margin-top: 20px;">Awards</h2><img class="img-fluid" src="/assets/img/WWDC21Winner.png?h=635e76ae457bd315d787163181b80dd7">
+                    <h2 style="margin-bottom: 20px;margin-top: 20px;">Awards</h2><img class="img-fluid" src="../assets/img/WWDC21Winner.png?h=635e76ae457bd315d787163181b80dd7">
                     <h2 style="margin-bottom: 20px;margin-top: 20px;">Skills</h2>
                     <div class="table-responsive">
                         <table class="table">
@@ -241,16 +238,16 @@ if(isset($_GET['lang']) && !empty($_GET['lang'])){
                     <div class="accordion-collapse collapse show item-1" role="tabpanel" data-bs-parent="#accordion-1">
                         <div class="accordion-body">
                             <p class="mb-0">Github for sponsor:&nbsp;<a href="https://github.com/sponsors/1998code">https://github.com/sponsors/1998code</a><br>Google Ads:</p><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                                <!-- M-ADS Q1 -->
-                                <ins class="adsbygoogle"
-                                    style="display:block"
-                                    data-ad-client="ca-pub-1941913120815371"
-                                    data-ad-slot="1600474556"
-                                    data-ad-format="auto"
-                                    data-full-width-responsive="true"></ins>
-                                <script>
-                                    (adsbygoogle = window.adsbygoogle || []).push({});
-                                </script>
+<!-- M-ADS Q1 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1941913120815371"
+     data-ad-slot="1600474556"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
                         </div>
                     </div>
                 </div>
@@ -308,25 +305,25 @@ if(isset($_GET['lang']) && !empty($_GET['lang'])){
                 </div>
                 <div class="col-sm-6 col-md-6 col-lg-8 col-xl-8 col-xxl-8 text-truncate text-center d-xxl-flex justify-content-xxl-center"><h3 style="padding-top:5%">Location:</h3>
 
-                <div style="padding:5%">
-                <iframe style="border-radius:5%" width="500" height="500" src="https://snapshot.apple-mapkit.com/api/v1/snapshot?center=22.341549380226525%2C114.12976433573806&t=standard&scale=2&spn=0.6647131481197732%2C0.718663199852358&size=250x250&lang=en-US&poi=1&annotations=%5B%7B%22point%22%3A%2222.366249084472656%2C114.15977478027344%22%2C%22markerStyle%22%3A%22large%22%2C%22color%22%3A%2200a3d7%22%7D%5D&teamId=9PAHLTG8AD&keyId=FD3N2TP9F5&signature=Kpb-Pz6C8Fx5V_zdtt6BKSo6ni7WBiWwhNXF19E0LNgtinOm8dFcA2H6kZtPGh_t92OZbJknyjehxvunv-MCHA"></iframe>
-                </div></div>
+<div style="padding:5%">
+<iframe style="border-radius:5%" width="500" height="500" src="https://snapshot.apple-mapkit.com/api/v1/snapshot?center=22.341549380226525%2C114.12976433573806&t=standard&scale=2&spn=0.6647131481197732%2C0.718663199852358&size=250x250&lang=en-US&poi=1&annotations=%5B%7B%22point%22%3A%2222.366249084472656%2C114.15977478027344%22%2C%22markerStyle%22%3A%22large%22%2C%22color%22%3A%2200a3d7%22%7D%5D&teamId=9PAHLTG8AD&keyId=FD3N2TP9F5&signature=Kpb-Pz6C8Fx5V_zdtt6BKSo6ni7WBiWwhNXF19E0LNgtinOm8dFcA2H6kZtPGh_t92OZbJknyjehxvunv-MCHA"></iframe>
+</div></div>
             </div>
         </div>
     </section>
     <div data-aos="fade" data-aos-duration="1000" data-aos-once="true" id="get-started" class="brands" style="margin-top: 1%;width: 100%;padding: 2%;">
         <div class="container d-flex justify-content-center align-items-center justify-content-md-center justify-content-lg-center justify-content-xl-center">
-            <p class="d-none d-sm-inline d-md-inline d-lg-inline d-xl-inline d-xxl-inline" style="margin-bottom: 0px;margin-left: 15px;"><strong>Special thanks to:</strong></p><a href="https://vercel.com/?utm_source=1998code&amp;utm_campaign=oss" style="height: 32px;padding: 0px;margin-left: 15px;max-width: 168px;" target="_blank"><img src="/assets/img/powered-by-vercel.svg?h=91084ef203023a391277bb16f564cc4f" style="filter: grayscale(0%) hue-rotate(0deg) invert(0%) saturate(100%);height: 32px;margin: 0px;"></a><a href="https://betteruptime.com/?ref=i41" style="height: 32px;padding: 0px;margin-left: 15px;max-width: 80px;" target="_blank"><img src="/assets/img/betteruptime-light.png?h=ff4472a36a4efb3c1919010865406953" style="filter: grayscale(0%) hue-rotate(0deg) invert(0%) saturate(100%);height: 32px;margin: 0px;"></a>
+            <p class="d-none d-sm-inline d-md-inline d-lg-inline d-xl-inline d-xxl-inline" style="margin-bottom: 0px;margin-left: 15px;"><strong>Special thanks to:</strong></p><a href="https://vercel.com/?utm_source=1998code&amp;utm_campaign=oss" style="height: 32px;padding: 0px;margin-left: 15px;max-width: 168px;" target="_blank"><img src="../assets/img/powered-by-vercel.svg?h=91084ef203023a391277bb16f564cc4f" style="filter: grayscale(0%) hue-rotate(0deg) invert(0%) saturate(100%);height: 32px;margin: 0px;"></a><a href="https://betteruptime.com/?ref=i41" style="height: 32px;padding: 0px;margin-left: 15px;max-width: 80px;" target="_blank"><img src="../assets/img/betteruptime-light.png?h=ff4472a36a4efb3c1919010865406953" style="filter: grayscale(0%) hue-rotate(0deg) invert(0%) saturate(100%);height: 32px;margin: 0px;"></a>
         </div>
     </div>
     <footer data-aos="fade" data-aos-duration="1500" data-aos-once="true" class="footer-basic">
         <div class="social"><a href="https://dribbble.com/1998design" target="_blank"><i class="fab fa-dribbble"></i></a><a href="https://behance.net/1998design" target="_blank"><i class="fab fa-behance"></i></a><a href="https://1998design.medium.com" target="_blank"><i class="fab fa-medium-m"></i></a><a href="https://twitter.com/1998design" target="_blank"><i class="fab fa-twitter"></i></a><a href="https://github.com/1998code" target="_blank"><i class="fab fa-github"></i></a></div>
         <p class="copyright">Made&nbsp;by MING with&nbsp;♥ from Hong Kong.</p>
-    </footer><a class="cd-top js-cd-top cd-top--fade-out cd-top--show" style="width: 32px;height: 32px;background: url(/assets/img/cd-top-arrow.svg?h=b73f3c59a7f1ec91a545b91f7333e08d) center no-repeat, rgb(190,201,255);border-radius: 10px;" href="#0">Top</a>
+    </footer><a class="cd-top js-cd-top cd-top--fade-out cd-top--show" style="width: 32px;height: 32px;background: url(&quot;../assets/img/cd-top-arrow.svg?h=b73f3c59a7f1ec91a545b91f7333e08d&quot;) center no-repeat, rgb(190,201,255);border-radius: 10px;" href="#0">Top</a>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <script src="/assets/js/script.min.js?h=b1baa46f5676b8d9d4beb3344733b42b"></script>
+    <script src="../assets/js/script.min.js?h=b1baa46f5676b8d9d4beb3344733b42b"></script>
 </body>
 
 </html>
