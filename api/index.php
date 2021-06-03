@@ -49,11 +49,6 @@ if(isset($_SESSION['lang'])){
 </head>
 
 <body>    
-    <script>
-        function changeLang(){
-            document.getElementById('form_lang').submit();
-        }
-    </script>
     <div class="d-none d-sm-flex d-md-flex d-lg-flex d-xl-flex d-xxl-flex justify-content-sm-end justify-content-lg-end align-items-lg-center justify-content-xxl-end align-items-xxl-center" style="height: 3vh;margin-bottom: -3vh;width: 100vw;"><a data-aos="fade" data-aos-duration="1000" data-aos-delay="3000" data-aos-once="true" href="https://alt.1998.media" style="color: rgba(255,255,255,0.5);text-decoration: none;font-family: futura;font-size: 10px;margin-right: 0.5vw;">alt version</a></div>
     <section class="d-flex d-lg-flex align-items-center align-items-lg-center" style="height: 100vh;background: url(&quot;../assets/img/mesh-gradient.png?h=1489e3ae3c1a78e7c4683d180dbc4a10&quot;) no-repeat;background-size: cover;">
         <div class="container d-flex d-lg-flex flex-column justify-content-lg-center align-items-lg-start" style="height: 50vh;max-width: 75%;">
