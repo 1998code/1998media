@@ -16,7 +16,7 @@ if(isset($_GET['lang']) && !empty($_GET['lang'])){
    }else{
     include "lang_en.php";
    }
-   ?>
+?>
 
 <!DOCTYPE html>
 <html lang="en" style="overflow-x: hidden;font-family: futura!important;">
