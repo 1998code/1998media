@@ -87,7 +87,7 @@ if(isset($_GET['lang']) && !empty($_GET['lang'])){
                     <li class="nav-item"><a class="nav-link" href="mailto:contact@1998.media" target="_blank">Contact</a></li>
                     <li class="nav-item"><a class="nav-link" href="https://status.1998.media" target="_blank">Status</a></li>
                     <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#">Language&nbsp;</a>
-                        <div class="dropdown-menu" style="border-radius: 15px;"><a class="dropdown-item" href="?lang=en"><i class="fas fa-globe-americas"></i>&nbsp;&lt;?= _English&nbsp;?&gt;</a><a class="dropdown-item" href="?lang=zh"><i class="fas fa-globe-asia"></i>&nbsp;&lt;?= _Chinese&nbsp;?&gt;</a><a class="dropdown-item disabled" href="?lang=ko"><i class="fas fa-globe-asia"></i>&nbsp;&lt;?= _Korean&nbsp;?&gt;</a><a class="dropdown-item disabled" href="?lang=jp"><i class="fas fa-globe-asia"></i>&nbsp;&lt;?= _Japanese&nbsp;?&gt;</a></div>
+                        <div class="dropdown-menu" style="border-radius: 15px;"><a class="dropdown-item" href="?lang=en"><i class="fas fa-globe-americas"></i> <?= _English ?></a><a class="dropdown-item" href="?lang=zh"><i class="fas fa-globe-asia"></i> <?= _Chinese ?></a><a class="dropdown-item disabled" href="?lang=ko"><i class="fas fa-globe-asia"></i> <?= _Korean ?></a><a class="dropdown-item disabled" href="?lang=jp"><i class="fas fa-globe-asia"></i> <?= _Japanese ?></a></div>
                     </li>
                 </ul>
             </div>
