@@ -1,3 +1,3 @@
 <?php
 
-define("_MING", "MING");
+define("MING", "MING");

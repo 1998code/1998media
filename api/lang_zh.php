@@ -1,3 +1,3 @@
 <?php
 
-define("_MING", "銘");
+define("MING", "銘");
