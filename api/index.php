@@ -21,7 +21,7 @@ if(isset($_GET['lang']) && !empty($_GET['lang'])){
 <!DOCTYPE html><html lang="en" style="overflow-x: hidden;font-family: futura!important;"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"><title>1998 MEDIA (Official Website)</title><meta name="twitter:description" content="The Official Website of 1998 MEDIA."><meta name="twitter:card" content="summary_large_image"><meta property="og:image" content="https://1998.media/assets/img/54872601.jpeg"><meta name="description" content="The Official Website of 1998 MEDIA."><meta property="og:type" content="website"><meta name="twitter:image" content="https://1998.media/assets/img/54872601.jpeg"><meta name="twitter:title" content="1998 MEDIA (Official Website)"><link rel="icon" type="image/jpeg" sizes="460x460" href="../assets/img/54872601.jpeg?h=cdcfc44abed6fdb5a8d54fad3122a87b"><link rel="icon" type="image/jpeg" sizes="460x460" href="../assets/img/54872601.jpeg?h=cdcfc44abed6fdb5a8d54fad3122a87b"><link rel="icon" type="image/jpeg" sizes="460x460" href="../assets/img/54872601.jpeg?h=cdcfc44abed6fdb5a8d54fad3122a87b"><link rel="icon" type="image/jpeg" sizes="460x460" href="../assets/img/54872601.jpeg?h=cdcfc44abed6fdb5a8d54fad3122a87b"><link rel="icon" type="image/jpeg" sizes="460x460" href="../assets/img/54872601.jpeg?h=cdcfc44abed6fdb5a8d54fad3122a87b"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"><link rel="manifest" href="../manifest.json?h=e2fa655b292aa0a9821c43f4313512be"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="../assets/css/styles.min.css?h=c9b0d95e52b9b3ae307bf02f9bac669d"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"><script src="https://static.cdn-apple.com/businesschat/start-chat-button/2/index.js"></script>
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
- <script>
+ <!-- <script>
         function choosePic() {
            images = ["/assets/img/av1.png","/assets/img/av2.png","/assets/img/av3.png","/assets/img/av4.png","/assets/img/av5.png","/assets/img/av6.png",];
 
@@ -29,7 +29,7 @@ if(isset($_GET['lang']) && !empty($_GET['lang'])){
            document.getElementById('avatar').src= random;
 
         }
-    </script>
+    </script> -->
 </head><body onload="choosePic()">    <script>
         function changeLang(){
          document.getElementById('form_lang').submit();
