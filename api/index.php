@@ -231,17 +231,7 @@ if(isset($_GET['lang']) && !empty($_GET['lang'])){
                     <h2 class="accordion-header" role="tab"><button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordion-1 .item-1" aria-expanded="true" aria-controls="accordion-1 .item-1">[Support]&nbsp;How to sponsor your projects?</button></h2>
                     <div class="accordion-collapse collapse show item-1" role="tabpanel" data-bs-parent="#accordion-1">
                         <div class="accordion-body">
-                            <p class="mb-0">Github for sponsor:&nbsp;<a href="https://github.com/sponsors/1998code">https://github.com/sponsors/1998code</a><br>Google Ads:</p><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- M-ADS Q1 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-1941913120815371"
-     data-ad-slot="1600474556"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+                            <p class="mb-0">Github for sponsor:&nbsp;<a href="https://github.com/sponsors/1998code">https://github.com/sponsors/1998code</a></p>
                         </div>
                     </div>
                 </div>
