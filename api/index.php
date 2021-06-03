@@ -95,18 +95,18 @@ if(isset($_GET['lang']) && !empty($_GET['lang'])){
     <section data-aos="fade-up" style="margin-top: 5%;font-family: futura;margin-bottom: 5%;">
         <div class="container" style="max-width: 75%;"><h1 style="margin-bottom: 3vw;"><strong><?= _About ?></strong></h1>
             <div class="row">
-                <div class="col-xxl-12 d-flex d-sm-flex d-md-flex d-xxl-flex flex-column justify-content-center justify-content-sm-center justify-content-md-center align-items-md-start justify-content-xxl-center align-items-xxl-start" style="background: url(../assets/img/johannes-plenio-IoY8fvDGCNs-unsplash.jpg?h=9ce8dfc7dba1f7685731a15a8a8e27f9&quot;) center / cover no-repeat;border-radius: 25px;padding: 3vw;margin-bottom: 1.5vh;border: 5px solid rgb(255,255,255);height: 50vh;">
+                <div class="col-xxl-12 d-flex d-sm-flex d-md-flex d-xxl-flex flex-column justify-content-center justify-content-sm-center justify-content-md-center align-items-md-start justify-content-xxl-center align-items-xxl-start" style="background: url(../assets/img/johannes-plenio-IoY8fvDGCNs-unsplash.jpg?h=9ce8dfc7dba1f7685731a15a8a8e27f9) center / cover no-repeat;border-radius: 25px;padding: 3vw;margin-bottom: 1.5vh;border: 5px solid rgb(255,255,255);height: 50vh;">
                     <h2 style="color: rgb(255,255,255);">Who am I</h2>
                     <p style="color: rgb(255,255,255);">An outgoing &amp; motivated person with unlimited creativity, studying within a great IT environment. Eager to work in a large and professional MNC in Design and Programming related industry in the future.</p>
                 </div>
             </div>
             <div class="row">
-                <div class="col-xxl-5 d-md-flex d-xxl-flex flex-column justify-content-md-center align-items-md-start justify-content-xxl-center align-items-xxl-start" style="background: url(../assets/img/mymind-tZCrFpSNiIQ-unsplash.jpg?h=0408858ea21758a14f1feda2b3e56c90&quot;) bottom / cover no-repeat;border-radius: 25px;padding: 3vw;border: 5px solid rgb(255,255,255);">
+                <div class="col-xxl-5 d-md-flex d-xxl-flex flex-column justify-content-md-center align-items-md-start justify-content-xxl-center align-items-xxl-start" style="background: url(../assets/img/mymind-tZCrFpSNiIQ-unsplash.jpg?h=0408858ea21758a14f1feda2b3e56c90) bottom / cover no-repeat;border-radius: 25px;padding: 3vw;border: 5px solid rgb(255,255,255);">
                     <h2>My Education Level</h2>
                     <h3 style="color: rgb(0,0,0);">Bachelor's degree</h3>
                     <p>A science student graduated at The Hong Kong Polytechnic University and City University of Hong Kong. Passed Korean TOPIK language exam in 2018.<br></p>
                 </div>
-                <div class="col-xxl-7 d-lg-flex d-xxl-flex flex-column justify-content-lg-center align-items-lg-start justify-content-xxl-center align-items-xxl-start" style="background: url(../assets/img/asoggetti-cfKC0UOZHJo-unsplash.jpg?h=141c0dbe4ed31d499999b6ffb8f9f106&quot;) top / cover no-repeat;border-radius: 25px;padding: 3vw;border: 5px solid rgb(255,255,255);">
+                <div class="col-xxl-7 d-lg-flex d-xxl-flex flex-column justify-content-lg-center align-items-lg-start justify-content-xxl-center align-items-xxl-start" style="background: url(../assets/img/asoggetti-cfKC0UOZHJo-unsplash.jpg?h=141c0dbe4ed31d499999b6ffb8f9f106) top / cover no-repeat;border-radius: 25px;padding: 3vw;border: 5px solid rgb(255,255,255);">
                     <h2>What I Do</h2>
                     <div class="row" style="width: 100%;">
                         <div class="col">
@@ -321,7 +321,7 @@ if(isset($_GET['lang']) && !empty($_GET['lang'])){
     <footer data-aos="fade" data-aos-duration="1500" data-aos-once="true" class="footer-basic">
         <div class="social"><a href="https://dribbble.com/1998design" target="_blank"><i class="fab fa-dribbble"></i></a><a href="https://behance.net/1998design" target="_blank"><i class="fab fa-behance"></i></a><a href="https://1998design.medium.com" target="_blank"><i class="fab fa-medium-m"></i></a><a href="https://twitter.com/1998design" target="_blank"><i class="fab fa-twitter"></i></a><a href="https://github.com/1998code" target="_blank"><i class="fab fa-github"></i></a></div>
         <p class="copyright">Made&nbsp;by MING with&nbsp;♥ from Hong Kong.</p>
-    </footer><a class="cd-top js-cd-top cd-top--fade-out cd-top--show" style="width: 32px;height: 32px;background: url(../assets/img/cd-top-arrow.svg?h=b73f3c59a7f1ec91a545b91f7333e08d&quot;) center no-repeat, rgb(190,201,255);border-radius: 10px;" href="#0">Top</a>
+    </footer><a class="cd-top js-cd-top cd-top--fade-out cd-top--show" style="width: 32px;height: 32px;background: url(../assets/img/cd-top-arrow.svg?h=b73f3c59a7f1ec91a545b91f7333e08d) center no-repeat, rgb(190,201,255);border-radius: 10px;" href="#0">Top</a>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
