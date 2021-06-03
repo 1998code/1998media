@@ -48,16 +48,10 @@ if(isset($_GET['lang']) && !empty($_GET['lang'])){
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 </head>
 
-<body onload="choosePic()">    <script>
+<body>    
+    <script>
         function changeLang(){
-         document.getElementById('form_lang').submit();
-        }
-        function choosePic() {
-           images = ["/assets/img/av1.png","/assets/img/av2.png","/assets/img/av3.png","/assets/img/av4.png","/assets/img/av5.png","/assets/img/av6.png",];
-
-           var random = images[Math.floor(Math.random()*images.length)];
-           document.getElementById('avatar').src= random;
-
+            document.getElementById('form_lang').submit();
         }
     </script>
     <div class="d-none d-sm-flex d-md-flex d-lg-flex d-xl-flex d-xxl-flex justify-content-sm-end justify-content-lg-end align-items-lg-center justify-content-xxl-end align-items-xxl-center" style="height: 3vh;margin-bottom: -3vh;width: 100vw;"><a data-aos="fade" data-aos-duration="1000" data-aos-delay="3000" data-aos-once="true" href="https://alt.1998.media" style="color: rgba(255,255,255,0.5);text-decoration: none;font-family: futura;font-size: 10px;margin-right: 0.5vw;">alt version</a></div>
