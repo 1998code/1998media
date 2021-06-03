@@ -32,7 +32,7 @@ if(isset($_GET['lang']) && !empty($_GET['lang'])){
     <form method='get' action='' id='form_lang' >
       Select Language : <select name='lang' onchange='changeLang();' >
       <option value='en' <?php if(isset($_SESSION['lang']) && $_SESSION['lang'] == 'en'){ echo "selected"; } ?> >English</option>
-      <option value='pl' <?php if(isset($_SESSION['lang']) && $_SESSION['lang'] == 'pl'){ echo "selected"; } ?> >Polish</option>
+      <option value='zh' <?php if(isset($_SESSION['lang']) && $_SESSION['lang'] == 'pl'){ echo "selected"; } ?> >Polish</option>
      </select>
     </form>
    
