@@ -5,6 +5,7 @@
     }
   },
   "rewrites": [
+    { "source": "/", "destination": "/index.php" },
     { "source": "/:match*", "destination": "/api/:match*" }
   ]
 }
