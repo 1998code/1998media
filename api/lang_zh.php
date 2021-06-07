@@ -13,4 +13,4 @@ define("_Chinese", "中文");
 define("_Korean", "韓文");
 define("_Japanese", "日文");
 
-define("_About", "About");
+define("_About", "關於");
