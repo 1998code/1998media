@@ -2,11 +2,12 @@
   "functions": {
     "api/*": {
       "runtime": "vercel-php@0.4.0",
+      "memory": 3008,
       "maxDuration": 60
     }
   },
   "rewrites": [
-    { "source": "/", "destination": "/index.php" },
+    { "source": "/", "destination": "/api/index.php" },
     { "source": "/:match*", "destination": "/api/:match*" }
   ]
 }
