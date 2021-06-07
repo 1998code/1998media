@@ -94,7 +94,7 @@ if(isset($_GET['lang']) && !empty($_GET['lang'])){
         </div>
     </nav>
     <section data-aos="fade-up" style="margin-top: 5%;font-family: futura;margin-bottom: 5%;">
-        <div class="container" style="max-width: 75%;"><h1 style="margin-bottom: 3vw;"><strong><?= _About ?></strong></h1>
+        <div class="container" style="max-width: 75%;"><h1 style="margin-bottom: 3vw;"><strong><?= _About ?></strong></h1>
             <div class="row">
                 <div class="col-xxl-12 d-flex d-sm-flex d-md-flex d-xxl-flex flex-column justify-content-center justify-content-sm-center justify-content-md-center align-items-md-start justify-content-xxl-center align-items-xxl-start" style="background: url(../assets/img/johannes-plenio-IoY8fvDGCNs-unsplash.jpg?h=9ce8dfc7dba1f7685731a15a8a8e27f9) center / cover no-repeat;border-radius: 25px;padding: 3vw;margin-bottom: 1.5vh;border: 5px solid rgb(255,255,255);height: 50vh;">
                     <h2 style="color: rgb(255,255,255);">Who am I</h2>
