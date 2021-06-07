@@ -65,6 +65,7 @@ if(isset($_GET['lang']) && !empty($_GET['lang'])){
         <div class="container d-flex d-lg-flex flex-column justify-content-lg-center align-items-lg-start" style="height: 50vh;max-width: 75%;">
             <div class="flex-grow-1"><img class="flex-grow-0" data-aos="fade" data-aos-duration="1000" data-aos-delay="500" data-aos-once="true" id="avatar" src="../assets/img/av1.png?h=7ea1e0bba9582d3e49cf424737e2fe36" style="width: 10vw;border-style: none;"></div>
             <h1 class="flex-grow-0" data-aos="fade" data-aos-duration="1000" data-aos-delay="1000" data-aos-once="true" style="color: rgba(108,117,125,0.5);"><span style="color: rgb(148,160,190);"><?= _Hello ?></span><span style="color: var(--bs-white);"><?= _Im ?><strong> <?= _MING ?>!</strong></span><br></h1>
+            <h1 class="text-break flex-grow-1" data-aos="fade" data-aos-duration="1000" data-aos-delay="2000" data-aos-once="true" style="line-height: 55px;"><span style="color: rgb(33,37,41);"><strong><?= _UI ?> <?= _Designer ?></strong></span>&nbsp;<span style="color: rgba(108,117,125,0.5);"><strong>&amp;</strong></span>&nbsp;<span style="color: rgb(33,37,41);"><strong><?= _App ?> <?= _Developer ?></strong></span><br><span style="background: -webkit-linear-gradient(#ffffff, #00ffc2);-webkit-background-clip: text;-webkit-text-fill-color: transparent;"><strong> WWDC21 <?= _Scholar ?></strong><br /></span></h1>
             <div data-aos="fade" data-aos-duration="1000" data-aos-delay="2500" data-aos-once="true" class="apple-business-chat-banner-container" data-apple-business-id="0b908b93-eb72-4f51-a8de-55d1d58d5301" data-apple-icon-title="Any questions? I am here to help." data-apple-banner-context="Chat with me via iMessage. Available for iPhone / iPad / Mac user." data-apple-business-intent-id="15672e94-a30a-42c0-bf8b-b2a79a99417e" data-apple-banner-background-color="rgba(255,255,255,0.5)" data-apple-banner-cta="Questions? I can help." style="border-radius:15px!important"></div><i class="fas fa-arrow-down d-flex d-lg-flex flex-grow-1 align-items-end my-auto align-items-lg-end" data-aos="fade" data-aos-duration="1000" data-aos-delay="3000" data-aos-once="true" style="font-size: 25px;color: rgba(108,117,125,0.5);"></i>
         </div>
     </section>
@@ -277,24 +278,24 @@ if(isset($_GET['lang']) && !empty($_GET['lang'])){
             <h1 style="margin-bottom: 15px;"><strong>Connect</strong></h1>
             <div class="row">
                 <div class="col-md-6 col-xxl-6"><div align="center"><a class="twitter-timeline" data-width="600" data-dnt="true"  data-tweet-limit="3" href="https://twitter.com/1998design?ref_src=twsrc%5Etfw">Tweets by 1998design</a>
-                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                    </div></div>
-                                    <div class="col-md-6 col-xxl-6"><div style="padding:5%">
-                    <div class="github-card" data-github="1998code" data-theme="default" data-width="100%"></div>
-                    <script src="https://cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
-                    </div>
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div></div>
+                                <div class="col-md-6 col-xxl-6"><div style="padding:5%">
+                <div class="github-card" data-github="1998code" data-theme="default" data-width="100%"></div>
+                <script src="https://cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
+                </div>
 
-                    <div style="padding:5%">
-                    <div class="iframely-embed"><div class="iframely-responsive" style="height: 140px; padding-bottom: 0;"><a href="https://www.behance.net/1998design" data-iframely-url="https://cdn.iframe.ly/7njRIfw"></a></div></div><script async src="https://cdn.iframe.ly/embed.js" charset="utf-8"></script>
-                    </div>
+                <div style="padding:5%">
+                <div class="iframely-embed"><div class="iframely-responsive" style="height: 140px; padding-bottom: 0;"><a href="https://www.behance.net/1998design" data-iframely-url="https://cdn.iframe.ly/7njRIfw"></a></div></div><script async src="https://cdn.iframe.ly/embed.js" charset="utf-8"></script>
+                </div>
 
-                    <div style="padding:5%">
-                    <div class="iframely-embed"><div class="iframely-responsive"><a href="https://1998design.medium.com" data-iframely-url="https://cdn.iframe.ly/vxI1Wuo"></a></div></div><script async src="https://cdn.iframe.ly/embed.js" charset="utf-8"></script>
-                    </div>
+                <div style="padding:5%">
+                <div class="iframely-embed"><div class="iframely-responsive"><a href="https://1998design.medium.com" data-iframely-url="https://cdn.iframe.ly/vxI1Wuo"></a></div></div><script async src="https://cdn.iframe.ly/embed.js" charset="utf-8"></script>
+                </div>
 
-                    <div style="padding:5%">
-                    <div class="iframely-embed"><div class="iframely-responsive" style="padding-bottom: 75%; padding-top: 120px;"><a href="https://dribbble.com/1998design" data-iframely-url="https://cdn.iframe.ly/5G5c0pY?media=0"></a></div></div><script async src="//cdn.iframe.ly/embed.js" charset="utf-8"></script>
-                    </div></div>
+                <div style="padding:5%">
+                <div class="iframely-embed"><div class="iframely-responsive" style="padding-bottom: 75%; padding-top: 120px;"><a href="https://dribbble.com/1998design" data-iframely-url="https://cdn.iframe.ly/5G5c0pY?media=0"></a></div></div><script async src="//cdn.iframe.ly/embed.js" charset="utf-8"></script>
+                </div></div>
             </div>
         </div>
     </section>
