@@ -23,7 +23,7 @@ if(isset($_GET['lang']) && !empty($_GET['lang'])){
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>1998 MEDIA (Official Website)</title>
+    <title>Welcome | 1998 MEDIA</title>
     <meta name="twitter:description" content="The Official Website of 1998 MEDIA.">
     <meta name="twitter:card" content="summary_large_image">
     <meta property="og:image" content="https://1998.media/assets/img/54872601.jpeg">
@@ -31,6 +31,7 @@ if(isset($_GET['lang']) && !empty($_GET['lang'])){
     <meta property="og:type" content="website">
     <meta name="twitter:image" content="https://1998.media/assets/img/54872601.jpeg">
     <meta name="twitter:title" content="1998 MEDIA (Official Website)">
+    <meta name="theme-color" content="#b3c9ff">
     <link rel="icon" type="image/jpeg" sizes="460x460" href="../assets/img/54872601.jpeg?h=cdcfc44abed6fdb5a8d54fad3122a87b">
     <link rel="icon" type="image/jpeg" sizes="460x460" href="../assets/img/54872601.jpeg?h=cdcfc44abed6fdb5a8d54fad3122a87b">
     <link rel="icon" type="image/jpeg" sizes="460x460" href="../assets/img/54872601.jpeg?h=cdcfc44abed6fdb5a8d54fad3122a87b">
