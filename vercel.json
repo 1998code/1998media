@@ -8,8 +8,6 @@
   },
   "rewrites": [
     { "source": "/", "destination": "/api/index.php" },
-    { "source": "/:match*", "destination": "/api/:match*" },
-    { "source": "/en", "destination": "/api/index.php?lang=en" },
-    { "source": "/hk", "destination": "/api/index.php?lang=zh" }
+    { "source": "/:match*", "destination": "/api/:match*" }
   ]
 }
