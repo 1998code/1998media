@@ -22,7 +22,7 @@ if(isset($_GET['lang']) && !empty($_GET['lang'])){
 <html lang="en" style="overflow-x: hidden;font-family: futura!important;">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, viewport-fit=cover">
     <title>Welcome | 1998 MEDIA</title>
     <meta name="twitter:description" content="The Official Website of 1998 MEDIA.">
     <meta name="twitter:card" content="summary_large_image">
