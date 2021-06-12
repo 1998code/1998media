@@ -8,6 +8,20 @@
   },
   "rewrites": [
     { "source": "/", "destination": "/api/index.php" },
-    { "source": "/:match*", "destination": "/api/:match*" }
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "header",
+          "key": "x-vercel-ip-country",
+          "value": "HK"
+        }
+      ],
+      "destination": "/api/index.php?lang=zh",
+      "permanent": false
+    },
+    { "source": "/:match*", "destination": "/api/:match*" },
+    { "source": "/en", "destination": "/api/index.php?lang=en" },
+    { "source": "/hk", "destination": "/api/index.php?lang=zh" }
   ]
 }
