@@ -94,21 +94,22 @@ if(isset($_GET['lang']) && !empty($_GET['lang'])){
             </div>
         </div>
     </nav>
+    <!-- Intro -->    
     <section data-aos="fade-up" style="margin-top: 5%;font-family: futura;margin-bottom: 5%;">
         <div class="container" style="max-width: 75%;"><h1 style="margin-bottom: 3vw;"><strong><?= _About ?></strong></h1>
             <div class="row">
-                <div class="col-xxl-12 d-flex d-sm-flex d-md-flex d-xxl-flex flex-column justify-content-center justify-content-sm-center justify-content-md-center align-items-md-start justify-content-xxl-center align-items-xxl-start" style="background: url(../assets/img/johannes-plenio-IoY8fvDGCNs-unsplash.jpg?h=9ce8dfc7dba1f7685731a15a8a8e27f9) center / cover no-repeat;border-radius: 25px;padding: 3vw;margin-bottom: 1.5vh;border: 5px solid rgb(255,255,255);height: 50vh;">
-                    <h2 style="color: rgb(255,255,255);">Who am I</h2>
-                    <p style="color: rgb(255,255,255);">An outgoing &amp; motivated person with unlimited creativity, studying within a great IT environment. Eager to work in a large and professional MNC in Design and Programming related industry in the future.</p>
+                <div class="col-xxl-12 d-flex d-sm-flex d-md-flex d-xxl-flex flex-column justify-content-center justify-content-sm-center justify-content-md-center align-items-md-start justify-content-xxl-center align-items-xxl-start" style="background: url(&quot;../assets/img/johannes-plenio-IoY8fvDGCNs-unsplash.jpg?h=9ce8dfc7dba1f7685731a15a8a8e27f9&quot;) center / cover no-repeat;border-radius: 25px;padding: 3vw;margin-bottom: 1.5vh;border: 5px solid rgb(255,255,255);height: 50vh;">
+                    <h2 style="color: rgb(255,255,255);"><?= _WhoAmI ?></h2>
+                    <p style="color: rgb(255,255,255);"><?= _WhoAmI_detail ?></p>
                 </div>
             </div>
             <div class="row">
-                <div class="col-xxl-5 d-md-flex d-xxl-flex flex-column justify-content-md-center align-items-md-start justify-content-xxl-center align-items-xxl-start" style="background: url(../assets/img/mymind-tZCrFpSNiIQ-unsplash.jpg?h=0408858ea21758a14f1feda2b3e56c90) bottom / cover no-repeat;border-radius: 25px;padding: 3vw;border: 5px solid rgb(255,255,255);">
+                <div class="col-xxl-5 d-md-flex d-xxl-flex flex-column justify-content-md-center align-items-md-start justify-content-xxl-center align-items-xxl-start" style="background: url(&quot;../assets/img/mymind-tZCrFpSNiIQ-unsplash.jpg?h=0408858ea21758a14f1feda2b3e56c90&quot;) bottom / cover no-repeat;border-radius: 25px;padding: 3vw;border: 5px solid rgb(255,255,255);">
                     <h2>My Education Level</h2>
                     <h3 style="color: rgb(0,0,0);">Bachelor's degree</h3>
                     <p>A science student graduated at The Hong Kong Polytechnic University and City University of Hong Kong. Passed Korean TOPIK language exam in 2018.<br></p>
                 </div>
-                <div class="col-xxl-7 d-lg-flex d-xxl-flex flex-column justify-content-lg-center align-items-lg-start justify-content-xxl-center align-items-xxl-start" style="background: url(../assets/img/asoggetti-cfKC0UOZHJo-unsplash.jpg?h=141c0dbe4ed31d499999b6ffb8f9f106) top / cover no-repeat;border-radius: 25px;padding: 3vw;border: 5px solid rgb(255,255,255);">
+                <div class="col-xxl-7 d-lg-flex d-xxl-flex flex-column justify-content-lg-center align-items-lg-start justify-content-xxl-center align-items-xxl-start" style="background: url(&quot;../assets/img/asoggetti-cfKC0UOZHJo-unsplash.jpg?h=141c0dbe4ed31d499999b6ffb8f9f106&quot;) top / cover no-repeat;border-radius: 25px;padding: 3vw;border: 5px solid rgb(255,255,255);">
                     <h2>What I Do</h2>
                     <div class="row" style="width: 100%;">
                         <div class="col">
@@ -180,12 +181,12 @@ if(isset($_GET['lang']) && !empty($_GET['lang'])){
                                 <tr>
                                     <td>Adobe Dimension</td>
                                     <td>Apple Pages</td>
-                                    <td></td>
+                                    <td>Sketch</td>
                                 </tr>
                                 <tr>
                                     <td>Adobe Photoshop</td>
                                     <td>Final Cut Pro</td>
-                                    <td></td>
+                                    <td>Shapr3D</td>
                                 </tr>
                                 <tr>
                                     <td>Adobe Premiere Pro</td>
@@ -233,6 +234,7 @@ if(isset($_GET['lang']) && !empty($_GET['lang'])){
             </div>
         </div>
     </section>
+    <!-- QA -->   
     <section data-aos="fade-up" data-aos-duration="1000" data-aos-delay="500" data-aos-once="true" style="margin-bottom: 5%;font-family: futura;">
         <div class="container" style="max-width: 75%;padding: 3vw;border-style: solid;border-radius: 25px;">
             <h1 style="margin-bottom: 15px;"><strong>Question and Answering</strong></h1>
@@ -242,16 +244,16 @@ if(isset($_GET['lang']) && !empty($_GET['lang'])){
                     <div class="accordion-collapse collapse show item-1" role="tabpanel" data-bs-parent="#accordion-1">
                         <div class="accordion-body">
                             <p class="mb-0">Github for sponsor:&nbsp;<a href="https://github.com/sponsors/1998code">https://github.com/sponsors/1998code</a><br>Google Ads:</p><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                                <!-- M-ADS Q1 -->
-                                <ins class="adsbygoogle"
-                                    style="display:block"
-                                    data-ad-client="ca-pub-1941913120815371"
-                                    data-ad-slot="1600474556"
-                                    data-ad-format="auto"
-                                    data-full-width-responsive="true"></ins>
-                                <script>
-                                    (adsbygoogle = window.adsbygoogle || []).push({});
-                                </script>
+<!-- M-ADS Q1 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1941913120815371"
+     data-ad-slot="1600474556"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
                         </div>
                     </div>
                 </div>
@@ -259,12 +261,12 @@ if(isset($_GET['lang']) && !empty($_GET['lang'])){
                     <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordion-1 .item-2" aria-expanded="false" aria-controls="accordion-1 .item-2">[OSS] Where do your Open Source works hosts?</button></h2>
                     <div class="accordion-collapse collapse item-2" role="tabpanel" data-bs-parent="#accordion-1">
                         <div class="accordion-body">
-                            <p class="mb-0">Github: <a href="https://github.com/1998code">https://github.com/1998code</a><i class="fas fa-external-link-alt" style="color: rgb(19,112,253);"></i><br>Vercel:&nbsp;<a href="https://vercel.com/?utm_source=1998code&amp;utm_campaign=oss">https://vercel.com</a>&nbsp;<i class="fas fa-external-link-alt" style="color: rgb(19,112,253);"></i></p>
+                            <p class="mb-0">Github: <a href="https://github.com/1998code">https://github.com/1998code&nbsp;</a><i class="fas fa-external-link-alt" style="color: rgb(19,112,253);"></i><br>Vercel:&nbsp;<a href="https://vercel.com/?utm_source=1998code&amp;utm_campaign=oss">https://vercel.com</a>&nbsp;<i class="fas fa-external-link-alt" style="color: rgb(19,112,253);"></i></p>
                         </div>
                     </div>
                 </div>
                 <div class="accordion-item" style="border-width: 0px;border-radius: 15px 15px 0px 0px;">
-                    <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordion-1 .item-3" aria-expanded="false" aria-controls="accordion-1 .item-3">[Job Opportunities] Looking for full-time, part-time or part-time job.</button></h2>
+                    <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordion-1 .item-3" aria-expanded="false" aria-controls="accordion-1 .item-3">[Job Cooperation] How to contact?</button></h2>
                     <div class="accordion-collapse collapse item-3" role="tabpanel" data-bs-parent="#accordion-1">
                         <div class="accordion-body">
                             <p class="mb-0">Please contact by email: <a href="mailto:job@1998.media">job@1998.media</a></p>
@@ -274,47 +276,22 @@ if(isset($_GET['lang']) && !empty($_GET['lang'])){
             </div>
         </div>
     </section>
-    <section data-aos="fade" data-aos-duration="1000" data-aos-delay="500" data-aos-once="true" style="margin-top: 5%;margin-bottom: 15%;font-family: futura;">
-        <div class="container" style="max-width: 75%;padding: 3vw;">
-            <h1 style="margin-bottom: 15px;"><strong>Connect</strong></h1>
-            <div class="row">
-                <div class="col-md-6 col-xxl-6"><div align="center"><a class="twitter-timeline" data-width="600" data-dnt="true"  data-tweet-limit="3" href="https://twitter.com/1998design?ref_src=twsrc%5Etfw">Tweets by 1998design</a>
-                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                </div></div>
-                                <div class="col-md-6 col-xxl-6"><div style="padding:5%">
-                <div class="github-card" data-github="1998code" data-theme="default" data-width="100%"></div>
-                <script src="https://cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
-                </div>
-
-                <div style="padding:5%">
-                <div class="iframely-embed"><div class="iframely-responsive" style="height: 140px; padding-bottom: 0;"><a href="https://www.behance.net/1998design" data-iframely-url="https://cdn.iframe.ly/7njRIfw"></a></div></div><script async src="https://cdn.iframe.ly/embed.js" charset="utf-8"></script>
-                </div>
-
-                <div style="padding:5%">
-                <div class="iframely-embed"><div class="iframely-responsive"><a href="https://1998design.medium.com" data-iframely-url="https://cdn.iframe.ly/vxI1Wuo"></a></div></div><script async src="https://cdn.iframe.ly/embed.js" charset="utf-8"></script>
-                </div>
-
-                <div style="padding:5%">
-                <div class="iframely-embed"><div class="iframely-responsive" style="padding-bottom: 75%; padding-top: 120px;"><a href="https://dribbble.com/1998design" data-iframely-url="https://cdn.iframe.ly/5G5c0pY?media=0"></a></div></div><script async src="//cdn.iframe.ly/embed.js" charset="utf-8"></script>
-                </div></div>
-            </div>
-        </div>
-    </section>
+    <!-- Contact --> 
     <section data-aos="fade" data-aos-duration="1000" data-aos-delay="500" data-aos-once="true" style="margin-top: 15%;font-family: futura;margin-bottom: 15%;">
-        <div class="container" style="max-width: 75%;">
+        <div class="container" style="max-width: 75%;background: #fcfcfc;border-radius: 25px;padding: 15px;">
             <h1><strong>Contact</strong></h1>
             <div class="row">
-                <div class="col-sm-6 col-lg-4 col-xxl-4 d-sm-flex d-xxl-flex align-items-sm-center align-items-xxl-center">
-                    <h3>Email: <a href="mailto:contact@1998.media" target="_blank">contact@1998.media</a></h3>
+                <div class="col-sm-6 col-lg-4 col-xxl-4 d-sm-flex d-xxl-flex flex-column align-items-sm-center justify-content-xxl-center align-items-xxl-center">
+                    <h3 class="d-xxl-flex flex-column justify-content-xxl-center align-items-xxl-start">Email: <a href="mailto:contact@1998.media" target="_blank">contact@1998.media</a><br><br>iMessage:<br></h3>
+                    <div data-aos="fade" data-aos-duration="1000" data-aos-delay="2500" data-aos-once="true" class="apple-business-chat-banner-container" data-apple-business-id="0b908b93-eb72-4f51-a8de-55d1d58d5301" data-apple-icon-title="Any questions? I am here to help." data-apple-banner-context="Chat with me via iMessage. Available for iPhone / iPad / Mac user." data-apple-business-intent-id="15672e94-a30a-42c0-bf8b-b2a79a99417e" data-apple-banner-background-color="rgba(255,255,255,0.5)" data-apple-banner-cta="Questions? I can help." style="border-radius:15px!important"></div>
                 </div>
-                <div class="col-sm-6 col-md-6 col-lg-8 col-xl-8 col-xxl-8 text-truncate text-center d-xxl-flex justify-content-xxl-center"><h3 style="padding-top:5%">Location:</h3>
-
-<div style="padding:5%">
-<iframe style="border-radius:5%" width="500" height="500" src="https://snapshot.apple-mapkit.com/api/v1/snapshot?center=22.341549380226525%2C114.12976433573806&t=standard&scale=2&spn=0.6647131481197732%2C0.718663199852358&size=250x250&lang=en-US&poi=1&annotations=%5B%7B%22point%22%3A%2222.366249084472656%2C114.15977478027344%22%2C%22markerStyle%22%3A%22large%22%2C%22color%22%3A%2200a3d7%22%7D%5D&teamId=9PAHLTG8AD&keyId=FD3N2TP9F5&signature=Kpb-Pz6C8Fx5V_zdtt6BKSo6ni7WBiWwhNXF19E0LNgtinOm8dFcA2H6kZtPGh_t92OZbJknyjehxvunv-MCHA"></iframe>
+                <div class="col-sm-6 col-md-6 col-lg-8 col-xl-8 col-xxl-8 text-truncate text-center d-xxl-flex justify-content-xxl-center"><div style="padding:5%">
+<iframe style="border-radius:25px" width="500" height="500" src="https://snapshot.apple-mapkit.com/api/v1/snapshot?center=22.341549380226525%2C114.12976433573806&t=standard&scale=2&spn=0.6647131481197732%2C0.718663199852358&size=250x250&lang=en-US&poi=1&annotations=%5B%7B%22point%22%3A%2222.366249084472656%2C114.15977478027344%22%2C%22markerStyle%22%3A%22large%22%2C%22color%22%3A%2200a3d7%22%7D%5D&teamId=9PAHLTG8AD&keyId=FD3N2TP9F5&signature=Kpb-Pz6C8Fx5V_zdtt6BKSo6ni7WBiWwhNXF19E0LNgtinOm8dFcA2H6kZtPGh_t92OZbJknyjehxvunv-MCHA"></iframe>
 </div></div>
             </div>
         </div>
     </section>
+    <!-- Credit -->
     <div data-aos="fade" data-aos-duration="1000" data-aos-once="true" id="get-started" class="brands" style="margin-top: 1%;width: 100%;padding: 2%;">
         <div class="container d-flex justify-content-center align-items-center justify-content-md-center justify-content-lg-center justify-content-xl-center">
             <p class="d-none d-sm-inline d-md-inline d-lg-inline d-xl-inline d-xxl-inline" style="margin-bottom: 0px;margin-left: 15px;"><strong>Special thanks to:</strong></p><a href="https://vercel.com/?utm_source=1998code&amp;utm_campaign=oss" style="height: 32px;padding: 0px;margin-left: 15px;max-width: 168px;" target="_blank"><img src="../assets/img/powered-by-vercel.svg?h=91084ef203023a391277bb16f564cc4f" style="filter: grayscale(0%) hue-rotate(0deg) invert(0%) saturate(100%);height: 32px;margin: 0px;"></a><a href="https://betteruptime.com/?ref=i41" style="height: 32px;padding: 0px;margin-left: 15px;max-width: 80px;" target="_blank"><img src="../assets/img/betteruptime-light.png?h=ff4472a36a4efb3c1919010865406953" style="filter: grayscale(0%) hue-rotate(0deg) invert(0%) saturate(100%);height: 32px;margin: 0px;"></a>
