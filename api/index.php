@@ -48,7 +48,7 @@ if(isset($_GET['lang']) && !empty($_GET['lang'])){
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 </head>
 
-<body onload="choosePic()">    
+<body onload="choosePic()" style="background: #fff6eb;">   
     <script>
         function changeLang(){
          document.getElementById('form_lang').submit();
@@ -98,18 +98,17 @@ if(isset($_GET['lang']) && !empty($_GET['lang'])){
     <section data-aos="fade-up" style="margin-top: 5%;font-family: futura;margin-bottom: 5%;">
         <div class="container" style="max-width: 75%;"><h1 style="margin-bottom: 3vw;"><strong><?= _About ?></strong></h1>
             <div class="row">
-                <div class="col-xxl-12 d-flex d-sm-flex d-md-flex d-xxl-flex flex-column justify-content-center justify-content-sm-center justify-content-md-center align-items-md-start justify-content-xxl-center align-items-xxl-start" style="background: url(&quot;../assets/img/johannes-plenio-IoY8fvDGCNs-unsplash.jpg?h=9ce8dfc7dba1f7685731a15a8a8e27f9&quot;) center / cover no-repeat;border-radius: 25px;padding: 3vw;margin-bottom: 1.5vh;border: 5px solid rgb(255,255,255);height: 50vh;">
+            <div class="col-xxl-12 d-flex d-sm-flex d-md-flex d-xxl-flex flex-column justify-content-center justify-content-sm-center justify-content-md-center align-items-md-start justify-content-xxl-center align-items-xxl-start" style="background: linear-gradient(-165deg, rgba(255,246,235,0.35), rgba(255,255,255,0)), url(&quot;../assets/img/johannes-plenio-IoY8fvDGCNs-unsplash.jpg?h=9ce8dfc7dba1f7685731a15a8a8e27f9&quot;) center / cover no-repeat;padding: 3vw;height: 50vh;border-style: none;border-color: rgb(255,255,255);margin-bottom: 1.5vh;border-radius: 5px;">
                     <h2 style="color: rgb(255,255,255);"><?= _WhoAmI ?></h2>
                     <p style="color: rgb(255,255,255);"><?= _WhoAmI_detail ?></p>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-xxl-5 d-md-flex d-xxl-flex flex-column justify-content-md-center align-items-md-start justify-content-xxl-center align-items-xxl-start" style="background: url(&quot;../assets/img/mymind-tZCrFpSNiIQ-unsplash.jpg?h=0408858ea21758a14f1feda2b3e56c90&quot;) bottom / cover no-repeat;border-radius: 25px;padding: 3vw;border: 5px solid rgb(255,255,255);">
-                    <h2>My Education Level</h2>
+            <div class="row" style="border-radius: 5px;border: 0px solid rgba(33,37,41,0) ;">
+                <div class="col-xxl-5 d-md-flex d-xxl-flex flex-column justify-content-md-center align-items-md-start justify-content-xxl-center align-items-xxl-start" style="background: linear-gradient(-125deg, rgb(255,246,235) 0%, rgba(255,255,255,0) 98%), url(&quot;../assets/img/mymind-tZCrFpSNiIQ-unsplash.jpg?h=0408858ea21758a14f1feda2b3e56c90&quot;) bottom / cover no-repeat;padding: 3vw;">
                     <h3 style="color: rgb(0,0,0);">Bachelor's degree</h3>
                     <p>A science student graduated at The Hong Kong Polytechnic University and City University of Hong Kong. Passed Korean TOPIK language exam in 2018.<br></p>
                 </div>
-                <div class="col-xxl-7 d-lg-flex d-xxl-flex flex-column justify-content-lg-center align-items-lg-start justify-content-xxl-center align-items-xxl-start" style="background: url(&quot;../assets/img/asoggetti-cfKC0UOZHJo-unsplash.jpg?h=141c0dbe4ed31d499999b6ffb8f9f106&quot;) top / cover no-repeat;border-radius: 25px;padding: 3vw;border: 5px solid rgb(255,255,255);">
+                <div class="col-xxl-7 d-lg-flex d-xxl-flex flex-column justify-content-lg-center align-items-lg-start justify-content-xxl-center align-items-xxl-start" style="background: linear-gradient(rgb(255,246,235), rgba(255,255,255,0)), url(&quot;../assets/img/asoggetti-cfKC0UOZHJo-unsplash.jpg?h=141c0dbe4ed31d499999b6ffb8f9f106&quot;) top / cover no-repeat;padding: 3vw;">
                     <h2>What I Do</h2>
                     <div class="row" style="width: 100%;">
                         <div class="col">
@@ -122,7 +121,7 @@ if(isset($_GET['lang']) && !empty($_GET['lang'])){
                 </div>
             </div>
             <div class="row">
-                <div class="col-xxl-12" style="padding: 3vw;border-radius: 25px;border: 3px solid rgb(12,99,228);margin-top: 5vw;">
+                <div class="col-xxl-12" style="padding: 3vw;border: 3px solid rgb(12,99,228);margin-top: 5vw;background: #ffffff;border-radius: 5px;">
                     <h2 style="margin-bottom: 20px;">Experience</h2>
                     <div class="accordion" role="tablist" id="accordion-2" style="border-radius: 15px;border: 1px solid rgb(231,241,255);margin-bottom: 20px;">
                         <div class="accordion-item" style="border-radius: 15px 15px 0px 0px;border-width: 0px;">
@@ -236,7 +235,7 @@ if(isset($_GET['lang']) && !empty($_GET['lang'])){
     </section>
     <!-- QA -->   
     <section data-aos="fade-up" data-aos-duration="1000" data-aos-delay="500" data-aos-once="true" style="margin-bottom: 5%;font-family: futura;">
-        <div class="container" style="max-width: 75%;padding: 3vw;border-style: solid;border-radius: 25px;">
+        <div class="container" style="max-width: 75%;padding: 3vw;border-style: solid;background: #ffffff;border-radius: 5px;">
             <h1 style="margin-bottom: 15px;"><strong>Question and Answering</strong></h1>
             <div class="accordion" role="tablist" id="accordion-1">
                 <div class="accordion-item" style="border-width: 0px;border-radius: 15px 15px 0px 0px;">
@@ -278,7 +277,7 @@ if(isset($_GET['lang']) && !empty($_GET['lang'])){
     </section>
     <!-- Contact --> 
     <section data-aos="fade" data-aos-duration="1000" data-aos-delay="500" data-aos-once="true" style="margin-top: 15%;font-family: futura;margin-bottom: 15%;">
-        <div class="container" style="max-width: 75%;background: #fcfcfc;border-radius: 25px;padding: 15px;">
+        <div class="container" style="max-width: 75%;background: #fcfcfc;padding: 25px;border-style: solid;border-color: rgb(13,110,253);border-radius: 5px;">
             <h1><strong>Contact</strong></h1>
             <div class="row">
                 <div class="col-sm-6 col-lg-4 col-xxl-4 d-sm-flex d-xxl-flex flex-column align-items-sm-center justify-content-xxl-center align-items-xxl-center">
