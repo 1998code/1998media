@@ -24,7 +24,7 @@ if(isset($_GET['lang']) && !empty($_GET['lang'])){
 <meta name="theme-color" content="rgb(0,2,55)" media="(prefers-color-scheme:dark)">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, viewport-fit=cover">
-    <title>1998 MEDIA (Official Website)</title>
+    <title>Welcome | 1998 MEDIA</title>
     <meta name="theme-color" content="#b3c9ff">
     <meta name="twitter:description" content="The Official Website of 1998 MEDIA.">
     <meta name="twitter:card" content="summary_large_image">
