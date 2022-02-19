@@ -1,7 +1,7 @@
 @media (prefers-color-scheme: dark) {
   #hero {
     height: 100vh;
-    background: url("assets/img/mesh-gradient-d.png?h=b3043d6fce32b16bcf287b740b0f4c96") no-repeat;
+    background: url("/assets/img/mesh-gradient-d.png?h=b3043d6fce32b16bcf287b740b0f4c96") no-repeat;
     background-size: cover;
   }
 }
@@ -158,7 +158,7 @@
 #topArrow {
   width: 32px;
   height: 32px;
-  background: url("../../assets/img/cd-top-arrow.svg?h=b73f3c59a7f1ec91a545b91f7333e08d") center no-repeat, rgb(13,110,253);
+  background: url("/assets/img/cd-top-arrow.svg?h=b73f3c59a7f1ec91a545b91f7333e08d") center no-repeat, rgb(13,110,253);
   border-radius: 10px;
   z-index: 9999;
 }
