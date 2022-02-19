@@ -1,0 +1,445 @@
+@media (prefers-color-scheme: dark) {
+  #hero {
+    height: 100vh;
+    background: url("assets/img/mesh-gradient-d.png?h=b3043d6fce32b16bcf287b740b0f4c96") no-repeat;
+    background-size: cover;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .navbar {
+    height: 10vh;
+    background: rgba(0,0,0,0.5)!important;
+    color: white;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  a {
+    color: white!important;
+  }
+}
+
+.navbar {
+  height: 10vh;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background: rgb(25,25,25)!important;
+    color: #ddd!important;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .footer-basic {
+    background: rgb(25,25,25)!important;
+    color: #ddd!important;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .accordion {
+    border: 1px solid rgb(11,99,228)!important;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .accordion-item {
+    background: rgb(25,25,25)!important;
+    color: #ddd;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .accordion-button {
+    background-color: rgb(25,25,25)!important;
+    color: #ddd;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .table {
+    color: #ddd!important;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .brands {
+    background: rgb(25,25,25)!important;
+    color: #ddd!important;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  #avatar {
+    width: 10vw;
+  }
+}
+
+.accordion {
+  border-radius: 15px!important;
+  margin-bottom: 25px;
+  /*border: 1px solid rgb(231,241,255);*/
+}
+
+@media (prefers-color-scheme: dark) {
+  #edu {
+    padding: 3vw;
+    background-position: center;
+    background-size: cover;
+    background-image: none!important;
+  }
+}
+
+#edu {
+  background-position: center;
+  background-size: cover;
+  padding: 25px;
+}
+
+#do {
+  padding: 25px;
+  background-position: center;
+  background-size: cover;
+}
+
+@media (prefers-color-scheme: dark) {
+  #do {
+    padding: 3vw;
+    background-position: center;
+    background-size: cover;
+    background-image: none;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .dropdown-item {
+    color: #313437!important;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  #skills {
+    background: rgba(11,99,228,0)!important;
+    border: 1px solid rgb(11,99,228)!important;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .navbar-toggler-icon {
+    filter: invert(100%);
+  }
+}
+
+#about {
+  margin-top: 5%;
+  font-family: futura;
+  margin-bottom: 5%;
+}
+
+#faq {
+  margin-bottom: 5%;
+  font-family: futura;
+}
+
+#contact {
+  font-family: futura;
+  margin-bottom: 5%;
+}
+
+.brands {
+  margin-top: 1%;
+  width: 100%;
+  padding: 2%;
+}
+
+#topArrow {
+  width: 32px;
+  height: 32px;
+  background: url("../../assets/img/cd-top-arrow.svg?h=b73f3c59a7f1ec91a545b91f7333e08d") center no-repeat, rgb(13,110,253);
+  border-radius: 10px;
+  z-index: 9999;
+}
+
+#heroContainer {
+  height: 50vh;
+  max-width: 75%;
+  background: rgba(25,25,25,0)!important;
+}
+
+#avatar {
+  background: rgba(255,255,255,0.1);
+  padding: 5px;
+  padding-bottom: 0px;
+  min-width: 80px;
+  min-height: 80px;
+  width: 10vw;
+}
+
+#headingGreeting {
+  color: rgba(108,117,125,0.5);
+}
+
+#headingName {
+  color: var(--bs-white);
+}
+
+#and {
+  color: rgba(108,117,125,0.5);
+}
+
+#wwdc21 {
+  background: -webkit-linear-gradient(#ffffff, #00ffc2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#arrowDown {
+  font-size: 25px;
+  color: rgba(108,117,125,0.5);
+}
+
+#appleBusinessChatBanner {
+  border-radius: 15px!important;
+}
+
+#branding {
+  font-family: futura;
+}
+
+@media (prefers-color-scheme: dark) {
+  .show #nav {
+    background-color: #191919!important;
+    margin-top: 22px;
+  }
+}
+
+.show #nav {
+  background-color: #fff6eb;
+  margin-top: 22px;
+}
+
+#menuDropDown {
+  border-radius: 15px;
+  background: rgb(255,255,255);
+}
+
+#aboutContainer {
+  max-width: 75%;
+}
+
+#who {
+  padding: 25px;
+}
+
+#whoDiv {
+  background: #0b63e4;
+  padding: 25px;
+  border-radius: 25px;
+  min-height: 300px;
+}
+
+#whoHeading {
+  color: rgb(255,246,235);
+}
+
+#whoParagraph {
+  color: rgb(255,246,235);
+}
+
+#eduDiv {
+  background: #a42870;
+  padding: 25px;
+  border-radius: 25px;
+  min-height: 300px;
+}
+
+#eduHeading {
+  color: rgb(255,246,235);
+}
+
+#eduParagraph {
+  color: rgb(255,246,235);
+}
+
+#cityuCert {
+  font-size: 12px;
+  background: var(--bs-pink);
+  padding: 15px;
+  border-radius: 15px;
+  color: rgb(255,255,255);
+}
+
+#doDiv {
+  background: var(--bs-indigo);
+  padding: 25px;
+  border-radius: 25px;
+  min-height: 300px;
+}
+
+#doHeading {
+  color: rgb(255,246,235);
+}
+
+#doParagraph {
+  color: rgb(255,246,235);
+}
+
+#exp {
+  margin-top: 5vw;
+  border-radius: 25px;
+  border: 3px none rgb(12,99,228);
+}
+
+#expHeading {
+  margin-bottom: 20px;
+}
+
+#awardsHeading {
+  margin-bottom: 20px;
+  margin-top: 30px;
+}
+
+#wwdc21Winner {
+  border-radius: 15px;
+  margin-bottom: 15px;
+  opacity: 1;
+  width: 100%;
+}
+
+#skillsLang {
+  margin-top: 5vw;
+  border-radius: 25px;
+  border: 3px none rgb(12,99,228);
+}
+
+#skillsLangHeading {
+  margin-bottom: 20px;
+}
+
+#skills {
+  background: #ffffff;
+  border-radius: 15px;
+}
+
+#skillsRemark {
+  font-size: 12px;
+  text-align: right;
+  color: rgba(221,221,221,0.85);
+  padding-right: 15px;
+}
+
+#faqContainer {
+  max-width: 75%;
+  border-radius: 25px;
+  border-style: none;
+}
+
+#faqHeading {
+  margin-bottom: 25px;
+}
+
+.accordion-item:first-of-type {
+  border-top-left-radius: 25px!important;
+  border-top-right-radius: 25px!important;
+}
+
+.accordion-item {
+  border: none!important;
+}
+
+.accordion-item:first-of-type .accordion-button {
+  box-shadow: none;
+  border-radius: 15px 15px 0px 0px;
+}
+
+.accordion-item:last-of-type {
+  border-bottom-right-radius: 25px!important;
+  border-bottom-left-radius: 25px!important;
+}
+
+#contactContainer {
+  max-width: 75%;
+  border-radius: 25px;
+  border-style: none;
+  border-color: rgb(13,110,253);
+}
+
+#contactSpan {
+  font-size: 40px;
+}
+
+#contactDiv {
+  border-radius: 15px!important;
+  margin-top: 5px;
+}
+
+#mapImage {
+  border-radius: 15px;
+}
+
+#thanks {
+  margin-bottom: 0px;
+  margin-left: 15px;
+}
+
+#vercel {
+  height: 32px;
+  padding: 0px;
+  margin-left: 15px;
+  max-width: 168px;
+}
+
+#betterUptime {
+  height: 32px;
+  padding: 0px;
+  margin-left: 15px;
+  max-width: 80px;
+  border-radius: 5px;
+}
+
+#vercelImage {
+  filter: grayscale(0%) hue-rotate(0deg) invert(0%) saturate(100%);
+  height: 32px;
+  margin: 0px;
+  border-radius: 5px;
+  border-width: 0px;
+  border-style: solid;
+}
+
+#butImage {
+  filter: grayscale(0%) hue-rotate(0deg) invert(0%) saturate(100%);
+  height: 32px;
+  margin: 0px;
+  border-radius: 5px;
+}
+
+html {
+  overflow-x: hidden;
+  font-family: futura!important;
+}
+
+body{
+top: 0px !important; 
+position: static !important; 
+}
+
+.goog-te-banner-frame{
+display:none !important
+}
+
+.goog-logo-link {
+    display:none !important;
+} 
+
+.goog-te-gadget{
+    color: transparent !important;
+}
+
+#hero {
+  height: 100vh;
+  background: url("/assets/img/mesh-gradient.png?h=1489e3ae3c1a78e7c4683d180dbc4a10") no-repeat;
+  background-size: cover;
+}
