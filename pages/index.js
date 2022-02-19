@@ -93,7 +93,7 @@ export default function Home() {
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="assets/js/bs-init.js?h=02a8f8d0119ea38ce4670281c1438789"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-        <Script src="https://static.cdn-apple.com/businesschat/start-chat-button/2/index.js" />
+        <Script src="https://static.cdn-apple.com/businesschat/start-chat-button/2/index.js" strategy="lazyOnload" />
         <Script src="assets/js/backTop.js?h=25fe335c21086050d7d683aa1d563dd6" />
       </body>
     </div>
