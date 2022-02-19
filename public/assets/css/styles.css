@@ -423,7 +423,8 @@ html {
 
 body{
 top: 0px !important; 
-position: static !important; 
+position: static !important;
+background: #fff6eb;
 }
 
 .goog-te-banner-frame{
