@@ -89,7 +89,11 @@ export default function Home() {
 
         <footer data-aos="fade" data-aos-once="true" class="footer-basic">
         <div class="social"><a href="https://dribbble.com/1998design" target="_blank"><i class="fab fa-dribbble"></i></a><a href="https://behance.net/1998design" target="_blank"><i class="fab fa-behance"></i></a><a href="https://1998design.medium.com" target="_blank"><i class="fab fa-medium-m"></i></a><a href="https://twitter.com/1998design" target="_blank"><i class="fab fa-twitter"></i></a><a href="https://github.com/1998code" target="_blank"><i class="fab fa-github"></i></a></div>
-        <p class="copyright">Made with&nbsp;♥&nbsp;by MING.</p>
+        <p class="copyright">
+          Made with&nbsp;♥&nbsp;by MING.
+          <br />
+          <small>Ver. 22.2.20 | Since 2020</small>
+        </p>
         </footer><a id="topArrow" class="cd-top js-cd-top cd-top--fade-out cd-top--show" href="#0">Top</a>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
