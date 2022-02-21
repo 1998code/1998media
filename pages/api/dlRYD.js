@@ -5,14 +5,14 @@ import { promisify } from 'util';
 import fetch from 'node-fetch';
 
 const pipeline = promisify(stream.pipeline);
-const url = 'https://1998.media/s5/RYD.zip';
+const url = 'https://1998.media/s5/RYD.tar.gz';
 
 const handler = async (req, res) => {
   const response = await fetch(url);
   if (!response.ok) throw new Error(`unexpected response ${response.statusText}`);
 
-  res.setHeader('Content-Type', 'application/zip');
-  res.setHeader('Content-Disposition', 'attachment; filename=RYD.app');
+  res.setHeader('Content-Type', 'application/tar+gzip');
+  res.setHeader('Content-Disposition', 'attachment; filename=RYD.tar.gz');
   await pipeline(response.body, res);
 };
 
