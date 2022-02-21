@@ -490,12 +490,12 @@ body{
 }
 
 #mlType {
-  font-family: Georgia;
+  /* font-family: Georgia; */
   border: 1px solid #a42870;
   border-radius: 15px;
 }
 #mlType #firstChar {
-  font-family: Georgia;
+  /* font-family: Georgia; */
   color: #a42870;
 }
 #mlType .form-check-input:checked {
@@ -519,6 +519,6 @@ body{
 
 #hero {
   height: 100vh;
-  background: url("../../assets/img/mesh-gradient.png?h=1489e3ae3c1a78e7c4683d180dbc4a10") no-repeat;
+  background: url("/assets/img/mesh-gradient.png?h=1489e3ae3c1a78e7c4683d180dbc4a10") no-repeat;
   background-size: cover;
 }
