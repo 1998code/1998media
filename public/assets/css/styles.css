@@ -491,6 +491,7 @@ body{
 
 #mlType {
   /* font-family: Georgia; */
+  background-color: #3a0d27;
   border: 1px solid #a42870;
   border-radius: 15px;
 }
