@@ -39,22 +39,22 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   .accordion {
     border: 1px solid rgb(11,99,228)!important;
   }
-}
+} */
 
 @media (prefers-color-scheme: dark) {
   .accordion-item {
-    background: rgb(25,25,25)!important;
+    background-color:rgba(0, 0, 0, 0.25)!important;
     color: #ddd;
   }
 }
 
 @media (prefers-color-scheme: dark) {
   .accordion-button {
-    background-color: rgb(25,25,25)!important;
+    background-color: transparent!important;
     color: #ddd;
   }
 }
@@ -62,6 +62,9 @@
 @media (prefers-color-scheme: dark) {
   .table {
     color: #ddd!important;
+  }
+  tr {
+    border-style: hidden!important;
   }
 }
 
@@ -81,7 +84,6 @@
 .accordion {
   border-radius: 15px!important;
   margin-bottom: 25px;
-  /*border: 1px solid rgb(231,241,255);*/
 }
 
 @media (prefers-color-scheme: dark) {
@@ -122,8 +124,7 @@
 
 @media (prefers-color-scheme: dark) {
   #skills {
-    background: rgba(11,99,228,0)!important;
-    border: 1px solid rgb(11,99,228)!important;
+    background-color:rgba(0, 0, 0, 0.25)!important;
   }
 }
 
@@ -470,7 +471,7 @@ body{
 }
 
 .card-body {
-  border: 1px solid #0963e4;
+  /* border: 1px solid #0963e4; */
   border-radius: 15px;
 }
 
@@ -489,14 +490,14 @@ body{
   padding-left: 3px;
 }
 
+@media (prefers-color-scheme: dark) {
 #mlType {
-  /* font-family: Georgia; */
-  background-color: #3a0d27;
-  border: 1px solid #a42870;
+  /* background-color: #3a0d27; */
+  /* border: 1px solid #a42870; */
   border-radius: 15px;
 }
+}
 #mlType #firstChar {
-  /* font-family: Georgia; */
   color: #a42870;
 }
 #mlType .form-check-input:checked {
@@ -514,7 +515,7 @@ body{
 
 @media (prefers-color-scheme: dark) {
   #projCard {
-    background-color: #002d47;
+    background-color: rgba(0, 0, 0, 0.25);
   }
 }
 
@@ -522,4 +523,32 @@ body{
   height: 100vh;
   background: url("/assets/img/mesh-gradient.png?h=1489e3ae3c1a78e7c4683d180dbc4a10") no-repeat;
   background-size: cover;
+}
+
+#atlassian {
+  color: var(--bs-blue);
+}
+
+#tmg {
+  color: var(--bs-teal);
+}
+
+#2022 {
+  border-width: 0px;
+  border-radius: 15px 15px 0px 0px;
+}
+
+#2021 {
+  border-width: 0px;
+}
+
+#2019 {
+  border-width: 0px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.accordion-item:last-of-type .accordion-button.collapsed {
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
 }
