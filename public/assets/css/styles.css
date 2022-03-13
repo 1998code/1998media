@@ -552,3 +552,7 @@ body{
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
 }
+
+#externalLink {
+  color: rgb(19,112,253);
+}
