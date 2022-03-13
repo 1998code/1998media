@@ -341,6 +341,7 @@
   max-width: 75%;
   border-radius: 25px;
   border-style: none;
+  overflow-x: scroll;
 }
 
 #faqContainer {
@@ -500,6 +501,9 @@ body{
 #mlType #firstChar {
   color: #a42870;
 }
+.form-check-input {
+  margin-right: 5px;
+}
 #mlType .form-check-input:checked {
   background-color: #a42870;
   border-color: #a42870;
@@ -509,8 +513,16 @@ body{
 }
 
 #projDiv {
-  max-width: 100%;
-  overflow-x: scroll;
+  animation: scroll 15s linear infinite;
+  animation-delay: 3s;
+}
+#projDiv:hover {
+  animation-play-state: paused;
+}
+
+@keyframes scroll {
+	0% { transform: translateX(0); }
+	100% { transform: translateX(calc(-315px * 4))}
 }
 
 @media (prefers-color-scheme: dark) {
@@ -555,4 +567,8 @@ body{
 
 #externalLink {
   color: rgb(19,112,253);
+}
+
+.smallHeading {
+  font-size: 12px;
 }
