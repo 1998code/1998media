@@ -16,7 +16,6 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>Create Next App</title>
         <meta charset="utf-8" />
         <meta name="theme-color" media="(prefers-color-scheme:light)" content="#b3c9ff" key="Light" />
         <meta name="theme-color" media="(prefers-color-scheme:dark)" content="#000237" key="Dark" />
