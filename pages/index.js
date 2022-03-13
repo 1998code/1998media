@@ -1,5 +1,7 @@
 import Head from 'next/head'
 import Script from 'next/script'
+import Link from 'next/link'
+import { useState, useEffect } from 'react'
 
 export default function Home() {
   function changeLang() {
@@ -12,6 +14,24 @@ export default function Home() {
   }
   const translator = '<div id="google_translate_element"></div><script type="text/javascript"> function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: "en", layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL}, "google_translate_element"); } </script> <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>'
   const ads = '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1941913120815371" data-ad-slot="1600474556" data-ad-format="auto" data-full-width-responsive="true"></ins> <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>'
+
+  const [error, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [blogs, setBlogs] = useState([]); 
+  
+  useEffect(() => {
+    fetch("https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@1998design")
+      .then(res => res.json())
+      .then(
+            (data) => {
+                setIsLoaded(true);
+                setBlogs(data.items);
+            },
+            (error) => {
+                console.log(error)
+            }
+      )
+  }, [])
 
   return (
     <div>
@@ -341,6 +361,31 @@ export default function Home() {
                 </div>
             </div>
         </section>
+        
+        <section data-aos="fade-up" data-aos-duration="1000" data-aos-delay="500" data-aos-once="true" id="post">
+            <div class="container" id="postContainer">
+                <h1 id="postHeading"><strong>Latest Posts</strong></h1>
+                <ul class="list-group" id="postList">
+                    { blogs.map(item => (
+                        <Link href={item.link} >
+                            <li class="list-group-item d-lg-flex d-xl-flex d-xxl-flex justify-content-between align-items-lg-center align-items-xl-center align-items-xxl-center" id="postItem" >
+                                <span>{item.pubDate.slice(0, 10)}<h5>{item.title}</h5></span>
+                                <small class="text-end">
+                                    #{item.categories[0].charAt(0).toUpperCase() + item.categories[0].slice(1)} &nbsp;
+                                    #{item.categories[1].charAt(0).toUpperCase() + item.categories[1].slice(1)} &nbsp;
+                                    #{item.categories[2].charAt(0).toUpperCase() + item.categories[2].slice(1)}
+                                </small>
+                            </li>
+                        </Link>
+                    ))}
+
+                    {/* <li class="list-group-item d-lg-flex d-xl-flex d-xxl-flex justify-content-between align-items-lg-center align-items-xl-center align-items-xxl-center" id="postItem" onclick="window.open(&#39;https://google.com&#39;)">
+                        <h3>Demo Title 1</h3><span>Time</span>
+                    </li> */}
+                </ul>
+            </div>
+        </section>
+
 
         <section data-aos="fade-up" data-aos-duration="1000" data-aos-delay="500" data-aos-once="true" id="faq">
             <div class="container" id="faqContainer">
