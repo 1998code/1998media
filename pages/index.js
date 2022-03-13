@@ -50,12 +50,12 @@ export default function Home() {
 
       <body onload="choosePic()">
         <section class="d-flex d-lg-flex align-items-center align-items-lg-center" id="hero">
-          <div class="container d-flex d-lg-flex flex-column justify-content-lg-center align-items-lg-start" id="heroContainer">
-            <div class="flex-grow-1"><img class="rounded-circle img-fluid flex-grow-0" data-aos="fade" data-aos-duration="1000" data-aos-delay="500" data-aos-once="true" id="avatar" src="assets/img/av1.png?h=455cd139442f5f06d9317f400725df51" /></div>
-            <h1 class="flex-grow-0" data-aos="fade" data-aos-duration="1000" data-aos-delay="1000" data-aos-once="true" id="headingGreeting">Hi,&nbsp;<span data-aos="fade" data-aos-duration="1000" data-aos-delay="1500" id="headingName">I'm <strong>MING</strong>!</span><br /></h1>
-            <h1 class="text-break flex-grow-1" data-aos="fade" data-aos-duration="1000" data-aos-delay="2000" data-aos-once="true"><strong>UI Lead&nbsp;</strong><span id="and">&amp;</span>&nbsp;<strong>Software&nbsp;Engineer</strong><br /><span id="wwdc21"><strong>&nbsp;WWDC Award Winner</strong></span></h1>
-            <div data-aos="fade" data-aos-duration="1000" data-aos-delay="2500" data-aos-once="true" id="appleBusinessChatBanner" class="apple-business-chat-banner-container" data-apple-business-id="0b908b93-eb72-4f51-a8de-55d1d58d5301" data-apple-icon-title="Any questions? I am here to help." data-apple-banner-context="Chat with me via iMessage. Available for iPhone / iPad / Mac user." data-apple-business-intent-id="15672e94-a30a-42c0-bf8b-b2a79a99417e" data-apple-banner-background-color="rgba(0,0,0,0.25)" data-apple-banner-cta="Questions? I can help." data-apple-banner-text-color="rgb(255, 255, 255)"></div><i class="fas fa-arrow-down d-flex d-lg-flex flex-grow-1 align-items-end my-auto align-items-lg-end" data-aos="fade" data-aos-duration="1000" data-aos-delay="3000" data-aos-once="true" id="arrowDown"></i>
-          </div>
+            <div class="container d-flex d-lg-flex flex-column justify-content-lg-center align-items-lg-start" id="heroContainer">
+                <div class="flex-grow-1"><img class="rounded-circle img-fluid flex-grow-0" data-aos="fade" data-aos-duration="1000" data-aos-delay="500" data-aos-once="true" id="avatar" src="assets/img/av1.png?h=455cd139442f5f06d9317f400725df51" /></div>
+                <h1 class="flex-grow-0" data-aos="fade" data-aos-duration="1000" data-aos-delay="1000" data-aos-once="true" id="headingGreeting">Hi,&nbsp;<span data-aos="fade" data-aos-duration="1000" data-aos-delay="1500" id="headingName">I'm <strong>MING</strong>!</span><br /></h1>
+                <h1 class="text-break flex-grow-1" data-aos="fade" data-aos-duration="1000" data-aos-delay="2000" data-aos-once="true"><strong>UI Designer&nbsp;</strong><span id="and">&amp;</span>&nbsp;<strong>Software&nbsp;Engineer</strong><br /><span id="wwdc21"><strong>&nbsp;WWDC Award Winner</strong></span></h1>
+                <div data-aos="fade" data-aos-duration="1000" data-aos-delay="2500" data-aos-once="true" id="appleBusinessChatBanner" class="apple-business-chat-banner-container" data-apple-business-id="0b908b93-eb72-4f51-a8de-55d1d58d5301" data-apple-icon-title="Any questions? I am here to help." data-apple-banner-context="Chat with me via iMessage. Available for iPhone / iPad / Mac user." data-apple-business-intent-id="15672e94-a30a-42c0-bf8b-b2a79a99417e" data-apple-banner-background-color="rgba(0,0,0,0.25)" data-apple-banner-cta="Questions? I can help." data-apple-banner-text-color="rgb(255, 255, 255)"></div><i class="fas fa-arrow-down d-flex d-lg-flex flex-grow-1 align-items-end my-auto align-items-lg-end" data-aos="fade" data-aos-duration="1000" data-aos-delay="3000" data-aos-once="true" id="arrowDown"></i>
+            </div>
         </section>
 
         <nav class="navbar navbar-light navbar-expand-lg sticky-top navigation-clean" dangerouslySetInnerHTML={{ __html: navContainer }}></nav>
@@ -234,7 +234,58 @@ export default function Home() {
 
         <section data-aos="fade-up" data-aos-duration="1000" data-aos-delay="500" data-aos-once="true" id="proj" dangerouslySetInnerHTML={{ __html: project }}></section>
 
-        <section data-aos="fade-up" data-aos-duration="1000" data-aos-delay="500" data-aos-once="true" id="faq" dangerouslySetInnerHTML={{ __html: faq }}></section>
+        {/* <section data-aos="fade-up" data-aos-duration="1000" data-aos-delay="500" data-aos-once="true" id="faq" dangerouslySetInnerHTML={{ __html: faq }}></section> */}
+
+        <section data-aos="fade-up" data-aos-duration="1000" data-aos-delay="500" data-aos-once="true" id="faq">
+            <div class="container" id="faqContainer">
+                <h1 id="faqHeading"><strong>Question and Answering</strong></h1>
+                <div class="accordion" role="tablist" id="accordion-qa">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" role="tab"><button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordion-qa .item-1" aria-expanded="true" aria-controls="accordion-qa .item-1">[Support]&nbsp;How to support your projects?</button></h2>
+                        <div class="accordion-collapse collapse show item-1" role="tabpanel" data-bs-parent="#accordion-qa">
+                            <div class="accordion-body">
+                                <p class="text-truncate mb-0"><i class="fab fa-github"></i>&nbsp;Github for sponsor:&nbsp;<a href="https://github.com/sponsors/1998code" target="_blank"><span>https://github.com/sponsors/1998code</span></a><br /><br /><i class="fab fa-google"></i>&nbsp;Google Ads:<br /><br />
+                                {/* <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                                <ins class="adsbygoogle"
+                                    style="display:block"
+                                    data-ad-client="ca-pub-1941913120815371"
+                                    data-ad-slot="1600474556"
+                                    data-ad-format="auto"
+                                    data-full-width-responsive="true"></ins>
+                                <script>
+                                    (adsbygoogle = window.adsbygoogle || []).push({});
+                                </script> */}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordion-qa .item-2" aria-expanded="false" aria-controls="accordion-qa .item-2">[OSS] Where do your Open Source works hosts?</button></h2>
+                        <div class="accordion-collapse collapse item-2" role="tabpanel" data-bs-parent="#accordion-qa">
+                            <div class="accordion-body">
+                                <p class="mb-0">Github: <a href="https://github.com/1998code">https://github.com/1998code&nbsp;</a><i class="fas fa-external-link-alt" id="externalLink"></i><br />Vercel:&nbsp;<a href="https://vercel.com/?utm_source=1998code&amp;utm_campaign=oss">https://vercel.com</a>&nbsp;<i class="fas fa-external-link-alt" id="externalLink"></i></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordion-qa .item-3" aria-expanded="false" aria-controls="accordion-qa .item-3">[Job] How to contact you?</button></h2>
+                        <div class="accordion-collapse collapse item-3" role="tabpanel" data-bs-parent="#accordion-qa">
+                            <div class="accordion-body">
+                                <p class="mb-0">Please contact by email: <a href="mailto:job@1998.media">job@1998.media</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordion-qa .item-4" aria-expanded="false" aria-controls="accordion-qa .item-4">[ML] Wanna chat with my A.I. bot?</button></h2>
+                        <div class="accordion-collapse collapse item-4" role="tabpanel" data-bs-parent="#accordion-qa">
+                            <div class="accordion-body">
+                                <p class="mb-0">01.&nbsp;<a href="https://console.dialogflow.com/api-client/demo/embedded/7588efa8-1c68-497c-819e-3d1dfef8f164" target="_blank">Google Dialogflow</a>&nbsp;<i class="fas fa-external-link-alt" id="externalLink"></i></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <section data-aos="fade-up" data-aos-duration="1000" data-aos-delay="500" data-aos-once="true" id="contact">
           <div class="container" id="contactContainer">
