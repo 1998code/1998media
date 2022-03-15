@@ -15,23 +15,28 @@ export default function Home() {
   const translator = '<div id="google_translate_element"></div><script type="text/javascript"> function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: "en", layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL}, "google_translate_element"); } </script> <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>'
   const ads = '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1941913120815371" data-ad-slot="1600474556" data-ad-format="auto" data-full-width-responsive="true"></ins> <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>'
 
-  const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [blogs, setBlogs] = useState([]); 
   
-//   useEffect(() => {
-//     fetch("https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@1998design")
-//       .then(res => res.json())
-//       .then(
-//             (data) => {
-//                 setIsLoaded(true);
-//                 setBlogs(data.items);
-//             },
-//             (error) => {
-//                 console.log(error)
-//             }
-//       )
-//   }, [])
+  useEffect(() => {
+    fetch("https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@1998design")
+      .then(res => res.json())
+      .then(
+            (data) => {
+                setIsLoaded(true)
+                if (data.items) {
+                    console.log('t')
+                    setBlogs(data.items)
+                } else {
+                    const demo = [{title: "How To: Save Contacts on SwiftUI", pubDate: "2021-12-18 12:23:42", link: "https://levelup.gitconnected.com/how-to-save-conta…iftui-80ab70eb4da0?source=rss-8deb80c1cbc0------2", categories: ["SwiftUI","Apple","Developer"]}]
+                    setBlogs(demo)
+                }
+            },
+            (error) => {
+               console.log(error)
+            }
+      )
+  }, [])
 
   return (
     <div>
@@ -362,7 +367,7 @@ export default function Home() {
             </div>
         </section>
         
-        {/* <section data-aos="fade-up" data-aos-duration="1000" data-aos-delay="500" data-aos-once="true" id="post">
+        <section data-aos="fade-up" data-aos-duration="1000" data-aos-delay="500" data-aos-once="true" id="post">
             <div class="container" id="postContainer">
                 <h1 id="postHeading"><strong>Latest Posts</strong></h1>
                 <ul class="list-group" id="postList">
@@ -380,7 +385,7 @@ export default function Home() {
                     ))}
                 </ul>
             </div>
-        </section> */}
+        </section>
 
         <section data-aos="fade-up" data-aos-duration="1000" data-aos-delay="500" data-aos-once="true" id="faq">
             <div class="container" id="faqContainer">
