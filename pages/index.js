@@ -362,7 +362,7 @@ export default function Home() {
             </div>
         </section>
         
-        <section data-aos="fade-up" data-aos-duration="1000" data-aos-delay="500" data-aos-once="true" id="post">
+        {/* <section data-aos="fade-up" data-aos-duration="1000" data-aos-delay="500" data-aos-once="true" id="post">
             <div class="container" id="postContainer">
                 <h1 id="postHeading"><strong>Latest Posts</strong></h1>
                 <ul class="list-group" id="postList">
@@ -378,14 +378,9 @@ export default function Home() {
                             </li>
                         </Link>
                     ))}
-
-                    {/* <li class="list-group-item d-lg-flex d-xl-flex d-xxl-flex justify-content-between align-items-lg-center align-items-xl-center align-items-xxl-center" id="postItem" onclick="window.open(&#39;https://google.com&#39;)">
-                        <h3>Demo Title 1</h3><span>Time</span>
-                    </li> */}
                 </ul>
             </div>
-        </section>
-
+        </section> */}
 
         <section data-aos="fade-up" data-aos-duration="1000" data-aos-delay="500" data-aos-once="true" id="faq">
             <div class="container" id="faqContainer">
