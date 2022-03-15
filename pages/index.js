@@ -24,13 +24,7 @@ export default function Home() {
       .then(
             (data) => {
                 setIsLoaded(true)
-                if (data.items) {
-                    console.log('t')
-                    setBlogs(data.items)
-                } else {
-                    const demo = [{title: "How To: Save Contacts on SwiftUI", pubDate: "2021-12-18 12:23:42", link: "https://levelup.gitconnected.com/how-to-save-conta…iftui-80ab70eb4da0?source=rss-8deb80c1cbc0------2", categories: ["SwiftUI","Apple","Developer"]}]
-                    setBlogs(demo)
-                }
+                setBlogs(data.items)
             },
             (error) => {
                console.log(error)
