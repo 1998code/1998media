@@ -19,19 +19,19 @@ export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [blogs, setBlogs] = useState([]); 
   
-  useEffect(() => {
-    fetch("https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@1998design")
-      .then(res => res.json())
-      .then(
-            (data) => {
-                setIsLoaded(true);
-                setBlogs(data.items);
-            },
-            (error) => {
-                console.log(error)
-            }
-      )
-  }, [])
+//   useEffect(() => {
+//     fetch("https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@1998design")
+//       .then(res => res.json())
+//       .then(
+//             (data) => {
+//                 setIsLoaded(true);
+//                 setBlogs(data.items);
+//             },
+//             (error) => {
+//                 console.log(error)
+//             }
+//       )
+//   }, [])
 
   return (
     <div>
