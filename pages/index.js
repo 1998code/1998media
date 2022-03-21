@@ -70,7 +70,7 @@ export default function Home() {
             <div class="container d-flex d-lg-flex flex-column justify-content-lg-center align-items-lg-start" id="heroContainer">
                 <div class="flex-grow-1"><img class="rounded-circle img-fluid flex-grow-0" data-aos="fade" data-aos-duration="1000" data-aos-delay="500" data-aos-once="true" id="avatar" src="assets/img/av1.png?h=455cd139442f5f06d9317f400725df51" /></div>
                 <h1 class="flex-grow-0" data-aos="fade" data-aos-duration="1000" data-aos-delay="1000" data-aos-once="true" id="headingGreeting">Hi,&nbsp;<span data-aos="fade" data-aos-duration="1000" data-aos-delay="1500" id="headingName">I'm <strong>MING</strong>!</span><br /></h1>
-                <h1 class="text-break flex-grow-1" data-aos="fade" data-aos-duration="1000" data-aos-delay="2000" data-aos-once="true"><strong>UI Designer&nbsp;</strong><span id="and">&amp;</span>&nbsp;<strong>App&nbsp;Engineer</strong><br /><span id="wwdc21"><strong>&nbsp;WWDC Award Winner</strong></span></h1>
+                <h1 class="flex-grow-1" data-aos="fade" data-aos-duration="1000" data-aos-delay="2000" data-aos-once="true"><strong>Software Engineer</strong><br /><span id="wwdc21"><strong>&nbsp;WWDC Award Winner</strong></span></h1>
                 <div data-aos="fade" data-aos-duration="1000" data-aos-delay="2500" data-aos-once="true" id="appleBusinessChatBanner" class="apple-business-chat-banner-container" data-apple-business-id="0b908b93-eb72-4f51-a8de-55d1d58d5301" data-apple-icon-title="Any questions? I am here to help." data-apple-banner-context="Chat with me via iMessage. Available for iPhone / iPad / Mac user." data-apple-business-intent-id="15672e94-a30a-42c0-bf8b-b2a79a99417e" data-apple-banner-background-color="rgba(0,0,0,0.25)" data-apple-banner-cta="Questions? I can help." data-apple-banner-text-color="rgb(255, 255, 255)"></div><i class="fas fa-arrow-down d-flex d-lg-flex flex-grow-1 align-items-end my-auto align-items-lg-end" data-aos="fade" data-aos-duration="1000" data-aos-delay="3000" data-aos-once="true" id="arrowDown"></i>
             </div>
         </section>
@@ -317,6 +317,47 @@ export default function Home() {
                         </div>
                     </div>
                     {/* repeat */}
+                    <div class="card" id="projCard">
+                        <div class="card-body" id="mlType">
+                            <h6 class="text-muted card-subtitle mb-2 smallHeading">Upcoming in 2022 Q2</h6>
+                            <h4 class="card-title">CoreML Collection</h4>
+                            <h6 class="text-muted card-subtitle mb-2 smallHeading">Mobile Pre-trained models - Machine Learning</h6>
+                            <p class="card-text" id="cardPara"><span id="firstChar">A</span>pple CoreML models collection, which is ready to use and deploy.</p>
+                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-5" checked disabled /><label class="form-check-label" for="formCheck-5">Free Usage</label></div>
+                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-6" checked disabled /><label class="form-check-label" for="formCheck-6">Open Source</label></div><a class="card-link" href="#">Preview&nbsp;<i class="fas fa-external-link-alt"></i></a><a class="card-link" href="#">Github&nbsp;<i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                    <div class="card" id="projCard">
+                        <div class="card-body">
+                            <h6 class="text-muted card-subtitle mb-2 smallHeading">Published in 2022 Q1</h6>
+                            <h4 class="card-title">Return YouTube Dislike</h4>
+                            <h6 class="text-muted card-subtitle mb-2 smallHeading">Quality Rating before watch - Safari Extension</h6>
+                            <p class="card-text" id="cardPara"><span id="firstChar">W</span>aste less time on the content farm and untrustful content.<br /></p>
+                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-9" checked disabled /><label class="form-check-label" for="formCheck-9">Free Usage</label></div>
+                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-10" checked disabled /><label class="form-check-label" for="formCheck-10">Open Source</label></div><a class="card-link" href="http://localhost:3000/api/dlRYDmac" target="_blank">Install&nbsp;<i class="fas fa-cloud-download-alt"></i></a><a class="card-link" href="https://github.com/1998code/return-youtube-dislike/tree/main/Extensions/SafariApp">Github&nbsp;<i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                    <div class="card" id="projCard">
+                        <div class="card-body" id="mlType">
+                            <h6 class="text-muted card-subtitle mb-2 smallHeading">Published in 2022 Q1</h6>
+                            <h4 class="card-title">Baby Name Generator</h4>
+                            <h6 class="text-muted card-subtitle mb-2 smallHeading">Natural Language Processing - Deep ML</h6>
+                            <p class="card-text" id="cardPara"><span id="firstChar">A</span>user-friendly application that suggests to parents their baby's name.</p>
+                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-1" checked disabled /><label class="form-check-label" for="formCheck-1">Free Usage</label></div>
+                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-2" checked disabled /><label class="form-check-label" for="formCheck-2">Open Source</label></div><a class="card-link" href="#">Preview&nbsp;<i class="fas fa-external-link-alt"></i></a><a class="card-link" href="#">Github&nbsp;<i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                    <div class="card" id="projCard">
+                        <div class="card-body">
+                            <h6 class="text-muted card-subtitle mb-2 smallHeading">Published in 2020 Q2</h6>
+                            <h4 class="card-title">Bootstrap Themes</h4>
+                            <h6 class="text-muted card-subtitle mb-2 smallHeading">Pre-made framework templates for developers</h6>
+                            <p class="card-text" id="cardPara"><span id="firstChar">V</span>arious modern web templates are ready to use for training purposes.<br /></p>
+                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-3" checked disabled /><label class="form-check-label" for="formCheck-3">Free Usage</label></div>
+                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-4" checked disabled /><label class="form-check-label" for="formCheck-4">Open Source</label></div><a class="card-link" href="#">Preview&nbsp;<i class="fas fa-external-link-alt"></i></a><a class="card-link" href="#">Github&nbsp;<i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                    {/* Repeat 2 */}
                     <div class="card" id="projCard">
                         <div class="card-body" id="mlType">
                             <h6 class="text-muted card-subtitle mb-2 smallHeading">Upcoming in 2022 Q2</h6>

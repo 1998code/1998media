@@ -1,8 +1,8 @@
 @media (prefers-color-scheme: dark) {
   #hero {
-    height: 100vh;
+    height: 100vh!important;
     background: url("/assets/img/mesh-gradient-d.png?h=b3043d6fce32b16bcf287b740b0f4c96") no-repeat !important;
-    background-size: cover;
+    background-size: cover!important;
   }
 }
 
@@ -603,7 +603,7 @@ body{
 
 @media (prefers-color-scheme: dark) {
   #postItem {
-    background-color: #002d47!important;
+    background-color: rgba(0, 0, 0, 0.25)!important;
     color: white!important;
   }
 }
