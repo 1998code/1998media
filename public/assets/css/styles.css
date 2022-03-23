@@ -125,6 +125,7 @@
 @media (prefers-color-scheme: dark) {
   #skills {
     background-color:rgba(0, 0, 0, 0.25)!important;
+    padding: 10px;
   }
 }
 
@@ -310,9 +311,9 @@
 
 #wwdc21Winner {
   border-radius: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 50px;
   opacity: 1;
-  width: 100%;
+  max-height: 100px;
 }
 
 #skillsLang {
@@ -621,4 +622,12 @@ body{
   border-radius: 25px;
   border: 1px solid white;
   z-index: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+  #achievementsPara {
+    background-color: rgba(0, 0, 0, 0.25)!important;
+    border-radius: 15px;
+    padding: 15px;
+  }
 }

@@ -158,6 +158,8 @@ export default function Home() {
                         </div>
                         <h2 id="awardsHeading">Awards</h2>
                         <img class="img-fluid" id="wwdc21Winner" src="assets/img/WWDC21Winner.png?h=635e76ae457bd315d787163181b80dd7" />
+                        <h2 id="achievementsHeading">Achievements</h2>
+                        <p id="achievementsPara">Apple App Store<br />2022 ‣ #1 Developer Tools in Canada&nbsp;&amp; Global Top-100<br />2021 ‣ #1 Developer Tools in the U.S. &amp; Global Top-100<br /></p>
                     </div>
                     <div class="col-xl-7 col-xxl-7" data-aos="fade-up" data-aos-once="true" id="skillsLang">
                         <h2 id="skillsLangHeading">Skills &amp; Languages</h2>
