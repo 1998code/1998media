@@ -62,7 +62,7 @@ export default function Home() {
                 <ul class="list-group" id="postList">
                     { blogs.map(item => (
                         <Link href={item.link} >
-                            <li class="list-group-item d-lg-flex d-xl-flex d-xxl-flex justify-content-between align-items-lg-center align-items-xl-center align-items-xxl-center" id="postItem" >
+                            <li class="list-group-item d-lg-flex d-xl-flex d-xxl-flex justify-content-between align-items-lg-center align-items-xl-center align-items-xxl-center" id="postItemE" >
                                 <span>{item.pubDate.slice(0, 10)}<h5>{item.title}</h5></span>
                                 <small class="text-end">
                                     #{item.categories[0].charAt(0).toUpperCase() + item.categories[0].slice(1)} &nbsp;

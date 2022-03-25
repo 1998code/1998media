@@ -629,7 +629,6 @@ body{
   color: #0c63e4;
   border: none;
 }
-
 #postItem:hover {
   transform: scale(1.05);
   transition: all 0.3s ease-in;
@@ -637,6 +636,20 @@ body{
   border: 1px solid white;
   z-index: 2;
 }
+
+#postItemE {
+  cursor: pointer;
+  background-color: transparent;
+  /* color: #0c63e4; */
+  border: none;
+}
+#postItemE:hover {
+  transform: scale(1.05);
+  transition: all 0.3s ease-in;
+  border-radius: 25px;
+  z-index: 2;
+}
+
 
 @media (prefers-color-scheme: dark) {
   #achievementsPara {
