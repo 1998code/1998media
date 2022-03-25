@@ -581,7 +581,7 @@
 }
 
 .about-big-heading {
-  margin-top: 100px;
+  margin-top: 25px;
   margin-bottom: 25px;
   margin-left: 0px;
   color: #000;
@@ -927,6 +927,8 @@
 
 .container-4 {
   max-width: 90vw;
+  padding-top: 25px;
+  padding-bottom: 25px;
   text-align: center;
 }
 
@@ -936,12 +938,6 @@
   display: -ms-flexbox;
   display: flex;
   overflow: hidden;
-  min-height: 80vh;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
@@ -966,6 +962,7 @@
 
 .columns-5.slwordshide {
   width: 90vw;
+  margin-bottom: 50px;
 }
 
 .columns-6 {
@@ -1065,6 +1062,18 @@
   opacity: 0.5;
 }
 
+.about-services-section {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  min-height: 70vh;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
 .layout-container {
   width: 100%;
   max-width: 1140px;
@@ -1137,6 +1146,10 @@
 .button-3 {
   border-radius: 15px;
   background-color: #00050a;
+}
+
+.html-embed-4 {
+  padding-top: 15px;
 }
 
 @media screen and (max-width: 991px) {
