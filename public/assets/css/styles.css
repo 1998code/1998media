@@ -30,6 +30,10 @@
     background: rgb(25,25,25)!important;
     color: #ddd!important;
   }
+  .ignoreDarkMode {
+    background: #fff6eb!important;
+    color: black!important;
+  }
 }
 
 @media (prefers-color-scheme: dark) {

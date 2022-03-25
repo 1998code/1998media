@@ -54,7 +54,7 @@ export default function Home() {
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Montserrat:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic"></link>
       </Head>
 
-      <body class="monstserrat">
+      <body class="ignoreDarkMode monstserrat">
 
         <section data-aos="fade-up" data-aos-duration="1000" data-aos-delay="500" data-aos-once="true" id="post">
             <div class="container" id="postContainer">
