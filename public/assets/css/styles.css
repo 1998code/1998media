@@ -456,6 +456,10 @@ body{
   background: #fff6eb;
 }
 
+.monstserrat {
+  font-family: Montserrat, sans-serif;
+}
+
 .goog-te-banner-frame{
   display:none !important
 }
