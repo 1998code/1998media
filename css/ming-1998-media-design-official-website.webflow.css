@@ -1700,6 +1700,7 @@
   .div-block {
     display: -ms-grid;
     display: grid;
+    margin-top: 0px;
     grid-auto-flow: row;
     grid-auto-columns: 1fr;
     grid-column-gap: 16px;
@@ -1849,6 +1850,13 @@
 
   .section-6 {
     display: none;
+  }
+
+  .image-3 {
+    left: auto;
+    top: auto;
+    right: 0%;
+    bottom: 0%;
   }
 }
 
