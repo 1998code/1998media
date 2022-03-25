@@ -361,6 +361,11 @@
   margin-bottom: 25px;
 }
 
+#projHeadingE {
+  margin-bottom: 25px;
+  font-weight: lighter;
+}
+
 #faqHeading {
   margin-bottom: 25px;
 }
@@ -582,6 +587,11 @@ body{
 
 #postHeading {
   margin-bottom: 25px;
+}
+
+#postHeadingE {
+  margin-bottom: 25px;
+  font-weight: lighter;
 }
 
 #postList {

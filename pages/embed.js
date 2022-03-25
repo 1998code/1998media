@@ -58,7 +58,7 @@ export default function Home() {
 
         <section data-aos="fade-up" data-aos-duration="1000" data-aos-delay="500" data-aos-once="true" id="proj">
             <div class="container" id="projContainer">
-                <h1 id="projHeading"><strong>Recent Projects</strong></h1>
+                <h1 id="projHeadingE"><strong>Recent Projects</strong></h1>
                 <div class="d-flex align-items-center" id="projDiv">
                     <div class="card" id="projCard">
                         <div class="card-body" id="mlType">
@@ -185,9 +185,10 @@ export default function Home() {
                 </div>
             </div>
         </section>
+
         <section data-aos="fade-up" data-aos-duration="1000" data-aos-delay="500" data-aos-once="true" id="post">
             <div class="container" id="postContainer">
-                <h1 id="postHeading"><strong>Latest Posts</strong></h1>
+                <h1 id="postHeadingE"><strong>Latest Posts</strong></h1>
                 <ul class="list-group" id="postList">
                     { blogs.map(item => (
                         <Link href={item.link} >
