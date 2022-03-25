@@ -523,9 +523,9 @@
 }
 
 .centered-container.horizontal-flex {
-  max-width: 80vw;
+  width: 80vw;
+  max-width: none;
   min-height: 350px;
-  min-width: 65vw;
   margin-right: 0px;
   margin-left: 0px;
   -webkit-box-orient: horizontal;
@@ -595,7 +595,7 @@
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  min-height: 100vh;
+  min-height: 80vh;
 }
 
 .subscribe-content-wrapper {
@@ -853,7 +853,7 @@
   margin-bottom: 40px;
   font-family: Montserrat, sans-serif;
   color: #333;
-  font-size: 20px;
+  font-size: 18px;
   line-height: 25px;
 }
 
@@ -883,7 +883,8 @@
 }
 
 .columns-2 {
-  width: 100%;
+  width: 80vw;
+  padding: 25px;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
@@ -899,6 +900,7 @@
 }
 
 .container-4 {
+  max-width: 90vw;
   text-align: center;
 }
 
@@ -929,7 +931,7 @@
 }
 
 .columns-3.slwordshide {
-  width: 80vw;
+  width: 90vw;
 }
 
 .columns-5 {
@@ -937,7 +939,7 @@
 }
 
 .columns-5.slwordshide {
-  width: 80vw;
+  width: 90vw;
 }
 
 .columns-6 {
@@ -945,13 +947,13 @@
 }
 
 .columns-6.slwordshide {
-  width: 80vw;
+  width: 90vw;
 }
 
 .slwords {
   background-image: url('../images/Mesh-gradient.png');
-  background-position: 100% 50%;
-  background-size: auto;
+  background-position: 50% 50%;
+  background-size: cover;
   font-size: 2rem;
   -webkit-background-clip: text;
   background-clip: text;
@@ -971,7 +973,7 @@
 }
 
 .columns-4.slwordshide {
-  width: 80vw;
+  width: 90vw;
 }
 
 .text-span {
@@ -980,6 +982,51 @@
 
 .text-span-2 {
   color: #a85003;
+}
+
+.slwords2 {
+  background-image: url('../images/Mesh-gradient-2.png');
+  background-position: 50% 50%;
+  background-size: cover;
+  font-size: 2rem;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.slwords3 {
+  background-image: url('../images/Mesh-gradient.png');
+  background-position: 100% 0%;
+  background-size: cover;
+  font-size: 2rem;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.dropdown-link {
+  background-color: #fff;
+}
+
+.dropdown-link-2 {
+  background-color: #fff;
+}
+
+.html-embed-3 {
+  background-color: #fff;
+}
+
+.text-block {
+  padding-left: 15px;
+  background-color: #fff;
+}
+
+.container-6 {
+  max-width: 80vw;
+}
+
+.bold-text-9 {
+  font-size: 20px;
 }
 
 @media screen and (max-width: 991px) {
@@ -993,6 +1040,11 @@
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
+  }
+
+  .nav-menu {
+    border-radius: 20px;
+    background-color: #fff;
   }
 
   .navbar-light-navbutton {
@@ -1024,6 +1076,10 @@
     -webkit-flex: 0 auto;
     -ms-flex: 0 auto;
     flex: 0 auto;
+  }
+
+  .menu-button.w--open {
+    background-color: hsla(0, 0%, 78.4%, 0);
   }
 
   .navbar-light-icon {
@@ -1240,6 +1296,23 @@
     background-clip: text;
     -webkit-text-fill-color: transparent;
   }
+
+  .tab-link.w--current {
+    background-color: #0eafff;
+    color: #fff;
+  }
+
+  .container-5 {
+    max-width: 80vw;
+  }
+
+  .slwords2.slwordshide {
+    display: none;
+  }
+
+  .slwords3.slwordshide {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 767px) {
@@ -1409,6 +1482,11 @@
     display: -ms-flexbox;
     display: flex;
   }
+
+  .tab-link.w--current {
+    background-color: #1c81ce;
+    color: #fff;
+  }
 }
 
 @media screen and (max-width: 479px) {
@@ -1418,7 +1496,6 @@
   }
 
   .nav-menu {
-    background-color: hsla(0, 0%, 100%, 0);
     -webkit-backdrop-filter: blur(25px);
     backdrop-filter: blur(25px);
   }
@@ -1504,7 +1581,38 @@
     line-height: 75px;
   }
 
+  .paragraph-3 {
+    max-width: 100vw;
+  }
+
   .section-5 {
+    display: none;
+  }
+
+  .paragraph-4 {
+    max-width: 100vw;
+    background-position: 0% 100%;
+    background-size: cover;
+  }
+
+  .tab-link {
+    background-color: hsla(0, 0%, 100%, 0.5);
+  }
+
+  .tab-link.w--current {
+    background-color: #4b80fc;
+    color: #fff;
+  }
+
+  .tab-link-softwares {
+    background-color: #fff;
+  }
+
+  .tab-link-languages {
+    background-color: #fff;
+  }
+
+  .section-6 {
     display: none;
   }
 }
