@@ -951,7 +951,7 @@
 }
 
 .slwords {
-  background-image: url('../images/Mesh-gradient.png');
+  background-image: url('../images/Mesh-gradient_2.png');
   background-position: 50% 50%;
   background-size: cover;
   font-size: 2rem;
@@ -995,7 +995,7 @@
 }
 
 .slwords3 {
-  background-image: url('../images/Mesh-gradient.png');
+  background-image: url('../images/Mesh-gradient_1.png');
   background-position: 100% 0%;
   background-size: cover;
   font-size: 2rem;
@@ -1529,6 +1529,10 @@
     display: none;
   }
 
+  .float-avatar.fa-3.slow-scroll-up {
+    display: none;
+  }
+
   .float-avatar.fa-5.slow-scroll-up {
     display: none;
   }
@@ -1542,7 +1546,12 @@
   }
 
   .about-heading-wrapper {
+    margin-right: 0px;
     margin-left: 0px;
+  }
+
+  .about-big-heading {
+    margin-top: 0px;
   }
 
   .about-content-wrapper {
@@ -1560,7 +1569,7 @@
   }
 
   .contact-form-wrap {
-    padding: 40px 30px;
+    padding: 0px;
   }
 
   .contact-details-wrap {
@@ -1569,6 +1578,18 @@
 
   .section-3 {
     padding: 15px;
+  }
+
+  .heading-2 {
+    text-align: center;
+  }
+
+  .stickycolumn {
+    position: static;
+  }
+
+  .paragraph-2 {
+    padding-right: 0px;
   }
 
   .heading-4 {
@@ -1581,8 +1602,14 @@
     line-height: 75px;
   }
 
+  .container-4 {
+    display: none;
+  }
+
   .paragraph-3 {
     max-width: 100vw;
+    margin-bottom: 0px;
+    padding: 25px;
   }
 
   .section-5 {
@@ -1591,8 +1618,13 @@
 
   .paragraph-4 {
     max-width: 100vw;
+    padding: 25px;
     background-position: 0% 100%;
     background-size: cover;
+  }
+
+  .paragraph-5 {
+    padding: 25px;
   }
 
   .tab-link {
