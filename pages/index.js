@@ -19,7 +19,7 @@ export default function Home() {
   const [blogs, setBlogs] = useState([]); 
   
   useEffect(() => {
-    fetch("https://api.allorigins.win/raw?url=https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@1998design")
+    fetch("https://api.allorigins.win/raw?url=https://send-rss-get-json.herokuapp.com/convert/?u=https://medium.com/feed/@1998design")
       .then(res => res.json())
       .then(
             (data) => {
