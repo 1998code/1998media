@@ -70,7 +70,7 @@ export default function Home() {
             <div class="container d-flex d-lg-flex flex-column justify-content-lg-center align-items-lg-start" id="heroContainer">
                 <div class="flex-grow-1"><img class="rounded-circle img-fluid flex-grow-0" data-aos="fade" data-aos-duration="1000" data-aos-delay="500" data-aos-once="true" id="avatar" src="assets/img/av1.png?h=455cd139442f5f06d9317f400725df51" /></div>
                 <h1 class="flex-grow-0" data-aos="fade" data-aos-duration="1000" data-aos-delay="1000" data-aos-once="true" id="headingGreeting">Hi,&nbsp;<span data-aos="fade" data-aos-duration="1000" data-aos-delay="1500" id="headingName">I'm <strong>MING</strong>!</span><br /></h1>
-                <h1 class="flex-grow-1" data-aos="fade" data-aos-duration="1000" data-aos-delay="2000" data-aos-once="true"><strong>Software Engineer</strong><br /><span id="wwdc21"><strong>&nbsp;WWDC Award Winner</strong></span></h1>
+                <h1 class="flex-grow-1" data-aos="fade" data-aos-duration="1000" data-aos-delay="2000" data-aos-once="true"><strong>Software Engineer (Swift, Vue, React)</strong><br /><span id="wwdc21"><strong>&nbsp;WWDC Award Winner</strong></span></h1>
                 <div data-aos="fade" data-aos-duration="1000" data-aos-delay="2500" data-aos-once="true" id="appleBusinessChatBanner" class="apple-business-chat-banner-container" data-apple-business-id="0b908b93-eb72-4f51-a8de-55d1d58d5301" data-apple-icon-title="Any questions? I am here to help." data-apple-banner-context="Chat with me via iMessage. Available for iPhone / iPad / Mac user." data-apple-business-intent-id="15672e94-a30a-42c0-bf8b-b2a79a99417e" data-apple-banner-background-color="rgba(0,0,0,0.25)" data-apple-banner-cta="Questions? I can help." data-apple-banner-text-color="rgb(255, 255, 255)"></div><i class="fas fa-arrow-down d-flex d-lg-flex flex-grow-1 align-items-end my-auto align-items-lg-end" data-aos="fade" data-aos-duration="1000" data-aos-delay="3000" data-aos-once="true" id="arrowDown"></i>
             </div>
         </section>
@@ -86,7 +86,7 @@ export default function Home() {
                         <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#">Coding&nbsp;</a>
                             <div class="dropdown-menu" id="menuDropDown"><a class="dropdown-item" href="https://github.com/1998code" target="_blank"><i class="fab fa-github"></i>&nbsp;Github</a><a class="dropdown-item" href="https://github.com/sponsors/1998code" target="_blank"><i class="fas fa-money-check-alt"></i>&nbsp;Sponsor</a></div>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="https://blog.1998.media" target="_blank">Blog</a></li>
+                        <li class="nav-item"><a class="nav-link" href="https://1998design.medium.com" target="_blank">Blog</a></li>
                         <li class="nav-item"><a class="nav-link" href="mailto:contact@1998.media" target="_blank">Contact</a></li>
                         <li class="nav-item"><a class="nav-link" href="https://status.1998.media" target="_blank">Status</a></li>
                         <li class="nav-item d-md-flex align-items-md-center"><a class="nav-link d-md-flex align-items-md-center" href="https://shop.1998.media"><i class="fas fa-shopping-bag"></i></a></li>
@@ -107,13 +107,26 @@ export default function Home() {
                     <div class="col-md-12 col-lg-12 col-xl-4 col-xxl-4 d-flex d-sm-flex d-md-flex d-xxl-flex flex-column justify-content-center justify-content-sm-center justify-content-md-center align-items-md-start justify-content-xxl-center align-items-xxl-start" data-aos="fade-up" data-aos-once="true" id="who">
                         <div id="whoDiv">
                             <h2 id="whoHeading">Who am I</h2>
-                            <p id="whoParagraph">An outgoing &amp; motivated person with unlimited creativity, studying within a great IT environment. Eager to work in a large and professional MNC in Design and Programming related industry in the future.</p>
+                            <p id="whoParagraph">
+                                I'm currently a <b>Software Engineer</b> doing UI Design, Cross-platform app development &amp; Neural Network, plus Deep Neural Machine Learning Development Research.
+                                <br /><br />
+                                As an outgoing &amp; motivated person with unlimited creativity, studying within a great IT environment. Eager to work in a large and professional MNC in Design and Programming related industry in the future.
+                            </p>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-6 col-xl-4 col-xxl-4 d-flex d-sm-flex d-md-flex d-xxl-flex flex-column justify-content-center justify-content-sm-center justify-content-md-center align-items-md-start justify-content-xxl-center align-items-xxl-start" data-aos="fade-up" data-aos-once="true" id="edu">
                         <div class="d-xxl-flex flex-column" id="eduDiv">
                             <h2 id="eduHeading">Bachelor's degree</h2>
-                            <p class="flex-grow-1" id="eduParagraph">A science student graduated at The Hong Kong Polytechnic University and City University of Hong Kong.<br />Passed Korean TOPIK language exam in 2018.</p><a class="text-truncate" id="cityuCert" href="https://www.cityu.edu.hk/e-certification/nvkrwyua" target="_blank"><i class="fas fa-user-check"></i>&nbsp;CityU e-Cert Verification&nbsp;<i class="fas fa-external-link-alt"></i></a>
+                            <p class="flex-grow-1" id="eduParagraph">
+                                A science & building surveying student graduated at: <b>The Hong Kong Polytechnic University, and City University of Hong Kong</b>.
+                                <br />
+                                <br />
+                                Passed <b>Korean TOPIK</b> language exam in 2018.
+                                <br />
+                                <br />
+                                Winning <b>Apple WWDC</b> student award in 2021.
+                            </p>
+                            <a class="text-truncate" id="cityuCert" href="https://www.cityu.edu.hk/e-certification/nvkrwyua" target="_blank"><i class="fas fa-user-check"></i>&nbsp;CityU e-Cert Verification&nbsp;<i class="fas fa-external-link-alt"></i></a>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-6 col-xl-4 col-xxl-4 d-flex d-sm-flex d-md-flex d-xxl-flex flex-column justify-content-center justify-content-sm-center justify-content-md-center align-items-md-start justify-content-xxl-center align-items-xxl-start" data-aos="fade-up" data-aos-once="true" id="do">
@@ -159,7 +172,11 @@ export default function Home() {
                         <h2 id="awardsHeading">Awards</h2>
                         <img class="img-fluid" id="wwdc21Winner" src="assets/img/WWDC21Winner.png?h=635e76ae457bd315d787163181b80dd7" />
                         <h2 id="achievementsHeading">Achievements</h2>
-                        <p id="achievementsPara">Apple App Store<br />2022 ‣ #1 Developer Tools in Canada&nbsp;&amp; Global Top-100<br />2021 ‣ #1 Developer Tools in the U.S. &amp; Global Top-100<br /></p>
+                        <p id="achievementsPara">Apple App Store
+                        <br />2022 ‣ #1 Developer Tools in Canada
+                        <br />2021 ‣ #1 Developer Tools in the United States
+                        <br />Since 2020 ‣ Global Top-100 Paid Apps in different categories
+                        <br /></p>
                     </div>
                     <div class="col-xl-7 col-xxl-7" data-aos="fade-up" data-aos-once="true" id="skillsLang">
                         <h2 id="skillsLangHeading">Skills &amp; Languages</h2>
@@ -280,12 +297,16 @@ export default function Home() {
                 <div class="d-flex align-items-center" id="projDiv">
                     <div class="card" id="projCard">
                         <div class="card-body" id="mlType">
-                            <h6 class="text-muted card-subtitle mb-2 smallHeading">Upcoming in 2022 Q2</h6>
+                            <h6 class="text-muted card-subtitle mb-2 smallHeading">Upcoming in June 2022</h6>
                             <h4 class="card-title">CoreML Collection</h4>
                             <h6 class="text-muted card-subtitle mb-2 smallHeading">Mobile Pre-trained models - Machine Learning</h6>
                             <p class="card-text" id="cardPara"><span id="firstChar">A</span>pple CoreML models collection, which is ready to use and deploy.</p>
-                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-5" checked disabled /><label class="form-check-label" for="formCheck-5">Free Usage</label></div>
-                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-6" checked disabled /><label class="form-check-label" for="formCheck-6">Open Source</label></div><a class="card-link" href="#">Preview&nbsp;<i class="fas fa-external-link-alt"></i></a><a class="card-link" href="#">Github&nbsp;<i class="fab fa-github"></i></a>
+                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-5" checked disabled />
+                            <label class="form-check-label" for="formCheck-5">Free Usage</label></div>
+                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-6" checked disabled />
+                            <label class="form-check-label" for="formCheck-6">Open Source</label></div>
+                            <a class="card-link" href="#">Preview&nbsp;<i class="fas fa-external-link-alt"></i></a>
+                            <a class="card-link" href="#">Github&nbsp;<i class="fab fa-github"></i></a>
                         </div>
                     </div>
                     <div class="card" id="projCard">
@@ -294,8 +315,14 @@ export default function Home() {
                             <h4 class="card-title">Return YouTube Dislike</h4>
                             <h6 class="text-muted card-subtitle mb-2 smallHeading">Quality Rating before watch - Safari Extension</h6>
                             <p class="card-text" id="cardPara"><span id="firstChar">W</span>aste less time on the content farm and untrustful content.<br /></p>
-                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-9" checked disabled /><label class="form-check-label" for="formCheck-9">Free Usage</label></div>
-                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-10" checked disabled /><label class="form-check-label" for="formCheck-10">Open Source</label></div><a class="card-link" href="http://localhost:3000/api/dlRYDmac" target="_blank">Install&nbsp;<i class="fas fa-cloud-download-alt"></i></a><a class="card-link" href="https://github.com/1998code/return-youtube-dislike/tree/main/Extensions/SafariApp">Github&nbsp;<i class="fab fa-github"></i></a>
+                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading">
+                                <input class="form-check-input" type="checkbox" id="formCheck-9" checked disabled />
+                                <label class="form-check-label" for="formCheck-9">Free Usage</label></div>
+                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading">
+                                <input class="form-check-input" type="checkbox" id="formCheck-10" checked disabled />
+                                <label class="form-check-label" for="formCheck-10">Open Source</label></div>
+                                <a class="card-link" href="http://localhost:3000/api/dlRYDmac" target="_blank">Install&nbsp;<i class="fas fa-cloud-download-alt"></i></a>
+                                <a class="card-link" href="https://github.com/1998code/return-youtube-dislike/tree/main/Extensions/SafariApp">Github&nbsp;<i class="fab fa-github"></i></a>
                         </div>
                     </div>
                     <div class="card" id="projCard">
@@ -305,7 +332,21 @@ export default function Home() {
                             <h6 class="text-muted card-subtitle mb-2 smallHeading">Natural Language Processing - Deep ML</h6>
                             <p class="card-text" id="cardPara"><span id="firstChar">A</span>user-friendly application that suggests to parents their baby's name.</p>
                             <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-1" checked disabled /><label class="form-check-label" for="formCheck-1">Free Usage</label></div>
-                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-2" checked disabled /><label class="form-check-label" for="formCheck-2">Open Source</label></div><a class="card-link" href="#">Preview&nbsp;<i class="fas fa-external-link-alt"></i></a><a class="card-link" href="#">Github&nbsp;<i class="fab fa-github"></i></a>
+                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-2" disabled /><label class="form-check-label" for="formCheck-2">Open Source</label></div>
+                            <a class="card-link" href="https://bng.1998.media/">Preview&nbsp;<i class="fas fa-external-link-alt"></i></a>
+                            {/* <a class="card-link" href="#">Github&nbsp;<i class="fab fa-github"></i></a> */}
+                        </div>
+                    </div>
+                    <div class="card" id="projCard">
+                        <div class="card-body">
+                            <h6 class="text-muted card-subtitle mb-2 smallHeading">Published in 2021 Q1</h6>
+                            <h4 class="card-title">Core Font</h4>
+                            <h6 class="text-muted card-subtitle mb-2 smallHeading">Pre-made framework templates for developers</h6>
+                            <p class="card-text" id="cardPara"><span id="firstChar">A</span>n open source font project for everyone. Support with all devices plus Web CDN.<br /></p>
+                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-3" checked disabled /><label class="form-check-label" for="formCheck-3">Free Usage</label></div>
+                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-4" checked disabled /><label class="form-check-label" for="formCheck-4">Open Source</label></div>
+                            <a class="card-link" href="https://fonts.1998.media/Core">Preview&nbsp;<i class="fas fa-external-link-alt"></i></a>
+                            <a class="card-link" href="https://github.com/1998code/Core-Font">Github&nbsp;<i class="fab fa-github"></i></a>
                         </div>
                     </div>
                     <div class="card" id="projCard">
@@ -315,18 +356,24 @@ export default function Home() {
                             <h6 class="text-muted card-subtitle mb-2 smallHeading">Pre-made framework templates for developers</h6>
                             <p class="card-text" id="cardPara"><span id="firstChar">V</span>arious modern web templates are ready to use for training purposes.<br /></p>
                             <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-3" checked disabled /><label class="form-check-label" for="formCheck-3">Free Usage</label></div>
-                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-4" checked disabled /><label class="form-check-label" for="formCheck-4">Open Source</label></div><a class="card-link" href="#">Preview&nbsp;<i class="fas fa-external-link-alt"></i></a><a class="card-link" href="#">Github&nbsp;<i class="fab fa-github"></i></a>
+                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-4" checked disabled /><label class="form-check-label" for="formCheck-4">Open Source</label></div>
+                            <a class="card-link" href="https://themes.1998.media/">Preview&nbsp;<i class="fas fa-external-link-alt"></i></a>
+                            <a class="card-link" href="https://github.com/1998code?tab=repositories&q=theme&type=&language=">Github&nbsp;<i class="fab fa-github"></i></a>
                         </div>
                     </div>
-                    {/* repeat */}
+                    {/* Repeat */}
                     <div class="card" id="projCard">
                         <div class="card-body" id="mlType">
-                            <h6 class="text-muted card-subtitle mb-2 smallHeading">Upcoming in 2022 Q2</h6>
+                            <h6 class="text-muted card-subtitle mb-2 smallHeading">Upcoming in June 2022</h6>
                             <h4 class="card-title">CoreML Collection</h4>
                             <h6 class="text-muted card-subtitle mb-2 smallHeading">Mobile Pre-trained models - Machine Learning</h6>
                             <p class="card-text" id="cardPara"><span id="firstChar">A</span>pple CoreML models collection, which is ready to use and deploy.</p>
-                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-5" checked disabled /><label class="form-check-label" for="formCheck-5">Free Usage</label></div>
-                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-6" checked disabled /><label class="form-check-label" for="formCheck-6">Open Source</label></div><a class="card-link" href="#">Preview&nbsp;<i class="fas fa-external-link-alt"></i></a><a class="card-link" href="#">Github&nbsp;<i class="fab fa-github"></i></a>
+                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-5" checked disabled />
+                            <label class="form-check-label" for="formCheck-5">Free Usage</label></div>
+                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-6" checked disabled />
+                            <label class="form-check-label" for="formCheck-6">Open Source</label></div>
+                            <a class="card-link" href="#">Preview&nbsp;<i class="fas fa-external-link-alt"></i></a>
+                            <a class="card-link" href="#">Github&nbsp;<i class="fab fa-github"></i></a>
                         </div>
                     </div>
                     <div class="card" id="projCard">
@@ -335,8 +382,14 @@ export default function Home() {
                             <h4 class="card-title">Return YouTube Dislike</h4>
                             <h6 class="text-muted card-subtitle mb-2 smallHeading">Quality Rating before watch - Safari Extension</h6>
                             <p class="card-text" id="cardPara"><span id="firstChar">W</span>aste less time on the content farm and untrustful content.<br /></p>
-                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-9" checked disabled /><label class="form-check-label" for="formCheck-9">Free Usage</label></div>
-                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-10" checked disabled /><label class="form-check-label" for="formCheck-10">Open Source</label></div><a class="card-link" href="http://localhost:3000/api/dlRYDmac" target="_blank">Install&nbsp;<i class="fas fa-cloud-download-alt"></i></a><a class="card-link" href="https://github.com/1998code/return-youtube-dislike/tree/main/Extensions/SafariApp">Github&nbsp;<i class="fab fa-github"></i></a>
+                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading">
+                                <input class="form-check-input" type="checkbox" id="formCheck-9" checked disabled />
+                                <label class="form-check-label" for="formCheck-9">Free Usage</label></div>
+                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading">
+                                <input class="form-check-input" type="checkbox" id="formCheck-10" checked disabled />
+                                <label class="form-check-label" for="formCheck-10">Open Source</label></div>
+                                <a class="card-link" href="http://localhost:3000/api/dlRYDmac" target="_blank">Install&nbsp;<i class="fas fa-cloud-download-alt"></i></a>
+                                <a class="card-link" href="https://github.com/1998code/return-youtube-dislike/tree/main/Extensions/SafariApp">Github&nbsp;<i class="fab fa-github"></i></a>
                         </div>
                     </div>
                     <div class="card" id="projCard">
@@ -346,7 +399,21 @@ export default function Home() {
                             <h6 class="text-muted card-subtitle mb-2 smallHeading">Natural Language Processing - Deep ML</h6>
                             <p class="card-text" id="cardPara"><span id="firstChar">A</span>user-friendly application that suggests to parents their baby's name.</p>
                             <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-1" checked disabled /><label class="form-check-label" for="formCheck-1">Free Usage</label></div>
-                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-2" checked disabled /><label class="form-check-label" for="formCheck-2">Open Source</label></div><a class="card-link" href="#">Preview&nbsp;<i class="fas fa-external-link-alt"></i></a><a class="card-link" href="#">Github&nbsp;<i class="fab fa-github"></i></a>
+                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-2" disabled /><label class="form-check-label" for="formCheck-2">Open Source</label></div>
+                            <a class="card-link" href="https://bng.1998.media/">Preview&nbsp;<i class="fas fa-external-link-alt"></i></a>
+                            {/* <a class="card-link" href="#">Github&nbsp;<i class="fab fa-github"></i></a> */}
+                        </div>
+                    </div>
+                    <div class="card" id="projCard">
+                        <div class="card-body">
+                            <h6 class="text-muted card-subtitle mb-2 smallHeading">Published in 2021 Q1</h6>
+                            <h4 class="card-title">Core Font</h4>
+                            <h6 class="text-muted card-subtitle mb-2 smallHeading">Pre-made framework templates for developers</h6>
+                            <p class="card-text" id="cardPara"><span id="firstChar">A</span>n open source font project for everyone. Support with all devices plus Web CDN.<br /></p>
+                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-3" checked disabled /><label class="form-check-label" for="formCheck-3">Free Usage</label></div>
+                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-4" checked disabled /><label class="form-check-label" for="formCheck-4">Open Source</label></div>
+                            <a class="card-link" href="https://fonts.1998.media/Core">Preview&nbsp;<i class="fas fa-external-link-alt"></i></a>
+                            <a class="card-link" href="https://github.com/1998code/Core-Font">Github&nbsp;<i class="fab fa-github"></i></a>
                         </div>
                     </div>
                     <div class="card" id="projCard">
@@ -356,48 +423,9 @@ export default function Home() {
                             <h6 class="text-muted card-subtitle mb-2 smallHeading">Pre-made framework templates for developers</h6>
                             <p class="card-text" id="cardPara"><span id="firstChar">V</span>arious modern web templates are ready to use for training purposes.<br /></p>
                             <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-3" checked disabled /><label class="form-check-label" for="formCheck-3">Free Usage</label></div>
-                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-4" checked disabled /><label class="form-check-label" for="formCheck-4">Open Source</label></div><a class="card-link" href="#">Preview&nbsp;<i class="fas fa-external-link-alt"></i></a><a class="card-link" href="#">Github&nbsp;<i class="fab fa-github"></i></a>
-                        </div>
-                    </div>
-                    {/* Repeat 2 */}
-                    <div class="card" id="projCard">
-                        <div class="card-body" id="mlType">
-                            <h6 class="text-muted card-subtitle mb-2 smallHeading">Upcoming in 2022 Q2</h6>
-                            <h4 class="card-title">CoreML Collection</h4>
-                            <h6 class="text-muted card-subtitle mb-2 smallHeading">Mobile Pre-trained models - Machine Learning</h6>
-                            <p class="card-text" id="cardPara"><span id="firstChar">A</span>pple CoreML models collection, which is ready to use and deploy.</p>
-                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-5" checked disabled /><label class="form-check-label" for="formCheck-5">Free Usage</label></div>
-                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-6" checked disabled /><label class="form-check-label" for="formCheck-6">Open Source</label></div><a class="card-link" href="#">Preview&nbsp;<i class="fas fa-external-link-alt"></i></a><a class="card-link" href="#">Github&nbsp;<i class="fab fa-github"></i></a>
-                        </div>
-                    </div>
-                    <div class="card" id="projCard">
-                        <div class="card-body">
-                            <h6 class="text-muted card-subtitle mb-2 smallHeading">Published in 2022 Q1</h6>
-                            <h4 class="card-title">Return YouTube Dislike</h4>
-                            <h6 class="text-muted card-subtitle mb-2 smallHeading">Quality Rating before watch - Safari Extension</h6>
-                            <p class="card-text" id="cardPara"><span id="firstChar">W</span>aste less time on the content farm and untrustful content.<br /></p>
-                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-9" checked disabled /><label class="form-check-label" for="formCheck-9">Free Usage</label></div>
-                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-10" checked disabled /><label class="form-check-label" for="formCheck-10">Open Source</label></div><a class="card-link" href="http://localhost:3000/api/dlRYDmac" target="_blank">Install&nbsp;<i class="fas fa-cloud-download-alt"></i></a><a class="card-link" href="https://github.com/1998code/return-youtube-dislike/tree/main/Extensions/SafariApp">Github&nbsp;<i class="fab fa-github"></i></a>
-                        </div>
-                    </div>
-                    <div class="card" id="projCard">
-                        <div class="card-body" id="mlType">
-                            <h6 class="text-muted card-subtitle mb-2 smallHeading">Published in 2022 Q1</h6>
-                            <h4 class="card-title">Baby Name Generator</h4>
-                            <h6 class="text-muted card-subtitle mb-2 smallHeading">Natural Language Processing - Deep ML</h6>
-                            <p class="card-text" id="cardPara"><span id="firstChar">A</span>user-friendly application that suggests to parents their baby's name.</p>
-                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-1" checked disabled /><label class="form-check-label" for="formCheck-1">Free Usage</label></div>
-                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-2" checked disabled /><label class="form-check-label" for="formCheck-2">Open Source</label></div><a class="card-link" href="#">Preview&nbsp;<i class="fas fa-external-link-alt"></i></a><a class="card-link" href="#">Github&nbsp;<i class="fab fa-github"></i></a>
-                        </div>
-                    </div>
-                    <div class="card" id="projCard">
-                        <div class="card-body">
-                            <h6 class="text-muted card-subtitle mb-2 smallHeading">Published in 2020 Q2</h6>
-                            <h4 class="card-title">Bootstrap Themes</h4>
-                            <h6 class="text-muted card-subtitle mb-2 smallHeading">Pre-made framework templates for developers</h6>
-                            <p class="card-text" id="cardPara"><span id="firstChar">V</span>arious modern web templates are ready to use for training purposes.<br /></p>
-                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-3" checked disabled /><label class="form-check-label" for="formCheck-3">Free Usage</label></div>
-                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-4" checked disabled /><label class="form-check-label" for="formCheck-4">Open Source</label></div><a class="card-link" href="#">Preview&nbsp;<i class="fas fa-external-link-alt"></i></a><a class="card-link" href="#">Github&nbsp;<i class="fab fa-github"></i></a>
+                            <div class="form-check d-xxl-flex align-items-xxl-start smallHeading"><input class="form-check-input" type="checkbox" id="formCheck-4" checked disabled /><label class="form-check-label" for="formCheck-4">Open Source</label></div>
+                            <a class="card-link" href="https://themes.1998.media/">Preview&nbsp;<i class="fas fa-external-link-alt"></i></a>
+                            <a class="card-link" href="https://github.com/1998code?tab=repositories&q=theme&type=&language=">Github&nbsp;<i class="fab fa-github"></i></a>
                         </div>
                     </div>
                 </div>
@@ -491,7 +519,7 @@ export default function Home() {
           <p class="copyright">
             Made with&nbsp;♥&nbsp;by MING.
             <br />
-            <small>Ver. 22.3.13 | Since 2020</small>
+            <small>Ver. 22.4.18 | Since 2020</small>
           </p>
         </footer><a id="topArrow" class="cd-top js-cd-top cd-top--fade-out cd-top--show" href="#0">Top</a>
 

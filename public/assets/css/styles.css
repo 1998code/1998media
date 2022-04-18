@@ -533,7 +533,7 @@ body{
 }
 
 #projDiv {
-  animation: scroll 15s linear infinite;
+  animation: scroll 10s linear infinite;
   animation-delay: 3s;
 }
 #projDiv:hover {
