@@ -661,3 +661,18 @@ body{
     padding: 15px;
   }
 }
+
+.postThumbnail {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 25px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  background: white;
+}
+
+@media (prefers-color-scheme: dark) {
+  .postThumbnail {
+    background: black;
+  }
+}

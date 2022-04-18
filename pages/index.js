@@ -439,12 +439,16 @@ export default function Home() {
                     { blogs.map(item => (
                         <Link href={item.link} target="_blank" >
                             <li class="list-group-item d-lg-flex d-xl-flex d-xxl-flex justify-content-between align-items-lg-center align-items-xl-center align-items-xxl-center" id="postItem" >
-                                <span>{item.pubDate.slice(0, 10)}<h5>{item.title}</h5></span>
-                                <small class="text-end">
-                                    #{item.categories[0].charAt(0).toUpperCase() + item.categories[0].slice(1)} &nbsp;
-                                    #{item.categories[1].charAt(0).toUpperCase() + item.categories[1].slice(1)} &nbsp;
-                                    #{item.categories[2].charAt(0).toUpperCase() + item.categories[2].slice(1)}
-                                </small>
+                                <span>
+                                    {item.pubDate.slice(0, 10)}
+                                    <h5>{item.title}</h5>
+                                    <small class="text-end">
+                                        #{item.categories[0].charAt(0).toUpperCase() + item.categories[0].slice(1)} &nbsp;
+                                        #{item.categories[1].charAt(0).toUpperCase() + item.categories[1].slice(1)} &nbsp;
+                                        #{item.categories[2].charAt(0).toUpperCase() + item.categories[2].slice(1)}
+                                    </small>
+                                </span>
+                                <img class="postThumbnail" src={item.thumbnail} / >
                             </li>
                         </Link>
                     ))}
