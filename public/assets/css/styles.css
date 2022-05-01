@@ -67,9 +67,9 @@
   .table {
     color: #ddd!important;
   }
-  tr {
-    border-style: hidden!important;
-  }
+}
+tr {
+  border-style: hidden!important;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -123,13 +123,6 @@
 @media (prefers-color-scheme: dark) {
   .dropdown-item {
     color: #313437!important;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  #skills {
-    background-color:rgba(0, 0, 0, 0.25)!important;
-    padding: 10px;
   }
 }
 
@@ -338,6 +331,12 @@
 #skills {
   background: #ffffff;
   border-radius: 15px;
+  padding: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  #skills {
+    background-color:rgba(0, 0, 0, 0.25)!important;
+  }
 }
 
 #skillsRemark {
@@ -625,25 +624,29 @@ body{
   border: none;
 }
 
+#postItem {
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.75);
+  color: #0c63e4;
+  border: none;
+}
 @media (prefers-color-scheme: dark) {
   #postItem {
     background-color: rgba(0, 0, 0, 0.25)!important;
     color: white!important;
   }
 }
-
-#postItem {
-  cursor: pointer;
-  background-color: #ffffff;
-  color: #0c63e4;
-  border: none;
-}
 #postItem:hover {
   transform: scale(1.05);
   transition: all 0.3s ease-in;
   border-radius: 25px;
-  border: 1px solid white;
+  border: 1px solid #0c63e4;
   z-index: 2;
+}
+@media (prefers-color-scheme: dark) {
+  #postItem:hover {
+    border: 1px solid white;
+  }
 }
 
 #postItemE {

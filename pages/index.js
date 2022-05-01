@@ -523,7 +523,7 @@ export default function Home() {
           <p class="copyright">
             Made with&nbsp;♥&nbsp;by MING.
             <br />
-            <small>Ver. 22.4.18 | Since 2020</small>
+            <small>Ver. 22.05.01 | Since 2020</small>
           </p>
         </footer><a id="topArrow" class="cd-top js-cd-top cd-top--fade-out cd-top--show" href="#0">Top</a>
 
