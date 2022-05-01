@@ -202,9 +202,14 @@
 }
 
 #wwdc21 {
-  background: -webkit-linear-gradient(#ffffff, #00ffc2);
+  background: -webkit-linear-gradient(#58e5c4, #0548e6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+@media (prefers-color-scheme: dark) {
+  #wwdc21 {
+    background: -webkit-linear-gradient(#ffffff, #00ffc2);
+  }
 }
 
 #arrowDown {
@@ -675,4 +680,8 @@ body{
   .postThumbnail {
     background: black;
   }
+}
+
+.container {
+  max-width: 75%
 }
