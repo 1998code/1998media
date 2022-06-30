@@ -235,9 +235,9 @@ export default function Home() {
         <div id="achievements" className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             <div className="max-w-7xl mx-auto text-left">
-              <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+              <a className="text-3xl font-extrabold text-gray-900 sm:text-4xl" href="#achievements">
                 Trusted by customers from over 175 countries and regions
-              </h2>
+              </a>
               <p className="mt-3 text-xl text-gray-500 sm:mt-4">
                 People love my apps, and I'd believe you will, too.
               </p>
@@ -278,7 +278,7 @@ export default function Home() {
         <div id="skills" className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
           <div className="relative max-w-7xl mx-auto">
             <div className="text-left flex">
-              <h2 className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl">Skills & Languages</h2>
+              <a className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl" href="#skills">Skills & Languages</a>
             </div>
             <div className="mt-10">
               <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">Softwares</h2>
@@ -356,10 +356,10 @@ export default function Home() {
           </div>
         </div>
 
-        <div id="exp" className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
+        <div id="experience" className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
           <div className="relative max-w-7xl mx-auto">
             <div className="text-left flex">
-              <h2 className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl">Experience</h2>
+              <a className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl" href="#experience">Experience</a>
               <p className="mt-3 max-w-2xl ml-auto text-xl text-gray-500 sm:mt-4">
                 Works and society contribution.
               </p>
@@ -405,7 +405,7 @@ export default function Home() {
         <div id="blog" className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
           <div className="relative max-w-7xl mx-auto">
             <div className="text-left flex">
-              <h2 className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl">Blog</h2>
+              <a className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl" href="#blog">Blog</a>
               <p className="mt-3 max-w-2xl ml-auto text-xl text-gray-500 sm:mt-4">
                 Find out the latest posts and tutorials.
               </p>
@@ -450,7 +450,7 @@ export default function Home() {
         <div id="faq" className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:py-20 lg:px-8">
           <div className="md:grid md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
             <div>
-              <h2 className="text-3xl font-extrabold text-gray-900">Ask</h2>
+              <a className="text-3xl font-extrabold text-gray-900" href="#faq">Ask</a>
               <p className="mt-4 text-lg text-gray-500">
                 Cannot find what you are looking for?
                 <br />
