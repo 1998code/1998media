@@ -5,17 +5,28 @@ export default function Home() {
   const [blogs, setBlogs] = useState([]);
 
   useEffect(() => {
+    getBlogData()
+    window.addEventListener('resize', ()=> {
+      getBlogData()
+    })
+  }, [])
+
+  function getBlogData() {
     fetch("https://api.allorigins.win/raw?url=https://api.rss2json.com/v1/api.json?rss_url=https://api.allorigins.win/raw?url=https://medium.com/feed/@1998design")
       .then(res => res.json())
       .then(
         (data) => {
-          setBlogs(data.items.slice(0, 9));
+          if (window.innerWidth <= 1024) {
+            setBlogs(data.items);
+          } else {
+            setBlogs(data.items.slice(0, 9));
+          }
         },
         (error) => {
           console.log(error)
         }
       )
-  }, [])
+  }
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
