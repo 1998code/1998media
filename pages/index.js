@@ -566,7 +566,7 @@ export default function Home() {
                   <a href="https://vercel.com/?utm_source=1998code&utm_campaign=oss">
                     <img
                       className="h-12"
-                      src="https://1998.media/assets/img/powered-by-vercel.svg?h=91084ef203023a391277bb16f564cc4f"
+                      src="/logos/Vercel.svg"
                       alt="vercal"
                     />
                   </a>
