@@ -556,7 +556,7 @@ export default function Home() {
                   </p>
                   <a
                     className="block w-full py-3 px-5 text-center bg-white border border-transparent rounded-md shadow-md text-base font-medium text-orange-700 hover:bg-gray-50 sm:inline-block sm:w-auto"
-                    href="#"
+                    href="mailto:hi@1998.media"
                   >
                     Email
                   </a>
