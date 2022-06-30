@@ -358,9 +358,9 @@ export default function Home() {
 
         <div id="experience" className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
           <div className="relative max-w-7xl mx-auto">
-            <div className="text-left flex">
-              <a className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl" href="#experience">Experience</a>
-              <p className="mt-3 max-w-2xl ml-auto text-xl text-gray-500 sm:mt-4">
+            <div className="text-left flex flex-wrap">
+              <a className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl grow" href="#experience">Experience</a>
+              <p className="mt-2 max-w-2xl text-xl text-gray-500">
                 Works and society contribution.
               </p>
             </div>
@@ -404,9 +404,9 @@ export default function Home() {
 
         <div id="blog" className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
           <div className="relative max-w-7xl mx-auto">
-            <div className="text-left flex">
-              <a className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl" href="#blog">Blog</a>
-              <p className="mt-3 max-w-2xl ml-auto text-xl text-gray-500 sm:mt-4">
+            <div className="text-left flex flex-wrap">
+              <a className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl grow" href="#blog">Blog</a>
+              <p className="mt-2 max-w-2xl text-xl text-gray-500">
                 Find out the latest posts and tutorials.
               </p>
             </div>
@@ -478,7 +478,7 @@ export default function Home() {
           <div className="max-w-7xl mx-auto bg-orange-600 lg:bg-transparent lg:px-8">
             <div className="lg:grid lg:grid-cols-12">
               <div className="relative z-10 lg:col-start-1 lg:row-start-1 lg:col-span-4 lg:py-16 lg:bg-transparent">
-                <div className="max-w-md mx-auto px-4 sm:pt-8 sm:max-w-3xl sm:px-6 lg:max-w-none lg:p-0">
+                <div className="max-w-md mx-auto px-4 pt-8 sm:max-w-3xl sm:px-6 lg:max-w-none lg:p-0">
                   <div className="aspect-w-10 aspect-h-6 sm:aspect-w-1 sm:aspect-h-1 lg:aspect-w-1">
                     <img
                       className="object-cover object-center rounded-3xl shadow-2xl"
