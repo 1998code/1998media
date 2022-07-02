@@ -67,7 +67,7 @@ export default function Experience() {
       title: 'Student Assistant',
       type: 'Part-time',
       location: '🇭🇰 HONG KONG',
-      description: 'Develop website & design booklet for College\'s Language Scolar Program.',
+      description: 'Develop website & design booklet for University\'s Language Scolar Program.',
       date: '2020-2021',
       textColor: 'text-pink-600',
       bgColor: 'bg-pink-100'
