@@ -17,7 +17,7 @@ export default function Home() {
       <Head>
         <title>1998 MEDIA (Official Website)</title>
         <meta name="description" content="The Official Website of 1998 MEDIA." />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" />
       </Head>
       <main>
         <Header />

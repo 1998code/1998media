@@ -17,7 +17,7 @@ export default function Home() {
       <Head>
         <title>1998 MEDIA (官方網站)</title>
         <meta name="description" content="1998 MEDIA 唯一官方網站。" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" />
       </Head>
       <main>
         <Header />
