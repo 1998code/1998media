@@ -61,8 +61,8 @@ export default function Footer() {
               </a>
             ))}
           </div>
-          <p className="mt-8 text-center text-base text-gray-400">Made with&nbsp;♥&nbsp;by MING.</p>
-          <p className="mt-1 text-center text-base text-gray-400">Ver. 22.06.19 | Since 2020</p>
+          <p className="mt-8 text-center text-base text-gray-400">Made with&nbsp;♥&nbsp;by MING</p>
+          <p className="mt-1 text-center text-base text-gray-400">Ver. 22.7.2 | Since 2020 | Open Source.</p>
         </div>
     )
 }
