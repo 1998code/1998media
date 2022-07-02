@@ -1,0 +1,73 @@
+import { useState, useEffect } from 'react'
+
+export default function Blog() {
+  const [blogs, setBlogs] = useState([])
+  useEffect(() => {
+    getBlogData()
+    window.addEventListener('resize', () => {
+      getBlogData()
+    })
+  }, [])
+  function getBlogData() {
+    fetch("https://api.allorigins.win/raw?url=https://api.rss2json.com/v1/api.json?rss_url=https://api.allorigins.win/raw?url=https://medium.com/feed/@1998design")
+      .then(res => res.json())
+      .then(
+        (data) => {
+          if (window.innerWidth <= 1024) {
+            setBlogs(data.items);
+          } else {
+            setBlogs(data.items.slice(0, 9));
+          }
+        },
+        (error) => {
+          console.log(error)
+        }
+      )
+  }
+  return (
+    <div id="blog" className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
+      <div className="relative max-w-7xl mx-auto">
+        <div className="text-left flex flex-wrap">
+          <a className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl grow" href="#blog">Blog</a>
+          <p className="mt-2 max-w-2xl text-xl text-gray-500">
+            Find out the latest posts and tutorials.
+          </p>
+        </div>
+        <div className="mt-8 mx-auto grid gap-5 md:grid-cols-2 lg:grid-cols-3 lg:max-w-none">
+          {blogs.map(post => (
+            <div key={post.title} className="flex flex-col rounded-lg overflow-hidden bg-white transform transition duration-500 hover:scale-105">
+              <div className="flex-shrink-0">
+                <a href={post.link}>
+                  <img className="h-48 w-full object-cover" src={post.thumbnail} alt="" />
+                </a>
+              </div>
+              <div className="flex-1 p-6 flex flex-col justify-between">
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-indigo-600 space-x-2">
+                    <a href={'https://medium.com/search?q=' + post.categories[0].charAt(0).toUpperCase() + post.categories[0].slice(1)} className="hover:underline">
+                      #{post.categories[0].charAt(0).toUpperCase() + post.categories[0].slice(1)}
+                    </a>
+                    <a href={'https://medium.com/search?q=' + post.categories[1].charAt(0).toUpperCase() + post.categories[1].slice(1)} className="hover:underline">
+                      #{post.categories[1].charAt(0).toUpperCase() + post.categories[1].slice(1)}
+                    </a>
+                    <a href={'https://medium.com/search?q=' + post.categories[2].charAt(0).toUpperCase() + post.categories[2].slice(1)} className="hover:underline">
+                      #{post.categories[2].charAt(0).toUpperCase() + post.categories[2].slice(1)}
+                    </a>
+                  </p>
+                  <a href={post.link} className="block mt-2">
+                    <p className="text-xl font-semibold text-gray-900">{post.title}</p>
+                  </a>
+                </div>
+                <div className="mt-3 flex items-center">
+                  <div className="flex-shrink-0 text-gray-400">
+                    <time dateTime={post.pubDate.slice(0, 10)}>{post.pubDate.slice(0, 10)}</time>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
