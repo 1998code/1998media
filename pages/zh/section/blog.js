@@ -30,7 +30,7 @@ export default function Blog() {
         <div className="text-left flex flex-wrap">
           <a className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl grow" href="#blog">Blog</a>
           <p className="mt-2 max-w-2xl text-xl text-gray-500">
-            Find out the latest posts and tutorials.
+            查找最新的文章和教程（只提供英語版本）。
           </p>
         </div>
         <div className="mt-8 mx-auto grid gap-5 md:grid-cols-2 lg:grid-cols-3 lg:max-w-none">

@@ -3,7 +3,7 @@ export default function Credits() {
     <div id="credits" className="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
       <div className="lg:grid lg:grid-cols-2 lg:gap-8">
         <h2 className="max-w-md mx-auto text-3xl font-extrabold text-indigo-900 text-center lg:max-w-xl lg:text-left">
-          Special thanks to partners:
+          特別感謝合作夥伴：
         </h2>
         <div className="flow-root self-center mt-8 lg:mt-0">
           <div className="-mt-4 -ml-8 flex flex-wrap justify-between lg:-ml-4">

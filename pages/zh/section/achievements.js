@@ -34,7 +34,7 @@ export default function Achievements() {
                 <div className="flex flex-col border-t border-gray-100 p-6 text-center sm:border-0 sm:border-l">
                   <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">Since 2020</dt>
                   <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">全球不同類別的付費應用</dt>
-                  <dd className="order-1 text-5xl font-extrabold text-teal-600">前一百</dd>
+                  <dd className="order-1 text-5xl font-extrabold text-teal-600">首一百</dd>
                 </div>
               </dl>
             </div>
