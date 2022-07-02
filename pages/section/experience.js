@@ -1,32 +1,49 @@
 export default function Experience() {
   const positions = [
     {
+      title: 'QuestDB Translator',
+      type: 'Volunteer',
+      location: '🌐 Remote, United Kingdom',
+      description: 'Contribute open source database project.',
+      date: '2022',
+      textColor: 'text-green-600',
+      bgColor: 'bg-green-100'
+    },
+    {
       title: 'Software Engineer',
       type: 'Full-time',
       location: '🇭🇰 HONG KONG',
       description: 'Web + iOS Development',
-      date: '2021-',
+      date: '2021-NOW',
+      textColor: 'text-blue-600',
+      bgColor: 'bg-blue-100'
     },
     {
       title: 'Unsplash Artists',
       type: 'Freelance',
       location: '🌐 Remote',
       description: '3D Design + Photography',
-      date: '2022-',
+      date: '2022-NOW',
+      textColor: 'text-orange-600',
+      bgColor: 'bg-orange-100'
     },
     {
       title: 'Articles Writer',
       type: 'Freelance',
       location: '🌐 Remote',
       description: 'Powerful tutorial + Writing',
-      date: '2020-',
+      date: '2020-NOW',
+      textColor: 'text-orange-600',
+      bgColor: 'bg-orange-100'
     },
     {
       title: 'Apple Developer',
       type: 'Freelance',
       location: '🌐 Remote',
       description: 'Build and publish app for iOS, iPadOS, watchOS, and macOS platforms',
-      date: '2020-',
+      date: '2020-NOW',
+      textColor: 'text-orange-600',
+      bgColor: 'bg-orange-100'
     },
     {
       title: 'Student Assistant',
@@ -34,6 +51,8 @@ export default function Experience() {
       location: '🇭🇰 HONG KONG',
       description: 'Data analytics and visualisation.',
       date: '2020-2021',
+      textColor: 'text-pink-600',
+      bgColor: 'bg-pink-100'
     },
     {
       title: 'Student Developer',
@@ -41,6 +60,8 @@ export default function Experience() {
       location: '🇭🇰 HONG KONG',
       description: 'Participate in Artificial Intelligence (A.I.) and Natural Language Processing (N.L.P) research field.',
       date: '2020-2021',
+      textColor: 'text-pink-600',
+      bgColor: 'bg-pink-100'
     },
     {
       title: 'Student Assistant',
@@ -48,6 +69,8 @@ export default function Experience() {
       location: '🇭🇰 HONG KONG',
       description: 'Develop website & design booklet for College\'s Language Scolar Program.',
       date: '2020-2021',
+      textColor: 'text-pink-600',
+      bgColor: 'bg-pink-100'
     },
     {
       title: 'Atlassian Translator',
@@ -55,6 +78,8 @@ export default function Experience() {
       location: '🌐 Remote, Australia',
       description: 'BitBucket.org Team',
       date: '2020-2021',
+      textColor: 'text-green-600',
+      bgColor: 'bg-green-100'
     },
     {
       title: 'StopCovid19Tokyo Translator',
@@ -62,22 +87,29 @@ export default function Experience() {
       location: '🌐 Remote, Japan',
       description: 'Contribute open source project with Tokyo Metropolitan Government and Code of Japan Team.',
       date: '2020-2021',
+      textColor: 'text-green-600',
+      bgColor: 'bg-green-100'
     },
     {
       title: 'Designer',
       type: 'Freelance',
       location: '🌐 Remote',
       description: 'Start Freelance works on different platforms (Adobe Stock, Behance, Dribbble)',
-      date: '2019-',
+      date: '2019-NOW',
+      textColor: 'text-orange-600',
+      bgColor: 'bg-orange-100'
     },
   ]
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(' ')
+  }
   return (
     <div id="experience" className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
       <div className="relative max-w-7xl mx-auto">
         <div className="text-left flex flex-wrap">
           <a className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl grow" href="#experience">Experience</a>
           <p className="mt-2 max-w-2xl text-xl text-gray-500">
-            Works and society contribution.
+            Works and society contributions.
           </p>
         </div>
         <div className="bg-white shadow overflow-hidden sm:rounded-md mt-8">
@@ -87,9 +119,9 @@ export default function Experience() {
                 <a href="#" className="block hover:bg-gray-50">
                   <div className="px-4 py-4 sm:px-6">
                     <div className="flex items-center justify-between">
-                      <p className={"text-sm font-medium truncate " + (position.type == "Full-time" || position.type == "Volunteer" ? "text-green-600" : "text-sky-600")}>{position.title}</p>
+                      <p className={classNames(position.textColor, 'text-sm font-medium truncate')}>{position.title}</p>
                       <div className="ml-2 flex-shrink-0 flex">
-                        <p className={"px-2 inline-flex text-xs leading-5 font-semibold rounded-full " + (position.type == "Full-time" || position.type == "Volunteer" ? "text-green-800 bg-green-100" : "text-sky-800 bg-sky-100")}>
+                        <p className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${position.textColor} ${position.bgColor}`}>
                           {position.type}
                         </p>
                       </div>
