@@ -1,12 +1,12 @@
 export default function Faq() {
   const faqs = [
     {
-      question: 'How to support your projects?',
+      question: '如何支持您的項目？',
       answer:
-        'Github Sponsorship: https://github.com/sponsors/1998code',
+        'Github 贊助: https://github.com/sponsors/1998code',
     },
     {
-      question: 'Where does your Open Source Software (OSS) project host?',
+      question: '您的開源軟件 (OSS) 項目在哪里托管？',
       answer:
         'Github: https://github.com/1998code | Vercel: https://vercel.com',
     },
@@ -17,12 +17,11 @@ export default function Faq() {
         <div>
           <a className="text-3xl font-extrabold text-gray-900" href="#faq">Ask</a>
           <p className="mt-4 text-lg text-gray-500">
-            Cannot find what you are looking for?
+            無法找到您想要的？
             <br />
             <a href="#contact" className="font-medium text-orange-600 hover:text-orange-500">
-              Contact
-            </a>{' '}
-            now.
+              現在聯繫
+            </a>
           </p>
         </div>
         <div className="mt-12 lg:mt-0 lg:col-span-2">

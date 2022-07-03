@@ -65,16 +65,16 @@ export default function Contact() {
             </div>
             <div className="relative max-w-md mx-auto py-12 px-4 space-y-6 sm:max-w-3xl sm:py-16 sm:px-6 lg:max-w-none lg:p-0 lg:col-start-4 lg:col-span-6">
               <h2 className="text-3xl font-extrabold text-white" id="join-heading">
-                Contact
+                聯繫
               </h2>
               <p className="text-lg text-white">
-                Email or Chat Available. Response in 72 hours.
+                請使用電子郵件。 72 小時內回覆。
               </p>
               <a
                 className="block w-full py-3 px-5 text-center bg-white border border-transparent rounded-md shadow-md text-base font-medium text-orange-700 hover:bg-gray-50 sm:inline-block sm:w-auto"
                 href="mailto:hi@1998.media"
               >
-                Email
+                電郵
               </a>
             </div>
           </div>
