@@ -62,7 +62,7 @@ export default function Footer() {
             ))}
           </div>
           <p className="mt-8 text-center text-base text-gray-400">MING 用♥製作</p>
-          <p className="mt-1 text-center text-base text-gray-400">版本 22.7.2 | 自 2020 年起 | 完全開源。</p>
+          <p className="mt-1 text-center text-base text-gray-400">版本 22.7.6 | 自 2020 年起 | 完全開源。</p>
         </div>
     )
 }

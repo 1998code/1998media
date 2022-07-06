@@ -5,6 +5,7 @@ import About from './section/about'
 import Achievements from './section/achievements'
 import Skills from './section/skills'
 import Experience from './section/experience'
+import Project from './section/project'
 import Blog from './section/blog'
 import Faq from './section/faq'
 import Contact from './section/contact'
@@ -25,6 +26,7 @@ export default function Home() {
         <Achievements />
         <Skills />
         <Experience />
+        <Project />
         <Blog />
         <Faq />
         <Contact />
