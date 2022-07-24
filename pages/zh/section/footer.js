@@ -1,8 +1,8 @@
 export default function Footer() {
     const navigation = {
         main: [
-          { name: 'About', href: '#about' },
-          { name: 'Blog', href: '#blog' },
+          { name: '關於', href: '#about' },
+          { name: '文章', href: '#blog' },
         ],
         social: [
           {

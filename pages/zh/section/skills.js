@@ -34,13 +34,13 @@ export default function Skills() {
     { name: 'Bootstrap 5', initials: 'CSS', href: '#', bgColor: 'bg-indigo-600' },
   ]
   const speakWrites = [
-    { name: 'Cantonese (Chinese Traditional)', initials: 'Proficient', href: '#', bgColor: 'bg-green-600' },
-    { name: 'English', initials: 'Proficient', href: '#', bgColor: 'bg-green-600' },
+    { name: 'Cantonese (Chinese Traditional)', initials: '熟練', href: '#', bgColor: 'bg-green-600' },
+    { name: 'English', initials: '熟練', href: '#', bgColor: 'bg-green-600' },
 
-    { name: 'Mandarin (Chinese Simplified)', initials: 'Fluent', href: '#', bgColor: 'bg-blue-600' },
-    { name: 'Korean  (Passed the Test of Proficiency in Korean in 2018)', initials: 'Fluent', href: '#', bgColor: 'bg-blue-600' },
+    { name: 'Mandarin (Chinese Simplified)', initials: '流利', href: '#', bgColor: 'bg-blue-600' },
+    { name: 'Korean  (Passed the Test of Proficiency in Korean in 2018)', initials: '流利', href: '#', bgColor: 'bg-blue-600' },
 
-    { name: 'Japanese', initials: 'Basic', href: '#', bgColor: 'bg-orange-600' },
+    { name: 'Japanese', initials: '基本', href: '#', bgColor: 'bg-orange-600' },
   ]
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -49,10 +49,10 @@ export default function Skills() {
     <div id="skills" className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
       <div className="relative max-w-7xl mx-auto">
         <div className="text-left flex">
-          <a className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl" href="#skills">Skills & Languages</a>
+          <a className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl" href="#skills">技能和語言</a>
         </div>
         <div className="mt-10">
-          <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">Softwares</h2>
+          <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">軟體</h2>
           <ul role="list" className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {softwares.map((software) => (
               <li key={software.name} className="col-span-1 flex shadow-sm rounded-md">
@@ -76,7 +76,7 @@ export default function Skills() {
           </ul>
         </div>
         <div className="mt-10">
-          <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">Languages & Technologies</h2>
+          <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">技術語言</h2>
           <ul role="list" className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {languages.map((language) => (
               <li key={language.name} className="col-span-1 flex shadow-sm rounded-md">
@@ -100,7 +100,7 @@ export default function Skills() {
           </ul>
         </div>
         <div className="mt-10">
-          <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">Speak & Write</h2>
+          <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">說話和寫作</h2>
           <ul role="list" className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2">
             {speakWrites.map((speakWrite) => (
               <li key={speakWrite.name} className="col-span-1 flex shadow-sm rounded-md">
@@ -123,7 +123,7 @@ export default function Skills() {
             ))}
           </ul>
         </div>
-        <p className="mt-10 text-sm text-gray-500">*Random sort - does not mean the order of proficient level</p>
+        <p className="mt-10 text-sm text-gray-500">*隨機排序-並不意味著熟練水準的順序</p>
       </div>
     </div>
   )

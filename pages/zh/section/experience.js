@@ -107,9 +107,9 @@ export default function Experience() {
     <div id="experience" className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
       <div className="relative max-w-7xl mx-auto">
         <div className="text-left flex flex-wrap">
-          <a className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl grow" href="#experience">Experience</a>
+          <a className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl grow" href="#experience">經驗</a>
           <p className="mt-2 max-w-2xl text-xl text-gray-500">
-            Works and society contributions.
+            工作和社會貢獻。
           </p>
         </div>
         <div className="bg-white shadow overflow-hidden sm:rounded-md mt-8">
