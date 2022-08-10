@@ -1,3 +1,5 @@
+import Image from "next/future/image"
+
 export default function About() {
   return (
     <div id="about" className="max-w-7xl mx-auto py-16 md:mb-20 px-4 sm:py-24 sm:px-6 lg:px-8 bg-orange-200 bg-opacity-50">
@@ -10,10 +12,10 @@ export default function About() {
         <div className="flow-root self-center mt-8 lg:mt-0">
           <div className="-mt-4 -ml-8 flex flex-wrap lg:-ml-4">
             <div className="mt-4 ml-8 flex flex-grow flex-shrink-0 justify-center lg:flex-grow-0 lg:ml-4">
-              <img className="h-24" src="/logos/CityU.png" alt="CityU" />
+              <Image className="h-24" src="/logos/CityU.png" alt="CityU" />
             </div>
             <div className="mt-4 ml-8 flex flex-grow flex-shrink-0 justify-center lg:flex-grow-0 lg:ml-4">
-              <img className="h-24" src="/logos/PolyU.webp" alt="PolyU" />
+              <Image className="h-24" src="/logos/PolyU.webp" alt="PolyU" />
             </div>
           </div>
         </div>

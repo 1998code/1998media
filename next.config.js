@@ -9,6 +9,7 @@ const nextConfig = {
           hostname: '**.1998.media',
         },
       ],
+      allowFutureImage: true,
     },
   },
 }
