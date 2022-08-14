@@ -2,7 +2,7 @@ export default function Experience() {
   const positions = [
     {
       title: 'QuestDB Translator',
-      type: 'Volunteer',
+      type: '志願者',
       location: '🌐 Remote, United Kingdom',
       description: 'Contribute open source database project.',
       date: '2022',
@@ -11,8 +11,8 @@ export default function Experience() {
     },
     {
       title: 'Software Engineer',
-      type: 'Full-time',
-      location: '🇭🇰 HONG KONG',
+      type: '全職',
+      location: '🇭🇰 香港',
       description: 'Web + iOS Development',
       date: '2021-NOW',
       textColor: 'text-blue-600',
@@ -20,7 +20,7 @@ export default function Experience() {
     },
     {
       title: 'Unsplash Artists',
-      type: 'Freelance',
+      type: '自由職業者',
       location: '🌐 Remote',
       description: '3D Design + Photography',
       date: '2022-NOW',
@@ -29,7 +29,7 @@ export default function Experience() {
     },
     {
       title: 'Articles Writer',
-      type: 'Freelance',
+      type: '自由職業者',
       location: '🌐 Remote',
       description: 'Powerful tutorial + Writing',
       date: '2020-NOW',
@@ -38,7 +38,7 @@ export default function Experience() {
     },
     {
       title: 'Apple Developer',
-      type: 'Freelance',
+      type: '自由職業者',
       location: '🌐 Remote',
       description: 'Build and publish app for iOS, iPadOS, watchOS, and macOS platforms',
       date: '2020-NOW',
@@ -47,8 +47,8 @@ export default function Experience() {
     },
     {
       title: 'Student Assistant',
-      type: 'Part-time',
-      location: '🇭🇰 HONG KONG',
+      type: '兼職',
+      location: '🇭🇰 香港',
       description: 'Data analytics and visualisation.',
       date: '2020-2021',
       textColor: 'text-pink-600',
@@ -56,8 +56,8 @@ export default function Experience() {
     },
     {
       title: 'Student Developer',
-      type: 'Part-time',
-      location: '🇭🇰 HONG KONG',
+      type: '兼職',
+      location: '🇭🇰 香港',
       description: 'Participate in Artificial Intelligence (A.I.) and Natural Language Processing (N.L.P) research field.',
       date: '2020-2021',
       textColor: 'text-pink-600',
@@ -65,8 +65,8 @@ export default function Experience() {
     },
     {
       title: 'Student Assistant',
-      type: 'Part-time',
-      location: '🇭🇰 HONG KONG',
+      type: '兼職',
+      location: '🇭🇰 香港',
       description: 'Develop website & design booklet for University\'s Language Scolar Program.',
       date: '2020-2021',
       textColor: 'text-pink-600',
@@ -74,7 +74,7 @@ export default function Experience() {
     },
     {
       title: 'Atlassian Translator',
-      type: 'Volunteer',
+      type: '志願者',
       location: '🌐 Remote, Australia',
       description: 'BitBucket.org Team',
       date: '2020-2021',
@@ -83,7 +83,7 @@ export default function Experience() {
     },
     {
       title: 'StopCovid19Tokyo Translator',
-      type: 'Volunteer',
+      type: '志願者',
       location: '🌐 Remote, Japan',
       description: 'Contribute open source project with Tokyo Metropolitan Government and Code of Japan Team.',
       date: '2020-2021',
@@ -92,7 +92,7 @@ export default function Experience() {
     },
     {
       title: 'Designer',
-      type: 'Freelance',
+      type: '自由職業者',
       location: '🌐 Remote',
       description: 'Start Freelance works on different platforms (Adobe Stock, Behance, Dribbble)',
       date: '2019-NOW',
@@ -107,7 +107,7 @@ export default function Experience() {
     <div id="experience" className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
       <div className="relative max-w-7xl mx-auto">
         <div className="text-left flex flex-wrap">
-          <a className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl grow" href="#experience">經驗</a>
+          <a className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl grow" href="#experience">經驗 <i class="fa-regular fa-flask"></i></a>
           <p className="mt-2 max-w-2xl text-xl text-gray-500">
             工作和社會貢獻。
           </p>

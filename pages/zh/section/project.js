@@ -28,7 +28,7 @@ export default function Github() {
     <div id="project" className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
       <div className="relative max-w-7xl mx-auto">
         <div className="text-left flex flex-wrap">
-          <a className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl grow" href="#project">專案</a>
+          <a className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl grow" href="#project">開源專案</a>
           <p className="mt-2 max-w-2xl text-xl text-gray-500">
             查找最新項目（只提供英語版本）。
           </p>
