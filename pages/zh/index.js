@@ -19,6 +19,7 @@ export default function Home() {
         <title>1998 MEDIA (官方網站)</title>
         <meta name="description" content="1998 MEDIA 唯一官方網站。" />
         <link rel="icon" href="/favicon.png" />
+        <link rel="stylesheet" href="https://cdn.1998.media/css/sfprodisplay.css" />
         <link rel="stylesheet" href="https://cdn.1998.media/css/fontawesome.css" />
       </Head>
       <main>
