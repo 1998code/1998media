@@ -7,7 +7,7 @@ export default function Achievements() {
             深受超過 175 個國家和地區客戶的信賴 <i class="fa-regular fa-earth-americas"></i>
           </a>
           <p className="mt-3 text-xl text-gray-500 sm:mt-4">
-            人們喜歡我的應用程序，我相信你也會喜歡的。<i class="fa-regular fa-hand-holding-heart"></i>
+            人們喜歡我的應用程式，我相信你也會喜歡的。<i class="fa-regular fa-hand-holding-heart"></i>
           </p>
         </div>
       </div>
