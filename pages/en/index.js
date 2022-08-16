@@ -13,6 +13,14 @@ import Credits from './section/credits'
 import Footer from './section/footer'
 
 export default function Home() {
+  fetch ('/api/newrelic')
+    .then (res => res.json())
+    .then (data => {
+      console.log(data)
+    }).catch (err => {
+      console.log(err)
+    }
+  )
   return (
     <div>
       <Head>

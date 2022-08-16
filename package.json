@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@tailwindcss/aspect-ratio": "^0.4.0",
+    "newrelic": "^9.0.0",
     "next": "^12.2.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
