@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import Image from "next/future/image"
 
 export default function Blog() {
   const [blogs, setBlogs] = useState([])
@@ -37,24 +38,24 @@ export default function Blog() {
           {blogs.map(post => (
             <div key={post.title} className="flex flex-col rounded-lg overflow-hidden bg-white transform transition duration-500 hover:scale-105">
               <div className="flex-shrink-0">
-                <a href={post.link}>
-                  <img className="h-48 w-full object-cover" src={post.thumbnail} alt="" />
+                <a href={post.link} target="_blank">
+                  <Image className="h-48 w-full object-cover" src={post.thumbnail} alt={post.title} unoptimized={true}  />
                 </a>
               </div>
               <div className="flex-1 p-6 flex flex-col justify-between">
                 <div className="flex-1">
                   <p className="text-sm font-medium text-indigo-600 space-x-2">
-                    <a href={'https://medium.com/search?q=' + post.categories[0].charAt(0).toUpperCase() + post.categories[0].slice(1)} className="hover:underline">
+                    <a href={'https://medium.com/search?q=' + post.categories[0].charAt(0).toUpperCase() + post.categories[0].slice(1)} className="hover:underline" target="_blank">
                       #{post.categories[0].charAt(0).toUpperCase() + post.categories[0].slice(1)}
                     </a>
-                    <a href={'https://medium.com/search?q=' + post.categories[1].charAt(0).toUpperCase() + post.categories[1].slice(1)} className="hover:underline">
+                    <a href={'https://medium.com/search?q=' + post.categories[1].charAt(0).toUpperCase() + post.categories[1].slice(1)} className="hover:underline" target="_blank">
                       #{post.categories[1].charAt(0).toUpperCase() + post.categories[1].slice(1)}
                     </a>
-                    <a href={'https://medium.com/search?q=' + post.categories[2].charAt(0).toUpperCase() + post.categories[2].slice(1)} className="hover:underline">
+                    <a href={'https://medium.com/search?q=' + post.categories[2].charAt(0).toUpperCase() + post.categories[2].slice(1)} className="hover:underline" target="_blank">
                       #{post.categories[2].charAt(0).toUpperCase() + post.categories[2].slice(1)}
                     </a>
                   </p>
-                  <a href={post.link} className="block mt-2">
+                  <a href={post.link} className="block mt-2" target="_blank">
                     <p className="text-xl font-semibold text-gray-900">{post.title}</p>
                   </a>
                 </div>

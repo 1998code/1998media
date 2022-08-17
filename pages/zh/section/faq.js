@@ -2,13 +2,22 @@ export default function Faq() {
   const faqs = [
     {
       question: '如何支持您的項目？',
-      answer:
-        'Github 贊助: https://github.com/sponsors/1998code',
+      answer: (props) => (
+        <a href="https://github.com/sponsors/1998code">
+          Github Sponsorship
+          <i className="ml-1 fa fa-external-link fa-sm"></i>
+        </a>
+      ),
     },
     {
       question: '您的開源軟件 (OSS) 項目在哪里托管？',
-      answer:
-        'Github: https://github.com/1998code | Vercel: https://vercel.com',
+      answer: (props) => (
+        <span>
+          <a href="https://github.com/1998code">Github<i className="ml-1 fa fa-external-link fa-sm"></i></a> 
+          <i class="fa-solid fa-pipe px-3"></i>
+          <a href="https://vercel.com">Vercel<i className="ml-1 fa fa-external-link fa-sm"></i></a>
+        </span>
+      ),
     },
   ]
   return (
@@ -29,7 +38,7 @@ export default function Faq() {
             {faqs.map((faq) => (
               <div key={faq.question}>
                 <dt className="text-lg leading-6 font-medium text-gray-900">{faq.question}</dt>
-                <dd className="mt-2 text-base text-gray-500">{faq.answer}</dd>
+                <dd className="mt-2 text-base text-gray-500"><faq.answer /></dd>
               </div>
             ))}
           </dl>
