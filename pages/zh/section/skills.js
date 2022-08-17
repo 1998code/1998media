@@ -1,46 +1,46 @@
 export default function Skills() {
   const softwares = [
-    { name: 'Adobe Creative Cloud', initials: 'CC', href: '#', bgColor: 'bg-red-600' },
-    { name: 'Figma', initials: 'Fi', href: '#', bgColor: 'bg-black' },
-    { name: 'Framer', initials: 'Fr', href: '#', bgColor: 'bg-sky-500' },
-    { name: 'Sketch', initials: 'Sk', href: '#', bgColor: 'bg-orange-400' },
+    { name: 'Adobe Creative Cloud', icons: 'CC', href: '#', bgColor: 'bg-red-600' },
+    { name: 'Figma', icons: 'fa-figma', href: '#', bgColor: 'bg-black' },
+    { name: 'Framer', icons: 'fa-sketch', href: '#', bgColor: 'bg-sky-500' },
+    { name: 'Sketch', icons: 'Sk', href: '#', bgColor: 'bg-orange-400' },
 
-    { name: 'Apple Xcode', initials: 'AX', href: '#', bgColor: 'bg-sky-500' },
-    { name: 'Apple iWork', initials: 'Ai', href: '#', bgColor: 'bg-green-500' },
-    { name: 'Microsoft Office', initials: 'MO', href: '#', bgColor: 'bg-teal-500' },
-    { name: 'Google Worksuite', initials: 'GW', href: '#', bgColor: 'bg-blue-500' },
+    { name: 'Apple Xcode', icons: 'fa-apple', href: '#', bgColor: 'bg-black' },
+    { name: 'Apple iWork', icons: 'fa-apple', href: '#', bgColor: 'bg-black' },
+    { name: 'Microsoft Office', icons: 'fa-microsoft', href: '#', bgColor: 'bg-teal-500' },
+    { name: 'Google Worksuite', icons: 'fa-google', href: '#', bgColor: 'bg-blue-500' },
 
-    { name: 'Apple Final Cut Pro', initials: 'FCP', href: '#', bgColor: 'bg-yellow-500' },
-    { name: 'Unity', initials: 'Un', href: '#', bgColor: 'bg-blue-500' },
-    { name: 'Cinema 4D', initials: 'C4D', href: '#', bgColor: 'bg-purple-500' },
-    { name: 'Shapr3D', initials: 'S3D', href: '#', bgColor: 'bg-orange-500' },
+    { name: 'Apple Final Cut Pro', icons: 'fa-apple', href: '#', bgColor: 'bg-black' },
+    { name: 'Unity', icons: 'fa-unity', href: '#', bgColor: 'bg-blue-500' },
+    { name: 'Cinema 4D', icons: 'C4D', href: '#', bgColor: 'bg-purple-500' },
+    { name: 'Shapr3D', icons: 'S3D', href: '#', bgColor: 'bg-orange-500' },
 
-    { name: 'Microsoft PowerBI', initials: 'PBI', href: '#', bgColor: 'bg-purple-500' },
-    { name: 'Microsoft SQL Server', initials: 'MSS', href: '#', bgColor: 'bg-yellow-500' },
-    { name: 'MySQLWorkbench', initials: 'MSW', href: '#', bgColor: 'bg-green-500' },
-    { name: 'Table Plus', initials: 'TP', href: '#', bgColor: 'bg-purple-500' },
+    { name: 'Microsoft PowerBI', icons: 'fa-microsoft', href: '#', bgColor: 'bg-teal-500' },
+    { name: 'Microsoft SQL Server', icons: 'fa-microsoft', href: '#', bgColor: 'bg-teal-500' },
+    { name: 'MySQLWorkbench', icons: 'MSW', href: '#', bgColor: 'bg-green-500' },
+    { name: 'Table Plus', icons: 'TP', href: '#', bgColor: 'bg-purple-500' },
   ]
   const languages = [
-    { name: 'SwiftUI', initials: 'Swift', href: '#', bgColor: 'bg-orange-600' },
-    { name: 'CoreData', initials: 'Swift', href: '#', bgColor: 'bg-orange-600' },
-    { name: 'CloudKit', initials: 'Swift', href: '#', bgColor: 'bg-orange-600' },
+    { name: 'SwiftUI', icons: 'fa-swift', href: '#', bgColor: 'bg-orange-600' },
+    { name: 'CoreData', icons: 'fa-apple', href: '#', bgColor: 'bg-orange-600' },
+    { name: 'CloudKit', icons: 'fa-apple', href: '#', bgColor: 'bg-orange-600' },
 
-    { name: 'VuetifyJS', initials: 'VUE', href: '#', bgColor: 'bg-teal-600' },
-    { name: 'NuxtJS', initials: 'VUE', href: '#', bgColor: 'bg-teal-600' },
+    { name: 'VuetifyJS', icons: 'fa-vuejs', href: '#', bgColor: 'bg-teal-600' },
+    { name: 'NuxtJS', icons: 'fa-vuejs', href: '#', bgColor: 'bg-teal-600' },
 
-    { name: 'NextJS', initials: 'REACT', href: '#', bgColor: 'bg-sky-600' },
+    { name: 'NextJS', icons: 'fa-react', href: '#', bgColor: 'bg-sky-600' },
 
-    { name: 'TailwindCSS', initials: 'CSS', href: '#', bgColor: 'bg-indigo-600' },
-    { name: 'Bootstrap 5', initials: 'CSS', href: '#', bgColor: 'bg-indigo-600' },
+    { name: 'TailwindCSS', icons: 'fa-css3', href: '#', bgColor: 'bg-indigo-600' },
+    { name: 'Bootstrap 5', icons: 'fa-bootstrap', href: '#', bgColor: 'bg-indigo-600' },
   ]
   const speakWrites = [
-    { name: 'Cantonese (Chinese Traditional)', initials: '熟練', href: '#', bgColor: 'bg-green-600' },
-    { name: 'English', initials: '熟練', href: '#', bgColor: 'bg-green-600' },
+    { name: 'Cantonese (Chinese Traditional)', icons: '熟練', href: '#', bgColor: 'bg-green-600' },
+    { name: 'English', icons: '熟練', href: '#', bgColor: 'bg-green-600' },
 
-    { name: 'Mandarin (Chinese Simplified)', initials: '流利', href: '#', bgColor: 'bg-blue-600' },
-    { name: 'Korean  (Passed the Test of Proficiency in Korean in 2018)', initials: '流利', href: '#', bgColor: 'bg-blue-600' },
+    { name: 'Mandarin (Chinese Simplified)', icons: '流利', href: '#', bgColor: 'bg-blue-600' },
+    { name: 'Korean  (Passed the Test of Proficiency in Korean in 2018)', icons: '流利', href: '#', bgColor: 'bg-blue-600' },
 
-    { name: 'Japanese', initials: '基本', href: '#', bgColor: 'bg-orange-600' },
+    { name: 'Japanese', icons: '基本', href: '#', bgColor: 'bg-orange-600' },
   ]
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -62,7 +62,7 @@ export default function Skills() {
                     'flex-shrink-0 flex items-center justify-center w-16 text-white text-sm font-medium rounded-l-md'
                   )}
                 >
-                  {software.initials}
+                  <i className={classNames('fa-brands',software.icons)}>{software.icons.includes('fa') ? '' : software.icons}</i>
                 </div>
                 <div className="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white rounded-r-md truncate">
                   <div className="flex-1 px-4 py-2 text-sm truncate">
@@ -86,7 +86,7 @@ export default function Skills() {
                     'flex-shrink-0 flex items-center justify-center w-16 text-white text-sm font-medium rounded-l-md'
                   )}
                 >
-                  {language.initials}
+                  <i className={classNames('fa-brands',language.icons)}>{language.icons.includes('fa') ? '' : language.icons}</i>
                 </div>
                 <div className="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white rounded-r-md truncate">
                   <div className="flex-1 px-4 py-2 text-sm truncate">
@@ -110,7 +110,7 @@ export default function Skills() {
                     'flex-shrink-0 flex items-center justify-center w-24 text-white text-sm font-medium rounded-l-md'
                   )}
                 >
-                  {speakWrite.initials}
+                  {speakWrite.icons}
                 </div>
                 <div className="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white rounded-r-md truncate">
                   <div className="flex-1 px-4 py-2 text-sm truncate">

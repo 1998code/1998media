@@ -4,10 +4,10 @@ export default function Achievements() {
       <div className="max-w-7xl mx-auto">
         <div className="max-w-7xl mx-auto text-left">
           <a className="text-3xl font-extrabold text-gray-900 sm:text-4xl" href="#achievements">
-            Trusted by customers from over 175 countries and regions
+            Trusted by customers from over 175 countries and regions <i class="fa-regular fa-earth-americas"></i>
           </a>
           <p className="mt-3 text-xl text-gray-500 sm:mt-4">
-            People love my apps, and I'd believe you will, too.
+            People love my apps, and I'd believe you will, too. <i class="fa-regular fa-hand-holding-heart"></i>
           </p>
         </div>
       </div>
