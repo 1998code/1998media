@@ -3,7 +3,7 @@ export default function Footer() {
         main: [
           { name: '關於', href: '#about' },
           { name: '文章', href: '#blog' },
-          { name: 'Status', href: 'https://status.1998.media' },
+          { name: '狀態', href: 'https://status.1998.media' },
         ],
         social: [
           {
@@ -54,7 +54,7 @@ export default function Footer() {
             ))}
           </div>
           <p className="mt-8 text-center text-base text-gray-400">MING 用♥製作</p>
-          <p className="mt-1 text-center text-base text-gray-400">版本 22.8.17 | 自 2020 年起 | 完全開源。</p>
+          <p className="mt-1 text-center text-base text-gray-400">版本 22.8.20 | 自 2020 年起 | 完全開源。</p>
         </div>
     )
 }
