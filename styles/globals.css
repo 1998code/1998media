@@ -22,3 +22,11 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.darkmode-ignore {
+  display: block!important;
+}
+
+.darkmode-toggle {
+  z-index: 10;
+}

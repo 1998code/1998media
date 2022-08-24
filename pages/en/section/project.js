@@ -13,10 +13,12 @@ export default function Github() {
       .then(res => res.json())
       .then(
         (data) => {
-          if (window.innerWidth <= 1024) {
-            setGithubs(data.slice(0, 4));
-          } else {
-            setGithubs(data.slice(0, 8));
+          if (data.documentation_url != "https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting") {
+            if (window.innerWidth <= 1024) {
+              setGithubs(data.slice(0, 4));
+            } else {
+              setGithubs(data.slice(0, 8));
+            }
           }
         },
         (error) => {

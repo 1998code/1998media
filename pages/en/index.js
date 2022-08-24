@@ -30,7 +30,7 @@ export default function Home() {
         <link rel="stylesheet" href="https://cdn.1998.media/css/sfprodisplay.css" />
         <link rel="stylesheet" href="https://cdn.1998.media/css/fontawesome.css" />
       </Head>
-      <main>
+      <main className="select-none darkmode-ignore">
         <Header />
         <About />
         <Achievements />

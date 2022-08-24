@@ -24,7 +24,7 @@ export default function Experience() {
       location: '🌐 Remote',
       description: '3D Design + Photography',
       date: '2022-NOW',
-      textColor: 'text-orange-600 dark:text-orange-300',
+      textColor: 'text-orange-600',
       bgColor: 'bg-orange-100'
     },
     {
@@ -33,7 +33,7 @@ export default function Experience() {
       location: '🌐 Remote',
       description: 'Powerful tutorial + Writing',
       date: '2020-NOW',
-      textColor: 'text-orange-600 dark:text-orange-300',
+      textColor: 'text-orange-600',
       bgColor: 'bg-orange-100'
     },
     {
@@ -42,7 +42,7 @@ export default function Experience() {
       location: '🌐 Remote',
       description: 'Build and publish app for iOS, iPadOS, watchOS, and macOS platforms',
       date: '2020-NOW',
-      textColor: 'text-orange-600 dark:text-orange-300',
+      textColor: 'text-orange-600',
       bgColor: 'bg-orange-100'
     },
     {
@@ -96,7 +96,7 @@ export default function Experience() {
       location: '🌐 Remote',
       description: 'Start Freelance works on different platforms (Adobe Stock, Behance, Dribbble)',
       date: '2019-NOW',
-      textColor: 'text-orange-600 dark:text-orange-300',
+      textColor: 'text-orange-600',
       bgColor: 'bg-orange-100'
     },
   ]
@@ -113,7 +113,7 @@ export default function Experience() {
           </p>
         </div>
         <div className="bg-white dark:bg-black shadow overflow-hidden sm:rounded-md mt-8">
-          <ul role="list" className="divide-y divide-gray-200">
+          <ul role="list" className="divide-y divide-gray-200 dark:divide-gray-800">
             {positions.map((position) => (
               <li key={position.id}>
                 <a href="#" className="block hover:bg-gray-50 dark:hover:bg-gray-900">

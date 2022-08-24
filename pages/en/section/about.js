@@ -2,20 +2,22 @@ import Image from "next/future/image"
 
 export default function About() {
   return (
-    <div id="about" className="max-w-7xl mx-auto py-16 md:mb-20 px-4 sm:py-24 sm:px-6 lg:px-8 bg-orange-200 bg-opacity-50">
+    <div id="about" className="max-w-7xl mx-auto py-16 md:mb-20 px-4 sm:py-24 sm:px-6 lg:px-8 bg-orange-200 dark:bg-orange-800 dark:bg-orange-300 bg-opacity-50 darkmode-ignore">
       <div className="lg:grid lg:grid-cols-2 lg:gap-8">
-        <h2 className="max-w-md mx-auto text-3xl font-extrabold text-orange-900 text-center lg:max-w-xl lg:text-left">
-          I'm a <span className="text-orange-500"><i class="fa-regular fa-computer-classic"></i> Software Engineer</span> working on <span className="text-orange-700"><i class="fa-regular fa-sidebar"></i> UI Design, <i class="fa-regular fa-command"></i> App Development, <i class="fa-regular fa-brain-circuit"></i> Neural Network, and <i class="fa-regular fa-server"></i> Deep Machine Learning Research</span>.
+        <h2 className="max-w-md mx-auto text-3xl font-extrabold text-orange-900 dark:text-orange-100 text-center lg:max-w-xl lg:text-left">
+          I'm a <span className="text-orange-500"><i class="fa-regular fa-computer-classic"></i> Software Engineer</span> working on <span className="text-orange-700 dark:text-orange-300"><i class="fa-regular fa-sidebar"></i> UI Design, <i class="fa-regular fa-command"></i> App Development, <i class="fa-regular fa-brain-circuit"></i> Neural Network, and <i class="fa-regular fa-server"></i> Deep Machine Learning Research</span>.
           <br /><br />
           As an <i class="fa-regular fa-person-to-portal"></i> <span className="underline decoration-orange-500 decoration-2">outgoing & motivated</span> <i class="fa-regular fa-person-from-portal"></i> person with <span className="underline decoration-orange-500 decoration-wavy decoration-2">unlimited</span> creativity <i class="fa-regular fa-paintbrush-pencil"></i> , studying within a great IT environment. <span className="text-yellow-600">Eager to work in a large and professional MNC in Design and Programming related industry <i class="fa-regular fa-briefcase"></i> in the future.</span>
         </h2>
         <div className="flow-root self-center mt-8 lg:mt-0">
           <div className="-mt-4 -ml-8 flex flex-wrap lg:-ml-4">
             <div className="mt-4 ml-8 flex flex-grow flex-shrink-0 justify-center lg:flex-grow-0 lg:ml-4">
-              <Image className="h-24" src="/logos/CityU.png" alt="CityU" />
+              <Image className="h-24 dark:hidden" src="/logos/CityU.png" alt="CityU" />
+              <Image className="h-24 hidden dark:block" src="/logos/CityU_dark.png" alt="CityU" />
             </div>
             <div className="mt-4 ml-8 flex flex-grow flex-shrink-0 justify-center lg:flex-grow-0 lg:ml-4">
-              <Image className="h-24" src="/logos/PolyU.webp" alt="PolyU" />
+              <Image className="h-24 dark:hidden" src="/logos/PolyU.webp" alt="PolyU" />
+              <Image className="h-24 hidden dark:block" src="/logos/PolyU_dark.webp" alt="PolyU" />
             </div>
           </div>
         </div>

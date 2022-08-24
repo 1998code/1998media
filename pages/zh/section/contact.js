@@ -73,7 +73,7 @@ export default function Contact() {
                 請使用電子郵件。 72 小時內回覆。
               </p>
               <a
-                className="block w-full py-3 px-5 text-center bg-white dark:bg-black border border-transparent rounded-md shadow-md text-base font-medium text-orange-700 hover:bg-gray-50 dark:hover:bg-gray-900 sm:inline-block sm:w-auto"
+                className="block w-full py-3 px-5 text-center bg-white dark:bg-black border border-transparent rounded-md shadow-md text-base font-medium text-orange-700 dark:text-orange-300 hover:bg-gray-50 dark:hover:bg-gray-900 sm:inline-block sm:w-auto"
                 href="mailto:hi@1998.media"
               >
                 電郵
