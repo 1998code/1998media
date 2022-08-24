@@ -2,7 +2,7 @@ import Image from "next/future/image"
 
 export default function About() {
   return (
-    <div id="about" className="max-w-7xl mx-auto py-16 md:mb-20 px-4 sm:py-24 sm:px-6 lg:px-8 bg-orange-200 dark:bg-orange-800 bg-opacity-50 darkmode-ignore">
+    <div id="about" className="max-w-7xl mx-auto py-16 md:mb-20 px-4 sm:py-24 sm:px-6 lg:px-8 bg-orange-200 dark:bg-orange-800 bg-opacity-50 lg:rounded-3xl">
       <div className="lg:grid lg:grid-cols-2 lg:gap-8">
         <h2 className="max-w-md mx-auto text-3xl font-extrabold text-orange-900 dark:text-orange-100 text-center lg:max-w-xl lg:text-left">
           I'm a <span className="text-orange-500 dark:text-orange-400"><i class="fa-regular fa-computer-classic"></i> Software Engineer</span> working on <span className="text-orange-700 dark:text-orange-300"><i class="fa-regular fa-sidebar"></i> UI Design, <i class="fa-regular fa-command"></i> App Development, <i class="fa-regular fa-brain-circuit"></i> Neural Network, and <i class="fa-regular fa-server"></i> Deep Machine Learning Research</span>.

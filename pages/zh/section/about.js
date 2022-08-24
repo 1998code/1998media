@@ -2,7 +2,7 @@ import Image from "next/future/image"
 
 export default function About() {
   return (
-    <div id="about" className="max-w-7xl mx-auto py-16 md:mb-20 px-4 sm:py-24 sm:px-6 lg:px-8 bg-orange-200 dark:bg-orange-800 bg-opacity-50">
+    <div id="about" className="max-w-7xl mx-auto py-16 md:mb-20 px-4 sm:py-24 sm:px-6 lg:px-8 bg-orange-200 dark:bg-orange-800 bg-opacity-50 lg:rounded-3xl">
       <div className="lg:grid lg:grid-cols-2 lg:gap-8">
         <h2 className="max-w-md mx-auto text-3xl font-extrabold text-orange-900 dark:text-orange-100 text-center lg:max-w-xl lg:text-left">
           我是一名 <span className="text-orange-500 dark:text-orange-400"><i class="fa-regular fa-computer-classic"></i> 軟件工程師</span>，致力於 <span className="text-orange-700 dark:text-orange-300"><i class="fa-regular fa-sidebar"></i> 用戶界面設計、<i class="fa-regular fa-command"></i> 應用程式開發、<i class="fa-regular fa-brain-circuit"></i> 人工神經網絡規劃，以及 <i class="fa-regular fa-server"></i> 深度機器學習研究</span>。
