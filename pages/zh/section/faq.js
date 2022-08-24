@@ -28,7 +28,7 @@ export default function Faq() {
           <p className="mt-4 text-lg text-gray-500">
             無法找到您想要的？
             <br />
-            <a href="#contact" className="font-medium text-orange-600 hover:text-orange-500">
+            <a href="#contact" className="font-medium text-orange-600 dark:text-orange-300 hover:text-orange-500">
               現在聯繫
             </a>
           </p>

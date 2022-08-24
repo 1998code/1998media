@@ -29,14 +29,14 @@ export default function Blog() {
     <div id="blog" className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
       <div className="relative max-w-7xl mx-auto">
         <div className="text-left flex flex-wrap">
-          <a className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl grow" href="#blog">文章專欄</a>
+          <a className="text-3xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl grow" href="#blog">文章專欄</a>
           <p className="mt-2 max-w-2xl text-xl text-gray-500">
             查找最新的文章和教程（只提供英語版本）。
           </p>
         </div>
         <div className="mt-8 mx-auto grid gap-5 md:grid-cols-2 lg:grid-cols-3 lg:max-w-none">
           {blogs.map(post => (
-            <div key={post.title} className="flex flex-col rounded-lg overflow-hidden bg-white transform transition duration-500 hover:scale-105">
+            <div key={post.title} className="flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-105">
               <div className="flex-shrink-0">
                 <a href={post.link} target="_blank">
                   <Image className="h-48 w-full object-cover" src={post.thumbnail} alt={post.title} unoptimized={true}  />
@@ -56,7 +56,7 @@ export default function Blog() {
                     </a>
                   </p>
                   <a href={post.link} className="block mt-2" target="_blank">
-                    <p className="text-xl font-semibold text-gray-900">{post.title}</p>
+                    <p className="text-xl font-semibold text-gray-900 dark:text-gray-100">{post.title}</p>
                   </a>
                 </div>
                 <div className="mt-3 flex items-center">

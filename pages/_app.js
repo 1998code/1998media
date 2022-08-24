@@ -4,4 +4,18 @@ function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />
 }
 
+import Darkmode from 'darkmode-js';
+const options = {
+  mixColor: '#fff',
+  backgroundColor: '#fff6eb',
+  buttonColorDark: '#000',
+  buttonColorLight: '#fff6eb',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: false
+}
+
+const darkmode = new Darkmode(options);
+darkmode.showWidget();
+
 export default MyApp

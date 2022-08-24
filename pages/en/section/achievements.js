@@ -3,7 +3,7 @@ export default function Achievements() {
     <div id="achievements" className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="max-w-7xl mx-auto text-left">
-          <a className="text-3xl font-extrabold text-gray-900 sm:text-4xl" href="#achievements">
+          <a className="text-3xl font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl" href="#achievements">
             Trusted by customers from over 175 countries and regions <i class="fa-regular fa-earth-americas"></i>
           </a>
           <p className="mt-3 text-xl text-gray-500 sm:mt-4">
@@ -15,7 +15,7 @@ export default function Achievements() {
         <div className="relative">
           <div className="relative max-w-7xl mx-auto">
             <div className="max-w-7xl mx-auto">
-              <dl className="rounded-lg bg-white shadow-lg sm:grid sm:grid-cols-4">
+              <dl className="rounded-lg bg-white dark:bg-black shadow-lg sm:grid sm:grid-cols-4">
                 <div className="flex flex-col border-b border-gray-100 p-6 text-center sm:border-0 sm:border-r">
                   <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">2022</dt>
                   <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">Developer Tools in Canada</dt>
@@ -29,7 +29,7 @@ export default function Achievements() {
                 <div className="flex flex-col border-t border-b border-gray-100 p-6 text-center sm:border-0 sm:border-l sm:border-r">
                   <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">2021</dt>
                   <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">Apple Worldwide Developers Conference (WWDC)</dt>
-                  <dd className="order-1 text-5xl font-extrabold text-orange-600">Winner</dd>
+                  <dd className="order-1 text-5xl font-extrabold text-orange-600 dark:text-orange-300">Winner</dd>
                 </div>
                 <div className="flex flex-col border-t border-gray-100 p-6 text-center sm:border-0 sm:border-l">
                   <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">Since 2020</dt>

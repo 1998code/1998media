@@ -28,7 +28,7 @@ export default function Faq() {
           <p className="mt-4 text-lg text-gray-500">
             Cannot find what you are looking for?
             <br />
-            <a href="#contact" className="font-medium text-orange-600 hover:text-orange-500">
+            <a href="#contact" className="font-medium text-orange-600 dark:text-orange-300 hover:text-orange-500">
               Contact
             </a>{' '}
             now.

@@ -1,16 +1,16 @@
 export default function Skills() {
   const softwares = [
     { name: 'Adobe Creative Cloud', icons: 'CC', href: '#', bgColor: 'bg-red-600' },
-    { name: 'Figma', icons: 'fa-figma', href: '#', bgColor: 'bg-black' },
+    { name: 'Figma', icons: 'fa-figma', href: '#', bgColor: 'bg-black dark:bg-white dark:text-black' },
     { name: 'Framer', icons: 'fa-sketch', href: '#', bgColor: 'bg-sky-500' },
     { name: 'Sketch', icons: 'Sk', href: '#', bgColor: 'bg-orange-400' },
 
-    { name: 'Apple Xcode', icons: 'fa-apple', href: '#', bgColor: 'bg-black' },
-    { name: 'Apple iWork', icons: 'fa-apple', href: '#', bgColor: 'bg-black' },
+    { name: 'Apple Xcode', icons: 'fa-apple', href: '#', bgColor: 'bg-black dark:bg-white dark:text-black' },
+    { name: 'Apple iWork', icons: 'fa-apple', href: '#', bgColor: 'bg-black dark:bg-white dark:text-black' },
     { name: 'Microsoft Office', icons: 'fa-microsoft', href: '#', bgColor: 'bg-teal-500' },
     { name: 'Google Worksuite', icons: 'fa-google', href: '#', bgColor: 'bg-blue-500' },
 
-    { name: 'Apple Final Cut Pro', icons: 'fa-apple', href: '#', bgColor: 'bg-black' },
+    { name: 'Apple Final Cut Pro', icons: 'fa-apple', href: '#', bgColor: 'bg-black dark:bg-white dark:text-black' },
     { name: 'Unity', icons: 'fa-unity', href: '#', bgColor: 'bg-blue-500' },
     { name: 'Cinema 4D', icons: 'C4D', href: '#', bgColor: 'bg-purple-500' },
     { name: 'Shapr3D', icons: 'S3D', href: '#', bgColor: 'bg-orange-500' },
@@ -49,7 +49,7 @@ export default function Skills() {
     <div id="skills" className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
       <div className="relative max-w-7xl mx-auto">
         <div className="text-left flex">
-          <a className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl" href="#skills">Skills & Languages <i class="fa-regular fa-language"></i></a>
+          <a className="text-3xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl" href="#skills">Skills & Languages <i class="fa-regular fa-language"></i></a>
         </div>
         <div className="mt-10">
           <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">Softwares</h2>
@@ -64,9 +64,9 @@ export default function Skills() {
                 >
                   <i className={classNames('fa-brands',software.icons)}>{software.icons.includes('fa') ? '' : software.icons}</i>
                 </div>
-                <div className="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white rounded-r-md truncate">
+                <div className="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white dark:bg-black rounded-r-md truncate">
                   <div className="flex-1 px-4 py-2 text-sm truncate">
-                    <a href={software.href} className="text-gray-900 font-medium hover:text-gray-600">
+                    <a href={software.href} className="text-gray-900 dark:text-gray-100 font-medium hover:text-gray-600">
                       {software.name}
                     </a>
                   </div>
@@ -88,9 +88,9 @@ export default function Skills() {
                 >
                    <i className={classNames('fa-brands',language.icons)}>{language.icons.includes('fa') ? '' : language.icons}</i>
                 </div>
-                <div className="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white rounded-r-md truncate">
+                <div className="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white dark:bg-black rounded-r-md truncate">
                   <div className="flex-1 px-4 py-2 text-sm truncate">
-                    <a href={language.href} className="text-gray-900 font-medium hover:text-gray-600">
+                    <a href={language.href} className="text-gray-900 dark:text-gray-100 font-medium hover:text-gray-600">
                       {language.name}
                     </a>
                   </div>
@@ -112,9 +112,9 @@ export default function Skills() {
                 >
                   {speakWrite.icons}
                 </div>
-                <div className="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white rounded-r-md truncate">
+                <div className="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white dark:bg-black rounded-r-md truncate">
                   <div className="flex-1 px-4 py-2 text-sm truncate">
-                    <a href={speakWrite.href} className="text-gray-900 font-medium hover:text-gray-600">
+                    <a href={speakWrite.href} className="text-gray-900 dark:text-gray-100 font-medium hover:text-gray-600">
                       {speakWrite.name}
                     </a>
                   </div>
