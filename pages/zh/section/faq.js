@@ -4,7 +4,7 @@ export default function Faq() {
       question: '如何支持您的項目？',
       answer: (props) => (
         <a href="https://github.com/sponsors/1998code">
-          Github Sponsorship
+          Github 贊助
           <i className="ml-1 fa fa-external-link fa-sm"></i>
         </a>
       ),
