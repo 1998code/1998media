@@ -10,15 +10,6 @@ export default function Experience() {
       bgColor: 'bg-green-100'
     },
     {
-      title: 'Software Engineer',
-      type: 'Full-time',
-      location: '🇭🇰 HONG KONG',
-      description: 'Web + iOS Development',
-      date: '2021-NOW',
-      textColor: 'text-blue-600',
-      bgColor: 'bg-blue-100'
-    },
-    {
       title: 'Unsplash Artists',
       type: 'Freelance',
       location: '🌐 Remote',
@@ -26,6 +17,15 @@ export default function Experience() {
       date: '2022-NOW',
       textColor: 'text-orange-600',
       bgColor: 'bg-orange-100'
+    },
+    {
+      title: 'Software Engineer',
+      type: 'Full-time',
+      location: '🇭🇰 HONG KONG',
+      description: 'Web + iOS Development',
+      date: '2021-NOW',
+      textColor: 'text-blue-600',
+      bgColor: 'bg-blue-100'
     },
     {
       title: 'Articles Writer',
