@@ -4,7 +4,7 @@ export default function Experience() {
       title: 'QuestDB 譯者',
       type: '志願',
       location: '🌐 遠程, 英國',
-      description: 'Contribute open source database project.',
+      description: '貢獻開源數據庫項目。',
       date: '2022',
       textColor: 'text-green-600',
       bgColor: 'bg-green-100'
