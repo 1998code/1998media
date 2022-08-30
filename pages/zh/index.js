@@ -29,6 +29,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.png" />
         <link rel="stylesheet" href="https://cdn.1998.media/css/sfprodisplay.css" />
         <link rel="stylesheet" href="https://cdn.1998.media/css/fontawesome.css" />
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1941913120815371"></script>
       </Head>
       <main className="select-none darkmode-ignore">
         <Header />
