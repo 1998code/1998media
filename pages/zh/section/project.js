@@ -15,9 +15,9 @@ export default function Github() {
         (data) => {
           if (data.documentation_url != "https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting") {
             if (window.innerWidth <= 1024) {
-              setGithubs(data.slice(0, 4));
-            } else {
               setGithubs(data.slice(0, 8));
+            } else {
+              setGithubs(data.slice(0, 16));
             }
           }
         },
@@ -40,10 +40,14 @@ export default function Github() {
             <a href={repo.html_url} target="_blank" key={repo.name} className="flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-105">
               <div className="flex-1 p-6 flex flex-col justify-between">
                 <div className="flex-1">
-                  <p className="text-xl font-semibold text-gray-900 dark:text-gray-100">{repo.name}</p>
+                  <p className="text-xl font-semibold text-gray-900 dark:text-gray-100 flex items-center">
+                    <i className="fab fa-github text-gray-500 dark:text-gray-100 mr-1"></i>
+                    {repo.name}
+                  </p>
                 </div>
                 <div className="mt-3 flex items-center">
                   <div className="flex-shrink-0 text-gray-400">
+                    <i className="far fa-calendar-alt text-gray-500 dark:text-gray-100 mr-2"></i>
                     <time dateTime={repo.created_at.slice(0, 10)}>{repo.created_at.slice(0, 10)}</time>
                   </div>
                 </div>
