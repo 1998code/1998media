@@ -16,6 +16,10 @@ const nextConfig = {
           protocol: 'https',
           hostname: '**.medium.com',
         },
+        {
+          protocol: 'https',
+          hostname: '**.vercel.app',
+        }
       ],
       allowFutureImage: true,
     },

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import Image from 'next/future/image'
 
 export default function Github() {
   const [githubs, setGithubs] = useState([])
@@ -54,6 +55,11 @@ export default function Github() {
               </div>
             </a>
           ))}
+        </div>
+        <div className="mt-8 mx-auto grid gap-5 md:grid-cols-4 lg:max-w-none">
+          <Image className="w-full col-span-3" src="https://github-readme-stats.vercel.app/api?username=1998code&show_icons=true&bg_color=30,e96443,904e95&title_color=fff&text_color=fff&icon_color=fff&hide_border=true" alt="Performance" />
+          <Image className="w-full dark:hidden" src="https://github-readme-stats.vercel.app/api/top-langs/?username=1998code&langs_count=8&layout=default&hide_border=true" alt="Top Languages" />
+          <Image className="w-full hidden dark:block" src="https://github-readme-stats.vercel.app/api/top-langs/?username=1998code&langs_count=8&layout=default&bg_color=000&title_color=fff&text_color=fff&hide_border=true" alt="Top Languages" />
         </div>
       </div>
     </div>
