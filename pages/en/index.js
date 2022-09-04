@@ -13,7 +13,7 @@ import Credits from './section/credits'
 import Footer from './section/footer'
 
 export default function Home() {
-  fetch ('https://1998.media/api/newrelic')
+  fetch ('/api/newrelic')
     .then (res => res.json())
     .then (data => {
       // console.log(data)
