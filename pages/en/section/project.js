@@ -30,7 +30,10 @@ export default function Github() {
     <div id="project" className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
       <div className="relative max-w-7xl mx-auto">
         <div className="text-left flex flex-wrap">
-          <a className="text-3xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl grow" href="#project">Project</a>
+          <a className="text-3xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl grow" href="#project">
+            Project
+            <i className="fas fa-code ml-2"></i>
+          </a>
           <p className="mt-2 max-w-2xl text-xl text-gray-500">
             Find out the latest projects.
           </p>

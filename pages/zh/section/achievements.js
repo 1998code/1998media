@@ -4,7 +4,8 @@ export default function Achievements() {
       <div className="max-w-7xl mx-auto">
         <div className="max-w-7xl mx-auto text-left">
           <a className="text-3xl font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl" href="#achievements">
-            深受超過 175 個國家和地區客戶的信賴 <i class="fa-regular fa-earth-americas"></i>
+            深受超過 175 個國家和地區客戶的信賴
+            <i className="fa-regular fa-earth-americas ml-2"></i>
           </a>
           <p className="mt-3 text-xl text-gray-500 sm:mt-4">
             人們喜歡我的應用程式，我相信你也會喜歡的。<i class="fa-regular fa-hand-holding-heart"></i>
