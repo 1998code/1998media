@@ -28,7 +28,7 @@ export default function Custom404() {
                                 <i className={'text-sky-700 fa-3x ' + (link.icon)} aria-hidden="true" />
                             </div>
                             <div className="min-w-0 flex-1">
-                                <h3 className="text-base font-medium text-gray-900">
+                                <h3 className="text-base font-medium text-gray-900 dark:text-gray-100">
                                 <span className="rounded-sm focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-sky-500">
                                     <a href={link.url} target="_blank" className="focus:outline-none">
                                     <span className="absolute inset-0" aria-hidden="true" />
