@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 export default function Footer() {
     const navigation = {
@@ -45,7 +45,7 @@ export default function Footer() {
       .then(response => response.json())
       .then(data => {
         setIP(data.ip);
-        setGeo(data.geo && data.geo.country + '(' + data.geo.city + ')' || '未知');
+        setGeo(data.geo && data.geo.country + ' - ' + data.geo.city || '未知');
       });
     return (
         <div className="max-w-7xl mx-auto py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
