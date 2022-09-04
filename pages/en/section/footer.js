@@ -3,6 +3,7 @@ export default function Footer() {
         main: [
           { name: 'About', href: '#about' },
           { name: 'Blog', href: 'https://blog.1998.media' },
+          { name: 'Store', href: 'https://shop.1998.media' },
           { name: 'Status', href: 'https://status.1998.media' },
         ],
         social: [
@@ -27,7 +28,6 @@ export default function Footer() {
               <i className="fab fa-dribbble fa-xl" />
             ),
           },
-          // behance
           {
             name: 'Behance',
             href: 'https://www.behance.net/1998design',
