@@ -45,7 +45,7 @@ export default function Footer() {
       .then(response => response.json())
       .then(data => {
         setIP(data.ip);
-        setGeo(data.geo.country || '未知');
+        setGeo(data.geo && data.geo.country + '(' + data.geo.city + ')' || '未知');
       });
     return (
         <div className="max-w-7xl mx-auto py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
@@ -73,7 +73,7 @@ export default function Footer() {
           </div>
           <p className="mt-8 text-center text-base text-gray-400">MING 用♥製作</p>
           <p className="mt-1 text-center text-base text-gray-400">版本 22.9.4 | 自 2020 年起 | 完全開源。</p>
-          <p className="mt-1 text-center text-base text-gray-400 pt-3">您的 IP 源自: {ip} | {geo}</p>
+          <p className="mt-1 text-center text-xs text-gray-400 pt-3">您的 IP 源自: {ip} | {geo}</p>
         </div>
     )
 }
