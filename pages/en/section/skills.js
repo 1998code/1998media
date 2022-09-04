@@ -64,7 +64,7 @@ export default function Skills() {
                 >
                   <i className={classNames('fa-brands',software.icons)}>{software.icons.includes('fa') ? '' : software.icons}</i>
                 </div>
-                <div className="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white dark:bg-black rounded-r-md truncate">
+                <div className="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white dark:bg-black dark:border-black rounded-r-md truncate">
                   <div className="flex-1 px-4 py-2 text-sm truncate">
                     <a href={software.href} className="text-gray-900 dark:text-gray-100 font-medium hover:text-gray-600">
                       {software.name}
@@ -88,7 +88,7 @@ export default function Skills() {
                 >
                    <i className={classNames('fa-brands',language.icons)}>{language.icons.includes('fa') ? '' : language.icons}</i>
                 </div>
-                <div className="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white dark:bg-black rounded-r-md truncate">
+                <div className="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white dark:bg-black dark:border-black rounded-r-md truncate">
                   <div className="flex-1 px-4 py-2 text-sm truncate">
                     <a href={language.href} className="text-gray-900 dark:text-gray-100 font-medium hover:text-gray-600">
                       {language.name}
@@ -112,7 +112,7 @@ export default function Skills() {
                 >
                   {speakWrite.icons}
                 </div>
-                <div className="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white dark:bg-black rounded-r-md truncate">
+                <div className="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white dark:bg-black dark:border-black rounded-r-md truncate">
                   <div className="flex-1 px-4 py-2 text-sm truncate">
                     <a href={speakWrite.href} className="text-gray-900 dark:text-gray-100 font-medium hover:text-gray-600">
                       {speakWrite.name}
