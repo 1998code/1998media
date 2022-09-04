@@ -1,42 +1,52 @@
+import { useState, useEffect } from 'react'
+
 export default function Footer() {
     const navigation = {
-        main: [
-          { name: '關於', href: '#about' },
-          { name: '文章', href: 'https://blog.1998.media' },
-          { name: '商店', href: 'https://shop.1998.media' },
-          { name: '狀態', href: 'https://status.1998.media' },
-        ],
-        social: [
-          {
-            name: 'Twitter',
-            href: 'https://twitter.com/1998design',
-            icon: (props) => (
-              <i className="fab fa-twitter fa-xl" />
-            ),
-          },
-          {
-            name: 'GitHub',
-            href: 'https://github.com/1998code',
-            icon: (props) => (
-              <i className="fab fa-github fa-xl" />
-            ),
-          },
-          {
-            name: 'Dribbble',
-            href: 'https://dribbble.com/1998design',
-            icon: (props) => (
-              <i className="fab fa-dribbble fa-xl" />
-            ),
-          },
-          {
-            name: 'Behance',
-            href: 'https://www.behance.net/1998design',
-            icon: (props) => (
-              <i className="fab fa-behance fa-xl" />
-            ),
-          },
-        ],
-      }
+      main: [
+        { name: '關於', href: '#about' },
+        { name: '文章', href: 'https://blog.1998.media' },
+        { name: '商店', href: 'https://shop.1998.media' },
+        { name: '狀態', href: 'https://status.1998.media' },
+      ],
+      social: [
+        {
+          name: 'Twitter',
+          href: 'https://twitter.com/1998design',
+          icon: (props) => (
+            <i className="fab fa-twitter fa-xl" />
+          ),
+        },
+        {
+          name: 'GitHub',
+          href: 'https://github.com/1998code',
+          icon: (props) => (
+            <i className="fab fa-github fa-xl" />
+          ),
+        },
+        {
+          name: 'Dribbble',
+          href: 'https://dribbble.com/1998design',
+          icon: (props) => (
+            <i className="fab fa-dribbble fa-xl" />
+          ),
+        },
+        {
+          name: 'Behance',
+          href: 'https://www.behance.net/1998design',
+          icon: (props) => (
+            <i className="fab fa-behance fa-xl" />
+          ),
+        },
+      ],
+    }
+    const [ip, setIP] = useState([])
+    const [geo, setGeo] = useState([])
+    fetch('/api/ip')
+      .then(response => response.json())
+      .then(data => {
+        setIP(data.ip);
+        setGeo(data.geo);
+      });
     return (
         <div className="max-w-7xl mx-auto py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
           <nav className="-mx-5 -my-2 flex flex-wrap justify-center" aria-label="Footer">
@@ -63,6 +73,7 @@ export default function Footer() {
           </div>
           <p className="mt-8 text-center text-base text-gray-400">MING 用♥製作</p>
           <p className="mt-1 text-center text-base text-gray-400">版本 22.9.4 | 自 2020 年起 | 完全開源。</p>
+          <p className="mt-1 text-center text-base text-gray-400 pt-3">您的 IP 源自: {ip} | {geo}</p>
         </div>
     )
 }
