@@ -2,7 +2,8 @@ export default function Footer() {
     const navigation = {
         main: [
           { name: '關於', href: '#about' },
-          { name: '文章', href: '#blog' },
+          { name: '文章', href: 'https://blog.1998.media' },
+          { name: '商店', href: 'https://shop.1998.media' },
           { name: '狀態', href: 'https://status.1998.media' },
         ],
         social: [
@@ -27,6 +28,13 @@ export default function Footer() {
               <i className="fab fa-dribbble fa-xl" />
             ),
           },
+          {
+            name: 'Behance',
+            href: 'https://www.behance.net/1998design',
+            icon: (props) => (
+              <i className="fab fa-behance fa-xl" />
+            ),
+          },
         ],
       }
     return (
@@ -34,7 +42,7 @@ export default function Footer() {
           <nav className="-mx-5 -my-2 flex flex-wrap justify-center" aria-label="Footer">
             {navigation.main.map((item) => (
               <div key={item.name} className="px-5 py-2">
-                <a href={item.href} className="text-base text-gray-500 hover:text-gray-900">
+                <a href={item.href} target="_blank" className="text-base text-gray-500 hover:text-gray-900">
                   {item.name}
                   {item.href.includes('http') ? (
                     <i className="ml-1 fa fa-external-link fa-sm"></i>
@@ -47,7 +55,7 @@ export default function Footer() {
           </nav>
           <div className="mt-8 flex justify-center space-x-6">
             {navigation.social.map((item) => (
-              <a key={item.name} href={item.href} className="text-gray-400 hover:text-gray-500">
+              <a key={item.name} href={item.href} target="_blank" className="text-gray-400 hover:text-gray-500">
                 <span className="sr-only">{item.name}</span>
                 <item.icon aria-hidden="true" />
               </a>
