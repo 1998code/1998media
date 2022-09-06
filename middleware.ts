@@ -13,6 +13,9 @@ export default function middleware(req: NextRequest) {
     case 'zh-CN':
       req.nextUrl.pathname = '/cn'
       return NextResponse.rewrite(req.nextUrl)
+    case 'ru':
+      req.nextUrl.pathname = '/ru'
+      return NextResponse.rewrite(req.nextUrl)
     default:
       req.nextUrl.pathname = '/en'
       return NextResponse.rewrite(req.nextUrl)
