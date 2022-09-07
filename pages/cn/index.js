@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { useState } from 'react'
 
 export default function Home() {
   fetch ('/api/newrelic')
@@ -7,8 +8,15 @@ export default function Home() {
       // console.log(data)
     }).catch (err => {
       console.log(err)
-    }
-  )
+    });
+  const [ip, setIP] = useState([])
+  const [geo, setGeo] = useState([])
+  fetch('/api/ip')
+    .then(response => response.json())
+    .then(data => {
+      setIP(data.ip);
+      setGeo(data.geo && data.geo.country + ' - ' + data.geo.city || 'Unknown');
+    });
   return (
     <div>
       <Head>
@@ -28,6 +36,8 @@ export default function Home() {
             好的，立即跳转
             <i className="fas fa-rotate-left ml-3"></i>
           </a>
+          <br />
+          <p className="mt-5 text-center text-xs text-gray-400 pt-3">{ip} | {geo}</p>
         </div>
       </main>
     </div>
