@@ -14,7 +14,7 @@ export default function Faq() {
       answer: (props) => (
         <span>
           <a href="https://github.com/1998code">Github<i className="ml-1 fa fa-external-link fa-sm"></i></a> 
-          <i class="fa-solid fa-pipe px-3"></i>
+          <i className="fa-solid fa-pipe px-3"></i>
           <a href="https://vercel.com">Vercel<i className="ml-1 fa fa-external-link fa-sm"></i></a>
         </span>
       ),

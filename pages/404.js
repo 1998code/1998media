@@ -39,7 +39,7 @@ export default function Custom404() {
                                 <p className="text-base text-gray-500">{link.description}</p>
                             </div>
                             <div className="flex-shrink-0 self-center">
-                                <i class="fa-solid fa-square-arrow-up-right text-gray-400"></i>
+                                <i className="fa-solid fa-square-arrow-up-right text-gray-400"></i>
                             </div>
                         </li>
                     ))}

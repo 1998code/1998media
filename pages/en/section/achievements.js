@@ -8,7 +8,7 @@ export default function Achievements() {
             <i className="fa-regular fa-earth-americas ml-2"></i>
           </a>
           <p className="mt-3 text-xl text-gray-500 sm:mt-4">
-            People love my apps, and I'd believe you will, too. <i class="fa-regular fa-hand-holding-heart"></i>
+            People love my apps, and I'd believe you will, too. <i className="fa-regular fa-hand-holding-heart"></i>
           </p>
         </div>
       </div>

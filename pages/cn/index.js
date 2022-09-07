@@ -28,7 +28,7 @@ export default function Home() {
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1941913120815371"></script>
       </Head>
       <main className="select-none overflow-hidden w-screen h-screen flex justify-center items-center">
-        <div class="text-center">
+        <div className="text-center">
           <h1 className="text-black text-4xl">这个网站还不支持你的语言，你想重定向到中文吗？</h1>
           <br/ >
           <a href="/zh" className="text-black text-5xl text-center">

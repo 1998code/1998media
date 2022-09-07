@@ -8,7 +8,7 @@ export default function Achievements() {
             <i className="fa-regular fa-earth-americas ml-2"></i>
           </a>
           <p className="mt-3 text-xl text-gray-500 sm:mt-4">
-            人們喜歡我的應用程式，我相信你也會喜歡的。<i class="fa-regular fa-hand-holding-heart"></i>
+            人們喜歡我的應用程式，我相信你也會喜歡的。<i className="fa-regular fa-hand-holding-heart"></i>
           </p>
         </div>
       </div>
