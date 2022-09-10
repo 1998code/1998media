@@ -34,13 +34,13 @@ export default function Skills() {
     { name: 'Bootstrap 5', icons: 'fa-bootstrap', href: '#', bgColor: 'bg-indigo-600' },
   ]
   const speakWrites = [
-    { name: 'Cantonese (Chinese Traditional)', icons: '熟練', href: '#', bgColor: 'bg-green-600' },
-    { name: 'English', icons: '熟練', href: '#', bgColor: 'bg-green-600' },
+    { name: '粵語（繁體中文）', icons: '熟練', href: '#', bgColor: 'bg-green-600' },
+    { name: '英語', icons: '熟練', href: '#', bgColor: 'bg-green-600' },
 
-    { name: 'Mandarin (Chinese Simplified)', icons: '流利', href: '#', bgColor: 'bg-blue-600' },
-    { name: 'Korean  (Passed the Test of Proficiency in Korean in 2018)', icons: '流利', href: '#', bgColor: 'bg-blue-600' },
+    { name: '普通話（簡體中文）', icons: '流利', href: '#', bgColor: 'bg-blue-600' },
+    { name: '韓語（2018年通過韓語能力考試）', icons: '流利', href: '#', bgColor: 'bg-blue-600' },
 
-    { name: 'Japanese', icons: '基本', href: '#', bgColor: 'bg-orange-600' },
+    { name: '日語', icons: '基本', href: '#', bgColor: 'bg-orange-600' },
   ]
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')

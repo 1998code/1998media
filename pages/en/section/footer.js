@@ -72,7 +72,7 @@ export default function Footer() {
             ))}
           </div>
           <p className="mt-8 text-center text-base text-gray-400">Made with&nbsp;♥&nbsp;by MING</p>
-          <p className="mt-1 text-center text-base text-gray-400">Ver. 22.9.4 | Since 2020 | Open Source.</p>
+          <p className="mt-1 text-center text-base text-gray-400">Ver. 22.9.10 | Since 2020 | Open Source.</p>
           <p className="mt-1 text-center text-xs text-gray-400 pt-3">You're come from: {ip} | {geo}</p>
         </div>
     )

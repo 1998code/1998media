@@ -72,7 +72,7 @@ export default function Footer() {
             ))}
           </div>
           <p className="mt-8 text-center text-base text-gray-400">MING 用♥製作</p>
-          <p className="mt-1 text-center text-base text-gray-400">版本 22.9.4 | 自 2020 年起 | 完全開源。</p>
+          <p className="mt-1 text-center text-base text-gray-400">版本 22.9.10 | 自 2020 年起 | 完全開源。</p>
           <p className="mt-1 text-center text-xs text-gray-400 pt-3">您的 IP 源自: {ip} | {geo}</p>
         </div>
     )
