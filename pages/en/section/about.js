@@ -1,5 +1,3 @@
-import Image from "next/future/image"
-
 export default function About() {
   return (
     <div id="about" className="max-w-7xl mx-auto py-16 md:mb-20 px-4 sm:py-24 sm:px-6 lg:px-8 bg-orange-200 dark:bg-orange-800 bg-opacity-50 lg:rounded-3xl">
@@ -12,12 +10,12 @@ export default function About() {
         <div className="flow-root self-center mt-8 lg:mt-0">
           <div className="-mt-4 -ml-8 flex flex-wrap lg:-ml-4">
             <div className="mt-4 ml-8 flex flex-grow flex-shrink-0 justify-center lg:flex-grow-0 lg:ml-4">
-              <Image className="h-24 dark:hidden" src="/logos/CityU.png" alt="CityU" />
-              <Image className="h-24 hidden dark:block" src="/logos/CityU_dark.png" alt="CityU" />
+              <img className="h-24 dark:hidden" src="/logos/CityU.png" alt="CityU" />
+              <img className="h-24 hidden dark:block" src="/logos/CityU_dark.png" alt="CityU" />
             </div>
             <div className="mt-4 ml-8 flex flex-grow flex-shrink-0 justify-center lg:flex-grow-0 lg:ml-4">
-              <Image className="h-24 dark:hidden" src="/logos/PolyU.webp" alt="PolyU" />
-              <Image className="h-24 hidden dark:block" src="/logos/PolyU_dark.webp" alt="PolyU" />
+              <img className="h-24 dark:hidden" src="/logos/PolyU.webp" alt="PolyU" />
+              <img className="h-24 hidden dark:block" src="/logos/PolyU_dark.webp" alt="PolyU" />
             </div>
           </div>
         </div>

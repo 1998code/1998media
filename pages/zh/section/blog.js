@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import Image from "next/future/image"
 
 export default function Blog() {
   const [blogs, setBlogs] = useState([])
@@ -42,7 +41,7 @@ export default function Blog() {
             <div key={post.title} className="flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-105">
               <div className="flex-shrink-0">
                 <a href={post.link} target="_blank">
-                  <Image className="h-48 w-full object-cover" src={post.thumbnail} alt={post.title} unoptimized={true}  />
+                  <img className="h-48 w-full object-cover" src={post.thumbnail} alt={post.title} unoptimized={true}  />
                 </a>
               </div>
               <div className="flex-1 p-6 flex flex-col justify-between">

@@ -13,7 +13,7 @@
     "darkmode-js": "^1.5.7",
     "geoip-lite": "^1.4.6",
     "newrelic": "^9.0.0",
-    "next": "^12.2.0",
+    "next": "^12.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
