@@ -1,6 +1,6 @@
 export default function Contact() {
   return (
-    <div id="contact" className="relative py-16">
+    <div id="contact" data-aos="zoom-in" data-aos-once className="relative py-16">
       <div className="hidden absolute top-0 inset-x-0 h-1/2 lg:block" aria-hidden="true" />
       <div className="max-w-7xl mx-auto bg-orange-600 lg:bg-transparent lg:px-8">
         <div className="lg:grid lg:grid-cols-12">

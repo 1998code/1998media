@@ -46,7 +46,7 @@ export default function Skills() {
     return classes.filter(Boolean).join(' ')
   }
   return (
-    <div id="skills" className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
+    <div id="skills" data-aos="zoom-in" data-aos-once className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
       <div className="relative max-w-7xl mx-auto">
         <div className="text-left flex">
           <a className="text-3xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl" href="#skills">
