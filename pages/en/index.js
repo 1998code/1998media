@@ -32,11 +32,11 @@ export default function Home() {
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1941913120815371"></script>
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
         <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+      </Head>
+      <main className="select-none darkmode-ignore overflow-hidden">
         <script>
           AOS.init();
         </script>
-      </Head>
-      <main className="select-none darkmode-ignore overflow-hidden">
         <Header />
         <About />
         <Achievements />
