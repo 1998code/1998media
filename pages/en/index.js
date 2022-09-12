@@ -32,13 +32,13 @@ export default function Home() {
         <link rel="stylesheet" href="https://cdn.1998.media/css/sfprodisplay.css" />
         <link rel="stylesheet" href="https://cdn.1998.media/css/fontawesome.css" />
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1941913120815371"></script>
-        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+        <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
       </Head>
+      <script>
+        AOS.init();
+      </script>
       <main className="select-none darkmode-ignore overflow-hidden">
-        <script>
-          AOS.init();
-        </script>
         <Header />
         <About />
         <Achievements />
