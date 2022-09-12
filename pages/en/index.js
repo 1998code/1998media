@@ -34,10 +34,10 @@ export default function Home() {
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1941913120815371"></script>
         <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
         <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+        <script defer>
+          AOS.init();
+        </script>
       </Head>
-      <script>
-        AOS.init();
-      </script>
       <main className="select-none darkmode-ignore overflow-hidden">
         <Header />
         <About />
