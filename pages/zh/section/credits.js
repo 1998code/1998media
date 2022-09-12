@@ -1,6 +1,6 @@
 export default function Credits() {
   return (
-    <div id="credits" className="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
+    <div id="credits" data-aos="zoom-in" data-aos-once className="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
       <div className="lg:grid lg:grid-cols-2 lg:gap-8">
         <h2 className="max-w-md mx-auto text-3xl font-extrabold text-indigo-900 dark:text-indigo-100 text-center lg:max-w-xl lg:text-left">
           特別感謝：
