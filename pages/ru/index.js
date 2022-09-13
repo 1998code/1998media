@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import { useState } from 'react'
+import axios from 'axios'
 
 export default function Home() {
   fetch ('/api/newrelic')
@@ -11,12 +12,14 @@ export default function Home() {
     });
   const [ip, setIP] = useState([])
   const [geo, setGeo] = useState([])
-  fetch('/api/ip')
-    .then(response => response.json())
-    .then(data => {
-      setIP(data.ip);
-      setGeo(data.geo && data.geo.country + ' - ' + data.geo.city || 'Unknown');
-    });
+  axios.get('/api/ip')
+    .then(res => {
+      setIP(res.data.ip);
+      setGeo(res.data.geo && res.data.geo.country + ' - ' + res.data.geo.city || 'Unknown');
+    }).catch(err => {
+      console.log(err)
+    }
+  )
   return (
     <div>
       <Head>
