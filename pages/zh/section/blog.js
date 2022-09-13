@@ -11,19 +11,16 @@ export default function Blog() {
   }, [])
   function getBlogData() {
     axios.get("https://api.allorigins.win/raw?url=https://api.rss2json.com/v1/api.json?rss_url=https://api.allorigins.win/raw?url=https://medium.com/feed/@1998design")
-      .then(res => res.json())
-      .then(
-        (data) => {
-          if (window.innerWidth <= 1024) {
-            setBlogs(data.items);
-          } else {
-            setBlogs(data.items.slice(0, 9));
-          }
-        },
-        (error) => {
-          console.log(error)
+      .then(res => {
+        if (window.innerWidth <= 1024) {
+          setBlogs(res.data.items);
+        } else {
+          setBlogs(res.data.items.slice(0, 9));
         }
-      )
+      }).catch(err => {
+        console.log(err)
+      }
+    )
   }
   return (
     <div id="blog" data-aos="zoom-in" data-aos-once className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">

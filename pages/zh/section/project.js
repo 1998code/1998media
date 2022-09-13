@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import axios from 'axios'
 
 export default function Github() {
   const [githubs, setGithubs] = useState([])
@@ -9,22 +10,19 @@ export default function Github() {
     })
   }, [])
   function getGithubData() {
-    fetch("https://api.github.com/users/1998code/repos?sort=created_at")
-      .then(res => res.json())
-      .then(
-        (data) => {
-          if (data.documentation_url != "https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting") {
-            if (window.innerWidth <= 1024) {
-              setGithubs(data.slice(0, 8));
-            } else {
-              setGithubs(data.slice(0, 16));
-            }
+    axios.get("https://api.github.com/users/1998code/repos?sort=created_at")
+      .then(res => {
+        if (res.data.documentation_url != "https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting") {
+          if (window.innerWidth <= 1024) {
+            setGithubs(res.data.slice(0, 8));
+          } else {
+            setGithubs(res.data.slice(0, 16));
           }
-        },
-        (error) => {
-          console.log(error)
         }
-      )
+      }).catch(err => {
+        console.log(err)
+      }
+    )
   }
   return (
     <div id="project" data-aos="zoom-in" data-aos-once className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
