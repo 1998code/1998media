@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import axios from 'axios'
 
 export default function Blog() {
   const [blogs, setBlogs] = useState([])
@@ -9,7 +10,7 @@ export default function Blog() {
     })
   }, [])
   function getBlogData() {
-    fetch("https://api.allorigins.win/raw?url=https://api.rss2json.com/v1/api.json?rss_url=https://api.allorigins.win/raw?url=https://medium.com/feed/@1998design")
+    axios.get("https://api.allorigins.win/raw?url=https://api.rss2json.com/v1/api.json?rss_url=https://api.allorigins.win/raw?url=https://medium.com/feed/@1998design")
       .then(res => res.json())
       .then(
         (data) => {

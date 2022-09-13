@@ -11,6 +11,7 @@
   "dependencies": {
     "@newrelic/next": "^0.3.0",
     "@tailwindcss/aspect-ratio": "^0.4.0",
+    "axios": "^0.27.2",
     "darkmode-js": "^1.5.7",
     "geoip-lite": "^1.4.6",
     "newrelic": "^9.0.3",

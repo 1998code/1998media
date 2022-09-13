@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import axios from 'axios'
 
 export default function Footer() {
     const navigation = {
@@ -41,12 +42,14 @@ export default function Footer() {
     }
     const [ip, setIP] = useState([])
     const [geo, setGeo] = useState([])
-    fetch('/api/ip')
-      .then(response => response.json())
-      .then(data => {
-        setIP(data.ip);
-        setGeo(data.geo && data.geo.country + ' - ' + data.geo.city || '未知');
-      });
+    axios.get('/api/ip')
+      .then(res => {
+        setIP(res.data.ip);
+        setGeo(res.data.geo && res.data.geo.country + ' - ' + res.data.geo.city || '未知');
+      }).catch(err => {
+        console.log(err)
+      }
+    )
     return (
         <div data-aos="zoom-in" data-aos-once className="max-w-7xl mx-auto py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
           <nav className="-mx-5 -my-2 flex flex-wrap justify-center" aria-label="Footer">
