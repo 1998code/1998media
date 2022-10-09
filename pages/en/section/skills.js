@@ -1,4 +1,7 @@
 export default function Skills() {
+  const certs = [
+    { name: 'User Experience (UX) Design', icons: 'fa-google', href: 'https://coursera.org/verify/KDTDPH6RCXZD', bgColor: 'bg-blue-500' }
+  ]
   const softwares = [
     { name: 'Adobe Creative Cloud', icons: 'CC', href: '#', bgColor: 'bg-red-600' },
     { name: 'Figma', icons: 'fa-figma', href: '#', bgColor: 'bg-black dark:bg-white dark:text-black' },
@@ -55,6 +58,30 @@ export default function Skills() {
           </a>
         </div>
         <div className="mt-10">
+          <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">Certified</h2>
+          <ul role="list" className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {certs.map((cert) => (
+              <li key={cert.name} className="col-span-1 flex shadow-sm rounded-md">
+                <div
+                  className={classNames(
+                    cert.bgColor,
+                    'flex-shrink-0 flex items-center justify-center w-16 text-white text-sm font-medium rounded-l-md'
+                  )}
+                >
+                  <i className={classNames('fa-brands',cert.icons)}>{cert.icons.includes('fa') ? '' : cert.icons}</i>
+                </div>
+                <div className="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white dark:bg-black dark:border-black rounded-r-md truncate">
+                  <div className="flex-1 px-4 py-2 text-sm truncate">
+                    <a href={cert.href} target="_blank" className="text-gray-900 dark:text-gray-100 font-medium hover:text-gray-600">
+                      {cert.name}
+                    </a>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="mt-10">
           <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">Softwares</h2>
           <ul role="list" className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {softwares.map((software) => (
@@ -69,7 +96,7 @@ export default function Skills() {
                 </div>
                 <div className="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white dark:bg-black dark:border-black rounded-r-md truncate">
                   <div className="flex-1 px-4 py-2 text-sm truncate">
-                    <a href={software.href} className="text-gray-900 dark:text-gray-100 font-medium hover:text-gray-600">
+                    <a href={software.href} target="_blank" className="text-gray-900 dark:text-gray-100 font-medium hover:text-gray-600">
                       {software.name}
                     </a>
                   </div>
@@ -93,7 +120,7 @@ export default function Skills() {
                 </div>
                 <div className="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white dark:bg-black dark:border-black rounded-r-md truncate">
                   <div className="flex-1 px-4 py-2 text-sm truncate">
-                    <a href={language.href} className="text-gray-900 dark:text-gray-100 font-medium hover:text-gray-600">
+                    <a href={language.href} target="_blank" className="text-gray-900 dark:text-gray-100 font-medium hover:text-gray-600">
                       {language.name}
                     </a>
                   </div>
@@ -117,7 +144,7 @@ export default function Skills() {
                 </div>
                 <div className="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white dark:bg-black dark:border-black rounded-r-md truncate">
                   <div className="flex-1 px-4 py-2 text-sm truncate">
-                    <a href={speakWrite.href} className="text-gray-900 dark:text-gray-100 font-medium hover:text-gray-600">
+                    <a href={speakWrite.href} target="_blank" className="text-gray-900 dark:text-gray-100 font-medium hover:text-gray-600">
                       {speakWrite.name}
                     </a>
                   </div>

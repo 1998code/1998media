@@ -17,6 +17,10 @@ export default function About() {
               <img className="h-24 dark:hidden" src="/logos/PolyU.webp" alt="PolyU" />
               <img className="h-24 hidden dark:block" src="/logos/PolyU_dark.webp" alt="PolyU" />
             </div>
+            <div className="mt-4 ml-8 flex flex-grow flex-shrink-0 justify-center lg:flex-grow-0 lg:ml-4">
+              <img className="h-24 dark:hidden" src="/logos/Google.png" alt="Google" />
+              <img className="h-24 hidden dark:block" src="/logos/Google_dark.png" alt="Google" />
+            </div>
           </div>
         </div>
       </div>
