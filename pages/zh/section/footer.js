@@ -42,10 +42,14 @@ export default function Footer() {
     }
     const [ip, setIP] = useState([])
     const [geo, setGeo] = useState([])
+    const [latitude, setLatitude] = useState([])
+    const [longitude, setLongitude] = useState([])
     axios.get('/api/ip')
       .then(res => {
         setIP(res.data.ip);
         setGeo(res.data.geo && res.data.geo.country + ' - ' + res.data.geo.city || '未知');
+        setLatitude(res.data.latitude || '未知');
+        setLongitude(res.data.longitude || '未知');
       }).catch(err => {
         console.log(err)
       }
@@ -76,7 +80,7 @@ export default function Footer() {
           </div>
           <p className="mt-8 text-center text-base text-gray-400">MING 用♥製作</p>
           <p className="mt-1 text-center text-base text-gray-400">版本 22.10.9 | 自 2020 年起 | 完全開源。</p>
-          <p className="mt-1 text-center text-xs text-gray-400 pt-3">您的 IP 源自: {ip} | {geo}</p>
+          <p className="mt-1 text-center text-xs text-gray-400 pt-3">您的 IP 源自: {ip} | {geo} ({latitude}, {longitude})</p>
         </div>
     )
 }
