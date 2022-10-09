@@ -12,10 +12,14 @@ export default function Home() {
     });
   const [ip, setIP] = useState([])
   const [geo, setGeo] = useState([])
+  const [latitude, setLatitude] = useState([])
+  const [longitude, setLongitude] = useState([])
   axios.get('/api/ip')
     .then(res => {
       setIP(res.data.ip);
       setGeo(res.data.geo && res.data.geo.country + ' - ' + res.data.geo.city || '未知');
+      setLatitude(res.data.latitude || '未知');
+      setLongitude(res.data.longitude || '未知');
     }).catch(err => {
       console.log(err)
     }
@@ -45,7 +49,7 @@ export default function Home() {
             <i className="fas fa-rotate-left ml-3"></i>
           </a>
           <br />
-          <p data-aos="zoom-in" data-aos-delay="750" data-aos-duration="250" className="mt-5 text-center text-xs text-gray-400 pt-3">{ip} | {geo}</p>
+          <p data-aos="zoom-in" data-aos-delay="750" data-aos-duration="250" className="mt-5 text-center text-xs text-gray-400 pt-3">{ip}，{geo} ({latitude}，{longitude})</p>
         </div>
       </main>
     </div>
