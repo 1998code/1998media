@@ -47,7 +47,7 @@ export default function Footer() {
     axios.get('/api/ip')
       .then(res => {
         setIP(res.data.ip);
-        setGeo(res.data.geo && res.data.geo.country + '，' + res.data.geo.city || '未知');
+        setGeo(res.data.geo && res.data.geo.city + '，' + res.data.geo.country || '未知');
         setLatitude(res.data.latitude || '未知');
         setLongitude(res.data.longitude || '未知');
       }).catch(err => {

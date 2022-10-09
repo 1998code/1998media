@@ -17,7 +17,7 @@ export default function Home() {
   axios.get('/api/ip')
     .then(res => {
       setIP(res.data.ip);
-      setGeo(res.data.geo && res.data.geo.country + ', ' + res.data.geo.city || 'Неизвестный');
+      setGeo(res.data.geo && res.data.geo.city + ', ' + res.data.geo.country || 'Неизвестный');
       setLatitude(res.data.latitude || 'Неизвестный');
       setLongitude(res.data.longitude || 'Неизвестный');
     }).catch(err => {
