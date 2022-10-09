@@ -42,10 +42,14 @@ export default function Footer() {
     }
     const [ip, setIP] = useState([])
     const [geo, setGeo] = useState([])
+    const [latitude, setLatitude] = useState([])
+    const [longitude, setLongitude] = useState([])
     axios.get('/api/ip')
       .then(res => {
         setIP(res.data.ip);
         setGeo(res.data.geo && res.data.geo.country + ' - ' + res.data.geo.city || 'Unknown');
+        setLatitude(res.data.latitude || 'Unknown');
+        setLongitude(res.data.longitude || 'Unknown');
       }).catch(err => {
         console.log(err)
       }
@@ -76,7 +80,7 @@ export default function Footer() {
           </div>
           <p className="mt-8 text-center text-base text-gray-400">Made with&nbsp;♥&nbsp;by MING</p>
           <p className="mt-1 text-center text-base text-gray-400">Ver. 22.10.9 | Since 2020 | Open Source.</p>
-          <p className="mt-1 text-center text-xs text-gray-400 pt-3">You come from: {ip} | {geo}</p>
+          <p className="mt-1 text-center text-xs text-gray-400 pt-3">You come from: {ip} | {geo} | {latitude} | {longitude}</p>
         </div>
     )
 }
