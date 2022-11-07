@@ -14,13 +14,6 @@ import Credits from './section/credits'
 import Footer from './section/footer'
 
 export default function Home() {
-  axios.get('/api/newrelic')
-    .then(res => {
-      // console.log(res.data)
-    }).catch(err => {
-      console.log(err)
-    }
-  )
   return (
     <div>
       <Head>

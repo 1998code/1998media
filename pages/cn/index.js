@@ -3,13 +3,6 @@ import { useState } from 'react'
 import axios from 'axios'
 
 export default function Home() {
-  fetch ('/api/newrelic')
-    .then (res => res.json())
-    .then (data => {
-      // console.log(data)
-    }).catch (err => {
-      console.log(err)
-    });
   const [ip, setIP] = useState([])
   const [geo, setGeo] = useState([])
   const [latitude, setLatitude] = useState([])
