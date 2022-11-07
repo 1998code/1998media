@@ -79,7 +79,7 @@ export default function Footer() {
             ))}
           </div>
           <p className="mt-8 text-center text-base text-gray-400">Made with&nbsp;♥&nbsp;by MING</p>
-          <p className="mt-1 text-center text-base text-gray-400">Ver. 22.11.05 | Since 2020 | Open Source.</p>
+          <p className="mt-1 text-center text-base text-gray-400">Ver. 22.11.08 | Since 2020 | Open Source.</p>
           <p className="mt-1 text-center text-xs text-gray-400 pt-3">You come from: {ip} | {geo} ({latitude}, {longitude})</p>
         </div>
     )
