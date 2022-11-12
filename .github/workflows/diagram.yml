@@ -1,7 +1,10 @@
 name: Create diagram
 on:
-  - push
-      
+  workflow_dispatch: {}
+  push:
+    branches:
+      - main
+      - nextJS12
 jobs:
   get_data:
     runs-on: ubuntu-latest
