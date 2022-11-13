@@ -30,3 +30,7 @@ a {
 .darkmode-toggle {
   z-index: 10;
 }
+
+.github-octo-flat-ui {
+  height: 35vh!important;
+}

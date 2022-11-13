@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@githubocto/flat-ui": "^0.14.1",
     "@tailwindcss/aspect-ratio": "^0.4.0",
     "axios": "^0.27.2",
     "darkmode-js": "^1.5.7",
