@@ -86,7 +86,7 @@ export default function Footer() {
           <p className="text-gray-400">You come from: {ip} | {geo} ({latitude}，{longitude})</p>
           <div>
             {navigation.main.map((item) => (
-              <a href={item.href} target="_blank" alt={item.name} className="ml-3 text-gray-500 hover:text-gray-600">
+              <a href={item.href} target="_blank" alt={item.name} className="text-gray-500 hover:text-gray-600">
                 {item.name}
                 {item.href.includes('http') ? (
                   <i className="ml-1 fa fa-external-link fa-sm"></i>
