@@ -56,10 +56,37 @@ export default function Footer() {
     )
     return (
         <div data-aos="zoom-in" data-aos-once className="max-w-7xl mx-auto py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
-          <nav className="-mx-5 -my-2 flex flex-wrap justify-center" aria-label="Footer">
-            {navigation.main.map((item) => (
-              <div key={item.name} className="px-5 py-2">
-                <a href={item.href} target="_blank" className="text-base text-gray-500 hover:text-gray-600">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <p className="text-gray-400">MING 用 <i className="fa fa-heart" /> 製作</p>
+              <p className="mt-1 text-gray-400 text-sm">版本 22.12.18 | 自 2020 年起 | 完全開源。</p>
+            </div>
+            <div className="flex justify-center space-x-6">
+              {navigation.social.map((item) => (
+                <a key={item.name} href={item.href} target="_blank" className="text-gray-400 hover:text-gray-500">
+                  <span className="sr-only">{item.name}</span>
+                  <item.icon aria-hidden="true" />
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <hr className="mt-3" />
+
+          <div className="mt-1 text-xs text-gray-400 pt-3 gap-3 flex flex-wrap justify-between">
+            <span class="flex items-center gap-3">
+              兼容: 
+              <i class="fab fa-safari"></i>
+              <i class="fab fa-chrome"></i>
+              <i class="fab fa-firefox-browser" />
+              <i class="fab fa-edge"></i>
+              <i class="fab fa-opera"></i>
+              <i class="fab fa-internet-explorer"></i>
+            </span>
+            <p className="text-gray-400">您的 IP 源自: {ip} | {geo} ({latitude}，{longitude})</p>
+            <div>
+              {navigation.main.map((item) => (
+                <a href={item.href} target="_blank" alt={item.name} className="ml-3 text-gray-500 hover:text-gray-600">
                   {item.name}
                   {item.href.includes('http') ? (
                     <i className="ml-1 fa fa-external-link fa-sm"></i>
@@ -67,20 +94,9 @@ export default function Footer() {
                     <i className="ml-1 fa fa-circle-arrow-up fa-sm"></i>
                   )}
                 </a>
-              </div>
-            ))}
-          </nav>
-          <div className="mt-8 flex justify-center space-x-6">
-            {navigation.social.map((item) => (
-              <a key={item.name} href={item.href} target="_blank" className="text-gray-400 hover:text-gray-500">
-                <span className="sr-only">{item.name}</span>
-                <item.icon aria-hidden="true" />
-              </a>
-            ))}
+              ))}
+            </div>
           </div>
-          <p className="mt-8 text-center text-base text-gray-400">MING 用♥製作</p>
-          <p className="mt-1 text-center text-base text-gray-400">版本 22.12.18 | 自 2020 年起 | 完全開源。</p>
-          <p className="mt-1 text-center text-xs text-gray-400 pt-3">您的 IP 源自: {ip} | {geo} ({latitude}，{longitude})</p>
         </div>
     )
 }

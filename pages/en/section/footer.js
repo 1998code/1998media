@@ -55,22 +55,13 @@ export default function Footer() {
       }
     )
     return (
-        <div id="footer" data-aos="zoom-in" data-aos-once className="max-w-7xl mx-auto py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
-          <nav className="-mx-5 -my-2 flex flex-wrap justify-center" aria-label="Footer">
-            {navigation.main.map((item) => (
-              <div key={item.name} className="px-5 py-2">
-                <a href={item.href} target="_blank" className="text-base text-gray-500 hover:text-gray-600">
-                  {item.name}
-                  {item.href.includes('http') ? (
-                    <i className="ml-1 fa fa-external-link fa-sm"></i>
-                  ) : (
-                    <i className="ml-1 fa fa-circle-arrow-up fa-sm"></i>
-                  )}
-                </a>
-              </div>
-            ))}
-          </nav>
-          <div className="mt-8 flex justify-center space-x-6">
+      <div data-aos="zoom-in" data-aos-once className="right-0 max-w-7xl mx-auto py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <p className="text-gray-400">Made with <i className="fa fa-heart" /> by MING</p>
+            <p className="mt-1 text-gray-400 text-sm">Ver. 22.12.18 | Since 2020 | Open Source.</p>
+          </div>
+          <div className="flex justify-center space-x-6">
             {navigation.social.map((item) => (
               <a key={item.name} href={item.href} target="_blank" className="text-gray-400 hover:text-gray-500">
                 <span className="sr-only">{item.name}</span>
@@ -78,9 +69,34 @@ export default function Footer() {
               </a>
             ))}
           </div>
-          <p className="mt-8 text-center text-base text-gray-400">Made with&nbsp;♥&nbsp;by MING</p>
-          <p className="mt-1 text-center text-base text-gray-400">Ver. 22.12.18 | Since 2020 | Open Source.</p>
-          <p className="mt-1 text-center text-xs text-gray-400 pt-3">You come from: {ip} | {geo} ({latitude}, {longitude})</p>
         </div>
+
+        <hr className="mt-3" />
+
+        <div className="mt-1 text-xs text-gray-400 pt-3 gap-3 flex flex-wrap justify-between">
+          <span class="flex items-center gap-3">
+            Compatible with: 
+            <i class="fab fa-safari"></i>
+            <i class="fab fa-chrome"></i>
+            <i class="fab fa-firefox-browser" />
+            <i class="fab fa-edge"></i>
+            <i class="fab fa-opera"></i>
+            <i class="fab fa-internet-explorer"></i>
+          </span>
+          <p className="text-gray-400">You come from: {ip} | {geo} ({latitude}，{longitude})</p>
+          <div>
+            {navigation.main.map((item) => (
+              <a href={item.href} target="_blank" alt={item.name} className="ml-3 text-gray-500 hover:text-gray-600">
+                {item.name}
+                {item.href.includes('http') ? (
+                  <i className="ml-1 fa fa-external-link fa-sm"></i>
+                ) : (
+                  <i className="ml-1 fa fa-circle-arrow-up fa-sm"></i>
+                )}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
     )
 }

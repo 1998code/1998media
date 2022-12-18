@@ -39,8 +39,8 @@ export default function Home() {
         <Faq />
         <Contact />
         <Credits />
+        <Footer />
       </main>
-      <Footer />
     </div>
   )
 }
