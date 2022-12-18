@@ -40,15 +40,17 @@ function MyApp({ Component, pageProps }) {
 
 import Darkmode from 'darkmode-js';
 const options = {
+  bottom: '95vh',
+  right: '15px',
+  time: '1.5s',
   mixColor: '#fff',
   backgroundColor: '#fff6eb',
   buttonColorDark: '#000',
   buttonColorLight: '#fff6eb',
   saveInCookies: true,
-  label: '🌓',
+  label: '<i class="fa fa-moon-over-sun text-orange-300 dark:text-orange-500" />',
   autoMatchOsTheme: true
 }
-
 const darkmode = new Darkmode(options);
 darkmode.showWidget();
 
