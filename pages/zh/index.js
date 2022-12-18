@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import axios from 'axios'
 
 import Header from './section/header'
 import About from './section/about'
