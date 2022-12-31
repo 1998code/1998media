@@ -59,7 +59,7 @@ export default function Footer() {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <p className="text-gray-400">Made with <i className="fa fa-heart" /> by MING</p>
-            <p className="mt-1 text-gray-400 text-sm">Ver. 22.12.18 | Since 2020 | Open Source.</p>
+            <p className="mt-1 text-gray-400 text-sm">Ver. 22.12.31 | Since 2020 | Open Source.</p>
           </div>
           <div className="flex justify-center space-x-6">
             {navigation.social.map((item) => (
@@ -84,14 +84,14 @@ export default function Footer() {
             <i class="fab fa-internet-explorer"></i>
           </span>
           <p className="text-gray-400">You come from: {ip} | {geo} ({latitude}，{longitude})</p>
-          <div>
+          <div class="flex gap-3">
             {navigation.main.map((item) => (
               <a href={item.href} target="_blank" alt={item.name} className="text-gray-500 hover:text-gray-600">
                 {item.name}
                 {item.href.includes('http') ? (
                   <i className="ml-1 fa fa-external-link fa-sm"></i>
                 ) : (
-                  <i className="ml-1 fa fa-circle-arrow-up fa-sm"></i>
+                  <i className="ml-1 far fa-circle-arrow-up fa-sm"></i>
                 )}
               </a>
             ))}
