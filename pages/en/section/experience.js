@@ -1,6 +1,15 @@
 export default function Experience() {
   const positions = [
     {
+      title: 'Senior Software Engineer',
+      type: 'Full-time',
+      location: '🇭🇰 HONG KONG',
+      description: 'UI Design, Web, iOS Development, A.I. Research',
+      date: '2023-NOW',
+      textColor: 'text-blue-600',
+      bgColor: 'bg-blue-100'
+    },
+    {
       title: 'QuestDB Translator',
       type: 'Volunteer',
       location: '🌐 Remote, United Kingdom',
@@ -23,7 +32,7 @@ export default function Experience() {
       type: 'Full-time',
       location: '🇭🇰 HONG KONG',
       description: 'Web + iOS Development',
-      date: '2021-NOW',
+      date: '2021-2023',
       textColor: 'text-blue-600',
       bgColor: 'bg-blue-100'
     },

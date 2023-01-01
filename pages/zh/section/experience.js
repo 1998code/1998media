@@ -1,6 +1,15 @@
 export default function Experience() {
   const positions = [
     {
+      title: '高級軟件工程師',
+      type: '全職',
+      location: '🇭🇰 香港',
+      description: 'UI 設計、Web、iOS 開發、A.I. 研究',
+      date: '2023-現在',
+      textColor: 'text-blue-600',
+      bgColor: 'bg-blue-100'
+    },
+    {
       title: 'QuestDB 譯者',
       type: '志願',
       location: '🌐 遠程, 英國',
@@ -23,7 +32,7 @@ export default function Experience() {
       type: '全職',
       location: '🇭🇰 香港',
       description: '網站UI設計+iOS開發',
-      date: '2021-現在',
+      date: '2021-2023',
       textColor: 'text-blue-600',
       bgColor: 'bg-blue-100'
     },
