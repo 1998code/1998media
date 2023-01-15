@@ -59,7 +59,7 @@ export default function Footer() {
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
               <p className="text-gray-400">MING 用 <i className="fa fa-heart" /> 製作</p>
-              <p className="mt-1 text-gray-400 text-sm">版本 23.1.14 | 自 2020 年起 | 完全開源。</p>
+              <p className="mt-1 text-gray-400 text-sm">版本 23.1.15 | 自 2020 年起 | 完全開源。</p>
             </div>
             <div className="flex justify-center space-x-6">
               {navigation.social.map((item) => (
