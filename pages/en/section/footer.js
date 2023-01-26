@@ -59,7 +59,7 @@ export default function Footer() {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <p className="text-gray-400">Made with <i className="fa fa-heart" /> by MING</p>
-            <p className="mt-1 text-gray-400 text-sm">Ver. 23.1.15 | Since 2020 | Open Source.</p>
+            <p className="mt-1 text-gray-400 text-sm">Ver. 23.1.26 | Since 2020 | Open Source.</p>
           </div>
           <div className="flex justify-center space-x-6">
             {navigation.social.map((item) => (
