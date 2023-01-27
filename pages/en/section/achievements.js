@@ -17,7 +17,7 @@ export default function Achievements() {
           <div className="relative max-w-7xl mx-auto">
             <div className="max-w-7xl mx-auto">
               <dl className="rounded-lg bg-white dark:bg-black shadow-lg sm:grid sm:grid-cols-3 divide-gray-100 dark:divide-gray-900 divide-x-2 divide-y-2">
-              <div className="flex flex-col p-6 text-center">
+                <div className="flex flex-col p-6 text-center">
                   <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">2022</dt>
                   <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">Graphics & Design App in Uzbekistan</dt>
                   <dd className="order-1 text-5xl font-extrabold text-pink-600">#1</dd>
