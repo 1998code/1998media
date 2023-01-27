@@ -19,6 +19,11 @@ export default function Achievements() {
             <dl className="rounded-lg bg-white dark:bg-black shadow-lg sm:grid sm:grid-cols-3 divide-gray-100 dark:divide-gray-900 divide-x-2 divide-y-2">
                 <div className="flex flex-col p-6 text-center">
                   <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">2022</dt>
+                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">App Store 付費圖形與設計軟件</dt>
+                  <dd className="order-1 text-5xl font-extrabold text-pink-600">烏茲別克 第一</dd>
+                </div>
+                <div className="flex flex-col p-6 text-center">
+                  <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">2022</dt>
                   <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">App Store 付費開發者工具</dt>
                   <dd className="order-1 text-5xl font-extrabold text-pink-600">科威特 第一</dd>
                 </div>
