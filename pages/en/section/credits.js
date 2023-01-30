@@ -2,7 +2,7 @@ export default function Credits() {
   return (
     <div id="credits" data-aos="zoom-in" data-aos-once className="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8 flex flex-wrap justify-between gap-3">
       <h2 className="text-3xl font-extrabold text-orange-600 dark:text-orange-100">
-        Premium Sponsors
+        Special Thanks
       </h2>
       <div className="flex flex-wrap gap-3">
         <a href="https://vercel.com/?utm_source=1998code&utm_campaign=oss">
