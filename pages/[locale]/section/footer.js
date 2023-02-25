@@ -59,7 +59,7 @@ export default function Footer() {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <p className="text-gray-400">Made with <i className="fa fa-heart" /> by MING</p>
-            <p className="mt-1 text-gray-400 text-sm">Ver. 23.01.30 | Since 2020 | Open Source.</p>
+            <p className="mt-1 text-gray-400 text-sm">Ver. 23.02.25 | Since 2020 | Open Source.</p>
           </div>
           <div className="flex justify-center space-x-6">
             {navigation.social.map((item) => (
@@ -74,17 +74,17 @@ export default function Footer() {
         <hr className="mt-3" />
 
         <div className="mt-1 text-xs text-gray-400 pt-3 gap-3 flex flex-wrap justify-between">
-          <span class="flex items-center gap-3">
+          <span className="flex items-center gap-3">
             Compatible with: 
-            <i class="fab fa-safari"></i>
-            <i class="fab fa-chrome"></i>
-            <i class="fab fa-firefox-browser" />
-            <i class="fab fa-edge"></i>
-            <i class="fab fa-opera"></i>
-            <i class="fab fa-internet-explorer"></i>
+            <i className="fab fa-safari"></i>
+            <i className="fab fa-chrome"></i>
+            <i className="fab fa-firefox-browser" />
+            <i className="fab fa-edge"></i>
+            <i className="fab fa-opera"></i>
+            <i className="fab fa-internet-explorer"></i>
           </span>
           <p className="text-gray-400">You come from: {ip} | {geo} ({latitude}，{longitude})</p>
-          <div class="flex gap-3">
+          <div className="flex gap-3">
             {navigation.main.map((item) => (
               <a href={item.href} target="_blank" alt={item.name} className="text-gray-500 hover:text-gray-600">
                 {item.name}

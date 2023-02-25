@@ -4,35 +4,35 @@ import '../styles/globals.css'
 function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
+    if (window.location.hostname !== 'localhost') {
+      document.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+      });
 
-    document.addEventListener('contextmenu', (e) => {
-      e.preventDefault();
-    });
+      console.log("Glad that you found here. Are you looking for job? Contact hire+web@1998.media");
 
-    console.log("Glad that you found here. Are you looking for job? Contact hire+web@1998.media");
+      const year = new Date().getFullYear() - 2000 + 2;
 
-    const year = new Date().getFullYear() - 2000 + 2;
-
-    console.log(`
-           #
-          # #
-        # # # #
-      # # # # # #
-    # # # Y${ year } # # #
-      # # # # # #
-        # # # #
-          # #
-           #
-           *
-           *
-           * 
-           * *
-           * * *
-           * *
-           * 
-           
-    `);
-
+      console.log(`
+            #
+            # #
+          # # # #
+        # # # # # #
+      # # # Y${ year } # # #
+        # # # # # #
+          # # # #
+            # #
+            #
+            *
+            *
+            * 
+            * *
+            * * *
+            * *
+            * 
+            
+      `);
+    }
   }, []);
 
   return <Component {...pageProps} />

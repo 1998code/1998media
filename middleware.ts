@@ -4,7 +4,7 @@ export const config = {
   matcher: '/',
 }
 
-export default function middleware(req: NextRequest) {
+export async function middleware(req: NextRequest) {
   const locale = req.headers.get('accept-language')?.split(',')?.[0]
   switch (locale) {
     case 'zh-TW':
@@ -17,7 +17,7 @@ export default function middleware(req: NextRequest) {
       req.nextUrl.pathname = '/ru'
       return NextResponse.rewrite(req.nextUrl)
     default:
-      req.nextUrl.pathname = '/en'
+      req.nextUrl.pathname = '/' + locale
       return NextResponse.rewrite(req.nextUrl)
   }
 }

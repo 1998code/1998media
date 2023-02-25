@@ -1,4 +1,7 @@
 import Head from 'next/head'
+import { useRouter } from 'next/router'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 
 import Header from './section/header'
 import About from './section/about'
@@ -13,6 +16,21 @@ import Credits from './section/credits'
 import Footer from './section/footer'
 
 export default function Home() {
+
+  useEffect(() => {
+      getI18nData()
+  }, [])
+
+  const [i18n, setI18n] = useState({})
+  function getI18nData() {
+    const path = window.location.pathname.replace('/', '')
+    axios.get(`https://edge-config.vercel.com/ecfg_q7yd5f5h35awid45o3p6roxirwjh?token=983e3f47-9a89-4095-a2a6-658990cd1835`).then((res) => {
+        setI18n(res.data.items[path])
+    }).catch((err) => {
+        console.log(err)
+    })
+  }
+
   return (
     <div>
       <Head>
@@ -30,17 +48,17 @@ export default function Home() {
         AOS.init();
       </script>
       <main className="select-none darkmode-ignore overflow-hidden">
-        <Header />
-        <About />
-        <Achievements />
-        <Skills />
-        <Experience />
-        <Project />
-        <Blog />
-        <Faq />
-        <Contact />
-        <Credits />
-        <Footer />
+        <Header i18n={i18n} />
+        <About i18n={i18n} />
+        <Achievements i18n={i18n} />
+        <Skills i18n={i18n} />
+        <Experience i18n={i18n} />
+        <Project i18n={i18n} />
+        <Blog i18n={i18n} />
+        <Faq i18n={i18n} />
+        <Contact i18n={i18n} />
+        <Credits i18n={i18n} />
+        <Footer i18n={i18n} />
       </main>
     </div>
   )
