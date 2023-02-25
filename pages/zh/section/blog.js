@@ -10,7 +10,7 @@ export default function Blog() {
     })
   }, [])
   function getBlogData() {
-    axios.get("https://api.rss2json.com/v1/api.json?rss_url=https://api.allorigins.win/raw?url=https://medium.com/feed/@1998design")
+    axios.get("https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@1998design")
       .then(res => {
         if (window.innerWidth <= 1024) {
           setBlogs(res.data.items);
