@@ -1,7 +1,7 @@
 export default function Header(props) {
 
     function i18n(key) {
-        return props.i18n && props.i18n['header'] ? props.i18n['header'][key] : key
+        return props.i18n && props.i18n['header'] && props.i18n['header'][key] ? props.i18n['header'][key] : key
     }
 
     return (
