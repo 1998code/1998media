@@ -28,62 +28,58 @@ export default function Achievements(props) {
               <dl className="rounded-lg overflow-hidden bg-white dark:bg-black shadow-lg sm:grid sm:grid-cols-2 md:grid-cols-3 divide-y divide-gray-200 dark:divide-gray-800 md:divide-y-0">
                 <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
                   <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">2022</dt>
-                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">Graphics & Design App in Uzbekistan</dt>
-                  <dd className="order-1 text-5xl font-extrabold text-sky-600">#1</dd>
+                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Graphics & Design App in Uzbekistan")}</dt>
+                  <dd className="order-1 text-5xl font-extrabold text-sky-600">{i18n("#1")}</dd>
                 </div>
                 <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
                   <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">2022</dt>
-                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">Developer Tools in Kuwait</dt>
-                  <dd className="order-1 text-5xl font-extrabold text-pink-600">#1</dd>
+                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Developer Tools in Kuwait")}</dt>
+                  <dd className="order-1 text-5xl font-extrabold text-pink-600">{i18n("#1")}</dd>
                 </div>
                 <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
                   <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">2022</dt>
-                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">Developer Tools in Taiwan</dt>
-                  <dd className="order-1 text-5xl font-extrabold text-green-600">#1</dd>
+                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Developer Tools in Taiwan")}</dt>
+                  <dd className="order-1 text-5xl font-extrabold text-green-600">{i18n("#1")}</dd>
                 </div>
                 <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
                   <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">2022</dt>
-                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">Developer Tools in Canada</dt>
-                  <dd className="order-1 text-5xl font-extrabold text-blue-600">#1</dd>
+                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Developer Tools in Canada")}</dt>
+                  <dd className="order-1 text-5xl font-extrabold text-blue-600">{i18n("#1")}</dd>
                 </div>
                 <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
                   <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">2021</dt>
-                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">Developer Tools in the United States</dt>
-                  <dd className="order-1 text-5xl font-extrabold text-cyan-600">#1</dd>
+                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Developer Tools in the United States")}</dt>
+                  <dd className="order-1 text-5xl font-extrabold text-cyan-600">{i18n("#1")}</dd>
                 </div>
                 <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
                   <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">2021</dt>
-                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">Apple Worldwide Developers Conference (WWDC)</dt>
-                  <dd className="order-1 text-5xl font-extrabold text-orange-600 dark:text-orange-300">Winner</dd>
+                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Apple Worldwide Developers Conference (WWDC)")}</dt>
+                  <dd className="order-1 text-5xl font-extrabold text-orange-600 dark:text-orange-300">{i18n("Winner")}</dd>
                 </div>
                 <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
-                  <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">Since 2020</dt>
-                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">Paid Apps in Different Categories Globally</dt>
-                  <dd className="order-1 text-5xl font-extrabold text-teal-600">Top-100</dd>
+                  <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">{i18n("Since")} 2020</dt>
+                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Paid Apps in Different Categories Globally")}</dt>
+                  <dd className="order-1 text-5xl font-extrabold text-teal-600">{i18n("Top-100")}</dd>
                 </div>
               </dl>
             </div>
             <div className="pt-6">
               <h3 className="mt-6 text-lg font-medium leading-6 text-gray-900 dark:text-gray-100">
                 <i className="far fa-cube mr-2"></i>
-                Unsplash 3D & Photography
+                {i18n("Unsplash 3D & Photography")}
               </h3>
               <dl className="mt-5 bg-white dark:bg-black grid grid-cols-1 overflow-hidden rounded-lg shadow md:grid-cols-3 divide-y divide-gray-200 dark:divide-gray-800 md:divide-y-0 md:divide-x">
                 {stats.map((item) => (
                   <div key={item.name} className="px-4 py-5 sm:p-6">
-                    <dt className="text-base font-normal text-gray-900 dark:text-gray-100">{item.name}</dt>
+                    <dt className="text-base font-normal text-gray-900 dark:text-gray-100">{i18n(item.name)}</dt>
                     <dd className="mt-1 flex items-baseline justify-between md:block lg:flex">
                       <div className="flex items-baseline text-2xl font-semibold text-emerald-600">
-                        {item.stat}
-                        <span className="ml-2 text-sm font-medium text-gray-500">{item.year}</span>
+                        {i18n(item.stat)}
+                        <span className="ml-2 text-sm font-medium text-gray-500">{i18n(item.year)}</span>
                       </div>
 
-                      <div
-                        className="bg-green-800 text-green-100 inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium md:mt-2 lg:mt-0"
-                      >
-                        <i
-                          className="flex-shrink-0 self-center fa fa-caret-up"
-                        />
+                      <div className="bg-green-800 text-green-100 inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium md:mt-2 lg:mt-0">
+                        <i className="flex-shrink-0 self-center fa fa-caret-up" />
                       </div>
                     </dd>
                   </div>

@@ -38,7 +38,7 @@ export default function Blog(props) {
             {i18n("Find out the latest posts and tutorials.")}
           </p>
         </div>
-        <div className="mt-8 mx-auto grid gap-5 md:grid-cols-2 lg:grid-cols-3 lg:max-w-none">
+        <div className="mt-8 mx-auto grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:max-w-none">
           {blogs.map(post => (
             <div key={post.title} className="flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-105">
               <div className="flex-shrink-0">

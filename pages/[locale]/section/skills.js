@@ -86,7 +86,7 @@ export default function Skills(props) {
           </ul>
         </div>
         <div className="mt-10">
-          <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">Softwares</h2>
+          <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">{i18n("Softwares")}</h2>
           <ul role="list" className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {softwares.map((software) => (
               <li key={software.name} className="col-span-1 flex shadow-sm rounded-md">
@@ -110,7 +110,7 @@ export default function Skills(props) {
           </ul>
         </div>
         <div className="mt-10">
-          <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">Languages & Technologies</h2>
+          <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">{i18n("Languages & Technologies")}</h2>
           <ul role="list" className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {languages.map((language) => (
               <li key={language.name} className="col-span-1 flex shadow-sm rounded-md">
@@ -134,7 +134,7 @@ export default function Skills(props) {
           </ul>
         </div>
         <div className="mt-10">
-          <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">Speak & Write</h2>
+          <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">{i18n("Speak & Write")}</h2>
           <ul role="list" className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2">
             {speakWrites.map((speakWrite) => (
               <li key={speakWrite.name} className="col-span-1 flex shadow-sm rounded-md">

@@ -27,7 +27,7 @@ export default function Home() {
       <script>
         AOS.init();
       </script>
-      <main className="select-none darkmode-ignore overflow-hidden">
+      <main className="darkmode-ignore overflow-hidden">
         <Header />
         <About />
         <Achievements />

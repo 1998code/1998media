@@ -4,8 +4,8 @@ import { Grid } from '@githubocto/flat-ui';
 
 export default function Projects(props) {
   function i18n(key) {
-    console.log(props.i18n && props.i18n['projects'] ? '' : 'Projects Missing i18n: ' + key)
-    return props.i18n && props.i18n['projects'] ? props.i18n['projects'][key] : key
+    console.log(props.i18n && props.i18n['projects'] && props.i18n['projects'][key] ? '' : 'Projects Missing i18n: ' + key)
+    return props.i18n && props.i18n['projects'] && props.i18n['projects'][key] ? props.i18n['projects'][key] : key
   }
   const [githubs, setGithubs] = useState([])
   const [githubRaw, setGithubRaw] = useState([])
@@ -40,10 +40,10 @@ export default function Projects(props) {
             <i className="fas fa-code ml-2"></i>
           </a>
           <p className="mt-2 max-w-2xl text-xl text-gray-500">
-            {i18n("Find out the latest inspiration")}{i18n(".")}
+            {i18n("Find out the latest inspiration.")}
           </p>
         </div>
-        <div className="mt-8 mx-auto grid gap-5 md:grid-cols-2 lg:grid-cols-4 lg:max-w-none">
+        <div className="mt-8 mx-auto grid gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:max-w-none">
           {githubs.map(repo => (
             <a href={repo.html_url} target="_blank" key={repo.name} className="flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-105">
               <div className="flex-1 p-6 flex flex-col justify-between">
