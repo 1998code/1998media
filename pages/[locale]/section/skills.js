@@ -1,4 +1,8 @@
-export default function Skills() {
+export default function Skills(props) {
+  function i18n(key) {
+    console.log(props.i18n && props.i18n['skills'] && props.i18n['skills'][key] ? '' : 'Skills Missing i18n: ' + key)
+    return props.i18n && props.i18n['skills'] && props.i18n['skills'][key] ? props.i18n['skills'][key] : key
+  }
   const certs = [
     { name: 'User Experience (UX) Design', icons: 'fa-google', href: 'https://coursera.org/verify/KDTDPH6RCXZD', bgColor: 'bg-blue-500' }
   ]
@@ -53,12 +57,12 @@ export default function Skills() {
       <div className="relative max-w-7xl mx-auto">
         <div className="text-left flex">
           <a className="text-3xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl" href="#skills">
-            Skills & Languages
+            {i18n("Skills & Languages")}
             <i className="fa-regular fa-language ml-2"></i>
           </a>
         </div>
         <div className="mt-10">
-          <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">Certified</h2>
+          <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">{i18n("Certified")}</h2>
           <ul role="list" className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {certs.map((cert) => (
               <li key={cert.name} className="col-span-1 flex shadow-sm rounded-md">
@@ -73,7 +77,7 @@ export default function Skills() {
                 <div className="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white dark:bg-black dark:border-black rounded-r-md truncate">
                   <div className="flex-1 px-4 py-2 text-sm truncate">
                     <a href={cert.href} target="_blank" className="text-gray-900 dark:text-gray-100 font-medium hover:text-gray-600">
-                      {cert.name}
+                      {i18n(cert.name)}
                     </a>
                   </div>
                 </div>
@@ -97,7 +101,7 @@ export default function Skills() {
                 <div className="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white dark:bg-black dark:border-black rounded-r-md truncate">
                   <div className="flex-1 px-4 py-2 text-sm truncate">
                     <a href={software.href} target="_blank" className="text-gray-900 dark:text-gray-100 font-medium hover:text-gray-600">
-                      {software.name}
+                      {i18n(software.name)}
                     </a>
                   </div>
                 </div>
@@ -121,7 +125,7 @@ export default function Skills() {
                 <div className="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white dark:bg-black dark:border-black rounded-r-md truncate">
                   <div className="flex-1 px-4 py-2 text-sm truncate">
                     <a href={language.href} target="_blank" className="text-gray-900 dark:text-gray-100 font-medium hover:text-gray-600">
-                      {language.name}
+                      {i18n(language.name)}
                     </a>
                   </div>
                 </div>
@@ -140,12 +144,12 @@ export default function Skills() {
                     'flex-shrink-0 flex items-center justify-center w-24 text-white text-sm font-medium rounded-l-md'
                   )}
                 >
-                  {speakWrite.icons}
+                  {i18n(speakWrite.icons)}
                 </div>
                 <div className="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white dark:bg-black dark:border-black rounded-r-md truncate">
                   <div className="flex-1 px-4 py-2 text-sm truncate">
                     <a href={speakWrite.href} target="_blank" className="text-gray-900 dark:text-gray-100 font-medium hover:text-gray-600">
-                      {speakWrite.name}
+                      {i18n(speakWrite.name)}
                     </a>
                   </div>
                 </div>
@@ -153,7 +157,7 @@ export default function Skills() {
             ))}
           </ul>
         </div>
-        <p className="mt-10 text-sm text-gray-500">*Random sort - does not mean the order of proficient level</p>
+        <p className="mt-10 text-sm text-gray-500">{i18n("*Random sort - does not mean the order of proficient level")}</p>
       </div>
     </div>
   )

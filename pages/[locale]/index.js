@@ -8,7 +8,7 @@ import About from './section/about'
 import Achievements from './section/achievements'
 import Skills from './section/skills'
 import Experience from './section/experience'
-import Project from './section/project'
+import Projects from './section/projects'
 import Blog from './section/blog'
 import Faq from './section/faq'
 import Contact from './section/contact'
@@ -53,7 +53,7 @@ export default function Home() {
         <Achievements i18n={i18n} />
         <Skills i18n={i18n} />
         <Experience i18n={i18n} />
-        <Project i18n={i18n} />
+        <Projects i18n={i18n} />
         <Blog i18n={i18n} />
         <Faq i18n={i18n} />
         <Contact i18n={i18n} />

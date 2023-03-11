@@ -1,4 +1,8 @@
-export default function Achievements() {
+export default function Achievements(props) {
+  function i18n(key) {
+    console.log(props.i18n && props.i18n['achievements'] && props.i18n['achievements'][key] ? '' : 'Achievements Missing i18n: ' + key)
+    return props.i18n && props.i18n['achievements'] && props.i18n['achievements'][key] ? props.i18n['achievements'][key] : key
+  }
   const stats = [
     { name: 'Total Views', stat: 'Over 500,000', year: 'til Now' },
     { name: 'Total Releases', stat: '5', year: 'til Now' },
@@ -9,11 +13,11 @@ export default function Achievements() {
       <div className="max-w-7xl mx-auto">
         <div className="max-w-7xl mx-auto text-left">
           <a className="text-3xl font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl" href="#achievements">
-            Trusted by customers from over 175 countries and regions
+            {i18n("Trusted by customers from over 175 countries and regions")}
             <i className="fa-regular fa-earth-americas ml-2"></i>
           </a>
           <p className="mt-3 text-xl text-gray-500 sm:mt-4">
-            People love my apps, and I'd believe you will, too. <i className="fa-regular fa-hand-holding-heart"></i>
+            {i18n("People love my apps, and I'd believe you will, too.")} <i className="fa-regular fa-hand-holding-heart"></i>
           </p>
         </div>
       </div>

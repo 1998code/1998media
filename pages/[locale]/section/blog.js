@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
-export default function Blog() {
+export default function Blog(props) {
+  function i18n(key) {
+    console.log(props.i18n && props.i18n['blog'] && props.i18n['blog'][key] ? '' : 'Blog Missing i18n: ' + key)
+    return props.i18n && props.i18n['blog'] && props.i18n['blog'][key] ? props.i18n['blog'][key] : key
+  }
   const [blogs, setBlogs] = useState([])
   useEffect(() => {
     getBlogData()
@@ -27,11 +31,11 @@ export default function Blog() {
       <div className="relative max-w-7xl mx-auto">
         <div className="text-left flex flex-wrap">
           <a className="text-3xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl grow" href="#blog">
-            Blog
+            {i18n("Blog")}
             <i className="fab fa-medium ml-2"></i>
           </a>
           <p className="mt-2 max-w-2xl text-xl text-gray-500">
-            Find out the latest posts and tutorials.
+            {i18n("Find out the latest posts and tutorials.")}
           </p>
         </div>
         <div className="mt-8 mx-auto grid gap-5 md:grid-cols-2 lg:grid-cols-3 lg:max-w-none">

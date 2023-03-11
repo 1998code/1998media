@@ -1,4 +1,8 @@
-export default function Experience() {
+export default function Experience(props) {
+  function i18n(key) {
+    console.log(props.i18n && props.i18n['experience'] && props.i18n['experience'][key] ? '' : 'Experience Missing i18n: ' + key)
+    return props.i18n && props.i18n['experience'] && props.i18n['experience'][key] ? props.i18n['experience'][key] : key
+  }
   const positions = [
     {
       title: 'Senior Software Engineer',
@@ -117,11 +121,11 @@ export default function Experience() {
       <div className="relative max-w-7xl mx-auto">
         <div className="text-left flex flex-wrap">
           <a className="text-3xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl grow" href="#experience">
-            Experience
+            {i18n("Experience")}
             <i className="fa-regular fa-flask ml-2"></i>
           </a>
           <p className="mt-2 max-w-2xl text-xl text-gray-500">
-            Works and society contributions.
+            {i18n("Works and society contributions.")}
           </p>
         </div>
         <div className="bg-white dark:bg-black shadow overflow-hidden sm:rounded-md mt-8">
@@ -131,22 +135,22 @@ export default function Experience() {
                 <a href="#" className="block hover:bg-gray-50 dark:hover:bg-gray-900">
                   <div className="px-4 py-4 sm:px-6">
                     <div className="flex items-center justify-between">
-                      <p className={classNames(position.textColor, 'text-sm font-medium truncate')}>{position.title}</p>
+                      <p className={classNames(position.textColor, 'text-sm font-medium truncate')}>{i18n(position.title)}</p>
                       <div className="ml-2 flex-shrink-0 flex">
                         <p className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${position.textColor} ${position.bgColor}`}>
-                          {position.type}
+                          {i18n(position.type)}
                         </p>
                       </div>
                     </div>
                     <div className="mt-2 sm:flex sm:justify-between">
                       <div className="sm:flex">
                         <p className="flex items-center text-sm text-gray-500">
-                          {position.description}
+                          {i18n(position.description)}
                         </p>
                       </div>
                       <div className="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
                         <p className="mr-2 flex items-center text-sm text-gray-500 sm:mt-0 sm:ml-6">
-                          {position.location}
+                          {i18n(position.location)}
                         </p>
                         <p>
                           <time dateTime={position.date}>{position.date}</time>

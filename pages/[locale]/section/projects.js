@@ -2,7 +2,11 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Grid } from '@githubocto/flat-ui';
 
-export default function Github() {
+export default function Projects(props) {
+  function i18n(key) {
+    console.log(props.i18n && props.i18n['projects'] ? '' : 'Projects Missing i18n: ' + key)
+    return props.i18n && props.i18n['projects'] ? props.i18n['projects'][key] : key
+  }
   const [githubs, setGithubs] = useState([])
   const [githubRaw, setGithubRaw] = useState([])
   useEffect(() => {
@@ -28,15 +32,15 @@ export default function Github() {
     )
   }
   return (
-    <div id="project" data-aos="zoom-in" data-aos-once className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
+    <div id="projects" data-aos="zoom-in" data-aos-once className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
       <div className="relative max-w-7xl mx-auto">
         <div className="text-left flex flex-wrap">
           <a className="text-3xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl grow" href="#project">
-            Project
+            {i18n("Projects")}
             <i className="fas fa-code ml-2"></i>
           </a>
           <p className="mt-2 max-w-2xl text-xl text-gray-500">
-            Find out the latest projects.
+            {i18n("Find out the latest inspiration")}{i18n(".")}
           </p>
         </div>
         <div className="mt-8 mx-auto grid gap-5 md:grid-cols-2 lg:grid-cols-4 lg:max-w-none">
