@@ -24,11 +24,17 @@ export default function Home() {
   const [i18n, setI18n] = useState({})
   function getI18nData() {
     const path = window.location.pathname.replace('/', '')
-    axios.get(`https://edge-config.vercel.com/ecfg_q7yd5f5h35awid45o3p6roxirwjh?token=983e3f47-9a89-4095-a2a6-658990cd1835`).then((res) => {
-        setI18n(res.data.items[path])
-    }).catch((err) => {
-        console.log(err)
-    })
+    
+    const availableLocales = ['en', 'zh-TW']
+    if (availableLocales.includes(path)) {
+      axios.get(`https://edge-config.vercel.com/ecfg_q7yd5f5h35awid45o3p6roxirwjh?token=983e3f47-9a89-4095-a2a6-658990cd1835`).then((res) => {
+          setI18n(res.data.items[path])
+      }).catch((err) => {
+          console.log(err)
+      })
+    } else if (path != 'earth') {
+      window.location.href = '/earth'
+    }
   }
 
   return (
@@ -43,6 +49,7 @@ export default function Home() {
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1941913120815371"></script>
         <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
         <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+        <script type="module" src="https://unpkg.com/@splinetool/viewer/build/spline-viewer.js"></script>
       </Head>
       <script>
         AOS.init();

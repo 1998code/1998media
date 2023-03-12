@@ -28,6 +28,7 @@ export default function About(props) {
           </div>
         </div>
       </div>
+      <img src="/bgs/Calculator.png" data-aos="zoom-in" data-aos-once />
     </div>
   )
 }
