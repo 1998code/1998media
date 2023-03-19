@@ -32,13 +32,15 @@ export default function Skills(props) {
     { name: 'CoreData', icons: 'fa-apple', href: '#', bgColor: 'bg-orange-600' },
     { name: 'CloudKit', icons: 'fa-apple', href: '#', bgColor: 'bg-orange-600' },
 
-    { name: 'VuetifyJS', icons: 'fa-vuejs', href: '#', bgColor: 'bg-teal-600' },
-    { name: 'NuxtJS', icons: 'fa-vuejs', href: '#', bgColor: 'bg-teal-600' },
-
     { name: 'NextJS', icons: 'fa-react', href: '#', bgColor: 'bg-sky-600' },
 
     { name: 'TailwindCSS', icons: 'fa-css3', href: '#', bgColor: 'bg-indigo-600' },
     { name: 'Bootstrap 5', icons: 'fa-bootstrap', href: '#', bgColor: 'bg-indigo-600' },
+
+    { name: 'VuetifyJS', icons: 'fa-vuejs', href: '#', bgColor: 'bg-teal-600' },
+    { name: 'NuxtJS', icons: 'fa-vuejs', href: '#', bgColor: 'bg-teal-600' },
+
+    { name: 'OpenAI GPT', icons: 'AI', href: '#', bgColor: 'bg-teal-600' }
   ]
   const speakWrites = [
     { name: 'Cantonese (Chinese Traditional)', icons: 'Proficient', href: '#', bgColor: 'bg-green-600' },
@@ -65,16 +67,16 @@ export default function Skills(props) {
           <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">{i18n("Certified")}</h2>
           <ul role="list" className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {certs.map((cert) => (
-              <li key={cert.name} className="col-span-1 flex shadow-sm rounded-md">
+              <li key={cert.name} className="col-span-1 flex shadow-sm rounded-md overflow-hidden border border-transparent hover:border-gray-500 transition-all">
                 <div
                   className={classNames(
                     cert.bgColor,
-                    'flex-shrink-0 flex items-center justify-center w-16 text-white text-sm font-medium rounded-l-md'
+                    'flex-shrink-0 flex items-center justify-center w-16 text-white text-sm font-medium rounded-md'
                   )}
                 >
                   <i className={classNames('fa-brands',cert.icons)}>{cert.icons.includes('fa') ? '' : cert.icons}</i>
                 </div>
-                <div className="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white dark:bg-black dark:border-black rounded-r-md truncate">
+                <div className="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white dark:bg-black dark:border-black truncate">
                   <div className="flex-1 px-4 py-2 text-sm truncate">
                     <a href={cert.href} target="_blank" className="text-gray-900 dark:text-gray-100 font-medium hover:text-gray-600">
                       {i18n(cert.name)}
@@ -89,16 +91,16 @@ export default function Skills(props) {
           <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">{i18n("Softwares")}</h2>
           <ul role="list" className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {softwares.map((software) => (
-              <li key={software.name} className="col-span-1 flex shadow-sm rounded-md">
+              <li key={software.name} className="col-span-1 flex shadow-sm rounded-md overflow-hidden border border-transparent hover:border-gray-500 transition-all">
                 <div
                   className={classNames(
                     software.bgColor,
-                    'flex-shrink-0 flex items-center justify-center w-16 text-white text-sm font-medium rounded-l-md'
+                    'flex-shrink-0 flex items-center justify-center w-16 text-white text-sm font-medium rounded-md'
                   )}
                 >
                   <i className={classNames('fa-brands',software.icons)}>{software.icons.includes('fa') ? '' : software.icons}</i>
                 </div>
-                <div className="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white dark:bg-black dark:border-black rounded-r-md truncate">
+                <div className="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white dark:bg-black dark:border-black truncate">
                   <div className="flex-1 px-4 py-2 text-sm truncate">
                     <a href={software.href} target="_blank" className="text-gray-900 dark:text-gray-100 font-medium hover:text-gray-600">
                       {i18n(software.name)}
@@ -113,16 +115,16 @@ export default function Skills(props) {
           <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">{i18n("Languages & Technologies")}</h2>
           <ul role="list" className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {languages.map((language) => (
-              <li key={language.name} className="col-span-1 flex shadow-sm rounded-md">
+              <li key={language.name} className="col-span-1 flex shadow-sm rounded-md overflow-hidden border border-transparent hover:border-gray-500 transition-all">
                 <div
                   className={classNames(
                     language.bgColor,
-                    'flex-shrink-0 flex items-center justify-center w-16 text-white text-sm font-medium rounded-l-md'
+                    'flex-shrink-0 flex items-center justify-center w-16 text-white text-sm font-medium rounded-md'
                   )}
                 >
                    <i className={classNames('fa-brands',language.icons)}>{language.icons.includes('fa') ? '' : language.icons}</i>
                 </div>
-                <div className="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white dark:bg-black dark:border-black rounded-r-md truncate">
+                <div className="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white dark:bg-black dark:border-black truncate">
                   <div className="flex-1 px-4 py-2 text-sm truncate">
                     <a href={language.href} target="_blank" className="text-gray-900 dark:text-gray-100 font-medium hover:text-gray-600">
                       {i18n(language.name)}
@@ -137,16 +139,16 @@ export default function Skills(props) {
           <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">{i18n("Speak & Write")}</h2>
           <ul role="list" className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2">
             {speakWrites.map((speakWrite) => (
-              <li key={speakWrite.name} className="col-span-1 flex shadow-sm rounded-md">
+              <li key={speakWrite.name} className="col-span-1 flex shadow-sm rounded-md overflow-hidden border border-transparent hover:border-gray-500 transition-all">
                 <div
                   className={classNames(
                     speakWrite.bgColor,
-                    'flex-shrink-0 flex items-center justify-center w-24 text-white text-sm font-medium rounded-l-md'
+                    'flex-shrink-0 flex items-center justify-center w-16 text-white text-xs font-medium rounded-md'
                   )}
                 >
                   {i18n(speakWrite.icons)}
                 </div>
-                <div className="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white dark:bg-black dark:border-black rounded-r-md truncate">
+                <div className="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white dark:bg-black dark:border-black truncate">
                   <div className="flex-1 px-4 py-2 text-sm truncate">
                     <a href={speakWrite.href} target="_blank" className="text-gray-900 dark:text-gray-100 font-medium hover:text-gray-600">
                       {i18n(speakWrite.name)}

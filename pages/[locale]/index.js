@@ -10,6 +10,7 @@ import Skills from './section/skills'
 import Experience from './section/experience'
 import Projects from './section/projects'
 import Blog from './section/blog'
+import AI from './section/ai'
 import Faq from './section/faq'
 import Contact from './section/contact'
 import Credits from './section/credits'
@@ -62,6 +63,7 @@ export default function Home() {
         <Experience i18n={i18n} />
         <Projects i18n={i18n} />
         <Blog i18n={i18n} />
+        <AI i18n={i18n} />
         <Faq i18n={i18n} />
         <Contact i18n={i18n} />
         <Credits i18n={i18n} />

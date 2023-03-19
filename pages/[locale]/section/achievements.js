@@ -26,7 +26,7 @@ export default function Achievements(props) {
         <div className="relative">
           <div className="relative max-w-7xl mx-auto">
             <div className="max-w-7xl mx-auto">
-              <dl className="rounded-lg overflow-hidden bg-white dark:bg-black shadow-lg sm:grid sm:grid-cols-2 md:grid-cols-3 divide-y divide-gray-200 dark:divide-gray-800 md:divide-y-0">
+              <dl className="rounded-lg overflow-hidden bg-white/50 dark:bg-black/50 backdrop-blur-md shadow-lg sm:grid sm:grid-cols-2 md:grid-cols-3 divide-y divide-gray-200 dark:divide-gray-800 md:divide-y-0">
                 <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
                   <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">2022</dt>
                   <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Graphics & Design App in Uzbekistan")}</dt>
@@ -70,7 +70,7 @@ export default function Achievements(props) {
                 <i className="far fa-cube mr-2"></i>
                 {i18n("Unsplash 3D & Photography")}
               </h3>
-              <dl className="mt-5 bg-white dark:bg-black grid grid-cols-1 overflow-hidden rounded-lg shadow md:grid-cols-3 divide-y divide-gray-200 dark:divide-gray-800 md:divide-y-0 md:divide-x">
+              <dl className="mt-5 bg-white/50 dark:bg-black/50 backdrop-blur-md grid grid-cols-1 overflow-hidden rounded-lg shadow md:grid-cols-3 divide-y divide-gray-200 dark:divide-gray-800 md:divide-y-0 md:divide-x">
                 {stats.map((item) => (
                   <div key={item.name} className="px-4 py-5 sm:p-6">
                     <dt className="text-base font-normal text-gray-900 dark:text-gray-100">{i18n(item.name)}</dt>
