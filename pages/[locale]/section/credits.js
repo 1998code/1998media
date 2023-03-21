@@ -13,8 +13,10 @@ export default function Credits(props) {
           <img className="h-12 rounded-lg" src="/logos/Vercel.svg" alt="Vercel" />
         </a>
         <a href="https://betteruptime.com/?ref=i41">
-          <img className="w-12 h-12 p-2 bg-white dark:bg-black rounded-lg" src="/logos/BetterUptime.png" alt="BetterUptime" />
+          <img className="w-12 h-12 p-2 bg-white dark:bg-black rounded-lg transition-all" src="/logos/BetterUptime.png" alt="BetterUptime" />
         </a>
+        <img className="h-12 rounded-lg bg-white p-2 dark:hidden" src="https://docsearch.algolia.com/img/docsearch-logo.svg" alt="Algolia Docsearch" /> 
+        <img className="h-12 rounded-lg hidden p-2 dark:bg-black dark:block" src="https://docsearch.algolia.com/img/docsearch-logo-white.svg" alt="Algolia Docsearch" /> 
         <img className="h-12 rounded-lg" src="/logos/STACKPATH.png" alt="STACKPATH" />
         <img className="h-12 rounded-lg" src="/logos/fastly.png" alt="fastly" />
       </div>

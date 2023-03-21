@@ -7,6 +7,14 @@ export default function AI(props) {
   const dalle = [
     {
       "version": "DALL·E 2 Experimental",
+      "prompt": "Create a 3D model of a cute and playful red panda sitting on a tree branch in a lush forest. The red panda should be depicted with soft, fluffy fur in...",
+      "output": "https://media.discordapp.net/attachments/1016625865473400934/1087001232507416706/DALLE_2023-03-19_21.14.19_-_Create_a_3D_model_of_a_cute_and_playful_red_panda_sitting_on_a_tree_branch_in_a_lush_forest._The_red_panda_should_be_depicted_with_soft_fluffy_fur_in.png?width=1722&height=1722",
+      "source": "Discord",
+      "sourceURL": "https://discord.com/channels/974519864045756446/1016625865473400934/1087001232767471759",
+      "featured": "🏆 Hall of Fame"
+    },
+    {
+      "version": "DALL·E 2 Experimental",
       "prompt": "Create a line of high-performance athletic shoes that are not only functional but also visually stunning, featuring innovative design elements and cutting-edge technology.",
       "output": "https://media.discordapp.net/attachments/1016626715545571338/1082377502799958046/DALLE_2023-03-07_03.01.36_-_Create_a_line_of_high-performance_athletic_shoes_that_are_not_only_functional_but_also_visually_stunning_featuring_innovative_design_elements_and_cut.png?width=1722&height=1722",
       "source": "Discord",
@@ -72,34 +80,34 @@ export default function AI(props) {
         </div>
         <div className="mt-8">
           {/* Featured */}
-          <div className="flex flex-wrap md:flex-nowrap overflow-x-auto max-w-full gap-6">
+          <div className="flex flex-wrap sm:flex-nowrap overflow-x-auto max-w-full gap-6">
             { dalle.map((item, index) => (
               item.featured === '🏆 Hall of Fame' && (
                 <a href={item.sourceURL} target="_blank" rel="noopener noreferrer" className="group w-96">
                   <img src={item.output} className="min-w-[350px] min-h-[350px] rounded-lg shadow-lg group-hover:scale-95 transition-all" />
                   <div className="mt-2 flex justify-between">
-                    <span className="text-sm text-gray-500">{item.featured}</span>
-                    <p className="text-sm text-gray-500 group-hover:text-gray-400">Open in {item.source}</p>
+                    <span className="text-sm text-gray-500">{i18n(item.featured)}</span>
+                    <p className="text-sm text-gray-500 group-hover:text-gray-400">{i18n(`Open in ${item.source}`)}</p>
                   </div>
                   <p className="mt-2 font-semibold text-gray-900 dark:text-gray-100 italic">
-                    "{item.prompt}" <span className="text-gray-500 text-xs">- {item.version}</span>
+                    "{i18n(item.prompt)}" <span className="text-gray-500 text-xs">- {item.version}</span>
                   </p>
                 </a>
               )
             ))}
           </div>
           {/* Other */}
-          <div className="flex flex-wrap md:flex-nowrap overflow-x-auto max-w-full gap-6 mt-8">
+          <div className="flex flex-wrap sm:flex-nowrap overflow-x-auto max-w-full gap-6 mt-8">
             { dalle.map((item, index) => (
               item.featured !== '🏆 Hall of Fame' && (
                 <a href={item.sourceURL} target="_blank" rel="noopener noreferrer" className="group w-96">
                   <img src={item.output} className="min-w-[280px] min-h-[280px] rounded-lg shadow-lg group-hover:scale-95 transition-all" />
                   <div className="mt-2 flex justify-between">
-                    <span className="text-sm text-gray-500">🌠 NEW</span>
-                    <p className="text-sm text-gray-500 group-hover:text-gray-400">Open in {item.source}</p>
+                    <span className="text-sm text-gray-500">🌠 {i18n("NEW")}</span>
+                    <p className="text-sm text-gray-500 group-hover:text-gray-400">{i18n(`Open in ${item.source}`)}</p>
                   </div>
                   <p className="mt-2 text-xs md:text-sm font-semibold text-gray-900 dark:text-gray-100 italic">
-                    "{item.prompt}" <span className="text-gray-500 text-xs">- {item.version}</span>
+                    "{i18n(item.prompt)}" <span className="text-gray-500 text-xs">- {item.version}</span>
                   </p>
                 </a>
               )

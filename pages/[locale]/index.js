@@ -26,7 +26,7 @@ export default function Home() {
   const [i18n, setI18n] = useState({})
   function getI18nData() {
     const path = window.location.pathname.replace('/', '')
-    
+
     const availableLocales = ['en', 'zh-TW']
     if (availableLocales.includes(path)) {
       axios.get(`https://edge-config.vercel.com/ecfg_q7yd5f5h35awid45o3p6roxirwjh?token=983e3f47-9a89-4095-a2a6-658990cd1835`).then((res) => {
@@ -35,7 +35,7 @@ export default function Home() {
           console.log(err)
       })
     } else if (path != 'earth') {
-      window.location.href = '/earth'
+      // window.location.href = '/earth'
     }
   }
 

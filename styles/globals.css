@@ -36,7 +36,13 @@ a {
 
 .DocSearch {
   position: fixed;
-  bottom: 35px;
+  bottom: 100px;
+  left: 43%;
+  opacity: 25%;
+}
+.DocSearch:hover {
+  opacity: 100%;
+  transition: opacity 0.2s ease-in-out;
 }
 
 .darkmode--activated .DocSearch-Button {
