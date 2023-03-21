@@ -27,16 +27,11 @@ export default function Home() {
   function getI18nData() {
     const path = window.location.pathname.replace('/', '')
 
-    const availableLocales = ['en', 'zh-TW', 'zh-CN']
-    if (availableLocales.includes(path)) {
-      axios.get(`https://edge-config.vercel.com/ecfg_q7yd5f5h35awid45o3p6roxirwjh?token=983e3f47-9a89-4095-a2a6-658990cd1835`).then((res) => {
-          setI18n(res.data.items[path])
-      }).catch((err) => {
-          console.log(err)
-      })
-    } else if (path != 'earth') {
-      // window.location.href = '/earth'
-    }
+    axios.get(`https://edge-config.vercel.com/ecfg_q7yd5f5h35awid45o3p6roxirwjh?token=983e3f47-9a89-4095-a2a6-658990cd1835`).then((res) => {
+        setI18n(res.data.items[path])
+    }).catch((err) => {
+        console.log(err)
+    })
   }
 
   return (
