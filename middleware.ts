@@ -10,6 +10,6 @@ export async function middleware(req: NextRequest) {
   switch (locale) {
     default:
       req.nextUrl.pathname = '/' + locale
-      return NextResponse.rewrite(req.nextUrl)
+      return NextResponse.redirect(req.nextUrl)
   }
 }
