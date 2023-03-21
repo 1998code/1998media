@@ -1,7 +1,8 @@
 import Head from 'next/head'
-import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import { DocSearch } from '@docsearch/react';
+import '@docsearch/css';
 
 import Header from './section/header'
 import About from './section/about'
@@ -68,6 +69,12 @@ export default function Home() {
         <Contact i18n={i18n} />
         <Credits i18n={i18n} />
         <Footer i18n={i18n} />
+        <DocSearch
+          appId="01IRDDJXZ4"
+          indexName="1998"
+          apiKey="a8c97c33f935922cf3fa01ff8ea67f10"
+          placeholder="Search & Learn More..."
+        />
       </main>
     </div>
   )

@@ -33,3 +33,28 @@ a {
 .github-octo-flat-ui {
   height: 35vh!important;
 }
+
+.DocSearch {
+  position: fixed;
+  bottom: 35px;
+}
+
+.darkmode--activated .DocSearch-Button {
+  filter: contrast(90%) invert(60%) hue-rotate(180deg) !important;
+  -ms-filter: invert(100%);
+  -webkit-filter: contrast(90%) invert(90%) hue-rotate(180deg) !important;
+  text-rendering: optimizeSpeed;
+  image-rendering: optimizeSpeed;
+  -webkit-font-smoothing: antialiased;
+  -webkit-image-rendering: optimizeSpeed;
+}
+
+.darkmode--activated .DocSearch-Modal {
+  filter: contrast(90%) invert(90%) hue-rotate(180deg) !important;
+  -ms-filter: invert(100%);
+  -webkit-filter: contrast(90%) invert(90%) hue-rotate(180deg) !important;
+  text-rendering: optimizeSpeed;
+  image-rendering: optimizeSpeed;
+  -webkit-font-smoothing: antialiased;
+  -webkit-image-rendering: optimizeSpeed;
+}

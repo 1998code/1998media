@@ -64,7 +64,7 @@ export default function Contact() {
               </svg>
             </div>
             <div className="relative max-w-md mx-auto py-12 px-4 space-y-6 sm:max-w-3xl sm:py-16 sm:px-6 lg:max-w-none lg:p-0 lg:col-start-4 lg:col-span-6">
-              <h2 className="text-3xl font-extrabold text-white" id="join-heading">
+              <h2 className="text-3xl font-extrabold text-white" id="contact">
                 聯繫
               </h2>
               <p className="text-lg text-white">
