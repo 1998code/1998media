@@ -1,70 +1,25 @@
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+
 export default function AI(props) {
   function i18n(key) {
     console.log(props.i18n && props.i18n['ai'] && props.i18n['ai'][key] ? '' : 'AI Missing i18n: ' + key)
     return props.i18n && props.i18n['ai'] && props.i18n['ai'][key] ? props.i18n['ai'][key] : key
   }
 
-  const dalle = [
-    {
-      "version": "DALL·E 2 Experimental",
-      "prompt": "Create a 3D model of a cute and playful red panda sitting on a tree branch in a lush forest. The red panda should be depicted with soft, fluffy fur in...",
-      "output": "https://media.discordapp.net/attachments/1016625865473400934/1087001232507416706/DALLE_2023-03-19_21.14.19_-_Create_a_3D_model_of_a_cute_and_playful_red_panda_sitting_on_a_tree_branch_in_a_lush_forest._The_red_panda_should_be_depicted_with_soft_fluffy_fur_in.png?width=1722&height=1722",
-      "source": "Discord",
-      "sourceURL": "https://discord.com/channels/974519864045756446/1016625865473400934/1087001232767471759",
-      "featured": "🏆 Hall of Fame"
-    },
-    {
-      "version": "DALL·E 2 Experimental",
-      "prompt": "Create a line of high-performance athletic shoes that are not only functional but also visually stunning, featuring innovative design elements and cutting-edge technology.",
-      "output": "https://media.discordapp.net/attachments/1016626715545571338/1082377502799958046/DALLE_2023-03-07_03.01.36_-_Create_a_line_of_high-performance_athletic_shoes_that_are_not_only_functional_but_also_visually_stunning_featuring_innovative_design_elements_and_cut.png?width=1722&height=1722",
-      "source": "Discord",
-      "sourceURL": "https://discord.com/channels/974519864045756446/1016626715545571338/1082377503093563462",
-      "featured": "🏆 Hall of Fame"
-    },
-    {
-      "version": "DALL·E 2 Experimental",
-      "prompt": "Create a series of whimsical illustrations that tell a story of a magical forest filled with mtstical creatures and hidden secrets.",
-      "output": "https://media.discordapp.net/attachments/979509782543220736/1082376598705156106/DALLE_2023-03-07_02.57.53_-_Create_a_series_of_whimsical_illustrations_that_tell_a_story_of_a_magical_forest_filled_with_mystical_creatures_and_hidden_secrets..png?width=1722&height=1722",
-      "source": "Discord",
-      "sourceURL": "https://discord.com/channels/974519864045756446/979509782543220736/1082376598977781800",
-    },
-    {
-      "version": "DALL·E 2 Experimental",
-      "prompt": "Design a modern and sustainable urban building that seamlessly blends with its surroundings and serves as a community hub for both business and leisure.",
-      "output": "https://media.discordapp.net/attachments/998385019699613806/1082375675048108143/DALLE_2023-03-07_02.53.59_-_Design_a_modern_and_sustainable_urban_building_that_seamlessly_blends_with_its_surroundings_and_serves_as_a_community_hub_for_both_business_and_leisur.png?width=1722&height=1722",
-      "source": "Discord",
-      "sourceURL": "https://discord.com/channels/974519864045756446/998385019699613806/1082375675362689155"
-    },
-    {
-      "version": "DALL·E 2 Experimental",
-      "prompt": "Design a modern and sustainable urban building that seamlessly blends with its surroundings and serves as a community hub for both business and leisure.",
-      "output": "https://media.discordapp.net/attachments/998385019699613806/1082375644006056036/DALLE_2023-03-07_02.53.57_-_Design_a_modern_and_sustainable_urban_building_that_seamlessly_blends_with_its_surroundings_and_serves_as_a_community_hub_for_both_business_and_leisur.png?width=1722&height=1722",
-      "source": "Discord",
-      "sourceURL": "https://discord.com/channels/974519864045756446/998385019699613806/1082375644324831322"
-    },
-    {
-      "version": "DALL·E 2 Experimental",
-      "prompt": "Design a modern and sustainable urban building that seamlessly blends with its surroundings and serves as a community hub for both business and leisure.",
-      "output": "https://media.discordapp.net/attachments/998385019699613806/1082375583033471146/DALLE_2023-03-07_02.53.54_-_Design_a_modern_and_sustainable_urban_building_that_seamlessly_blends_with_its_surroundings_and_serves_as_a_community_hub_for_both_business_and_leisur.png?width=1722&height=1722",
-      "source": "Discord",
-      "sourceURL": "https://discord.com/channels/974519864045756446/998385019699613806/1082375583402573944"
-    },
-    {
-      "version": "DALL·E 2 Experimental",
-      "prompt": "In the heart of Tokyo, a young girl with bright pink hair made her way through the bustling city streets her eyes fixed on the horizon. She was on a...",
-      "output": "https://media.discordapp.net/attachments/1016626157195644949/1082367318937567362/DALLE_2023-03-07_02.21.09_-_In_the_heart_of_Tokyo_a_young_girl_with_bright_pink_hair_made_her_way_through_the_bustling_city_streets_her_eyes_fixed_on_the_horizon._She_was_on_a_.png?width=1722&height=1722",
-      "source": "Discord",
-      "sourceURL": "https://discord.com/channels/974519864045756446/1016626157195644949/1082367319210217562",
-      "featured": "🏆 Hall of Fame"
-    },
-    {
-      "version": "DALL·E 2 Experimental",
-      "prompt": "The sun was setting over the city skyline as a sleek black cat crept along the rooftop, her eyes fixed on the street below. She was on a mission...",
-      "output": "https://media.discordapp.net/attachments/1016625865473400934/1082366693180973178/DALLE_2023-03-07_02.18.39_-_The_sun_was_setting_over_the_city_skyline_as_a_sleek_black_cat_crept_along_the_rooftop_her_eyes_fixed_on_the_street_below._She_was_on_a_mission_-_to.png?width=1722&height=1722",
-      "source": "Discord",
-      "sourceURL": "https://discord.com/channels/974519864045756446/1016625865473400934/1082366693499744337"
-    }
-  ]
+  useEffect(() => {
+      getDalleData()
+  }, [])
+
+  const [dalle, setDalle] = useState([])
+  function getDalleData() {
+    axios.get(`https://edge-config.vercel.com/ecfg_hmcfjwi2h70gpx7dhcynqeromm3s?token=8bc3ba74-f695-40ea-b637-a78860e530e8`).then((res) => {
+      console.log(res)
+      setDalle(res.data.items['results'])
+    }).catch((err) => {
+        console.log(err)
+    })
+  }
 
   return (
     <div id="ai" data-aos="zoom-in" data-aos-once className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
@@ -80,7 +35,7 @@ export default function AI(props) {
         </div>
         <div className="mt-8">
           {/* Featured */}
-          <div className="flex flex-wrap sm:flex-nowrap overflow-x-auto max-w-full gap-6">
+          <div className="flex flex-nowrap overflow-x-auto max-w-full gap-6">
             { dalle.map((item, index) => (
               item.featured === '🏆 Hall of Fame' && (
                 <a href={item.sourceURL} target="_blank" rel="noopener noreferrer" className="group w-96">
@@ -97,7 +52,7 @@ export default function AI(props) {
             ))}
           </div>
           {/* Other */}
-          <div className="flex flex-wrap sm:flex-nowrap overflow-x-auto max-w-full gap-6 mt-8">
+          <div className="flex flex-nowrap overflow-x-auto max-w-full gap-6 mt-8">
             { dalle.map((item, index) => (
               item.featured !== '🏆 Hall of Fame' && (
                 <a href={item.sourceURL} target="_blank" rel="noopener noreferrer" className="group w-96">
@@ -113,6 +68,12 @@ export default function AI(props) {
               )
             ))}
           </div>
+        </div>
+        <div>
+          <h4 className="mt-8 text-2xl font-medium text-gray-900 dark:text-gray-100">
+            {i18n("Experiment Running Models")}
+          </h4>
+          <iframe className="mt-4 w-full h-[680px] rounded-2xl" src="https://whisper.1998.media" />
         </div>
       </div>
     </div>
