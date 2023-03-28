@@ -75,10 +75,10 @@ export default function AI(props) {
             <i className="far fa-server ml-2"></i>
           </a>
           <p className="mt-2 max-w-2xl text-xl text-gray-500">
-            {i18n("Models are running on various large servers.")}
+            {i18n("Models are running on large machines.")}
           </p>
         </div>
-        <div className="mt-4">
+        <div className="mt-6">
           <iframe className="w-full h-[680px] rounded-2xl" src="https://whisper.1998.media" />
         </div>
       </div>
