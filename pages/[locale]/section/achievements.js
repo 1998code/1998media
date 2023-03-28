@@ -15,10 +15,10 @@ export default function Achievements(props) {
         <div className="max-w-7xl mx-auto text-left">
           <a className="text-3xl font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl" href="#achievements">
             {i18n("Trusted by customers from over 175 countries and regions")}
-            <i className="fa-regular fa-earth-americas ml-2"></i>
+            <i className="far fa-earth-americas ml-2"></i>
           </a>
           <p className="mt-3 text-xl text-gray-500 sm:mt-4">
-            {i18n("People love my apps, and I'd believe you will, too.")} <i className="fa-regular fa-hand-holding-heart"></i>
+            {i18n("People love my apps, and I'd believe you will, too.")} <i className="far fa-hand-holding-heart"></i>
           </p>
         </div>
       </div>

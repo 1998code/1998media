@@ -2,7 +2,7 @@ import Head from 'next/head'
 
 export default function Custom404() {
     const links = [
-        { title: 'Blog', description: 'Read the latest articles', icon: "fa-solid fa-square-rss", url: "https://blog.1998.media" },
+        { title: 'Blog', description: 'Read the latest articles', icon: "fas fa-square-rss", url: "https://blog.1998.media" },
       ]
 
     return (
@@ -39,7 +39,7 @@ export default function Custom404() {
                                 <p className="text-base text-gray-500">{link.description}</p>
                             </div>
                             <div className="flex-shrink-0 self-center">
-                                <i className="fa-solid fa-square-arrow-up-right text-gray-400"></i>
+                                <i className="fas fa-square-arrow-up-right text-gray-400"></i>
                             </div>
                         </li>
                     ))}

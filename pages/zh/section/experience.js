@@ -118,7 +118,7 @@ export default function Experience() {
         <div className="text-left flex flex-wrap">
           <a className="text-3xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl grow" href="#experience">
             經驗
-            <i className="fa-regular fa-flask ml-2"></i>
+            <i className="far fa-flask ml-2"></i>
           </a>
           <p className="mt-2 max-w-2xl text-xl text-gray-500">
             工作和社會貢獻。

@@ -69,11 +69,17 @@ export default function AI(props) {
             ))}
           </div>
         </div>
-        <div>
-          <h4 className="mt-8 text-2xl font-medium text-gray-900 dark:text-gray-100">
-            {i18n("Experiment Running Models")}
-          </h4>
-          <iframe className="mt-4 w-full h-[680px] rounded-2xl" src="https://whisper.1998.media" />
+        <div className="mt-8 text-left flex flex-wrap">
+          <a className="text-3xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl grow" href="#ai">
+            {i18n("Laboratory")}
+            <i className="far fa-server ml-2"></i>
+          </a>
+          <p className="mt-2 max-w-2xl text-xl text-gray-500">
+            {i18n("Models are running on various large servers.")}
+          </p>
+        </div>
+        <div className="mt-4">
+          <iframe className="w-full h-[680px] rounded-2xl" src="https://whisper.1998.media" />
         </div>
       </div>
     </div>

@@ -60,7 +60,7 @@ export default function Skills(props) {
         <div className="text-left flex">
           <a className="text-3xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl" href="#skills">
             {i18n("Skills & Languages")}
-            <i className="fa-regular fa-language ml-2"></i>
+            <i className="far fa-language ml-2"></i>
           </a>
         </div>
         <div className="mt-10">
