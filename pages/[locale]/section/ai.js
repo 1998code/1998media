@@ -79,7 +79,7 @@ export default function AI(props) {
           </p>
         </div>
         <div className="mt-6">
-          <iframe className="w-full h-[680px] rounded-2xl" src="https://whisper.1998.media" />
+          <iframe className="w-full h-[750px] rounded-2xl" src="https://whisper.1998.media" />
         </div>
       </div>
     </div>

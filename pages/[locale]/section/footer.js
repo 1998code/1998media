@@ -65,7 +65,7 @@ export default function Footer(props) {
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <p className="text-gray-400">{i18n("Made with")} <i className="fa fa-heart" /> {i18n("by MING")}</p>
-          <p className="mt-1 text-gray-400 text-sm">{i18n("Ver.")} 23.03.29 | {i18n("Since")} 2020 | {i18n("Open Source")}{i18n(".")}</p>
+          <p className="mt-1 text-gray-400 text-sm">{i18n("Ver.")} 23.03.30 | {i18n("Since")} 2020 | {i18n("Open Source")}{i18n(".")}</p>
         </div>
         <div className="flex justify-center space-x-6">
           {navigation.social.map((item) => (
