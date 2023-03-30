@@ -4,6 +4,7 @@ import axios from 'axios'
 import { DocSearch } from '@docsearch/react';
 import '@docsearch/css';
 
+import Loading from './section/loading'
 import Header from './section/header'
 import About from './section/about'
 import Achievements from './section/achievements'
@@ -23,14 +24,17 @@ export default function Home() {
       getI18nData()
   }, [])
 
+  const [loading, setLoading] = useState(true)
   const [i18n, setI18n] = useState({})
   function getI18nData() {
     const path = window.location.pathname.replace('/', '')
 
     axios.get(`https://edge-config.vercel.com/ecfg_q7yd5f5h35awid45o3p6roxirwjh?token=983e3f47-9a89-4095-a2a6-658990cd1835`).then((res) => {
         setI18n(res.data.items[path])
+        setLoading(false)
     }).catch((err) => {
-        console.log(err)
+        alert('Error Occured: ' + err)
+        window.location.reload()
     })
   }
 
@@ -52,24 +56,26 @@ export default function Home() {
         AOS.init();
       </script>
       <main className="select-none darkmode-ignore overflow-hidden">
-        <Header i18n={i18n} />
-        <About i18n={i18n} />
-        <Achievements i18n={i18n} />
-        <Skills i18n={i18n} />
-        <Experience i18n={i18n} />
-        <Projects i18n={i18n} />
-        <Blog i18n={i18n} />
-        <AI i18n={i18n} />
-        <Faq i18n={i18n} />
-        <Contact i18n={i18n} />
-        <Credits i18n={i18n} />
-        <Footer i18n={i18n} />
-        <DocSearch
-          appId="01IRDDJXZ4"
-          indexName="1998"
-          apiKey="a8c97c33f935922cf3fa01ff8ea67f10"
-          placeholder="Search & Learn More..."
-        />
+        { loading ? <Loading /> : (<div>
+          <Header i18n={i18n} />
+          <About i18n={i18n} />
+          <Achievements i18n={i18n} />
+          <Skills i18n={i18n} />
+          <Experience i18n={i18n} />
+          <Projects i18n={i18n} />
+          <Blog i18n={i18n} />
+          <AI i18n={i18n} />
+          <Faq i18n={i18n} />
+          <Contact i18n={i18n} />
+          <Credits i18n={i18n} />
+          <Footer i18n={i18n} />
+          <DocSearch
+            appId="01IRDDJXZ4"
+            indexName="1998"
+            apiKey="a8c97c33f935922cf3fa01ff8ea67f10"
+            placeholder="Search & Learn More..."
+          />
+        </div>)}
       </main>
     </div>
   )

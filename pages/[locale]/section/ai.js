@@ -69,17 +69,29 @@ export default function AI(props) {
             ))}
           </div>
         </div>
-        <div className="mt-8 text-left flex flex-wrap">
-          <a className="text-3xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl grow" href="#ai">
+        <div className="mt-8 text-left flex flex-wrap items-center">
+          <a className="text-2xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl grow" href="#ai">
             {i18n("Laboratory")}
             <i className="far fa-server ml-2"></i>
           </a>
-          <p className="mt-2 max-w-2xl text-xl text-gray-500">
-            {i18n("Models are running on large machines.")}
+          <p className="mt-2 max-w-2xl text-xl text-gray-500 text-left lg:text-right">
+            {i18n("Models are running on large machines.")}<br/>
+            {i18n("Feel free to tryout and let me know your thoughts on them.")}
           </p>
         </div>
         <div className="mt-6">
           <iframe className="w-full h-[750px] rounded-2xl" src="https://whisper.1998.media" />
+          <div className="text-gray-600 text-xs mt-3 text-left lg:text-right">
+            Research supported with Cloud TPUs from Google's TPU Research Cloud (TRC)
+            <br /><br />
+            Tested Environment
+            <br />
+            Architecture: Intel® Xeon® x86_64<br />
+            CPU(s): 96<br />
+            TPU(s): 8 (v2)<br />
+            Memory: 334 GB<br />
+            OS: Ubuntu 20.04.4 LTS
+          </div>
         </div>
       </div>
     </div>
