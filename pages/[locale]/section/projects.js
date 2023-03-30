@@ -19,11 +19,12 @@ export default function Projects(props) {
     axios.get("https://api.github.com/users/1998code/repos?sort=created_at")
       .then(res => {
         if (res.data.documentation_url != "https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting") {
-          setGithubRaw(res.data)
+          let filteredData = res.data.filter(repo => !repo.fork)
+          setGithubRaw(filteredData)
           if (window.innerWidth <= 1024) {
-            setGithubs(res.data.slice(0, 8));
+            setGithubs(filteredData.slice(0, 8));
           } else {
-            setGithubs(res.data.slice(0, 16));
+            setGithubs(filteredData.slice(0, 16));
           }
         }
       }).catch(err => {
@@ -43,6 +44,12 @@ export default function Projects(props) {
             {i18n("Find out the latest inspiration.")}
           </p>
         </div>
+        <div className="mt-8 mx-auto grid gap-5 md:grid-cols-4 lg:max-w-none">
+          <img className="w-full col-span-3 hover:scale-105 transition duration-300" src="https://gitstats.1998.media/api?username=1998code&show_icons=true&bg_color=30,e96443,904e95&title_color=fff&text_color=fff&icon_color=fff&hide_border=true" alt="Performance" />
+          <img className="w-full col-span-3 md:col-span-1 dark:hidden hover:scale-105 transition duration-300" src="https://gitstats.1998.media/api/top-langs/?username=1998code&langs_count=8&layout=default&hide_border=true" alt="Top Languages" />
+          <img className="w-full col-span-3 md:col-span-1 hidden dark:block hover:scale-105 transition duration-300" src="https://gitstats.1998.media/api/top-langs/?username=1998code&langs_count=8&layout=default&bg_color=000&title_color=fff&text_color=fff&hide_border=true" alt="Top Languages" />
+        </div>
+        <img id="projectChart" className="mt-8 w-full p-3 hover:scale-105 transition duration-300" src="https://ghchart.rshah.org/1998code" alt="Github chart" loading="lazy" />
         <div className="mt-8 mx-auto grid gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:max-w-none">
           {githubs.map(repo => (
             !repo.fork && (
@@ -72,12 +79,6 @@ export default function Projects(props) {
             )
           ))}
         </div>
-        <div className="mt-8 mx-auto grid gap-5 md:grid-cols-4 lg:max-w-none">
-          <img className="w-full col-span-3 hover:scale-105 transition duration-300" src="https://gitstats.1998.media/api?username=1998code&show_icons=true&bg_color=30,e96443,904e95&title_color=fff&text_color=fff&icon_color=fff&hide_border=true" alt="Performance" />
-          <img className="w-full col-span-3 md:col-span-1 dark:hidden hover:scale-105 transition duration-300" src="https://gitstats.1998.media/api/top-langs/?username=1998code&langs_count=8&layout=default&hide_border=true" alt="Top Languages" />
-          <img className="w-full col-span-3 md:col-span-1 hidden dark:block hover:scale-105 transition duration-300" src="https://gitstats.1998.media/api/top-langs/?username=1998code&langs_count=8&layout=default&bg_color=000&title_color=fff&text_color=fff&hide_border=true" alt="Top Languages" />
-        </div>
-        <img id="projectChart" className="w-full p-3 hover:scale-105 transition duration-300" src="https://ghchart.rshah.org/1998code" alt="Github chart" />
         <div id="projectFlattenDataTable" className="pt-8 rounded-lg overflow-hidden dark:hidden">
           <Grid data={githubRaw} canDownload={false} />
         </div>
