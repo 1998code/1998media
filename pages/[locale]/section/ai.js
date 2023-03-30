@@ -74,9 +74,9 @@ export default function AI(props) {
             {i18n("Laboratory")}
             <i className="far fa-server ml-2"></i>
           </a>
-          <p className="mt-2 max-w-2xl text-xl text-gray-500 text-left lg:text-right">
+          <p className="mt-2 max-w-2xl text-lg text-gray-500 text-left lg:text-right">
             {i18n("Models are running on large machines.")}<br/>
-            {i18n("Feel free to tryout and let me know your thoughts on them.")}
+            {i18n("Feel free to tryout and share your thoughts via contact below.")}
           </p>
         </div>
         <div className="mt-6">
@@ -86,10 +86,11 @@ export default function AI(props) {
             <br /><br />
             Tested Environment
             <br />
-            Architecture: Intel® Xeon® x86_64<br />
+            Architecture: x86_64 - Intel® Xeon®<br />
             CPU(s): 96<br />
             TPU(s): 8 (v2)<br />
             Memory: 334 GB<br />
+            Disk Space: 100 GB<br />
             OS: Ubuntu 20.04.4 LTS
           </div>
         </div>
