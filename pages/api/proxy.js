@@ -6,7 +6,8 @@ export default function (req, res) {
     }
     const axios = require('axios');
     axios.get(url).then((response) => {
-        res.status(200).json(response.data)
+        // response as html
+        res.status(200).json({ response })
     }
     ).catch((err) => {
         res.status(200).json({ error: err })
