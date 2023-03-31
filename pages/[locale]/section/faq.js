@@ -19,7 +19,9 @@ export default function Faq(props) {
         <span>
           <a href="https://github.com/1998code">Github<i className="ml-1 fa fa-external-link fa-sm"></i></a> 
           <i className="fas fa-pipe px-3"></i>
-          <a href="https://vercel.com">Vercel<i className="ml-1 fa fa-external-link fa-sm"></i></a>
+          <a href="https://vercel.com/?utm_source=1998code&utm_campaign=oss">Vercel<i className="ml-1 fa fa-external-link fa-sm"></i></a>
+          <i className="fas fa-pipe px-3"></i>
+          <a href="https://digitialocean.com">DigitalOcean<i className="ml-1 fa fa-external-link fa-sm"></i></a>
         </span>
       ),
     },
