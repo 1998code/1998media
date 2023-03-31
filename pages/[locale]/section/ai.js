@@ -8,7 +8,7 @@ export default function AI(props) {
   }
 
   useEffect(() => {
-      getDalleData()
+    getDalleData()
   }, [])
 
   const [dalle, setDalle] = useState([])
@@ -80,7 +80,7 @@ export default function AI(props) {
           </p>
         </div>
         <div className="mt-6">
-          <iframe className="w-full h-[1180px] md:h-[800px] lg:h-[750px] rounded-2xl" src="https://whisper.1998.media" scrolling='no' frameBorder='0' />
+          <iframe className="w-full h-[1180px] md:h-[800px] lg:h-[750px] rounded-2xl" src={`https://whisper.1998.media/?__theme=${localStorage.getItem('darkmode') === 'true' ? 'dark' : 'light'}`} scrolling='no' frameBorder='0' />
           <div className="text-gray-600 text-xs mt-3 text-left lg:text-right">
             Research supported with Cloud TPUs from Google's TPU Research Cloud (TRC)
             <br /><br />
