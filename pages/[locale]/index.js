@@ -29,19 +29,25 @@ const COLORS = [
 function CursorPointer() {
   const [{ cursor }, updateMyPresence] = useMyPresence();
 
-  const others = useOthers();
+  const users = useOthers();
+
+  const [privateId, setPrivateId] = useState(0);
+
+  useEffect(() => {
+    setPrivateId(Math.floor(Math.random() * 100000));
+  }, []);
 
   return (
     <div className="absolute w-screen h-screen z-[1]" onPointerMove={(event) => { event.preventDefault(); updateMyPresence({ cursor: { x: Math.round(event.clientX), y: Math.round(event.clientY), }, }); }} onPointerLeave={() => updateMyPresence({ cursor: null, }) } >
       {
-        others.map(({ connectionId, presence }) => {
+        users.map(({ connectionId, presence }) => {
           if (presence.cursor === null) {
             return null;
           }
-
           return (
             <Cursor
               key={`cursor-${connectionId}`}
+              id={connectionId * privateId}
               color={COLORS[connectionId % COLORS.length]}
               x={presence.cursor.x}
               y={presence.cursor.y}
