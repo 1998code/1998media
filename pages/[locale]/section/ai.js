@@ -80,7 +80,7 @@ export default function AI(props) {
           </p>
         </div>
         <div className="mt-6">
-          <iframe className="w-full h-[1180px] md:h-[800px] lg:h-[750px] rounded-2xl" src={`https://whisper.1998.media/?__theme=${localStorage.getItem('darkmode') === 'true' ? 'dark' : 'light'}`} scrolling='no' frameBorder='0' />
+          <iframe className="w-full h-[1180px] md:h-[800px] lg:h-[750px] rounded-2xl" src="https://whisper.1998.media/?__theme=dark" scrolling='no' frameBorder='0' />
         </div>
       </div>
     </div>
