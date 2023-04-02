@@ -75,24 +75,12 @@ export default function AI(props) {
             <i className="far fa-server ml-2"></i>
           </a>
           <p className="mt-2 max-w-2xl text-lg text-gray-500 text-left lg:text-right">
-            {i18n("Models are running on large machines.")}<br/>
+            {i18n("Models are running on cloud servers.")}<br/>
             {i18n("Feel free to tryout and share your thoughts via contact below.")}
           </p>
         </div>
         <div className="mt-6">
           <iframe className="w-full h-[1180px] md:h-[800px] lg:h-[750px] rounded-2xl" src={`https://whisper.1998.media/?__theme=${localStorage.getItem('darkmode') === 'true' ? 'dark' : 'light'}`} scrolling='no' frameBorder='0' />
-          <div className="text-gray-600 text-xs mt-3 text-left lg:text-right">
-            Research supported with Cloud TPUs from Google's TPU Research Cloud (TRC)
-            <br /><br />
-            Tested Environment
-            <br />
-            Architecture: x86_64 - Intel® Xeon®<br />
-            CPU(s): 96<br />
-            TPU(s): 8 (v2)<br />
-            Memory: 334 GB<br />
-            Disk Space: 100 GB<br />
-            OS: Ubuntu 20.04.4 LTS
-          </div>
         </div>
       </div>
     </div>
