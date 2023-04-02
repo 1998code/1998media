@@ -23,8 +23,7 @@ import { RoomProvider, useOthers, useMyPresence } from "../../liveblocks.config"
 const COLORS = [
   "#0EA293",
   "#576CBC",
-  "#19A7CE",
-  // "#4E6E81"
+  "#19A7CE"
 ];
 
 function CursorPointer() {
@@ -33,7 +32,7 @@ function CursorPointer() {
   const others = useOthers();
 
   return (
-    <div className="fixed w-screen h-screen z-[1]" onPointerMove={(event) => { event.preventDefault(); updateMyPresence({ cursor: { x: Math.round(event.clientX), y: Math.round(event.clientY), }, }); }} onPointerLeave={() => updateMyPresence({ cursor: null, }) } >
+    <div className="absolute w-screen h-screen z-[1]" onPointerMove={(event) => { event.preventDefault(); updateMyPresence({ cursor: { x: Math.round(event.clientX), y: Math.round(event.clientY), }, }); }} onPointerLeave={() => updateMyPresence({ cursor: null, }) } >
       {
         others.map(({ connectionId, presence }) => {
           if (presence.cursor === null) {
