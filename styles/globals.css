@@ -64,3 +64,9 @@ a {
   -webkit-font-smoothing: antialiased;
   -webkit-image-rendering: optimizeSpeed;
 }
+
+.darkmode--activated .backlight {
+  ---backlight: 0 0 0 1px #58fecf1a, -10px 0 25px -10px #0011fe85, 0 0 25px -10px #e4062f9b, 10px 0 25px -10px #0f3de5bb;
+  color: var(--colors-hiContrast);
+  box-shadow: var(---backlight);
+}

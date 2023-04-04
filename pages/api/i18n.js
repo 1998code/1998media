@@ -117,7 +117,11 @@ export default function (req, res) {
                 ".": ".",
                 ",": ",",
                 "Compatible with": "Compatible with",
-                "You come from": "You come from"
+                "You come from": "You come from",
+                "About": "About",
+                "Blog": "Blog",
+                "Store": "Store",
+                "Status": "Status",
             }
         },
         "zh": {

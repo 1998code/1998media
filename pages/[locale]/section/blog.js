@@ -40,7 +40,7 @@ export default function Blog(props) {
         </div>
         <div className="mt-8 mx-auto grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:max-w-none">
           {blogs.map(post => (
-            <div key={post.title} className="flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-105">
+            <div key={post.title} className="flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-105 backlight">
               <div className="flex-shrink-0">
                 <a href={post.link} target="_blank">
                   <img className="h-48 w-full object-cover" src={post.thumbnail} alt={post.title} />

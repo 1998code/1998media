@@ -128,7 +128,7 @@ export default function Experience(props) {
             {i18n("Works and society contributions.")}
           </p>
         </div>
-        <div className="bg-white dark:bg-black shadow overflow-hidden sm:rounded-md mt-8">
+        <div className="bg-white dark:bg-black shadow overflow-hidden sm:rounded-md mt-8 backlight">
           <ul role="list" className="divide-y divide-gray-200 dark:divide-gray-800">
             {positions.map((position) => (
               <li key={position.id}>

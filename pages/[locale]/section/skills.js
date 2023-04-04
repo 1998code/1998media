@@ -67,7 +67,7 @@ export default function Skills(props) {
           <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">{i18n("Certified")}</h2>
           <ul role="list" className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {certs.map((cert) => (
-              <li key={cert.name} className="col-span-1 flex shadow-sm rounded-md overflow-hidden border border-transparent hover:shadow-lg dark:hover:border-gray-500 transition-all">
+              <li key={cert.name} className="col-span-1 flex shadow-sm rounded-md overflow-hidden border border-transparent hover:shadow-lg dark:hover:border-gray-500 transition-all backlight">
                 <div
                   className={classNames(
                     cert.bgColor,
@@ -91,7 +91,7 @@ export default function Skills(props) {
           <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">{i18n("Softwares")}</h2>
           <ul role="list" className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {softwares.map((software) => (
-              <li key={software.name} className="col-span-1 flex shadow-sm rounded-md overflow-hidden border border-transparent hover:shadow-lg dark:hover:border-gray-500 transition-all">
+              <li key={software.name} className="col-span-1 flex shadow-sm rounded-md overflow-hidden border border-transparent hover:shadow-lg dark:hover:border-gray-500 transition-all backlight">
                 <div
                   className={classNames(
                     software.bgColor,
@@ -115,7 +115,7 @@ export default function Skills(props) {
           <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">{i18n("Languages & Technologies")}</h2>
           <ul role="list" className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {languages.map((language) => (
-              <li key={language.name} className="col-span-1 flex shadow-sm rounded-md overflow-hidden border border-transparent hover:shadow-lg dark:hover:border-gray-500 transition-all">
+              <li key={language.name} className="col-span-1 flex shadow-sm rounded-md overflow-hidden border border-transparent hover:shadow-lg dark:hover:border-gray-500 transition-all backlight">
                 <div
                   className={classNames(
                     language.bgColor,
@@ -139,7 +139,7 @@ export default function Skills(props) {
           <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">{i18n("Speak & Write")}</h2>
           <ul role="list" className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2">
             {speakWrites.map((speakWrite) => (
-              <li key={speakWrite.name} className="col-span-1 flex shadow-sm rounded-md overflow-hidden border border-transparent hover:shadow-lg dark:hover:border-gray-500 transition-all">
+              <li key={speakWrite.name} className="col-span-1 flex shadow-sm rounded-md overflow-hidden border border-transparent hover:shadow-lg dark:hover:border-gray-500 transition-all backlight">
                 <div
                   className={classNames(
                     speakWrite.bgColor,
