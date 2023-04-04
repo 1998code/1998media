@@ -568,10 +568,9 @@ export default function (req, res) {
 
     const selectedLang = lang => {
         if (lang.includes('en')) return 'en'
-        else if (lang.includes('ja')) return 'ja'
-        else if (lang.includes('ko')) return 'ko'
-        else if (lang.includes('zh-TW')) return 'zh-HK'
-        else if (lang.includes('zh-MO')) return 'zh-HK'
+        else if (lang.includes('ja') || lang.includes('jp')) return 'ja'
+        else if (lang.includes('ko') || lang.includes('kr')) return 'ko'
+        else if (lang.includes('zh-TW') || lang.includes('zh-MO')) return 'zh-HK'
         else if (lang.includes('zh-CN')) return 'zh'
         else return lang
     }
