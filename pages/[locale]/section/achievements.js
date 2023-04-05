@@ -1,6 +1,8 @@
 export default function Achievements(props) {
   function i18n(key) {
-    console.log(props.i18n && props.i18n['achievements'] && props.i18n['achievements'][key] ? '' : 'Achievements Missing i18n: ' + key)
+    if (props.i18n && props.i18n['achievements'] && !props.i18n['achievements'][key]) {
+      console.log('Achievements Missing i18n: ' + key)
+    }
     return props.i18n && props.i18n['achievements'] && props.i18n['achievements'][key] ? props.i18n['achievements'][key] : key
   }
   const stats = [
@@ -10,7 +12,7 @@ export default function Achievements(props) {
   ]
   return (
     <div id="achievements" data-aos="zoom-in" data-aos-once className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
-      <img src="/bgs/App.png" className="fixed -z-[1] w-[25vw] top-14 -right-16 " />
+      <img src="https://cdn.1998.media/bgs/App.png" className="fixed -z-[1] w-[25vw] top-14 -right-16 " />
       <div className="max-w-7xl mx-auto">
         <div className="max-w-7xl mx-auto text-left">
           <a className="text-3xl font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl" href="#achievements">
@@ -64,7 +66,7 @@ export default function Achievements(props) {
                 </div>
               </dl>
             </div>
-            <img src="/bgs/Camera.png" className="fixed -z-[1] w-[25vw] top-25 -right-16" />
+            <img src="https://cdn.1998.media/bgs/Camera.png" className="fixed -z-[1] w-[25vw] top-25 -right-16" />
             <div className="pt-6">
               <h3 className="mt-6 text-lg font-medium leading-6 text-gray-900 dark:text-gray-100">
                 <i className="far fa-cube mr-2"></i>

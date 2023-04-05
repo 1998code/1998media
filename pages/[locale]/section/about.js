@@ -1,6 +1,8 @@
 export default function About(props) {
   function i18n(key) {
-    console.log(props.i18n && props.i18n['about'] && props.i18n['about'][key] ? '' : 'About Missing i18n: ' + key)
+    if (props.i18n && props.i18n['about'] && !props.i18n['about'][key]) {
+      console.log('About Missing i18n: ' + key)
+    }
     return props.i18n && props.i18n['about'] && props.i18n['about'][key] ? props.i18n['about'][key] : key
   }
   return (
@@ -14,21 +16,21 @@ export default function About(props) {
         <div className="flow-root self-center mt-8 lg:mt-0">
           <div className="-mt-4 -ml-8 flex flex-wrap lg:-ml-4">
             <div className="mt-4 ml-8 flex flex-grow flex-shrink-0 justify-center lg:flex-grow-0 lg:ml-4">
-              <img className="h-24 dark:hidden" src="/logos/CityU.png" alt="CityU" />
-              <img className="h-24 hidden dark:block" src="/logos/CityU_dark.png" alt="CityU" />
+              <img className="h-24 dark:hidden" src="https://cdn.1998.media/logos/CityU.png" alt="CityU" />
+              <img className="h-24 hidden dark:block" src="https://cdn.1998.media/logos/CityU_dark.png" alt="CityU" />
             </div>
             <div className="mt-4 ml-8 flex flex-grow flex-shrink-0 justify-center lg:flex-grow-0 lg:ml-4">
-              <img className="h-24 dark:hidden" src="/logos/PolyU.webp" alt="PolyU" />
-              <img className="h-24 hidden dark:block" src="/logos/PolyU_dark.webp" alt="PolyU" />
+              <img className="h-24 dark:hidden" src="https://cdn.1998.media/logos/PolyU.webp" alt="PolyU" />
+              <img className="h-24 hidden dark:block" src="https://cdn.1998.media/logos/PolyU_dark.webp" alt="PolyU" />
             </div>
             <div className="mt-4 ml-8 flex flex-grow flex-shrink-0 justify-center lg:flex-grow-0 lg:ml-4">
-              <img className="h-24 dark:hidden" src="/logos/Google.png" alt="Google" />
-              <img className="h-24 hidden dark:block" src="/logos/Google_dark.png" alt="Google" />
+              <img className="h-24 dark:hidden" src="https://cdn.1998.media/logos/Google.png" alt="Google" />
+              <img className="h-24 hidden dark:block" src="https://cdn.1998.media/logos/Google_dark.png" alt="Google" />
             </div>
           </div>
         </div>
       </div>
-      <img src="/bgs/Calculator.png" data-aos="zoom-in" data-aos-once />
+      <img src="https://cdn.1998.media/bgs/Calculator.png" data-aos="zoom-in" data-aos-once />
     </div>
   )
 }

@@ -1,6 +1,8 @@
 export default function Experience(props) {
   function i18n(key) {
-    console.log(props.i18n && props.i18n['experience'] && props.i18n['experience'][key] ? '' : 'Experience Missing i18n: ' + key)
+    if (props.i18n && props.i18n['experience'] && !props.i18n['experience'][key]) {
+      console.log('Experience Missing i18n: ' + key)
+    }
     return props.i18n && props.i18n['experience'] && props.i18n['experience'][key] ? props.i18n['experience'][key] : key
   }
   const positions = [

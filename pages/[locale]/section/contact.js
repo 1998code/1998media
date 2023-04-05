@@ -1,6 +1,8 @@
 export default function Contact(props) {
   function i18n(key) {
-    console.log(props.i18n && props.i18n['contact'] && props.i18n['contact'][key] ? '' : 'Contact Missing i18n: ' + key)
+    if (props.i18n && props.i18n['contact'] && !props.i18n['contact'][key]) {
+      console.log('Contact Missing i18n: ' + key)
+    }
     return props.i18n && props.i18n['contact'] && props.i18n['contact'][key] ? props.i18n['contact'][key] : key
   }
   return (

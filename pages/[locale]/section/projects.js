@@ -4,7 +4,9 @@ import { Grid } from '@githubocto/flat-ui';
 
 export default function Projects(props) {
   function i18n(key) {
-    console.log(props.i18n && props.i18n['projects'] && props.i18n['projects'][key] ? '' : 'Projects Missing i18n: ' + key)
+    if (props.i18n && props.i18n['projects'] && !props.i18n['projects'][key]) {
+      console.log('Projects Missing i18n: ' + key)
+    }
     return props.i18n && props.i18n['projects'] && props.i18n['projects'][key] ? props.i18n['projects'][key] : key
   }
   const [githubs, setGithubs] = useState([])

@@ -84,7 +84,7 @@ export default function Home() {
       <Head>
         <title>1998 MEDIA (Official Website)</title>
         <meta name="description" content="The Official Website of 1998 MEDIA." />
-        <link rel="icon" href="/favicon.png" />
+        <link rel="icon" href="https://cdn.1998.media/favicon.png" />
         <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fff6eb" />
         <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000914" />
         <link rel="stylesheet" href="https://cdn.1998.media/css/fontawesome.css" />

@@ -1,6 +1,8 @@
 export default function Faq(props) {
   function i18n(key) {
-    console.log(props.i18n && props.i18n['faq'] && props.i18n['faq'][key] ? '' : 'FAQ Missing i18n: ' + key)
+    if (props.i18n && props.i18n['faq'] && !props.i18n['faq'][key]) {
+      console.log('FAQ Missing i18n: ' + key)
+    }
     return props.i18n && props.i18n['faq'] && props.i18n['faq'][key] ? props.i18n['faq'][key] : key
   }
   const faqs = [

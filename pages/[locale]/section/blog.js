@@ -3,7 +3,9 @@ import axios from 'axios'
 
 export default function Blog(props) {
   function i18n(key) {
-    console.log(props.i18n && props.i18n['blog'] && props.i18n['blog'][key] ? '' : 'Blog Missing i18n: ' + key)
+    if (props.i18n && props.i18n['blog'] && !props.i18n['blog'][key]) {
+      console.log('Blog Missing i18n: ' + key)
+    }
     return props.i18n && props.i18n['blog'] && props.i18n['blog'][key] ? props.i18n['blog'][key] : key
   }
   const [blogs, setBlogs] = useState([])
