@@ -34,13 +34,13 @@ a {
   height: 35vh!important;
 }
 
-.DocSearch {
+.DocSearch-Button {
   position: fixed;
   bottom: 100px;
   left: 45%;
   opacity: 25%;
 }
-.DocSearch:hover {
+.DocSearch-Button:hover {
   opacity: 100%;
   transition: opacity 0.2s ease-in-out;
 }
