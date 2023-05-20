@@ -1,8 +1,10 @@
-import Head from 'next/head'
 import { useState, useEffect } from 'react'
+
+import Head from 'next/head'
+
 import axios from 'axios'
-import { DocSearch } from '@docsearch/react';
-import '@docsearch/css';
+import { DocSearch } from '@docsearch/react'
+import '@docsearch/css'
 
 import Loading from './section/loading'
 import Header from './section/header'
@@ -91,7 +93,7 @@ export default function Home() {
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1941913120815371"></script>
         <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
         <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-        <script type="module" src="https://unpkg.com/@splinetool/viewer/build/spline-viewer.js"></script>
+        <script type="module" src="https://unpkg.com/@splinetool/viewer/build/spline-viewer.js" defer></script>
       </Head>
       <script>
         AOS.init();

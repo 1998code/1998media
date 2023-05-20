@@ -118,10 +118,11 @@ export default function (req, res) {
                 ",": ",",
                 "Compatible with": "Compatible with",
                 "You come from": "You come from",
+                "Unknown": "Unknown",
                 "About": "About",
                 "Blog": "Blog",
                 "Store": "Store",
-                "Status": "Status",
+                "Status": "Status"
             }
         },
         "zh": {
@@ -230,7 +231,12 @@ export default function (req, res) {
                 ".": "。",
                 ",": "，",
                 "Compatible with": "兼容",
-                "You come from": "您的 IP 源自"
+                "You come from": "您的 IP 源自",
+                "Unknown": "未知",
+                "About": "关于",
+                "Blog": "博客",
+                "Store": "商店",
+                "Status": "状态"
             }
         },
         "zh-HK": {
@@ -343,7 +349,12 @@ export default function (req, res) {
                 ".": "。",
                 ",": "，",
                 "Compatible with": "兼容",
-                "You come from": "您的 IP 源自"
+                "You come from": "您的 IP 源自",
+                "Unknown": "未知",
+                "About": "關於",
+                "Blog": "博客",
+                "Store": "商店",
+                "Status": "狀態"
             }
         },
         "ko": {
