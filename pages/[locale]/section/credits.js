@@ -19,7 +19,7 @@ export default function Credits(props) {
         </a>
         <img className="h-10 rounded-lg bg-white p-2 dark:hidden border border-black" src="https://docsearch.algolia.com/img/docsearch-logo.svg" alt="Algolia Docsearch" /> 
         <img className="h-10 rounded-lg hidden p-2 dark:bg-black dark:block border border-white" src="https://docsearch.algolia.com/img/docsearch-logo-white.svg" alt="Algolia Docsearch" /> 
-        <img className="h-10 rounded-lg border border-black" src="https://cdn.1998.media/logos/GoogleResearch.png" alt="Google Research" />
+        {/* <img className="h-10 rounded-lg border border-black" src="https://cdn.1998.media/logos/GoogleResearch.png" alt="Google Research" /> */}
         <a href="https://www.digitalocean.com/?refcode=ce873177d9ab&utm_medium=opensource">
           <img className="h-10 rounded-lg bg-white p-2 border border-black" src="https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/SVG/DO_Logo_icon_blue.svg" alt="DigitalOcean" />
         </a>
