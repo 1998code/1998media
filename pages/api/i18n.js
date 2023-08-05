@@ -19,8 +19,6 @@ export default async function (req, res) {
         return acc;
     }, {});
 
-    console.log(i18nRaw);
-
     const selectedLang = lang => {
         if (lang.includes('en')) return 'en'
         else if (lang.includes('ja') || lang.includes('jp')) return 'ja'
