@@ -9,13 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@liveblocks/client": "^1.0.0",
-    "@liveblocks/react": "^1.0.0",
     "@docsearch/react": "^3.3.3",
     "@githubocto/flat-ui": "^0.14.1",
+    "@liveblocks/client": "^1.0.0",
+    "@liveblocks/react": "^1.0.0",
     "@tailwindcss/aspect-ratio": "^0.4.0",
     "@vercel/analytics": "^0.1.11",
     "@vercel/edge-config": "^0.1.1",
+    "@vercel/postgres": "^0.4.1",
     "axios": "^0.27.2",
     "darkmode-js": "^1.5.7",
     "geoip-lite": "^1.4.6",
