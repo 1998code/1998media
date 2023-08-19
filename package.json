@@ -20,6 +20,7 @@
     "@vercel/postgres": "^0.4.1",
     "axios": "^0.27.2",
     "darkmode-js": "^1.5.7",
+    "framer-motion": "^10.16.0",
     "geoip-lite": "^1.4.6",
     "next": "^13.3.2",
     "react": "^18.2.0",
