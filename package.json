@@ -13,6 +13,7 @@
     "@githubocto/flat-ui": "^0.14.1",
     "@liveblocks/client": "^1.0.0",
     "@liveblocks/react": "^1.0.0",
+    "@nextui-org/tooltip": "^2.0.13",
     "@tailwindcss/aspect-ratio": "^0.4.0",
     "@vercel/analytics": "^0.1.11",
     "@vercel/edge-config": "^0.1.1",
@@ -20,7 +21,7 @@
     "axios": "^0.27.2",
     "darkmode-js": "^1.5.7",
     "geoip-lite": "^1.4.6",
-    "next": "^13.2.1",
+    "next": "^13.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

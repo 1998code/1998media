@@ -60,11 +60,11 @@ export default function Github() {
           ))}
         </div>
         <div className="mt-8 mx-auto grid gap-5 md:grid-cols-4 lg:max-w-none">
-          <img className="w-full col-span-3 hover:scale-105 transition duration-300" src="https://gitstats.1998.media/api?username=1998code&show_icons=true&bg_color=30,e96443,904e95&title_color=fff&text_color=fff&icon_color=fff&hide_border=true" alt="Performance" />
-          <img className="w-full col-span-3 md:col-span-1 dark:hidden hover:scale-105 transition duration-300" src="https://gitstats.1998.media/api/top-langs/?username=1998code&langs_count=8&layout=default&hide_border=true" alt="Top Languages" />
-          <img className="w-full col-span-3 md:col-span-1 hidden dark:block hover:scale-105 transition duration-300" src="https://gitstats.1998.media/api/top-langs/?username=1998code&langs_count=8&layout=default&bg_color=000&title_color=fff&text_color=fff&hide_border=true" alt="Top Languages" />
+          <img loading="lazy" className="w-full col-span-3 hover:scale-105 transition duration-300" src="https://gitstats.1998.media/api?username=1998code&show_icons=true&bg_color=30,e96443,904e95&title_color=fff&text_color=fff&icon_color=fff&hide_border=true" alt="Performance" />
+          <img loading="lazy" className="w-full col-span-3 md:col-span-1 dark:hidden hover:scale-105 transition duration-300" src="https://gitstats.1998.media/api/top-langs/?username=1998code&langs_count=8&layout=default&hide_border=true" alt="Top Languages" />
+          <img loading="lazy" className="w-full col-span-3 md:col-span-1 hidden dark:block hover:scale-105 transition duration-300" src="https://gitstats.1998.media/api/top-langs/?username=1998code&langs_count=8&layout=default&bg_color=000&title_color=fff&text_color=fff&hide_border=true" alt="Top Languages" />
         </div>
-        <img id="projectChart" className="w-full p-3 hover:scale-105 transition duration-300" src="https://ghchart.rshah.org/1998code" alt="Github chart" />
+        <img loading="lazy" id="projectChart" className="w-full p-3 hover:scale-105 transition duration-300" src="https://ghchart.rshah.org/1998code" alt="Github chart" />
         <div id="projectFlattenDataTable" className="pt-8 rounded-lg overflow-hidden dark:hidden">
           <Grid data={githubRaw} canDownload={false} />
         </div>

@@ -45,7 +45,7 @@ export default function Blog(props) {
             <div key={post.title} className="flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-105 backlight">
               <div className="flex-shrink-0">
                 <a href={post.link} target="_blank">
-                  <img className="h-48 w-full object-cover" src={post.thumbnail} alt={post.title} />
+                  <img loading="lazy" className="h-48 w-full object-cover" src={post.thumbnail} alt={post.title} />
                 </a>
               </div>
               <div className="flex-1 p-6 flex flex-col justify-between">

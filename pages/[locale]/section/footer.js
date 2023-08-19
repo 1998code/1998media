@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import axios from 'axios'
+import { Tooltip } from "@nextui-org/tooltip"
 
 export default function Footer(props) {
   function i18n(key) {
@@ -67,7 +68,7 @@ export default function Footer(props) {
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <p className="text-gray-400">{i18n("Made with")} <i className="fa fa-heart" /> {i18n("by MING")}</p>
-          <p className="mt-1 text-gray-400 text-sm">{i18n("Ver.")} 23.08.05 | {i18n("Since")} 2020 | {i18n("Open Source")}{i18n(".")}</p>
+          <p className="mt-1 text-gray-400 text-sm">{i18n("Ver.")} 23.08.19 | {i18n("Since")} 2020 | {i18n("Open Source")}{i18n(".")}</p>
         </div>
         <div className="flex justify-center space-x-6">
           {navigation.social.map((item) => (
@@ -83,13 +84,25 @@ export default function Footer(props) {
 
       <div className="mt-1 text-xs text-gray-400 pt-3 gap-3 flex flex-wrap justify-between">
         <span className="flex items-center gap-3">
-        {i18n("Compatible with")}: 
-          <i className="fab fa-safari"></i>
-          <i className="fab fa-chrome"></i>
-          <i className="fab fa-firefox-browser" />
-          <i className="fab fa-edge"></i>
-          <i className="fab fa-opera"></i>
-          <i className="fab fa-internet-explorer"></i>
+          {i18n("Compatible with")}: 
+          <Tooltip content="Safari" placement="bottom" class="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg">
+            <i className="fab fa-safari"></i>
+          </Tooltip>
+          <Tooltip content="Chrome" placement="top" class="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg">
+            <i className="fab fa-chrome"></i>
+          </Tooltip>
+          <Tooltip content="Firefox" placement="bottom" class="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg">
+            <i className="fab fa-firefox-browser" />
+          </Tooltip>
+          <Tooltip content="Microsoft Edge" placement="top" class="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg">
+            <i className="fab fa-edge"></i>
+          </Tooltip>
+          <Tooltip content="Opera" placement="bottom" class="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg">
+            <i className="fab fa-opera"></i>
+          </Tooltip>
+          <Tooltip content="IE" placement="top" class="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg">
+            <i className="fab fa-internet-explorer"></i>
+          </Tooltip>
         </span>
         <p className="text-gray-400">{i18n("You come from")}: {ip} | { i18n(geo) } ({ i18n(latitude) }{ i18n(",") }{ i18n(longitude) })</p>
         <div className="flex gap-3">

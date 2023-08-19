@@ -41,7 +41,7 @@ export default function AI(props) {
             { dalle.map((item, index) => (
               item.featured === '🏆 Hall of Fame' && (
                 <a href={item.sourceURL} target="_blank" rel="noopener noreferrer" className="group w-96">
-                  <img src={item.output} className="min-w-[350px] min-h-[350px] rounded-lg shadow-lg group-hover:scale-95 transition-all" />
+                  <img loading="lazy" src={item.output} className="min-w-[350px] min-h-[350px] rounded-lg shadow-lg group-hover:scale-95 transition-all" />
                   <div className="mt-2 flex justify-between">
                     <span className="text-sm text-gray-500">{i18n(item.featured)}</span>
                     <p className="text-sm text-gray-500 group-hover:text-gray-400">{i18n(`Open in ${item.source}`)}</p>
@@ -58,7 +58,7 @@ export default function AI(props) {
             { dalle.map((item, index) => (
               item.featured !== '🏆 Hall of Fame' && (
                 <a href={item.sourceURL} target="_blank" rel="noopener noreferrer" className="group w-96">
-                  <img src={item.output} className="min-w-[280px] min-h-[280px] rounded-lg shadow-lg group-hover:scale-95 transition-all" />
+                  <img loading="lazy" src={item.output} className="min-w-[280px] min-h-[280px] rounded-lg shadow-lg group-hover:scale-95 transition-all" />
                   <div className="mt-2 flex justify-between">
                     <span className="text-sm text-gray-500">🌠 {i18n("NEW")}</span>
                     <p className="text-sm text-gray-500 group-hover:text-gray-400">{i18n(`Open in ${item.source}`)}</p>
