@@ -30,38 +30,43 @@ export default function Achievements(props) {
             <div className="max-w-7xl mx-auto">
               <dl className="rounded-lg overflow-hidden bg-white/50 dark:bg-black/50 backdrop-blur-md shadow-lg sm:grid sm:grid-cols-2 md:grid-cols-3 divide-y divide-gray-200 dark:divide-gray-800 sm:divide-y-0 backlight">
                 <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
+                  <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">2023</dt>
+                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Developer Tools in Canada")} 🇨🇦</dt>
+                  <dd className="order-1 text-5xl font-extrabold text-blue-600">{i18n("#1")}</dd>
+                </div>
+                <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
                   <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">2022</dt>
-                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Graphics & Design App in Uzbekistan")}</dt>
+                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Graphics & Design App in Uzbekistan")} 🇺🇿</dt>
                   <dd className="order-1 text-5xl font-extrabold text-sky-600">{i18n("#1")}</dd>
                 </div>
                 <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
                   <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">2022</dt>
-                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Developer Tools in Kuwait")}</dt>
+                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Developer Tools in Kuwait")} 🇰🇼</dt>
                   <dd className="order-1 text-5xl font-extrabold text-pink-600">{i18n("#1")}</dd>
                 </div>
                 <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
                   <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">2022</dt>
-                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Developer Tools in Taiwan")}</dt>
+                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Developer Tools in Taiwan")} 🇹🇼</dt>
                   <dd className="order-1 text-5xl font-extrabold text-green-600">{i18n("#1")}</dd>
                 </div>
                 <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
                   <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">2022</dt>
-                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Developer Tools in Canada")}</dt>
+                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Developer Tools in Canada")} 🇨🇦</dt>
                   <dd className="order-1 text-5xl font-extrabold text-blue-600">{i18n("#1")}</dd>
                 </div>
                 <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
                   <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">2021</dt>
                   <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Developer Tools in the United States")}</dt>
-                  <dd className="order-1 text-5xl font-extrabold text-cyan-600">{i18n("#1")}</dd>
+                  <dd className="order-1 text-5xl font-extrabold text-cyan-600">{i18n("#1")} 🇺🇸</dd>
                 </div>
                 <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
                   <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">2021</dt>
-                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Apple Worldwide Developers Conference (WWDC)")}</dt>
+                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Apple Worldwide Developers Conference (WWDC)")} </dt>
                   <dd className="order-1 text-5xl font-extrabold text-orange-600 dark:text-orange-300">{i18n("Winner")}</dd>
                 </div>
                 <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
                   <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">{i18n("Since")} 2020</dt>
-                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Paid Apps in Different Categories Globally")}</dt>
+                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Paid Apps in Different Categories Globally")} </dt>
                   <dd className="order-1 text-5xl font-extrabold text-teal-600">{i18n("Top-100")}</dd>
                 </div>
               </dl>
