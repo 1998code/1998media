@@ -106,7 +106,7 @@ export default function Footer(props) {
         </span>
         <p className="text-gray-400">
           {i18n("You come from")}: 
-          {ip} | { i18n(geo) } (<a href={`https://www.google.com/maps/@${latitude},${longitude},9z`} target="_blank">
+          {ip} | { i18n(geo) } (<a href={`https://www.google.com/maps/@${latitude},${longitude},11z`} target="_blank">
             { i18n(latitude) }{ i18n(",") }{ i18n(longitude) }
           </a>)
         </p>
