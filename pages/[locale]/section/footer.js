@@ -68,7 +68,7 @@ export default function Footer(props) {
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <p className="text-gray-400">{i18n("Made with")} <i className="fa fa-heart" /> {i18n("by MING")}</p>
-          <p className="mt-1 text-gray-400 text-sm">{i18n("Ver.")} 23.08.22 | {i18n("Since")} 2020 | {i18n("Open Source")}{i18n(".")}</p>
+          <p className="mt-1 text-gray-400 text-sm">{i18n("Ver.")} 23.08.24 | {i18n("Since")} 2020 | {i18n("Open Source")}{i18n(".")}</p>
         </div>
         <div className="flex justify-center space-x-6">
           {navigation.social.map((item) => (
@@ -104,7 +104,12 @@ export default function Footer(props) {
             <i className="fab fa-internet-explorer"></i>
           </Tooltip>
         </span>
-        <p className="text-gray-400">{i18n("You come from")}: {ip} | { i18n(geo) } ({ i18n(latitude) }{ i18n(",") }{ i18n(longitude) })</p>
+        <p className="text-gray-400">
+          {i18n("You come from")}: 
+          {ip} | { i18n(geo) } (<a href={`https://www.google.com/maps/@${latitude},${longitude},9z`} target="_blank">
+            { i18n(latitude) }{ i18n(",") }{ i18n(longitude) }
+          </a>)
+        </p>
         <div className="flex gap-3">
           {navigation.main.map((item) => (
             <a href={item.href} target="_blank" alt={i18n(item.name)} className="text-gray-500 hover:text-gray-600">
