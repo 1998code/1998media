@@ -15,7 +15,9 @@ yarn dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to view the website.
 
 ## Structure
+
 ![Diagram](https://raw.githubusercontent.com/1998code/1998media/nextJS12/diagram.svg)
 
 ## License
+
 MIT
