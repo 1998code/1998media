@@ -71,7 +71,7 @@ export default function AI(props) {
             ))}
           </div>
         </div>
-        <div className="mt-8 text-left flex flex-wrap items-center">
+        {/* <div className="mt-8 text-left flex flex-wrap items-center">
           <a className="text-2xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl grow" href="#ai">
             {i18n("Laboratory")}
             <i className="far fa-server ml-2"></i>
@@ -80,10 +80,8 @@ export default function AI(props) {
             {i18n("Models are running on cloud servers.")}<br/>
             {i18n("Feel free to tryout and share your thoughts via contact below.")}
           </p>
-        </div>
-        <div className="mt-6">
-          <iframe className="w-full h-[1180px] md:h-[800px] lg:h-[750px] rounded-2xl backlight" src="https://whisper.1998.media/?__theme=dark" scrolling='no' frameBorder='0' />
-        </div>
+          <iframe className="mt-6 w-full h-[1180px] md:h-[800px] lg:h-[750px] rounded-2xl backlight" src="https://whisper.1998.media/?__theme=dark" scrolling='no' frameBorder='0' />
+        </div> */}
       </div>
     </div>
   )

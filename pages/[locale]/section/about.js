@@ -6,7 +6,7 @@ export default function About(props) {
     return props.i18n && props.i18n['about'] && props.i18n['about'][key] ? props.i18n['about'][key] : key
   }
   return (
-    <div id="about" data-aos="zoom-in" data-aos-once className="max-w-7xl mx-auto py-16 md:mb-20 px-4 sm:py-24 sm:px-6 lg:px-8 bg-orange-200 dark:bg-orange-800 bg-opacity-50 lg:rounded-3xl">
+    <div id="about" data-aos="zoom-in" data-aos-once className="max-w-7xl mx-auto py-16 md:mb-20 px-4 sm:py-24 sm:px-6 lg:px-8 bg-orange-200 dark:bg-orange-800 bg-opacity-50 xl:rounded-3xl">
       <div className="lg:grid lg:grid-cols-2 lg:gap-8">
         <h2 className="max-w-md mx-auto text-3xl font-extrabold text-orange-900 dark:text-orange-100 text-center lg:max-w-xl lg:text-left">
           {i18n("I'm a")} <span className="text-orange-500 dark:text-orange-400"><i className="far fa-computer-classic"></i> {i18n("Software Engineer")}</span> {i18n("working on")} <span className="text-orange-700 dark:text-orange-300"><i className="far fa-sidebar"></i> {i18n("UI Design,")} <i className="far fa-command"></i> {i18n("App Development,")} <i className="far fa-brain-circuit"></i> {i18n("Neural Network,")} {i18n("and")} <i className="far fa-server"></i> {i18n("Deep Machine Learning Research.")}</span>
