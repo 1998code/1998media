@@ -98,7 +98,7 @@ export default function Home() {
       <script>
         AOS.init();
       </script>
-      <main className="select-none darkmode-ignore overflow-hidden">
+      <main className="darkmode-ignore overflow-hidden">
         <RoomProvider id="1998-MEDIA" initialPresence={{ cursor: null, }} >
           <CursorPointer />
           { loading ? <Loading /> : (<div>

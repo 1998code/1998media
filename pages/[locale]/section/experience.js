@@ -9,7 +9,7 @@ export default function Experience(props) {
     {
       title: 'Senior Software Engineer',
       type: 'Full-time',
-      location: '🇭🇰 HONG KONG',
+      location: '🇭🇰 Hong Kong',
       description: 'UI Design, Web, iOS Development, A.I. Research',
       date: '2023-NOW',
       textColor: 'text-blue-600',
@@ -36,7 +36,7 @@ export default function Experience(props) {
     {
       title: 'Software Engineer',
       type: 'Full-time',
-      location: '🇭🇰 HONG KONG',
+      location: '🇭🇰 Hong Kong',
       description: 'Web + iOS Development',
       date: '2021-2023',
       textColor: 'text-blue-600',
@@ -63,7 +63,7 @@ export default function Experience(props) {
     {
       title: 'Student Assistant',
       type: 'Part-time',
-      location: '🇭🇰 HONG KONG',
+      location: '🇭🇰 Hong Kong',
       description: 'Data analytics and visualisation.',
       date: '2020-2021',
       textColor: 'text-pink-600',
@@ -72,7 +72,7 @@ export default function Experience(props) {
     {
       title: 'Student Developer',
       type: 'Part-time',
-      location: '🇭🇰 HONG KONG',
+      location: '🇭🇰 Hong Kong',
       description: 'Participate in Artificial Intelligence (A.I.) and Natural Language Processing (N.L.P) research field.',
       date: '2020-2021',
       textColor: 'text-pink-600',
@@ -81,7 +81,7 @@ export default function Experience(props) {
     {
       title: 'Student Assistant',
       type: 'Part-time',
-      location: '🇭🇰 HONG KONG',
+      location: '🇭🇰 Hong Kong',
       description: 'Develop website & design booklet for University\'s Language Scolar Program.',
       date: '2020-2021',
       textColor: 'text-pink-600',
@@ -134,7 +134,7 @@ export default function Experience(props) {
           <ul role="list" className="divide-y divide-gray-200 dark:divide-gray-800">
             {positions.map((position) => (
               <li key={position.id}>
-                <a href="#" className="block hover:bg-gray-50 dark:hover:bg-gray-900">
+                <div className="block hover:bg-gray-50 dark:hover:bg-gray-900">
                   <div className="px-4 py-4 sm:px-6">
                     <div className="flex items-center justify-between">
                       <p className={classNames(position.textColor, 'text-sm font-medium truncate')}>{i18n(position.title)}</p>
@@ -155,12 +155,12 @@ export default function Experience(props) {
                           {i18n(position.location)}
                         </p>
                         <p>
-                          <time dateTime={position.date}>{position.date}</time>
+                          <time dateTime={position.date}>{i18n(position.date)}</time>
                         </p>
                       </div>
                     </div>
                   </div>
-                </a>
+                </div>
               </li>
             ))}
           </ul>
