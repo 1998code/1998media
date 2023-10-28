@@ -16,21 +16,21 @@ export default function About(props) {
         <div className="flow-root self-center mt-8 lg:mt-0">
           <div className="-mt-4 -ml-8 flex flex-wrap lg:-ml-4">
             <div className="mt-4 ml-8 flex flex-grow flex-shrink-0 justify-center lg:flex-grow-0 lg:ml-4">
-              <img loading="lazy" className="h-24 dark:hidden" src="https://cdn.1998.media/logos/CityU.png" alt="CityU" />
-              <img loading="lazy" className="h-24 hidden dark:block" src="https://cdn.1998.media/logos/CityU_dark.png" alt="CityU" />
+              <img className="h-24 dark:hidden" src="https://cdn.1998.media/logos/CityU.png" alt="CityU" />
+              <img className="h-24 hidden dark:block" src="https://cdn.1998.media/logos/CityU_dark.png" alt="CityU" />
             </div>
             <div className="mt-4 ml-8 flex flex-grow flex-shrink-0 justify-center lg:flex-grow-0 lg:ml-4">
-              <img loading="lazy" className="h-24 dark:hidden" src="https://cdn.1998.media/logos/PolyU.webp" alt="PolyU" />
-              <img loading="lazy" className="h-24 hidden dark:block" src="https://cdn.1998.media/logos/PolyU_dark.webp" alt="PolyU" />
+              <img className="h-24 dark:hidden" src="https://cdn.1998.media/logos/PolyU.webp" alt="PolyU" />
+              <img className="h-24 hidden dark:block" src="https://cdn.1998.media/logos/PolyU_dark.webp" alt="PolyU" />
             </div>
             <div className="mt-4 ml-8 flex flex-grow flex-shrink-0 justify-center lg:flex-grow-0 lg:ml-4">
-              <img loading="lazy" className="h-24 dark:hidden" src="https://cdn.1998.media/logos/Google.png" alt="Google" />
-              <img loading="lazy" className="h-24 hidden dark:block" src="https://cdn.1998.media/logos/Google_dark.png" alt="Google" />
+              <img className="h-24 dark:hidden" src="https://cdn.1998.media/logos/Google.png" alt="Google" />
+              <img className="h-24 hidden dark:block" src="https://cdn.1998.media/logos/Google_dark.png" alt="Google" />
             </div>
           </div>
         </div>
       </div>
-      <img loading="lazy" src="https://cdn.1998.media/bgs/Calculator.png" data-aos="zoom-in" data-aos-once />
+      <img src="https://cdn.1998.media/bgs/Calculator.png" data-aos="zoom-in" data-aos-once />
     </div>
   )
 }
