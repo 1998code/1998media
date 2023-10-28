@@ -24,7 +24,7 @@ export default function Credits(props) {
           <img className="h-10 rounded-lg bg-white p-2 border border-black" src="https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/SVG/DO_Logo_icon_blue.svg" alt="DigitalOcean" />
         </a>
         {/* <img className="h-10 rounded-lg border border-white" src="https://cdn.1998.media/logos/STACKPATH.png" alt="STACKPATH" /> */}
-        <img className="h-10 rounded-lg" src="https://cdn.1998.media/logos/fastly.png" alt="fastly" />
+        {/* <img className="h-10 rounded-lg" src="https://cdn.1998.media/logos/fastly.png" alt="fastly" /> */}
       </div>
     </div>
   )
