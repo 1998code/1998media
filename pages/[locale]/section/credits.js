@@ -23,7 +23,7 @@ export default function Credits(props) {
         <a href="https://www.digitalocean.com/?refcode=ce873177d9ab&utm_medium=opensource">
           <img loading="lazy" className="h-10 rounded-lg bg-white p-2 border border-black" src="https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/SVG/DO_Logo_icon_blue.svg" alt="DigitalOcean" />
         </a>
-        <img loading="lazy" className="h-10 rounded-lg border border-white" src="https://cdn.1998.media/logos/STACKPATH.png" alt="STACKPATH" />
+        {/* <img loading="lazy" className="h-10 rounded-lg border border-white" src="https://cdn.1998.media/logos/STACKPATH.png" alt="STACKPATH" /> */}
         <img loading="lazy" className="h-10 rounded-lg" src="https://cdn.1998.media/logos/fastly.png" alt="fastly" />
       </div>
     </div>
