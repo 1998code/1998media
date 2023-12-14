@@ -20,9 +20,9 @@ export default function Faq(props) {
       answer: () => (
         <span>
           <a href="https://github.com/1998code">Github<i className="ml-1 fa fa-external-link fa-sm"></i></a> 
-          <i className="fas fa-pipe px-3"></i>
+          <i className="fa fa-pipe px-3"></i>
           <a href="https://vercel.com/?utm_source=1998code&utm_campaign=oss">Vercel<i className="ml-1 fa fa-external-link fa-sm"></i></a>
-          <i className="fas fa-pipe px-3"></i>
+          <i className="fa fa-pipe px-3"></i>
           <a href="https://www.digitalocean.com/?refcode=ce873177d9ab&utm_medium=opensource">DigitalOcean<i className="ml-1 fa fa-external-link fa-sm"></i></a>
         </span>
       ),

@@ -19,7 +19,7 @@ export default function Footer(props) {
     ],
     social: [
       {
-        name: 'Twitter',
+        name: 'X (Twitter)',
         href: 'https://twitter.com/1998design',
         icon: (props) => (
           <i className="fab fa-twitter fa-xl" />
@@ -67,15 +67,18 @@ export default function Footer(props) {
     <div data-aos="zoom-in" data-aos-once className="right-0 max-w-7xl mx-auto py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <p className="text-gray-400">{i18n("Made with")} <i className="fa fa-heart" /> {i18n("by MING")}</p>
-          <p className="mt-1 text-gray-400 text-sm">{i18n("Ver.")} 23.10.28 | {i18n("Since")} 2020 | {i18n("Open Source")}{i18n(".")}</p>
+          <span className="text-gray-400">{i18n("Made with")} <i className="fa fa-heart" /> {i18n("by MING")} | {i18n("Since")} 2020</span>
+          <br />
+          <span className="mt-1 text-gray-400 text-sm">{i18n("Ver.")} 24Q1 on 23.12.15 | {i18n("Open Source")}{i18n(".")}</span>
         </div>
         <div className="flex justify-center space-x-6">
           {navigation.social.map((item) => (
-            <a key={item.name} href={item.href} target="_blank" className="text-gray-400 hover:text-gray-500">
-              <span className="sr-only">{i18n(item.name)}</span>
-              <item.icon aria-hidden="true" />
-            </a>
+            <Tooltip content={item.name} placement="top" class="p-1 mb-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg">
+              <a key={item.name} href={item.href} target="_blank" className="text-gray-400 hover:text-gray-500">
+                <span className="sr-only">{i18n(item.name)}</span>
+                <item.icon aria-hidden="true" />
+              </a>
+            </Tooltip>
           ))}
         </div>
       </div>
@@ -112,7 +115,10 @@ export default function Footer(props) {
         </p>
         <div className="flex gap-3">
           {navigation.main.map((item) => (
-            <a href={item.href} target="_blank" alt={i18n(item.name)} className="text-gray-500 hover:text-gray-600">
+            <a href={item.href} 
+              target={item.href.includes('http') ? '_blank' : '_self'}
+              alt={i18n(item.name)} className="text-gray-500 hover:text-gray-600"
+            >
               {i18n(item.name)}
               {item.href.includes('http') ? (
                 <i className="ml-1 fa fa-external-link fa-sm"></i>

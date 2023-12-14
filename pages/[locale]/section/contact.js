@@ -58,14 +58,23 @@ export default function Contact(props) {
                 {i18n("Contact")}
               </h2>
               <p className="text-lg text-white">
-                {i18n("Email or Chat Available. Response in 72 hours.")}
+                {i18n("Response in 48 hours. Holidays may take longer. No spam, please.")}
               </p>
               <a
                 className="block w-full py-3 px-5 text-center bg-white dark:bg-black border border-transparent rounded-md shadow-md text-base font-medium text-orange-700 dark:text-orange-300 hover:bg-gray-50 dark:hover:bg-gray-900 sm:inline-block sm:w-auto"
-                href="mailto:hi@1998.media"
+                href="mailto:find@1998.media"
               >
-                {i18n("Email")}
-                <i className="fas fa-envelope ml-2" />
+                {i18n("General Inquiry")}: Find@1998.media
+                <i className="fa fa-envelope ml-2" />
+              </a>
+              <a
+                className="block w-full py-3 px-5 text-left bg-white dark:bg-green-800 border border-transparent rounded-md shadow-md text-base font-medium text-orange-700 dark:text-orange-300 hover:bg-gray-50 dark:hover:bg-green-900 sm:inline-block sm:w-auto"
+                href="mailto:safe@1998.media"
+              >
+                {i18n("Security Issue")}: Safe@1998.media 
+                <i className="fa fa-shield-alt ml-2" />
+                <br />
+                <small>{i18n("Please encrypt your message with PGP. Unencrypted messages will be ignored.")}</small>
               </a>
             </div>
           </div>

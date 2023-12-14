@@ -42,15 +42,17 @@ export default function Blog(props) {
         </div>
         <div className="mt-8 mx-auto grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:max-w-none">
           {blogs.map(post => (
-            <div key={post.title} className="flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-105 backlight">
-              <div className="flex-shrink-0">
-                <a href={post.link} target="_blank">
-                  <img className="h-48 w-full object-cover" src={post.thumbnail} alt={post.title} />
-                </a>
-              </div>
+            <div key={post.title} className="flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight">
+              {post.thumbnail && (
+                <div className="flex-shrink-0">
+                  <a href={post.link} target="_blank">
+                    <img className="h-48 w-full object-cover" src={post.thumbnail} alt={post.title} />
+                  </a>
+                </div>
+              )}
               <div className="flex-1 p-6 flex flex-col justify-between">
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-indigo-600 space-x-2">
+                  <p className="text-sm font-medium text-orange-600 space-x-2">
                     <a href={'https://medium.com/search?q=' + post.categories[0].charAt(0).toUpperCase() + post.categories[0].slice(1)} className="hover:underline" target="_blank">
                       #{post.categories[0].charAt(0).toUpperCase() + post.categories[0].slice(1)}
                     </a>

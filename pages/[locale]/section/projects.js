@@ -40,7 +40,7 @@ export default function Projects(props) {
         <div className="text-left flex flex-wrap">
           <a className="text-3xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl grow" href="#project">
             {i18n("Projects")}
-            <i className="fas fa-code ml-2"></i>
+            <i className="fa fa-code ml-2"></i>
           </a>
           <p className="mt-2 max-w-2xl text-xl text-gray-500">
             {i18n("Find out the latest inspiration.")}

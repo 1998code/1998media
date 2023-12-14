@@ -40,7 +40,7 @@ function CursorPointer() {
   }, []);
 
   return (
-    <div className="absolute w-screen h-screen z-[1]" onPointerMove={(event) => { event.preventDefault(); updateMyPresence({ cursor: { x: Math.round(event.clientX), y: Math.round(event.clientY), }, }); }} onPointerLeave={() => updateMyPresence({ cursor: null, }) } >
+    <a href="#about" className="absolute w-screen h-[95vh] z-[1] cursor-pointer" onPointerMove={(event) => { event.preventDefault(); updateMyPresence({ cursor: { x: Math.round(event.clientX), y: Math.round(event.clientY), }, }); }} onPointerLeave={() => updateMyPresence({ cursor: null, }) } >
       {
         users.map(({ connectionId, presence }) => {
           if (presence.cursor === null) {
@@ -57,7 +57,7 @@ function CursorPointer() {
           );
         })
       }
-    </div>
+    </a>
   );
 }
 
@@ -86,7 +86,7 @@ export default function Home() {
       <Head>
         <title>1998 MEDIA (Official Website)</title>
         <meta name="description" content="The Official Website of 1998 MEDIA." />
-        <link rel="icon" href="https://cdn.1998.media/favicon.png" />
+        <link rel="icon" href="https://cdn.1998.media/favicon23.jpg" />
         <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fff6eb" />
         <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000914" />
         <link rel="stylesheet" href="https://cdn.1998.media/css/fontawesome.css" />
