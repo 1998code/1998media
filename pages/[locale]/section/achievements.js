@@ -27,7 +27,11 @@ export default function Achievements(props) {
       <div className="mt-10 pb-12 sm:pb-16">
         <div className="relative">
           <div className="relative max-w-7xl mx-auto">
-            <div className="max-w-7xl mx-auto">
+            <div>
+              <h3 className="mb-6 text-lg font-medium leading-6 text-gray-900 dark:text-gray-100">
+                  <i className="fab fa-app-store mr-2"></i>
+                  {i18n("Apple App Store and Mac App Store")}
+              </h3>
               <dl className="rounded-lg overflow-hidden bg-white/50 dark:bg-black/50 backdrop-blur-md shadow-lg sm:grid sm:grid-cols-2 md:grid-cols-3 divide-y divide-gray-200 dark:divide-gray-800 sm:divide-y-0 backlight">
                 <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
                   <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">2023</dt>
