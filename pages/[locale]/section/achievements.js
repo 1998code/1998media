@@ -6,9 +6,9 @@ export default function Achievements(props) {
     return props.i18n && props.i18n['achievements'] && props.i18n['achievements'][key] ? props.i18n['achievements'][key] : key
   }
   const stats = [
-    { name: 'Total Views', stat: 'Over 600,000', year: 'til Now' },
+    { name: 'Total Views', stat: 'Over 721,000', year: 'til Now' },
     { name: 'Total Releases', stat: '5', year: 'til Now' },
-    { name: 'Average Views', stat: 'Over 125,000', year: 'til Now' },
+    { name: 'Average Views', stat: 'Over 144,200', year: 'til Now' },
   ]
   return (
     <div id="achievements" data-aos="zoom-in" data-aos-once className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
