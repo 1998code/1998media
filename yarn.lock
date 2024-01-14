@@ -1373,6 +1373,11 @@
     utf-8-validate "6.0.3"
     ws "8.13.0"
 
+"@vercel/speed-insights@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/@vercel/speed-insights/-/speed-insights-1.0.3.tgz"
+  integrity sha512-bKIt0HDdF6hP2bJZyS+za3k6sKeAXNRLSIUbwVwvyvKdsHBWS6ILBvmD1wXHZZyTqjU1TP7dTE/F6lHM6rBdKA==
+
 "@xobotyi/scrollbar-width@^1.9.5":
   version "1.9.5"
   resolved "https://registry.npmjs.org/@xobotyi/scrollbar-width/-/scrollbar-width-1.9.5.tgz"
