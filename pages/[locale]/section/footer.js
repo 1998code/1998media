@@ -63,13 +63,22 @@ export default function Footer(props) {
     }
   )
 
+  // Since
+  const today = new Date()
+  const start = new Date('2020-05-18')
+  const diff = today.getTime() - start.getTime()
+  const diffDay = Math.floor(diff / (24 * 3600 * 1000))
+  const diffYearNDay = `${Math.floor(diffDay / 365)} Years and ${Math.floor(diffDay % 365)} Days`
+
   return (
     <div data-aos="zoom-in" data-aos-once className="right-0 max-w-7xl mx-auto py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <span className="text-gray-400">{i18n("Made with")} <i className="fa fa-heart" /> {i18n("by MING")} | {i18n("Since")} 2020</span>
+          <span className="text-gray-400">
+            {i18n("Made with")} <i className="fa fa-heart" /> {i18n("by MING")} | {i18n("Open Source")}{i18n(".")}
+          </span>
           <br />
-          <span className="mt-1 text-gray-400 text-sm">{i18n("Ver.")} 24Q1 on 23.12.15 | {i18n("Open Source")}{i18n(".")}</span>
+          <span className="mt-1 text-gray-400 text-sm">{i18n("Ver.")} 24.1.14 | {i18n("Since")} 2020 | {diffYearNDay}</span>
         </div>
         <div className="flex justify-center space-x-6">
           {navigation.social.map((item) => (
@@ -108,8 +117,9 @@ export default function Footer(props) {
           </Tooltip>
         </span>
         <p className="text-gray-400">
-          {i18n("You come from")}: 
-          {ip} | { i18n(geo) } (<a href={`https://www.google.com/maps/@${latitude},${longitude},11z`} target="_blank">
+          {i18n("You come from")}: <a href={`https://whatismyipaddress.com/ip/${ip}`} target="_blank">
+            { ip }
+          </a> | { i18n(geo) } (<a href={`https://www.google.com/maps/@${latitude},${longitude},11z`} target="_blank">
             { i18n(latitude) }{ i18n(",") }{ i18n(longitude) }
           </a>)
         </p>
