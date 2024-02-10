@@ -30,7 +30,7 @@ export default function Achievements(props) {
             <div>
               <h3 className="mb-6 text-lg font-medium leading-6 text-gray-900 dark:text-gray-100">
                   <i className="fab fa-app-store mr-2"></i>
-                  {i18n("Apple App Store and Mac App Store")}
+                  {i18n("Apple App Store (iOS, iPadOS, watchOS, App Clips, macOS, visionOS)")}
               </h3>
               <dl className="rounded-lg overflow-hidden bg-white/50 dark:bg-black/50 backdrop-blur-md shadow-lg sm:grid sm:grid-cols-2 md:grid-cols-3 divide-y divide-gray-200 dark:divide-gray-800 sm:divide-y-0 backlight">
                 <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
