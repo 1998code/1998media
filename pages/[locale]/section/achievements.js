@@ -1,14 +1,14 @@
 export default function Achievements(props) {
   function i18n(key) {
     if (props.i18n && props.i18n['achievements'] && !props.i18n['achievements'][key]) {
-      console.log('Achievements Missing i18n: ' + key)
+      console.log('Achievements Missing Translation: ' + key)
     }
     return props.i18n && props.i18n['achievements'] && props.i18n['achievements'][key] ? props.i18n['achievements'][key] : key
   }
   const stats = [
-    { name: 'Total Views', stat: 'Over 721,000', year: 'til Now' },
-    { name: 'Total Releases', stat: '5', year: 'til Now' },
-    { name: 'Average Views', stat: 'Over 144,200', year: 'til Now' },
+    { name: 'Total Views', stat: 'Over 733,000' },
+    { name: 'Total Releases', stat: '6' },
+    { name: 'Average Views', stat: 'Over 122,000' },
   ]
   return (
     <div id="achievements" data-aos="zoom-in" data-aos-once className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
@@ -33,6 +33,11 @@ export default function Achievements(props) {
                   {i18n("Apple App Store and Mac App Store")}
               </h3>
               <dl className="rounded-lg overflow-hidden bg-white/50 dark:bg-black/50 backdrop-blur-md shadow-lg sm:grid sm:grid-cols-2 md:grid-cols-3 divide-y divide-gray-200 dark:divide-gray-800 sm:divide-y-0 backlight">
+                <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
+                  <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">2024</dt>
+                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Developer Tools in Hong Kong")} 🇭🇰</dt>
+                  <dd className="order-1 text-5xl font-extrabold text-cyan-600">{i18n("#1")}</dd>
+                </div>
                 <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
                   <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">2023</dt>
                   <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Developer Tools in the United Kingdom")} 🇬🇧</dt>
@@ -98,9 +103,7 @@ export default function Achievements(props) {
                     <dd className="mt-1 flex items-baseline justify-between md:block lg:flex">
                       <div className="flex items-baseline text-2xl font-semibold text-emerald-600">
                         {i18n(item.stat)}
-                        <span className="ml-2 text-sm font-medium text-gray-500">{i18n(item.year)}</span>
                       </div>
-
                       <div className="bg-green-800 text-green-100 inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium md:mt-2 lg:mt-0">
                         <i className="flex-shrink-0 self-center fa fa-caret-up" />
                       </div>

@@ -4,7 +4,7 @@ import axios from 'axios'
 export default function AI(props) {
   function i18n(key) {
     if (props.i18n && props.i18n['ai'] && !props.i18n['ai'][key]) {
-      console.log('AI Missing i18n: ' + key)
+      console.log('AI Missing Translation: ' + key)
     }
     return props.i18n && props.i18n['ai'] && props.i18n['ai'][key] ? props.i18n['ai'][key] : key
   }

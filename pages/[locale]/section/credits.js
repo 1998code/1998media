@@ -1,7 +1,7 @@
 export default function Credits(props) {
   function i18n(key) {
     if (props.i18n && props.i18n['credits'] && !props.i18n['credits'][key]) {
-      console.log('Credits Missing i18n: ' + key)
+      console.log('Credits Missing Translation: ' + key)
     }
     return props.i18n && props.i18n['credits'] && props.i18n['credits'][key] ? props.i18n['credits'][key] : key
   }

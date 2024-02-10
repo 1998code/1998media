@@ -1,7 +1,7 @@
 export default function Header(props) {
     function i18n(key) {
         if (props.i18n && props.i18n['header'] && !props.i18n['header'][key]) {
-            console.log('Header Missing i18n: ' + key)
+            console.log('Header Missing Translation: ' + key)
         }
         return props.i18n && props.i18n['header'] && props.i18n['header'][key] ? props.i18n['header'][key] : key
     }

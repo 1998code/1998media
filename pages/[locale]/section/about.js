@@ -1,7 +1,7 @@
 export default function About(props) {
   function i18n(key) {
     if (props.i18n && props.i18n['about'] && !props.i18n['about'][key]) {
-      console.log('About Missing i18n: ' + key)
+      console.log('About Missing Translation: ' + key)
     }
     return props.i18n && props.i18n['about'] && props.i18n['about'][key] ? props.i18n['about'][key] : key
   }

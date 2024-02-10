@@ -1,7 +1,7 @@
 export default function Skills(props) {
   function i18n(key) {
     if (props.i18n && props.i18n['skills'] && !props.i18n['skills'][key]) {
-      console.log('Skills Missing i18n: ' + key)
+      console.log('Skills Missing Translation: ' + key)
     }
     return props.i18n && props.i18n['skills'] && props.i18n['skills'][key] ? props.i18n['skills'][key] : key
   }
