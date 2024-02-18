@@ -6,9 +6,9 @@ export default function Achievements(props) {
     return props.i18n && props.i18n['achievements'] && props.i18n['achievements'][key] ? props.i18n['achievements'][key] : key
   }
   const stats = [
-    { name: 'Total Views', stat: 'Over 733,000' },
-    { name: 'Total Releases', stat: '6' },
-    { name: 'Average Views', stat: 'Over 122,000' },
+    { name: 'Total Views', stat: 'Over 736,000' },
+    { name: 'Total Releases', stat: '7' },
+    { name: 'Average Views', stat: 'Over 105,000' },
   ]
   return (
     <div id="achievements" data-aos="zoom-in" data-aos-once className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
@@ -33,6 +33,11 @@ export default function Achievements(props) {
                   {i18n("Apple App Store (iOS, iPadOS, watchOS, App Clips, macOS, visionOS)")}
               </h3>
               <dl className="rounded-lg overflow-hidden bg-white/50 dark:bg-black/50 backdrop-blur-md shadow-lg sm:grid sm:grid-cols-2 md:grid-cols-3 divide-y divide-gray-200 dark:divide-gray-800 sm:divide-y-0 backlight">
+                <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
+                  <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">2024</dt>
+                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Developer Tools in Taiwan")} 🇹🇼</dt>
+                  <dd className="order-1 text-5xl font-extrabold text-cyan-600">{i18n("#1")}</dd>
+                </div>
                 <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
                   <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">2024</dt>
                   <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Developer Tools in Hong Kong")} 🇭🇰</dt>
