@@ -5,10 +5,14 @@ export default function Achievements(props) {
     }
     return props.i18n && props.i18n['achievements'] && props.i18n['achievements'][key] ? props.i18n['achievements'][key] : key
   }
+  const totalViews = "739,900"
+  const totalReleases = "7"
+  const avgViews = Math.floor(parseInt(totalViews.replace(/,/g, '')) / parseInt(totalReleases)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
   const stats = [
-    { name: 'Total Views', stat: 'Over 736,000' },
-    { name: 'Total Releases', stat: '7' },
-    { name: 'Average Views', stat: 'Over 105,000' },
+    // add , to toalViews
+    { name: 'Total Views', stat: `Over ${totalViews}` },
+    { name: 'Total Releases', stat: `${totalReleases}` },
+    { name: 'Average Views', stat: `Over ${avgViews}` },
   ]
   return (
     <div id="achievements" data-aos="zoom-in" data-aos-once className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">

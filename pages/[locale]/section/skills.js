@@ -90,7 +90,7 @@ export default function Skills(props) {
           </ul>
         </div>
         <div className="mt-10">
-          <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">{i18n("Softwares")}</h2>
+          <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">{i18n("Softwares")}*</h2>
           <ul role="list" className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {softwares.map((software) => (
               <li key={software.name} className="col-span-1 flex shadow-sm rounded-lg overflow-hidden border border-transparent dark:hover:border-white hover:scale-95 backlight transition-all">
@@ -114,7 +114,7 @@ export default function Skills(props) {
           </ul>
         </div>
         <div className="mt-10">
-          <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">{i18n("Languages & Technologies")}</h2>
+          <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">{i18n("Languages & Technologies")}*</h2>
           <ul role="list" className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {languages.map((language) => (
               <li key={language.name} className="col-span-1 flex shadow-sm rounded-lg overflow-hidden border border-transparent dark:hover:border-white hover:scale-95 backlight transition-all">
