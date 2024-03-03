@@ -5,7 +5,7 @@ export default function Achievements(props) {
     }
     return props.i18n && props.i18n['achievements'] && props.i18n['achievements'][key] ? props.i18n['achievements'][key] : key
   }
-  const totalViews = "739,900"
+  const totalViews = "742,807"
   const totalReleases = "7"
   const avgViews = Math.floor(parseInt(totalViews.replace(/,/g, '')) / parseInt(totalReleases)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
   const stats = [
