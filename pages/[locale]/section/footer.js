@@ -68,7 +68,7 @@ export default function Footer(props) {
   const start = new Date('2020-05-18')
   const diff = today.getTime() - start.getTime()
   const diffDay = Math.floor(diff / (24 * 3600 * 1000))
-  const diffYearNDay = `${Math.floor(diffDay / 365)} Years and ${Math.floor(diffDay % 365)} Days`
+  const diffYearNDay = `${Math.floor(diffDay / 365)} ${i18n("Years")} ${i18n("and")} ${Math.floor(diffDay % 365)} ${i18n("Days")}`
 
   return (
     <div data-aos="zoom-in" data-aos-once className="right-0 max-w-7xl mx-auto py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
@@ -78,7 +78,7 @@ export default function Footer(props) {
             {i18n("Made with")} <i className="fa fa-heart" /> {i18n("by MING")} | {i18n("Open Source")}{i18n(".")}
           </span>
           <br />
-          <span className="mt-1 text-gray-400 text-sm">{i18n("Ver.")} 24.4.3 | {i18n("Since")} 2020 | {diffYearNDay}</span>
+          <span className="mt-1 text-gray-400 text-sm">{i18n("Ver.")} 24.4.17 | {i18n("Since")} 2020 | {diffYearNDay}</span>
         </div>
         <div className="flex justify-center space-x-6">
           {navigation.social.map((item) => (
@@ -123,7 +123,7 @@ export default function Footer(props) {
             { i18n(latitude) }{ i18n(",") }{ i18n(longitude) }
           </a>)
         </p>
-        <div className="flex gap-3">
+        <div className="flex items-center gap-3">
           {navigation.main.map((item) => (
             <a href={item.href} 
               target={item.href.includes('http') ? '_blank' : '_self'}

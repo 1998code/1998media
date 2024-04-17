@@ -5,14 +5,14 @@ export default function Achievements(props) {
     }
     return props.i18n && props.i18n['achievements'] && props.i18n['achievements'][key] ? props.i18n['achievements'][key] : key
   }
-  const totalViews = "804,094"
+  const totalViews = "812,430"
   const totalReleases = "7"
   const avgViews = Math.floor(parseInt(totalViews.replace(/,/g, '')) / parseInt(totalReleases)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
   const stats = [
     // add , to toalViews
-    { name: 'Total Views', stat: `Over ${totalViews}` },
+    { name: 'Total Views', stat: `${i18n("Over")} ${totalViews}` },
     { name: 'Total Releases', stat: `${totalReleases}` },
-    { name: 'Average Views', stat: `Over ${avgViews}` },
+    { name: 'Average Views', stat: `${i18n("Over")} ${avgViews}` },
   ]
   return (
     <div id="achievements" data-aos="zoom-in" data-aos-once className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
@@ -32,8 +32,8 @@ export default function Achievements(props) {
         <div className="relative max-w-7xl mx-auto">
           <div className="cursor-default">
             <h3 className="mb-6 text-lg font-medium leading-6 text-gray-900 dark:text-gray-100">
-                <i className="fab fa-app-store mr-2"></i>
                 {i18n("Apple App Store (iOS, iPadOS, watchOS, App Clips, macOS, visionOS)")}
+                <i className="fab fa-app-store ml-2"></i>
             </h3>
             <dl className="rounded-lg overflow-hidden bg-white/50 dark:bg-black/50 backdrop-blur-md shadow-lg sm:grid sm:grid-cols-2 md:grid-cols-3 divide-y divide-gray-200 dark:divide-gray-800 sm:divide-y-0 backlight">
               <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
@@ -103,8 +103,8 @@ export default function Achievements(props) {
           <img src="https://cdn.1998.media/bgs/Camera.png" className="fixed -z-[1] w-[25vw] top-25 -right-16" />
           <div className="pt-6">
             <h3 className="mt-6 text-lg font-medium leading-6 text-gray-900 dark:text-gray-100">
-              <i className="far fa-cube mr-2"></i>
-              {i18n("Unsplash 3D & Photography")}
+              {i18n("3D Rendering and Photography @Unsplash")}
+              <i className="far fa-image ml-2"></i>
             </h3>
             <dl className="mt-5 bg-white/50 dark:bg-black/50 backdrop-blur-md grid grid-cols-1 overflow-hidden rounded-lg shadow md:grid-cols-3 divide-y divide-gray-200 dark:divide-gray-800 md:divide-y-0 md:divide-x backlight">
               {stats.map((item) => (
@@ -121,6 +121,11 @@ export default function Achievements(props) {
                 </div>
               ))}
             </dl>
+            <h4 className="mt-6 text-lg font-medium leading-6 text-gray-500">
+              {i18n("Random Sample")}
+              <i className="far fa-random ml-2"></i>
+            </h4>
+            <img className="mt-5 w-full h-[70vh] object-cover rounded-lg hover:scale-95 transition-all" src="https://source.unsplash.com/user/1998media" />
           </div>
         </div>
       </div>
