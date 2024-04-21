@@ -11,7 +11,7 @@ export default function Experience(props) {
       type: 'Freelance',
       location: '🌐 Remote',
       description: 'Provide professional advice on cross platform development and design',
-      date: '2023-2024',
+      date: '2024-NOW',
       textColor: 'text-orange-600',
       bgColor: 'bg-orange-100'
     },
@@ -20,7 +20,7 @@ export default function Experience(props) {
       type: 'Full-time',
       location: '🇭🇰 Hong Kong',
       description: 'UI Design, Web, iOS Development, A.I. Research',
-      date: '2023-2024',
+      date: '2023-2025',
       textColor: 'text-blue-600',
       bgColor: 'bg-blue-100'
     },
