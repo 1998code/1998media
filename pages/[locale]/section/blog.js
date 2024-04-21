@@ -26,8 +26,20 @@ export default function Blog(props) {
       }).catch(err => {
         console.log(err)
       }
-    )
+      )
   }
+
+  // Function to recognize the language of the blog post is English or Chinese base on unicode
+  function languageCheck(text) {
+    let count = 0
+    for (let i = 0; i < text.length; i++) {
+      if (text.charCodeAt(i) > 255) {
+        count++
+      }
+    }
+    return count > text.length / 2 ? 'zh' : 'en'
+  }
+
   return (
     <div id="blog" data-aos="zoom-in" data-aos-once className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
       <div className="relative max-w-7xl mx-auto">
@@ -41,49 +53,67 @@ export default function Blog(props) {
           </p>
         </div>
         <div className="mt-8 mx-auto grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:max-w-none">
-          {blogs.map(post => (
-            <div key={post.title} className="flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight">
-              {/* New Thumbnail */}
-              {post.description.includes('medium-feed-image') && (
-                <div className="flex-shrink-0">
-                  <a href={post.link} target="_blank">
-                    <img className="h-48 w-full object-cover" src={post.description.split('src="')[1].split('"')[0]} alt={post.title} />
-                  </a>
-                </div>
-              )}
-              {/* Old Thumbnail */}
-              {/* {post.thumbnail && (
-                <div className="flex-shrink-0">
-                  <a href={post.link} target="_blank">
-                    <img className="h-48 w-full object-cover" src={post.thumbnail} alt={post.title} />
-                  </a>
-                </div>
-              )} */}
-              <div className="flex-1 p-6 flex flex-col justify-between">
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-orange-600 space-x-2">
-                    <a href={'https://medium.com/search?q=' + post.categories[0].charAt(0).toUpperCase() + post.categories[0].slice(1)} className="hover:underline" target="_blank">
-                      #{post.categories[0].charAt(0).toUpperCase() + post.categories[0].slice(1)}
-                    </a>
-                    <a href={'https://medium.com/search?q=' + post.categories[1].charAt(0).toUpperCase() + post.categories[1].slice(1)} className="hover:underline" target="_blank">
-                      #{post.categories[1].charAt(0).toUpperCase() + post.categories[1].slice(1)}
-                    </a>
-                    <a href={'https://medium.com/search?q=' + post.categories[2].charAt(0).toUpperCase() + post.categories[2].slice(1)} className="hover:underline" target="_blank">
-                      #{post.categories[2].charAt(0).toUpperCase() + post.categories[2].slice(1)}
-                    </a>
-                  </p>
-                  <a href={post.link} className="block mt-2" target="_blank">
-                    <p className="text-xl font-semibold text-gray-900 dark:text-gray-100">{post.title}</p>
-                  </a>
-                </div>
-                <div className="mt-3 flex items-center">
-                  <div className="flex-shrink-0 text-gray-400">
-                    <time dateTime={post.pubDate.slice(0, 10)}>{post.pubDate.slice(0, 10)}</time>
+          {
+            blogs
+              .filter(post => {
+                const userLanguage = window.location.pathname.replace('/', '');
+                const postLanguage = languageCheck(post.title);
+                if (userLanguage.includes('zh')) {
+                  return postLanguage === 'zh';
+                } else {
+                  return postLanguage === 'en';
+                }
+              })
+              .map(post =>
+                <div key={post.title} className="flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight">
+                  {post.description.includes('medium-feed-image') && (
+                    <div className="flex-shrink-0">
+                      <a href={post.link} target="_blank">
+                        <img className="h-48 w-full object-cover" src={post.description.split('src="')[1].split('"')[0]} alt={post.title} />
+                      </a>
+                    </div>
+                  )}
+                  <div className="flex-1 p-6 flex flex-col justify-between">
+                    <div class=" text-gray-400 text-xs">
+                      <i className="far fa-calendar mr-1"></i>
+                      <time dateTime={post.pubDate.slice(0, 10)}>{post.pubDate.slice(0, 10)}</time>
+                    </div>
+                    <div className="flex-1">
+                      <a href={post.link} className="block mt-2 text-xl font-semibold text-gray-900 dark:text-gray-100" target="_blank">
+                        {post.title}
+                      </a>
+                    </div>
+                    <span className="text-sm font-medium text-orange-600 space-x-2 mt-3">
+                      {
+                        post.categories.map((category, index) => {
+                          let level = 1
+                          for (let i = 0; i < index; i++) {
+                            level -= 0.1
+                          }
+                          level = Math.round(level * 10) / 10
+                          return (
+                            <a
+                              href={'https://medium.com/search?q=' + category.charAt(0).toUpperCase() + category.slice(1)}
+                              style={{ opacity: level }} // Use inline styles for dynamic opacity (as TailwindCSS cannot handle this correctly)
+                              className={`hover:underline`}
+                              target="_blank"
+                            >
+                              #{category.charAt(0).toUpperCase() + category.slice(1)}
+                            </a>
+                          );
+                        })
+                      }
+                    </span>
                   </div>
                 </div>
-              </div>
-            </div>
-          ))}
+              )
+          }
+        </div>
+        <div className="mt-8 text-center">
+          <a href="https://blog.1998.media" className="block text-lg font-semibold text-white bg-orange-600 hover:bg-orange-500 p-3 rounded-lg transition-all" target="_blank">
+            <i className="fab fa-medium mr-2"></i>
+            {i18n("View all posts on Medium")}
+          </a>
         </div>
       </div>
     </div>
