@@ -7,11 +7,20 @@ export default function Experience(props) {
   }
   const positions = [
     {
+      title: 'Application Development Consultant',
+      type: 'Freelance',
+      location: '🌐 Remote',
+      description: 'Provide professional advice on cross platform development and design',
+      date: '2023-2024',
+      textColor: 'text-orange-600',
+      bgColor: 'bg-orange-100'
+    },
+    {
       title: 'Senior Software Engineer',
       type: 'Full-time',
       location: '🇭🇰 Hong Kong',
       description: 'UI Design, Web, iOS Development, A.I. Research',
-      date: '2023-NOW',
+      date: '2023-2024',
       textColor: 'text-blue-600',
       bgColor: 'bg-blue-100'
     },
@@ -46,7 +55,7 @@ export default function Experience(props) {
       title: 'Articles Writer',
       type: 'Freelance',
       location: '🌐 Remote',
-      description: 'Powerful tutorial + Writing',
+      description: 'Write easy to understand tutorials that help thousands of developers',
       date: '2020-NOW',
       textColor: 'text-orange-600',
       bgColor: 'bg-orange-100'
@@ -73,7 +82,7 @@ export default function Experience(props) {
       title: 'Student Developer',
       type: 'Part-time',
       location: '🇭🇰 Hong Kong',
-      description: 'Participate in Artificial Intelligence (A.I.) and Natural Language Processing (N.L.P) research field.',
+      description: 'Participate in Artificial Intelligence (A.I.) and Natural Language Processing (N.L.P) research field',
       date: '2020-2021',
       textColor: 'text-pink-600',
       bgColor: 'bg-pink-100'
@@ -82,7 +91,7 @@ export default function Experience(props) {
       title: 'Student Assistant',
       type: 'Part-time',
       location: '🇭🇰 Hong Kong',
-      description: 'Develop website & design booklet for University\'s Language Scolar Program.',
+      description: 'Develop website & design booklet for University\'s Language Scolar Program',
       date: '2020-2021',
       textColor: 'text-pink-600',
       bgColor: 'bg-pink-100'
@@ -100,13 +109,13 @@ export default function Experience(props) {
       title: 'StopCovid19Tokyo Translator',
       type: 'Volunteer',
       location: '🌐 Remote, Japan',
-      description: 'Contribute open source project with Tokyo Metropolitan Government and Code of Japan Team.',
+      description: 'Contribute open source project with Tokyo Metropolitan Government and Code of Japan Team',
       date: '2020-2021',
       textColor: 'text-green-600',
       bgColor: 'bg-green-100'
     },
     {
-      title: 'Designer',
+      title: 'Designer / Photographer',
       type: 'Freelance',
       location: '🌐 Remote',
       description: 'Start Freelance works on different platforms (Adobe Stock, Behance, Dribbble)',

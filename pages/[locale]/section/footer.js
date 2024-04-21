@@ -22,7 +22,7 @@ export default function Footer(props) {
         name: 'X (Twitter)',
         href: 'https://twitter.com/1998design',
         icon: (props) => (
-          <i className="fab fa-twitter fa-xl" />
+          <i className="fab fa-x fa-xl" />
         ),
       },
       {
@@ -74,16 +74,16 @@ export default function Footer(props) {
     <div data-aos="zoom-in" data-aos-once className="right-0 max-w-7xl mx-auto py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <span className="text-gray-400">
+          <span className="ext-gray-600 dark:text-gray-400">
             {i18n("Made with")} <i className="fa fa-heart" /> {i18n("by MING")} | {i18n("Open Source")}{i18n(".")}
           </span>
           <br />
-          <span className="mt-1 text-gray-400 text-sm">{i18n("Ver.")} 24.4.17 | {i18n("Since")} 2020 | {diffYearNDay}</span>
+          <span className="mt-1 ext-gray-600 dark:text-gray-400 text-sm">{i18n("Ver.")} 24.4.21 | {i18n("Since")} 2020 | {diffYearNDay}</span>
         </div>
         <div className="flex justify-center space-x-6">
           {navigation.social.map((item) => (
             <Tooltip content={item.name} placement="top" class="p-1 mb-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg">
-              <a key={item.name} href={item.href} target="_blank" className="text-gray-400 hover:text-gray-500">
+              <a key={item.name} href={item.href} target="_blank" className="ext-gray-600 dark:text-gray-400 hover:text-gray-500">
                 <span className="sr-only">{i18n(item.name)}</span>
                 <item.icon aria-hidden="true" />
               </a>
@@ -94,7 +94,7 @@ export default function Footer(props) {
 
       <hr className="mt-3" />
 
-      <div className="mt-1 text-xs text-gray-400 pt-3 gap-3 flex flex-wrap justify-between">
+      <div className="mt-1 text-xs ext-gray-600 dark:text-gray-400 pt-3 gap-3 flex flex-wrap justify-between">
         <span className="flex items-center gap-3">
           {i18n("Compatible with")}: 
           <Tooltip content="Safari" placement="bottom" class="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg">
@@ -116,7 +116,7 @@ export default function Footer(props) {
             <i className="fab fa-internet-explorer"></i>
           </Tooltip>
         </span>
-        <p className="text-gray-400">
+        <p className="ext-gray-600 dark:text-gray-400">
           {i18n("You come from")}: <a href={`https://whatismyipaddress.com/ip/${ip}`} target="_blank">
             { ip }
           </a> | { i18n(geo) } (<a href={`https://www.google.com/maps/@${latitude},${longitude},11z`} target="_blank">
