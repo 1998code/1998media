@@ -73,7 +73,7 @@ export default function Experience(props) {
       title: 'Student Assistant',
       type: 'Part-time',
       location: '🇭🇰 Hong Kong',
-      description: 'Data analytics and visualisation.',
+      description: 'Data analytics and visualisation',
       date: '2020-2021',
       textColor: 'text-pink-600',
       bgColor: 'bg-pink-100'
