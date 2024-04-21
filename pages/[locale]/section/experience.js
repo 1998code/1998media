@@ -28,7 +28,7 @@ export default function Experience(props) {
       title: 'QuestDB Translator',
       type: 'Volunteer',
       location: '🌐 Remote, United Kingdom',
-      description: 'Contribute open source database project.',
+      description: 'Contribute open source database project',
       date: '2022',
       textColor: 'text-green-600',
       bgColor: 'bg-green-100'
