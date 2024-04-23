@@ -4,7 +4,8 @@ export default function (req, res) {
     // const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
     const ip = null
 
-    const geo = geoip.lookup(ip)
+    // const geo = geoip.lookup(ip)
+    const geo = null
 
     const latitude = req.headers['x-vercel-ip-latitude']
     const longitude = req.headers['x-vercel-ip-longitude']
