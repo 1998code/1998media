@@ -3,8 +3,8 @@ import NodeGeocoder from 'node-geocoder'
 export default async function (req, res) {
     const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
 
-    const latitude = '22.2842' || req.headers['x-vercel-ip-latitude']
-    const longitude = '114.1759' || req.headers['x-vercel-ip-longitude']
+    const latitude = req.headers['x-vercel-ip-latitude']
+    const longitude = req.headers['x-vercel-ip-longitude']
 
     let geo = null;
     if (latitude && longitude) {
