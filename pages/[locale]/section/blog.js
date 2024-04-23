@@ -18,26 +18,27 @@ export default function Blog(props) {
   function getBlogData() {
     axios.get("https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@1998design")
       .then(res => {
-        if (window.innerWidth <= 1024) {
+        // if (window.innerWidth <= 1024) {
           setBlogs(res.data.items);
-        } else {
-          setBlogs(res.data.items.slice(0, 9));
-        }
+        // } else {
+        //   setBlogs(res.data.items.slice(0, 9));
+        // }
       }).catch(err => {
         console.log(err)
       }
       )
   }
 
-  // Function to recognize the language of the blog post is English or Chinese base on unicode
+  const franc = require('franc-min').franc
+
   function languageCheck(text) {
-    let count = 0
-    for (let i = 0; i < text.length; i++) {
-      if (text.charCodeAt(i) > 255) {
-        count++
-      }
+    const lang = franc(text);
+    if (lang === 'cmn' || lang === 'yue' || lang === 'wuu' || lang === 'nan' || lang === 'und') { 
+      return 'zh';
     }
-    return count > text.length / 2 ? 'zh' : 'en'
+    else {
+      return 'en';
+    }
   }
 
   return (
@@ -52,7 +53,7 @@ export default function Blog(props) {
             {i18n("Find out the latest posts and tutorials.")}
           </p>
         </div>
-        <div className="mt-8 mx-auto grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:max-w-none">
+        <div className="mt-8 mx-auto grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {
             blogs
               .filter(post => {
@@ -69,7 +70,7 @@ export default function Blog(props) {
                   {post.description.includes('medium-feed-image') && (
                     <div className="flex-shrink-0">
                       <a href={post.link} target="_blank">
-                        <img className="h-48 w-full object-cover" src={post.description.split('src="')[1].split('"')[0]} alt={post.title} />
+                        <img className="h-48 w-full object-cover" src={post.description.split('src="')[1].split('"')[0]} alt={post.title} loading="lazy" />
                       </a>
                     </div>
                   )}

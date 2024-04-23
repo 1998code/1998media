@@ -16,7 +16,7 @@ export default function Achievements(props) {
   ]
   return (
     <div id="achievements" data-aos="zoom-in" data-aos-once className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
-      <img src="https://cdn.1998.media/bgs/App.png" className="fixed -z-[1] w-[25vw] top-14 -right-16 " />
+      <img src="https://cdn.1998.media/bgs/App.png" className="fixed -z-[1] w-[25vw] top-14 -right-16" loading="lazy" />
       <div className="max-w-7xl mx-auto">
         <div className="mx-auto text-left">
           <a className="text-3xl font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl" href="#achievements">
@@ -97,10 +97,10 @@ export default function Achievements(props) {
                 <dd className="order-1 text-5xl font-extrabold text-teal-600">{i18n("Top-100")}</dd>
               </div>
             </dl>
-            <img className="dark:hidden my-6 rounded-lg hover:scale-95 transition-all" src="https://api.mapbox.com/styles/v1/mapbox/streets-v12/static/pin-l+b8172a(113.9745954,22.3526409),pin-s+1f89e3(121.1945767,25.0169013),pin-s+0b236f(-9.7459993,54.4364324),pin-s+0033a0(-95.7129,37.0902),pin-s+ff0000(-106.3468,56.1304),pin-s+0099b5(64.5853,41.3775),pin-s+007a3d(47.4818,29.3117)/11.7314,14.9358,1.32,0,35/1280x720@2x?access_token=pk.eyJ1IjoiMTk5OG1lZGlhIiwiYSI6ImNsdHRuaGg4ZzE1NDUya3N5MTd2dTgwbTYifQ.nTFoFutOK1E7O6KBSFPLVQ&logo=false&attribution=false" />
-            <img className="hidden dark:block my-6 rounded-lg hover:scale-95 transition-all" src="https://api.mapbox.com/styles/v1/1998media/clttnmr3900k501qw52w30alb/static/pin-l+b8172a(113.9745954,22.3526409),pin-s+1f89e3(121.1945767,25.0169013),pin-s+0b236f(-9.7459993,54.4364324),pin-s+0033a0(-95.7129,37.0902),pin-s+ff0000(-106.3468,56.1304),pin-s+0099b5(64.5853,41.3775),pin-s+007a3d(47.4818,29.3117)/11.7314,14.9358,1.32,0,35/1280x720@2x?access_token=pk.eyJ1IjoiMTk5OG1lZGlhIiwiYSI6ImNsdHRuaGg4ZzE1NDUya3N5MTd2dTgwbTYifQ.nTFoFutOK1E7O6KBSFPLVQ&logo=false&attribution=false" />
+            <img className="dark:hidden my-6 rounded-lg hover:scale-95 transition-all" src="https://api.mapbox.com/styles/v1/mapbox/streets-v12/static/pin-l+b8172a(113.9745954,22.3526409),pin-s+1f89e3(121.1945767,25.0169013),pin-s+0b236f(-9.7459993,54.4364324),pin-s+0033a0(-95.7129,37.0902),pin-s+ff0000(-106.3468,56.1304),pin-s+0099b5(64.5853,41.3775),pin-s+007a3d(47.4818,29.3117)/11.7314,14.9358,1.32,0,35/1280x720@2x?access_token=pk.eyJ1IjoiMTk5OG1lZGlhIiwiYSI6ImNsdHRuaGg4ZzE1NDUya3N5MTd2dTgwbTYifQ.nTFoFutOK1E7O6KBSFPLVQ&logo=false&attribution=false" loading="lazy" />
+            <img className="hidden dark:block my-6 rounded-lg hover:scale-95 transition-all" src="https://api.mapbox.com/styles/v1/1998media/clttnmr3900k501qw52w30alb/static/pin-l+b8172a(113.9745954,22.3526409),pin-s+1f89e3(121.1945767,25.0169013),pin-s+0b236f(-9.7459993,54.4364324),pin-s+0033a0(-95.7129,37.0902),pin-s+ff0000(-106.3468,56.1304),pin-s+0099b5(64.5853,41.3775),pin-s+007a3d(47.4818,29.3117)/11.7314,14.9358,1.32,0,35/1280x720@2x?access_token=pk.eyJ1IjoiMTk5OG1lZGlhIiwiYSI6ImNsdHRuaGg4ZzE1NDUya3N5MTd2dTgwbTYifQ.nTFoFutOK1E7O6KBSFPLVQ&logo=false&attribution=false" loading="lazy" />
           </div>
-          <img src="https://cdn.1998.media/bgs/Camera.png" className="fixed -z-[1] w-[25vw] top-25 -right-16" />
+          <img src="https://cdn.1998.media/bgs/Camera.png" className="fixed -z-[1] w-[25vw] top-25 -right-16" loading="lazy" />
           <div className="pt-6">
             <h3 className="mt-6 text-lg font-medium leading-6 text-gray-900 dark:text-gray-100">
               {i18n("3D Rendering and Photography @Unsplash")}
@@ -125,7 +125,7 @@ export default function Achievements(props) {
               {i18n("Random Sample")}
               <i className="far fa-random ml-2"></i>
             </h4>
-            <img className="mt-5 w-full h-[70vh] object-cover rounded-lg hover:scale-95 transition-all" src="https://source.unsplash.com/user/1998media" />
+            <img className="mt-5 w-full h-[70vh] object-cover rounded-lg hover:scale-95 transition-all" src="https://source.unsplash.com/user/1998media" loading="lazy" />
           </div>
         </div>
       </div>
