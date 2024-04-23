@@ -52,7 +52,8 @@ export default function Footer(props) {
   const [geo, setGeo] = useState([])
   const [latitude, setLatitude] = useState([])
   const [longitude, setLongitude] = useState([])
-  axios.get('/api/ip')
+  const lang = window.location.pathname.split('/')[1]
+  axios.get(`/api/ip?l=${lang}`)
     .then(res => {
       setIP(res.data.ip || null);
       setGeo(res.data.geo && res.data.geo.city + ', ' + res.data.geo.country || 'Unknown');
