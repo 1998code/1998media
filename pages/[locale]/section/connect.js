@@ -1,9 +1,9 @@
 export default function Connect(props) {
   function i18n(key) {
-    if (props.i18n && props.i18n['blog'] && !props.i18n['blog'][key]) {
-      console.log('Blog Missing Translation: ' + key)
+    if (props.i18n && props.i18n['connect'] && !props.i18n['connect'][key]) {
+      console.log('Connect Missing Translation: ' + key)
     }
-    return props.i18n && props.i18n['blog'] && props.i18n['blog'][key] ? props.i18n['blog'][key] : key
+    return props.i18n && props.i18n['connect'] && props.i18n['connect'][key] ? props.i18n['connect'][key] : key
   }
   return (
     <div id="connect" data-aos="zoom-in" data-aos-once className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">

@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 export default function Credits(props) {
   function i18n(key) {
     if (props.i18n && props.i18n['credits'] && !props.i18n['credits'][key]) {
@@ -12,19 +14,18 @@ export default function Credits(props) {
       </h2>
       <div className="flex flex-wrap gap-3">
         <a href="https://vercel.com/?utm_source=1998code&utm_campaign=oss">
-          <img className="h-10 rounded-lg border border-white" src="https://cdn.1998.media/logos/Vercel.svg" alt="Vercel" />
+          <Image className="h-10 rounded-lg border border-black dark:border-white" src="https://cdn.1998.media/logos/Vercel.svg" alt="Vercel" width={200} height={40} />
         </a>
         <a href="https://betteruptime.com/?ref=i41">
-          <img className="w-10 h-10 p-2 bg-white rounded-lg transition-all border border-black" src="https://cdn.1998.media/logos/BetterUptime.png" alt="BetterUptime" />
+          <Image className="h-10 rounded-lg p-2 border border-black dark:border-white dark:bg-white" src="https://cdn.1998.media/logos/BetterUptime.png" alt="BetterUptime" width={40} height={40} />
         </a>
-        <img className="h-10 rounded-lg bg-white p-2 dark:hidden border border-black" src="https://docsearch.algolia.com/img/docsearch-logo.svg" alt="Algolia Docsearch" /> 
-        <img className="h-10 rounded-lg hidden p-2 dark:bg-black dark:block border border-white" src="https://docsearch.algolia.com/img/docsearch-logo-white.svg" alt="Algolia Docsearch" /> 
-        {/* <img className="h-10 rounded-lg border border-black" src="https://cdn.1998.media/logos/GoogleResearch.png" alt="Google Research" /> */}
+        <div>
+          <Image className="h-10 rounded-lg bg-white p-2 dark:hidden border border-black" src="https://docsearch.algolia.com/img/docsearch-logo.svg" alt="Algolia" width={150} height={40} />
+          <Image className="h-10 rounded-lg hidden p-2 dark:bg-black dark:block border border-white" src="https://docsearch.algolia.com/img/docsearch-logo-white.svg" alt="Docsearch" width={150} height={40} />
+        </div>
         <a href="https://www.digitalocean.com/?refcode=ce873177d9ab&utm_medium=opensource">
-          <img className="h-10 rounded-lg bg-white p-2 border border-black" src="https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/SVG/DO_Logo_icon_blue.svg" alt="DigitalOcean" />
+          <Image className="h-10 rounded-lg bg-white p-2 border border-black" src="https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/SVG/DO_Logo_icon_blue.svg" alt="DigitalOcean" width={40} height={40} />
         </a>
-        {/* <img className="h-10 rounded-lg border border-white" src="https://cdn.1998.media/logos/STACKPATH.png" alt="STACKPATH" /> */}
-        {/* <img className="h-10 rounded-lg" src="https://cdn.1998.media/logos/fastly.png" alt="fastly" /> */}
       </div>
     </div>
   )
