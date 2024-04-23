@@ -97,19 +97,19 @@ export default function Footer(props) {
       <div className="mt-1 text-xs ext-gray-600 dark:text-gray-400 pt-3 gap-3 flex flex-wrap justify-between">
         <span className="flex items-center gap-3">
           {i18n("Compatible with")}: 
-          <Tooltip content="Safari 12+" placement="bottom" class="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg">
+          <Tooltip content="Safari 12+" placement="bottom" className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg">
             <i className="fab fa-safari"></i>
           </Tooltip>
-          <Tooltip content="Chrome 64+" placement="top" class="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg">
+          <Tooltip content="Chrome 64+" placement="top" className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg">
             <i className="fab fa-chrome"></i>
           </Tooltip>
-          <Tooltip content="Firefox 67+" placement="bottom" class="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg">
+          <Tooltip content="Firefox 67+" placement="bottom" className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg">
             <i className="fab fa-firefox-browser" />
           </Tooltip>
-          <Tooltip content="Microsoft Edge 79+" placement="top" class="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg">
+          <Tooltip content="Microsoft Edge 79+" placement="top" className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg">
             <i className="fab fa-edge"></i>
           </Tooltip>
-          <Tooltip content="Opera 51+" placement="bottom" class="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg">
+          <Tooltip content="Opera 51+" placement="bottom" className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg">
             <i className="fab fa-opera"></i>
           </Tooltip>
         </span>
