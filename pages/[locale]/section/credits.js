@@ -13,7 +13,7 @@ export default function Credits(props) {
         {i18n("Special Thanks")}
       </h2>
       <div className="flex flex-wrap gap-3">
-        {/* <a href="https://vercel.com/?utm_source=1998code&utm_campaign=oss">
+        <a href="https://vercel.com/?utm_source=1998code&utm_campaign=oss">
           <Image className="h-10 rounded-lg border border-black dark:border-white" src="https://cdn.1998.media/logos/Vercel.svg" alt="Vercel" width={200} height={40} />
         </a>
         <a href="https://betteruptime.com/?ref=i41">
@@ -25,7 +25,7 @@ export default function Credits(props) {
         </div>
         <a href="https://www.digitalocean.com/?refcode=ce873177d9ab&utm_medium=opensource">
           <Image className="h-10 rounded-lg bg-white p-2 border border-black" src="https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/SVG/DO_Logo_icon_blue.svg" alt="DigitalOcean" width={40} height={40} />
-        </a> */}
+        </a>
       </div>
     </div>
   )
