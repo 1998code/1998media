@@ -18,8 +18,8 @@ export default function Connect(props) {
           </p>
         </div>
         <div>
-          <iframe width="100%" height="55" src="https://rss.app/embed/v1/ticker/uinAtIEboH5CBIfo" frameborder="0" class="relative rounded-lg -mb-7 z-[1]"></iframe>
-          <iframe width="100%" height="450"  src="https://rss.app/embed/v1/carousel/uinAtIEboH5CBIfo" frameborder="0" class="relative z-[0]"></iframe>
+          <iframe width="100%" height="55" src="https://rss.app/embed/v1/ticker/uinAtIEboH5CBIfo" frameborder="0" className="relative rounded-lg -mb-7 z-[1]"></iframe>
+          <iframe width="100%" height="450"  src="https://rss.app/embed/v1/carousel/uinAtIEboH5CBIfo" frameborder="0" className="relative z-[0]"></iframe>
         </div>
       </div>
     </div>
