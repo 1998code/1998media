@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import { franc } from 'franc-min'
 
 export default function Blog(props) {
   function i18n(key) {
@@ -28,8 +29,6 @@ export default function Blog(props) {
       }
       )
   }
-
-  const franc = require('franc-min').franc
 
   function languageCheck(text) {
     const lang = franc(text);
