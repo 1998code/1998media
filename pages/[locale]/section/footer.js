@@ -56,7 +56,7 @@ export default function Footer(props) {
   axios.get(`/api/ip?l=${lang}`)
     .then(res => {
       setIP(res.data.ip || null);
-      setGeo(res.data.geo && res.data.geo.city + ', ' + res.data.geo.country || 'Unknown');
+      setGeo(res.data.geo && res.data.geo.city + ', ' + res.data.geo.state || 'Unknown');
       setLatitude(res.data.latitude || 'Unknown');
       setLongitude(res.data.longitude || 'Unknown');
     }).catch(err => {

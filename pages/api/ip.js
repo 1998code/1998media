@@ -16,12 +16,12 @@ export default async function (req, res) {
         const res = await geoCoder.reverse({ lat: latitude, lon: longitude });
         geo = {
             city: res[0].city,
-            country: res[0].state || res[0].country
+            state: res[0].state
         }
     } else {
         geo = {
             city: 'Unknown',
-            country: 'Unknown'
+            state: 'Unknown'
         }
     }
 
