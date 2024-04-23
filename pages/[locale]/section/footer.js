@@ -113,13 +113,15 @@ export default function Footer(props) {
             <i className="fab fa-opera"></i>
           </Tooltip>
         </span>
-        <p className="ext-gray-600 dark:text-gray-400">
-          {i18n("You come from")}: <a href={`https://whatismyipaddress.com/ip/${ip}`} target="_blank">
-            { ip }
-          </a> | { i18n(geo) } (<a href={`https://www.google.com/maps/@${latitude},${longitude},11z`} target="_blank">
-            { i18n(latitude) }{ i18n(",") }{ i18n(longitude) }
-          </a>)
-        </p>
+        {ip && (
+          <p className="ext-gray-600 dark:text-gray-400">
+            {i18n("You come from")}: <a href={`https://whatismyipaddress.com/ip/${ip}`} target="_blank">
+              { ip }
+            </a> | { i18n(geo) } (<a href={`https://www.google.com/maps/@${latitude},${longitude},11z`} target="_blank">
+              { i18n(latitude) }{ i18n(",") }{ i18n(longitude) }
+            </a>)
+          </p>
+        )}
         <div className="flex items-center gap-3">
           {navigation.main.map((item) => (
             <a href={item.href} 
