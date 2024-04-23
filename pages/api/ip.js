@@ -1,7 +1,8 @@
 import NodeGeocoder from 'node-geocoder'
 
 let options = {
-    provider: 'openstreetmap'
+    provider: 'openstreetmap',
+    language: 'en'
   };
   
   let geoCoder = NodeGeocoder(options);
