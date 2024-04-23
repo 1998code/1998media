@@ -1,6 +1,8 @@
+import geoip from 'geoip-lite';
+
 export default function (req, res) {
     const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    const geoip = require('geoip-lite');
+    // const geoip = require('geoip-lite');
     const geo = geoip.lookup(ip);
 
     const latitude = req.headers['x-vercel-ip-latitude'];
