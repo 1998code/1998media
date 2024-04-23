@@ -82,7 +82,7 @@ export default function Footer(props) {
         </div>
         <div className="flex justify-center space-x-6">
           {navigation.social.map((item) => (
-            <Tooltip content={item.name} placement="top" class="p-1 mb-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg">
+            <Tooltip content={item.name} placement="top" className="p-1 mb-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg">
               <a key={item.name} href={item.href} target="_blank" className="ext-gray-600 dark:text-gray-400 hover:text-gray-500">
                 <span className="sr-only">{i18n(item.name)}</span>
                 <item.icon aria-hidden="true" />

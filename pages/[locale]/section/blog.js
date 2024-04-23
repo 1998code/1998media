@@ -74,7 +74,7 @@ export default function Blog(props) {
                     </div>
                   )}
                   <div className="flex-1 p-6 flex flex-col justify-between">
-                    <div class=" text-gray-400 text-xs">
+                    <div className=" text-gray-400 text-xs">
                       <i className="far fa-calendar mr-1"></i>
                       <time dateTime={post.pubDate.slice(0, 10)}>{post.pubDate.slice(0, 10)}</time>
                     </div>
