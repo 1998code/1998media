@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Tooltip } from "@nextui-org/tooltip"
 
@@ -48,21 +48,24 @@ export default function Footer(props) {
       },
     ],
   }
+
   const [ip, setIP] = useState([])
   const [geo, setGeo] = useState([])
   const [latitude, setLatitude] = useState([])
   const [longitude, setLongitude] = useState([])
-  const lang = window.location.pathname.split('/')[1]
-  axios.get(`/api/ip?l=${lang}`)
-    .then(res => {
-      setIP(res.data.ip || null);
-      setGeo(res.data.geo && res.data.geo.city + ', ' + res.data.geo.state || 'Unknown');
-      setLatitude(res.data.latitude || 'Unknown');
-      setLongitude(res.data.longitude || 'Unknown');
-    }).catch(err => {
-      console.log(err)
-    }
-  )
+
+  useEffect(() => {
+    const lang = window.location.pathname.split('/')[1]
+    axios.get(`/api/ip?l=${lang}`)
+      .then(res => {
+        setIP(res.data.ip || null);
+        setGeo(res.data.geo && res.data.geo.city + ', ' + res.data.geo.state || 'Unknown');
+        setLatitude(res.data.latitude || 'Unknown');
+        setLongitude(res.data.longitude || 'Unknown');
+      }).catch(err => {
+        console.log(err)
+      })
+  }, [])
 
   // Since
   const today = new Date()
@@ -72,7 +75,7 @@ export default function Footer(props) {
   const diffYearNDay = `${Math.floor(diffDay / 365)} ${i18n("Years")} ${i18n("and")} ${Math.floor(diffDay % 365)} ${i18n("Days")}`
 
   return (
-    <div data-aos="zoom-in" data-aos-once className="right-0 max-w-7xl mx-auto py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
+    <div data-aos="zoom-in" data-aos-once className="right-0 max-w-7xl mx-auto pt-12 pb-20 px-4 overflow-hidden sm:px-6 lg:px-8">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <span className="ext-gray-600 dark:text-gray-400">

@@ -65,14 +65,13 @@ function CursorPointer() {
 export default function Home() {
 
   useEffect(() => {
-    getI18nData()
+    const path = window.location.pathname.replace('/', '')
+    getI18nData(path)
   }, [])
 
   const [loading, setLoading] = useState(true)
   const [i18n, setI18n] = useState({})
-  function getI18nData() {
-    const path = window.location.pathname.replace('/', '')
-
+  function getI18nData(path) {
     axios.get(`/api/i18n?lang=${path}`).then((res) => {
       setI18n(res.data)
       setLoading(false)
