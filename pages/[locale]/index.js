@@ -82,6 +82,27 @@ export default function Home() {
     })
   }
 
+  const sections = ['header', 'about', 'achievements', 'skills', 'experience', 'projects', 'blog', 'connect', 'ai', 'faq', 'contact']
+  // When arrow up/down keys are pressed, scroll to the next/previous section
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+        e.preventDefault()
+        let currentSection = sections.indexOf(window.location.hash.replace('#', ''))
+        if (e.key === 'ArrowUp') {
+          currentSection = currentSection > 0 ? currentSection - 1 : sections.length - 1
+        } else {
+          currentSection = currentSection < sections.length - 1 ? currentSection + 1 : 0
+        }
+        window.location.hash = sections[currentSection]
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  })
+
   return (
     <div>
       <Head>
@@ -95,6 +116,7 @@ export default function Home() {
         <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
         <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
         <script type="module" src="https://unpkg.com/@splinetool/viewer/build/spline-viewer.js" defer></script>
+        <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
       </Head>
       <script>
         AOS.init();
@@ -124,6 +146,7 @@ export default function Home() {
                   apiKey="a8c97c33f935922cf3fa01ff8ea67f10"
                   placeholder="Search & Learn More..."
                 />
+                <div class="elfsight-app-d9c75342-d244-4ae0-91fd-78feae7b7d90" data-elfsight-app-lazy></div>
               </div>
             )}
         </RoomProvider>
