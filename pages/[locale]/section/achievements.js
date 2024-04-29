@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react'
+
 export default function Achievements(props) {
   function i18n(key) {
     if (props.i18n && props.i18n['achievements'] && !props.i18n['achievements'][key]) {
@@ -5,15 +7,47 @@ export default function Achievements(props) {
     }
     return props.i18n && props.i18n['achievements'] && props.i18n['achievements'][key] ? props.i18n['achievements'][key] : key
   }
-  const totalViews = "812,430"
-  const totalReleases = "7"
-  const avgViews = Math.floor(parseInt(totalViews.replace(/,/g, '')) / parseInt(totalReleases)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+
+  const unsplashPublicKey = "hjm0tzh_dDQx2REubp1NiT1P4jxE5wmnCbKQLbD-BZ8"
+
+  const [totalViews, setTotalViews] = useState(0)
+  function getUnsplashStats() {
+    fetch(`https://api.unsplash.com/users/1998media/statistics?client_id=${unsplashPublicKey}`)
+      .then(response => response.json())
+      .then(data => {
+        setTotalViews(data.views.total)
+      })
+      .catch((error) => {
+        console.error('Error:', error)
+      })
+  }
+
+  const [photos, setPhotos] = useState([])
+  function getUnsplashPhotos() {
+    fetch(`https://api.unsplash.com/users/1998media/photos?client_id=${unsplashPublicKey}`)
+      .then(response => response.json())
+      .then(data => {
+        setPhotos(data)
+      })
+      .catch((error) => {
+        console.error('Error:', error)
+      })
+  }
+
+  const totalReleases = 7
+  const avgViews = Math.floor(totalViews / totalReleases).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+
   const stats = [
-    // add , to toalViews
-    { name: 'Total Views', stat: `${i18n("Over")} ${totalViews}` },
+    { name: 'Total Views', stat: `${i18n("Over")} ${totalViews.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}` },
     { name: 'Total Releases', stat: `${totalReleases}` },
     { name: 'Average Views', stat: `${i18n("Over")} ${avgViews}` },
   ]
+
+  useEffect(() => {
+    getUnsplashStats()
+    getUnsplashPhotos()
+  }, [])
+
   return (
     <div id="achievements" data-aos="zoom-in" data-aos-once className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
       <img src="https://cdn.1998.media/bgs/App.png" className="fixed -z-[1] w-[25vw] top-14 -right-16" loading="lazy" />
@@ -125,7 +159,17 @@ export default function Achievements(props) {
               {i18n("Random Sample")}
               <i className="far fa-random ml-2"></i>
             </h4>
-            <img className="mt-5 w-full h-[70vh] object-cover rounded-lg hover:scale-95 transition-all" src="https://source.unsplash.com/user/1998media" loading="lazy" />
+            {/* <img className="mt-5 w-full h-[70vh] object-cover rounded-lg hover:scale-95 transition-all" src="https://source.unsplash.com/user/1998media" loading="lazy" /> */}
+            {/* Loop first 3 from photos array */}
+            <div className="grid grid-cols-1 gap-4 mt-5 sm:grid-cols-2">
+              {photos.map((photo) => (
+                <div key={photo.id} className="flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-105 border border-transparent hover:border-black dark:hover:border-white">
+                  <a href={photo.links.html} target="_blank">
+                    <img className="h-[25vh] w-full object-cover" src={photo.urls.raw} alt={photo.alt_description} loading="lazy" />
+                  </a>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
