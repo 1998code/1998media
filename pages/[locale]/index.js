@@ -116,7 +116,6 @@ export default function Home() {
         <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
         <script type="module" src="https://unpkg.com/@splinetool/viewer/build/spline-viewer.js" defer></script>
         <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
-        <script async src="https://contra.com/static/embed/sdk.js" charset="utf-8"></script>
       </Head>
       <script>
         AOS.init();

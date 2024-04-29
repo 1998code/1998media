@@ -64,8 +64,6 @@ export default function Contact(props) {
               <p className="text-lg text-white">
                 {i18n("Response in 48 hours. Holidays may take longer. No spam, please.")}
               </p>
-              <div class="contra-hire-me-button block dark:hidden" data-analyticsUserId="4648cbfc-59ae-4a03-b733-209be53664c3" data-theme="dark" data-username="work_e0aurl85"></div>
-              <div class="contra-hire-me-button hidden dark:block" data-analyticsUserId="4648cbfc-59ae-4a03-b733-209be53664c3" data-theme="light" data-username="work_e0aurl85"></div>
               <a
                 className="block w-full py-3 px-5 text-center bg-white dark:bg-black border border-transparent rounded-md shadow-md text-base font-medium text-orange-700 dark:text-orange-300 hover:bg-gray-50 dark:hover:bg-gray-900 sm:inline-block sm:w-auto"
                 href="mailto:find@1998.media"
