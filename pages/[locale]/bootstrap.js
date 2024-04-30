@@ -13,7 +13,6 @@ export default function Bootstrap() {
       <main>
         <iframe src="https://themes.1998.media/" frameborder="0" width="100%" height="100%" className="fixed"></iframe>
       </main>
-      
     </div>
   )
 }

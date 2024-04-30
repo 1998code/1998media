@@ -34,7 +34,7 @@ export default function Achievements(props) {
       })
   }
 
-  const totalReleases = 6
+  const totalReleases = photos.length
   const avgViews = Math.floor(totalViews / totalReleases).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 
   const stats = [

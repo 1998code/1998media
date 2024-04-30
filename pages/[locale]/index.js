@@ -63,7 +63,6 @@ function CursorPointer() {
 }
 
 export default function Home() {
-
   useEffect(() => {
     const path = window.location.pathname.replace('/', '')
     getI18nData(path)
