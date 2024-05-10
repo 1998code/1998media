@@ -30,28 +30,27 @@ export default function Skills(props) {
     { name: 'Table Plus', icons: 'TP', href: '#', bgColor: 'bg-purple-500' },
   ]
   const languages = [
-    { name: 'SwiftUI', icons: 'fa-swift', href: '#', bgColor: 'bg-orange-600' },
-    { name: 'CoreData', icons: 'fa-apple', href: '#', bgColor: 'bg-orange-600' },
-    { name: 'CloudKit', icons: 'fa-apple', href: '#', bgColor: 'bg-orange-600' },
+    { name: 'SwiftUI', icons: 'fa-swift', href: 'https://developer.apple.com/xcode/swiftui/', bgColor: 'bg-orange-600' },
+    { name: 'CoreData', icons: 'fa-apple', href: 'https://developer.apple.com/documentation/coredata/', bgColor: 'bg-orange-600' },
+    { name: 'CloudKit/JS', icons: 'fa-apple', href: 'https://developer.apple.com/icloud/cloudkit/', bgColor: 'bg-orange-600' },
 
-    { name: 'NextJS', icons: 'fa-react', href: '#', bgColor: 'bg-sky-600' },
+    { name: 'NextJS', icons: 'fa-react', href: 'https://nextjs.org/', bgColor: 'bg-sky-600' },
 
-    { name: 'TailwindCSS', icons: 'fa-css3', href: '#', bgColor: 'bg-indigo-600' },
-    { name: 'Bootstrap 5', icons: 'fa-bootstrap', href: '#', bgColor: 'bg-indigo-600' },
+    { name: 'TailwindCSS', icons: 'fa-css3', href: 'https://tailwindcss.com/', bgColor: 'bg-indigo-600' },
+    { name: 'Bootstrap 5', icons: 'fa-bootstrap', href: 'https://getbootstrap.com/', bgColor: 'bg-indigo-600' },
 
-    { name: 'VuetifyJS', icons: 'fa-vuejs', href: '#', bgColor: 'bg-teal-600' },
-    { name: 'NuxtJS', icons: 'fa-vuejs', href: '#', bgColor: 'bg-teal-600' },
+    { name: 'NuxtJS', icons: 'fa-vuejs', href: 'https://nuxt.com/', bgColor: 'bg-teal-600' },
+    { name: 'VuetifyJS', icons: 'fa-vuejs', href: 'https://vuetifyjs.com/en/', bgColor: 'bg-blue-600' },
 
-    { name: 'OpenAI GPT', icons: 'AI', href: '#', bgColor: 'bg-teal-600' }
+    { name: 'OpenAI GPT', icons: 'AI', href: 'https://openai.com/', bgColor: 'bg-teal-600' }
   ]
   const speakWrites = [
-    { name: 'Cantonese (Chinese Traditional)', icons: 'Proficient', href: '#', bgColor: 'bg-green-600' },
-    { name: 'English', icons: 'Proficient', href: '#', bgColor: 'bg-green-600' },
+    { name: 'Cantonese (Chinese Traditional)', icons: 'Proficient', href: 'https://www.hkeaa.edu.hk/en/hkdse/', bgColor: 'bg-green-600' },
+    { name: 'English', icons: 'Proficient', href: 'https://www.hkeaa.edu.hk/en/hkdse/', bgColor: 'bg-green-600' },
 
-    { name: 'Mandarin (Chinese Simplified)', icons: 'Fluent', href: '#', bgColor: 'bg-blue-600' },
-    { name: 'Korean  (Passed the Test of Proficiency in Korean in 2018)', icons: 'Fluent', href: '#', bgColor: 'bg-blue-600' },
+    { name: 'Mandarin (Chinese Simplified)', icons: 'Fluent', href: 'https://www.hkeaa.edu.hk/en/hkdse/', bgColor: 'bg-blue-600' },
 
-    { name: 'Japanese', icons: 'Basic', href: '#', bgColor: 'bg-orange-600' },
+    { name: 'Korean  (Passed the Test of Proficiency in Korean in 2018)', icons: 'Intermediate', href: 'https://www.topik-hk.org/eng/index.asp', bgColor: 'bg-sky-600' },
   ]
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
