@@ -69,7 +69,7 @@ export default function Home() {
   }, [])
 
   const [loading, setLoading] = useState(true)
-  const [i18n, setI18n] = useState({})
+  const [I18n, setI18n] = useState({})
   function getI18nData(path) {
     axios.get(`/api/i18n?lang=${path}`).then((res) => {
       setI18n(res.data)
@@ -80,7 +80,7 @@ export default function Home() {
     })
   }
 
-  const sections = ['header', 'about', 'achievements', 'skills', 'experience', 'projects', 'blog', 'connect', 'ai', 'faq', 'contact']
+  const sections = ['header', 'about', 'achievements', 'impacts', 'skills', 'experience', 'projects', 'blog', 'connect', 'ai', 'faq', 'contact']
   // When arrow up/down keys are pressed, scroll to the next/previous section
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -101,11 +101,18 @@ export default function Home() {
     }
   })
 
+  function i18n(key) {
+    if (I18n && I18n['index'] && !I18n['index'][key]) {
+      console.log('Index Missing Translation: ' + key)
+    }
+    return I18n && I18n['index'] && I18n['index'][key] ? I18n['index'][key] : key
+  }
+
   return (
     <div>
       <Head>
-        <title>1998 MEDIA (Official Website)</title>
-        <meta name="description" content="The Official Website of 1998 MEDIA." />
+        <title>{i18n('1998 MEDIA (Official Website)')}</title>
+        <meta name="description" content={i18n('Experience the Art of Design - Your Vision, My Craftsmanship.')} />
         <link rel="icon" href="https://cdn.1998.media/favicon23.jpg" />
         <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fff6eb" />
         <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000914" />
@@ -125,19 +132,19 @@ export default function Home() {
           {loading ?
             <Loading /> : (
               <div>
-                <Header i18n={i18n} />
-                <About i18n={i18n} />
-                <Achievements i18n={i18n} />
-                <Skills i18n={i18n} />
-                <Experience i18n={i18n} />
-                <Projects i18n={i18n} />
-                <Blog i18n={i18n} />
-                <Connect i18n={i18n} />
-                <AI i18n={i18n} />
-                <Faq i18n={i18n} />
-                <Contact i18n={i18n} />
-                <Credits i18n={i18n} />
-                <Footer i18n={i18n} />
+                <Header i18n={I18n} />
+                <About i18n={I18n} />
+                <Achievements i18n={I18n} />
+                <Skills i18n={I18n} />
+                <Experience i18n={I18n} />
+                <Projects i18n={I18n} />
+                <Blog i18n={I18n} />
+                <Connect i18n={I18n} />
+                <AI i18n={I18n} />
+                <Faq i18n={I18n} />
+                <Contact i18n={I18n} />
+                <Credits i18n={I18n} />
+                <Footer i18n={I18n} />
                 <DocSearch
                   appId="01IRDDJXZ4"
                   indexName="1998"
