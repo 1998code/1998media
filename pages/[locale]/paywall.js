@@ -4,11 +4,6 @@ import axios from 'axios'
 import { franc } from 'franc-min'
 
 export default function Paywall() {
-  useEffect(() => {
-    const path = window.location.pathname.replace('/', '')
-    getI18nData(path)
-  }, [])
-
   const [loading, setLoading] = useState(true)
   const [I18n, setI18n] = useState({})
   function getI18nData(path) {
@@ -26,33 +21,34 @@ export default function Paywall() {
     }
     return I18n && I18n['blog'] && I18n['blog'][key] ? I18n['blog'][key] : key
   }
+  useEffect(() => {
+    const path = window.location.pathname.replace('/', '')
+    getI18nData(path)
+  }, [])
   
   const [loadingBlog, setLoadingBlog] = useState(true)
   const [blogs, setBlogs] = useState([])
   const [offset, setOffset] = useState(0)
-  useEffect(() => {
-    getBlogData()
-    window.addEventListener('resize', () => {
-      getBlogData()
-    })
-  }, [])
   function getBlogData() {
     setLoadingBlog(true)
     axios.get(`/api/paywall?status=public&offset=${offset}`)
       .then(res => {
-        // setBlogs(res.data);
-        // append
-        setBlogs(blogs.concat(res.data))
+        setBlogs(prevBlogs => {
+          const newBlogs = res.data.filter(
+            (newBlog) => !prevBlogs.some((prevBlog) => prevBlog.id === newBlog.id)
+          );
+          return prevBlogs.concat(newBlogs);
+        })
         setLoadingBlog(false)
+        scrollToBottom()
+        setOffset(prevOffset => prevOffset + 10)
       }).catch(err => {
         console.log(err)
-      }
-      )
+      })
   }
 
   function nextPage() {
-    setOffset(offset + 10)
-    getBlogData()
+    setOffset(prevOffset => prevOffset + 10);
   }
 
   function languageCheck(text) {
@@ -64,6 +60,17 @@ export default function Paywall() {
       return 'en';
     }
   }
+
+  function scrollToBottom() {
+    const anchor = blogs[blogs.length - 1].title
+    const element = document.getElementById(anchor)
+    element.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  useEffect(() => {
+    getBlogData()
+  }, [offset])
+
   return (
     <div>
       <Head>
@@ -103,7 +110,8 @@ export default function Paywall() {
                     }
                   })
                   .map(post =>
-                    <a href={`https://blog.1998.media/${post.postID}?sk=${post.secret}`} target="_blank" key={post.title} className="flex items-center rounded-lg bg-white dark:bg-black overflow-hidden transform transition duration-500 border border-transparent hover:border-black dark:hover:border-white backlight">
+                    <a id={post.title}
+                      href={`https://blog.1998.media/${post.postID}?sk=${post.secret}`} target="_blank" key={post.title} className="flex items-center rounded-lg bg-white dark:bg-black overflow-hidden transform transition duration-500 border border-transparent hover:border-black dark:hover:border-white backlight">
                       <div className="flex-1 p-6 flex flex-col justify-between">
                         <div className=" text-gray-400 text-sm md:text-lg">
                           <i className="far fa-calendar mr-1"></i>

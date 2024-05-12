@@ -109,10 +109,14 @@ export default function Blog(props) {
               )
           }
         </div>
-        <div className="mt-8 text-center">
+        <div className="mt-8 text-center flex items-center gap-3">
+          <a href={window.location.pathname + '/paywall'} className="flex-1 block text-lg font-semibold text-white bg-teal-600 hover:bg-teal-500 p-3 rounded-lg transition-all" target="_blank">
+            <i className="fa fa-circle-dollar mr-2"></i>
+            {i18n("Subscribe with $2.99 per month")} ({i18n("Coming Soon")})
+          </a>
           <a href="https://blog.1998.media" className="block text-lg font-semibold text-white bg-orange-600 hover:bg-orange-500 p-3 rounded-lg transition-all" target="_blank">
             <i className="fab fa-medium mr-2"></i>
-            {i18n("View all posts on Medium")}
+            {i18n("View all posts on Medium")} ($5 per month)
           </a>
         </div>
       </div>
