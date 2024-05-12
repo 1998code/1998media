@@ -69,7 +69,7 @@ export default function Blog(props) {
                   {post.description.includes('medium-feed-image') && (
                     <div className="flex-shrink-0">
                       <a href={post.link} target="_blank">
-                        <img className="h-48 w-full object-cover" src={post.description.split('src="')[1].split('"')[0]} alt={post.title} loading="lazy" />
+                        <img className="h-48 w-full object-cover" src={post.description.split('src="')[1].split('"')[0]} alt={post.title}  />
                       </a>
                     </div>
                   )}

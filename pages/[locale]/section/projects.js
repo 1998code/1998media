@@ -47,17 +47,17 @@ export default function Projects(props) {
           </p>
         </div>
         <div className="mx-auto grid gap-5 md:grid-cols-4 lg:max-w-none items-center">
-          <img className="w-full col-span-3 hover:scale-95 transition duration-300 rounded-lg" src="https://gitstats.1998.media/api?username=1998code&show_icons=true&bg_color=30,e96443,904e95&title_color=fff&text_color=fff&icon_color=fff&hide_border=true" alt="Performance" loading="lazy" />
-          <img className="w-full col-span-3 md:col-span-1 dark:hidden hover:scale-95 transition duration-300 rounded-lg" src="https://gitstats.1998.media/api/top-langs/?username=1998code&langs_count=8&layout=default&hide_border=true" alt="Top Languages" loading="lazy" />
-          <img className="w-full col-span-3 md:col-span-1 hidden dark:block hover:scale-95 transition duration-300 rounded-lg backlight" src="https://gitstats.1998.media/api/top-langs/?username=1998code&langs_count=8&layout=default&bg_color=000&title_color=fff&text_color=fff&hide_border=true" alt="Top Languages" loading="lazy" />
+          <img className="w-full col-span-3 hover:scale-95 transition duration-300 rounded-lg" src="https://gitstats.1998.media/api?username=1998code&show_icons=true&bg_color=30,e96443,904e95&title_color=fff&text_color=fff&icon_color=fff&hide_border=true" alt="Performance" />
+          <img className="w-full col-span-3 md:col-span-1 dark:hidden hover:scale-95 transition duration-300 rounded-lg" src="https://gitstats.1998.media/api/top-langs/?username=1998code&langs_count=8&layout=default&hide_border=true" alt="Top Languages" />
+          <img className="w-full col-span-3 md:col-span-1 hidden dark:block hover:scale-95 transition duration-300 rounded-lg backlight" src="https://gitstats.1998.media/api/top-langs/?username=1998code&langs_count=8&layout=default&bg_color=000&title_color=fff&text_color=fff&hide_border=true" alt="Top Languages" />
         </div>
-        <img id="projectChart" className="w-full p-3 hover:scale-95 transition duration-300 rounded-lg backlight" src="https://ghchart.rshah.org/1998code" alt="Github chart" loading="lazy" />
+        <img id="projectChart" className="w-full p-3 hover:scale-95 transition duration-300 rounded-lg backlight" src="https://ghchart.rshah.org/1998code" alt="Github chart" />
         <div className="mx-auto grid gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:max-w-none">
           {githubs.map(repo => (
             !repo.fork && (
               <a href={repo.html_url} target="_blank" key={repo.name} className="flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight">
                 <div className="flex-shrink-0">
-                  <img className="w-full object-cover" src={`https://opengraph.githubassets.com/286af552210001e9ea769373d5955f2c4d4a911070501bbd22fc7cb957761f48/1998code/${repo.name}`} alt={repo.name.replaceAll('-', ' ')} loading="lazy" />
+                  <img className="w-full object-cover" src={`https://opengraph.githubassets.com/286af552210001e9ea769373d5955f2c4d4a911070501bbd22fc7cb957761f48/1998code/${repo.name}`} alt={repo.name.replaceAll('-', ' ')}  />
                 </div>
                 <div className="flex-1 p-6 flex flex-col justify-between">
                   <span className="text-xl font-semibold text-gray-900 dark:text-gray-100 flex items-center truncate">

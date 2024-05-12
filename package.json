@@ -21,6 +21,7 @@
     "@vercel/postgres": "^0.4.1",
     "@vercel/speed-insights": "^1.0.3",
     "axios": "^0.27.2",
+    "cheerio": "^1.0.0-rc.12",
     "darkmode-js": "^1.5.7",
     "framer-motion": "^10.16.0",
     "franc-min": "^6.2.0",
