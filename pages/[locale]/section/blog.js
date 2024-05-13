@@ -35,7 +35,7 @@ export default function Blog(props) {
 
   function languageCheck(text) {
     const lang = franc(text);
-    if (lang === 'cmn' || lang === 'yue' || lang === 'wuu' || lang === 'nan' || lang === 'und') { 
+    if (lang === 'cmn' || lang === 'yue' || lang === 'wuu' || lang === 'nan' || lang === 'zul' || lang === 'und') { 
       return 'zh';
     }
     else {
