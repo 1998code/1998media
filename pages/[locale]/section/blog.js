@@ -40,6 +40,8 @@ export default function Blog(props) {
     }
   }
 
+  const payWallURL = `${window.location.pathname}/paywall`
+
   return (
     <div id="blog" data-aos="zoom-in" data-aos-once className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
       <div className="relative max-w-7xl mx-auto">
@@ -110,7 +112,7 @@ export default function Blog(props) {
           }
         </div>
         <div className="mt-8 text-center flex items-center gap-3">
-          <a href={window.location.pathname + '/paywall'} className="flex-1 block text-lg font-semibold text-white bg-teal-600 hover:bg-teal-500 p-3 rounded-lg transition-all" target="_blank">
+          <a href={payWallURL} className="flex-1 block text-lg font-semibold text-white bg-teal-600 hover:bg-teal-500 p-3 rounded-lg transition-all" target="_blank">
             <i className="fa fa-circle-dollar mr-2"></i>
             {i18n("Subscribe with $2.99 per month")} ({i18n("Coming Soon")})
           </a>
