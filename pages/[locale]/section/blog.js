@@ -119,7 +119,7 @@ export default function Blog(props) {
           </a>
           <a href="https://blog.1998.media" className="block text-lg font-semibold text-white bg-orange-600 hover:bg-orange-500 p-3 rounded-lg transition-all" target="_blank">
             <i className="fab fa-medium mr-2"></i>
-            {i18n("View all posts on Medium")} ($5 per month)
+            {i18n("View all posts on Medium")} ({i18n("$5 per month")})
           </a>
         </div>
       </div>

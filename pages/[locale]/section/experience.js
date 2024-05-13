@@ -7,13 +7,22 @@ export default function Experience(props) {
   }
   const positions = [
     {
+      title: 'Google VertexAI for iOS',
+      type: 'Volunteer',
+      location: '🌐 Remote',
+      description: 'Contribute open source iOS Firebase project',
+      date: '2024',
+      textColor: 'text-green-600 dark:text-green-100',
+      bgColor: 'bg-green-100 dark:bg-green-900'
+    },
+    {
       title: 'Application Development Consultant',
       type: 'Freelance',
       location: '🌐 Remote',
       description: 'Provide professional advice on cross platform development and design',
       date: '2024-NOW',
-      textColor: 'text-orange-600',
-      bgColor: 'bg-orange-100'
+      textColor: 'text-orange-600 dark:text-orange-100',
+      bgColor: 'bg-orange-100 dark:bg-orange-900'
     },
     {
       title: 'Senior Software Engineer',
@@ -21,8 +30,8 @@ export default function Experience(props) {
       location: '🇭🇰 Hong Kong',
       description: 'UI Design, Web, iOS Development, A.I. Research',
       date: '2023-2025',
-      textColor: 'text-blue-600',
-      bgColor: 'bg-blue-100'
+      textColor: 'text-blue-600 dark:text-blue-100',
+      bgColor: 'bg-blue-100 dark:bg-blue-900'
     },
     {
       title: 'QuestDB Translator',
@@ -30,8 +39,8 @@ export default function Experience(props) {
       location: '🌐 Remote, United Kingdom',
       description: 'Contribute open source database project',
       date: '2022',
-      textColor: 'text-green-600',
-      bgColor: 'bg-green-100'
+      textColor: 'text-green-600 dark:text-green-100',
+      bgColor: 'bg-green-100 dark:bg-green-900'
     },
     {
       title: 'Unsplash Artists',
@@ -39,8 +48,8 @@ export default function Experience(props) {
       location: '🌐 Remote',
       description: '3D Design + Photography',
       date: '2022-NOW',
-      textColor: 'text-orange-600',
-      bgColor: 'bg-orange-100'
+      textColor: 'text-orange-600 dark:text-orange-100',
+      bgColor: 'bg-orange-100 dark:bg-orange-900'
     },
     {
       title: 'Software Engineer',
@@ -48,8 +57,8 @@ export default function Experience(props) {
       location: '🇭🇰 Hong Kong',
       description: 'Web + iOS Development',
       date: '2021-2023',
-      textColor: 'text-blue-600',
-      bgColor: 'bg-blue-100'
+      textColor: 'text-blue-600 dark:text-blue-100',
+      bgColor: 'bg-blue-100 dark:bg-blue-900'
     },
     {
       title: 'Articles Writer',
@@ -57,8 +66,8 @@ export default function Experience(props) {
       location: '🌐 Remote',
       description: 'Write easy to understand tutorials that help thousands of developers',
       date: '2020-NOW',
-      textColor: 'text-orange-600',
-      bgColor: 'bg-orange-100'
+      textColor: 'text-orange-600 dark:text-orange-100',
+      bgColor: 'bg-orange-100 dark:bg-orange-900'
     },
     {
       title: 'Apple Developer',
@@ -66,8 +75,8 @@ export default function Experience(props) {
       location: '🌐 Remote',
       description: 'Build and publish app for iOS, iPadOS, watchOS, and macOS platforms',
       date: '2020-NOW',
-      textColor: 'text-orange-600',
-      bgColor: 'bg-orange-100'
+      textColor: 'text-orange-600 dark:text-orange-100',
+      bgColor: 'bg-orange-100 dark:bg-orange-900'
     },
     {
       title: 'Student Assistant',
@@ -75,8 +84,8 @@ export default function Experience(props) {
       location: '🇭🇰 Hong Kong',
       description: 'Data analytics and visualisation',
       date: '2020-2021',
-      textColor: 'text-pink-600',
-      bgColor: 'bg-pink-100'
+      textColor: 'text-pink-600 dark:text-pink-100',
+      bgColor: 'bg-pink-100 dark:bg-pink-900'
     },
     {
       title: 'Student Developer',
@@ -84,8 +93,8 @@ export default function Experience(props) {
       location: '🇭🇰 Hong Kong',
       description: 'Participate in Artificial Intelligence (A.I.) and Natural Language Processing (N.L.P) research field',
       date: '2020-2021',
-      textColor: 'text-pink-600',
-      bgColor: 'bg-pink-100'
+      textColor: 'text-pink-600 dark:text-pink-100',
+      bgColor: 'bg-pink-100 dark:bg-pink-900'
     },
     {
       title: 'Student Assistant',
@@ -93,8 +102,8 @@ export default function Experience(props) {
       location: '🇭🇰 Hong Kong',
       description: 'Develop website & design booklet for University\'s Language Scolar Program',
       date: '2020-2021',
-      textColor: 'text-pink-600',
-      bgColor: 'bg-pink-100'
+      textColor: 'text-pink-600 dark:text-pink-100',
+      bgColor: 'bg-pink-100 dark:bg-pink-900'
     },
     {
       title: 'Atlassian Translator',
@@ -102,8 +111,8 @@ export default function Experience(props) {
       location: '🌐 Remote, Australia',
       description: 'BitBucket.org Team',
       date: '2020-2021',
-      textColor: 'text-green-600',
-      bgColor: 'bg-green-100'
+      textColor: 'text-green-600 dark:text-green-100',
+      bgColor: 'bg-green-100 dark:bg-green-900'
     },
     {
       title: 'StopCovid19Tokyo Translator',
@@ -111,8 +120,8 @@ export default function Experience(props) {
       location: '🌐 Remote, Japan',
       description: 'Contribute open source project with Tokyo Metropolitan Government and Code of Japan Team',
       date: '2020-2021',
-      textColor: 'text-green-600',
-      bgColor: 'bg-green-100'
+      textColor: 'text-green-600 dark:text-green-100',
+      bgColor: 'bg-green-100 dark:bg-green-900'
     },
     {
       title: 'Designer / Photographer',
@@ -120,8 +129,8 @@ export default function Experience(props) {
       location: '🌐 Remote',
       description: 'Start Freelance works on different platforms (Adobe Stock, Behance, Dribbble)',
       date: '2019-NOW',
-      textColor: 'text-orange-600',
-      bgColor: 'bg-orange-100'
+      textColor: 'text-orange-600 dark:text-orange-100',
+      bgColor: 'bg-orange-100 dark:bg-orange-900'
     },
   ]
   function classNames(...classes) {
@@ -143,29 +152,26 @@ export default function Experience(props) {
           <ul role="list" className="divide-y divide-gray-200 dark:divide-gray-800">
             {positions.map((position) => (
               <li key={position.id}>
-                <div className="block hover:bg-gray-50 dark:hover:bg-gray-900">
-                  <div className="px-4 py-4 sm:px-6">
+                <div className={`block ${position.bgColor} opacity-90 hover:opacity-100`}>
+                  <div className="group px-4 py-4 sm:px-6">
                     <div className="flex items-center justify-between">
-                      <p className={classNames(position.textColor, 'text-sm font-medium truncate')}>{i18n(position.title)}</p>
-                      <div className="ml-2 flex-shrink-0 flex">
-                        <p className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${position.textColor} ${position.bgColor}`}>
+                      <div className={classNames(position.textColor, 'font-medium truncate')}>
+                        {i18n(position.title)}
+                      </div>
+                      <div className="ml-2 flex-shrink-0 flex items-center gap-1">
+                        <p className={`border px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${position.textColor} ${position.bgColor}`}>
                           {i18n(position.type)}
                         </p>
+                        <i className={`far fa-circle-info ${position.textColor} dark:text-white`} />
                       </div>
                     </div>
-                    <div className="mt-2 sm:flex sm:justify-between">
-                      <div className="sm:flex">
-                        <p className="flex items-center text-sm text-gray-500">
-                          {i18n(position.description)}
-                        </p>
+                    <div className="!hidden mt-2 group-hover:!flex flex-wrap justify-between text-xs">
+                      <div className="text-gray-600 dark:text-gray-400">
+                        {i18n(position.description)}
                       </div>
-                      <div className="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
-                        <p className="mr-2 flex items-center text-sm text-gray-500 sm:mt-0 sm:ml-6">
-                          {i18n(position.location)}
-                        </p>
-                        <p>
-                          <time dateTime={position.date}>{i18n(position.date)}</time>
-                        </p>
+                      <div className="flex items-center gap-1 text-gray-600 dark:text-gray-400">
+                        {i18n(position.location)}
+                        <time dateTime={position.date}>{i18n(position.date)}</time>
                       </div>
                     </div>
                   </div>
