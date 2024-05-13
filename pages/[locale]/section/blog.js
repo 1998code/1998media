@@ -9,12 +9,15 @@ export default function Blog(props) {
     }
     return props.i18n && props.i18n['blog'] && props.i18n['blog'][key] ? props.i18n['blog'][key] : key
   }
+  const [payWallURL, setPayWallURL] = useState(false)
   const [blogs, setBlogs] = useState([])
   useEffect(() => {
     getBlogData()
     // window.addEventListener('resize', () => {
     //   getBlogData()
     // })
+
+    setPayWallURL(`${window.location.pathname}/paywall`)
   }, [])
   function getBlogData() {
     axios.get("https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@1998design")
@@ -39,8 +42,6 @@ export default function Blog(props) {
       return 'en';
     }
   }
-
-  const payWallURL = `${window.location.pathname}/paywall`
 
   return (
     <div id="blog" data-aos="zoom-in" data-aos-once className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
