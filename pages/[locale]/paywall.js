@@ -79,7 +79,6 @@ export default function Paywall() {
         <title>Paywall - Blog</title>
         <meta name="description"
           content="Free themes for students, teachers, and public use in learning purpose. Made with Bootstrap 5." />
-        <link rel="stylesheet" href="https://cdn.1998.media/css/fontawesome.css" />
       </Head>
       <main>
         <div id="blog" data-aos="zoom-in" data-aos-once className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
