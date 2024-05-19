@@ -32,7 +32,7 @@ export default function openAPI(props) {
       bgColor: 'bg-cyan-100 dark:bg-cyan-900'
     },
     {
-      title: 'DNS Reslover',
+      title: 'DNS Resolver',
       type: 'GET / NETWORK',
       status: 'Available',
       code: '/api/dns?domain={URL(STRING)}',
