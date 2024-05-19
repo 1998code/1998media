@@ -4,6 +4,8 @@ import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check"
 
 export default async function (req, res) {
     try {
+        const input = decodeURIComponent(req.query.text)
+
         const firebaseConfig = {
             apiKey: process.env.FIREBASE_API_KEY,
             authDomain: process.env.FIREBASE_AUTH_DOMAIN,
@@ -30,11 +32,16 @@ export default async function (req, res) {
             { model: "gemini-1.5-pro-preview-0409" }
         )
         // Call generateContent with a string or Content(s)
-        const generateContentResult = await model.generateContent(req.query.text)
+        const generateContentResult = await model.generateContent(input)
 
-        res.status(200).json({ generateContentResult })
+        res.status(200).json({ 
+            input,
+            generateContentResult 
+        })
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: 'An error occurred' });
+        res.status(500).json({ 
+            error: 'An error occurred' 
+        });
     }
 }
