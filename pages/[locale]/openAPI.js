@@ -84,7 +84,7 @@ export default function openAPI(props) {
                         </div>
                       </div>
                       <a href={item.href} target="_blank" className={`border px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${item.textColor} hover:bg-white dark:hover:bg-black`}>
-                        TRY
+                        {i18n("TRY")}
                       </a>
                     </div>
                     <div className={`${highlighted === item.title ? 'flex' : 'hidden'} mt-2 flex-wrap justify-between gap-3 text-xs`}>
