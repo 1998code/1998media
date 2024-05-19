@@ -7,10 +7,19 @@ export default function Experience(props) {
   }
   const positions = [
     {
-      title: 'Google VertexAI for iOS',
-      type: 'Volunteer',
+      title: 'Google AI SDK for Swift',
+      type: 'Contributor',
       location: '🌐 Remote',
-      description: 'Contribute open source iOS Firebase project',
+      description: 'Contribute open source iOS project',
+      date: '2024',
+      textColor: 'text-green-600 dark:text-green-100',
+      bgColor: 'bg-green-100 dark:bg-green-900'
+    },
+    {
+      title: 'Google VertexAI for iOS',
+      type: 'Contributor',
+      location: '🌐 Remote',
+      description: 'Contribute open source iOS project',
       date: '2024',
       textColor: 'text-green-600 dark:text-green-100',
       bgColor: 'bg-green-100 dark:bg-green-900'
@@ -35,7 +44,7 @@ export default function Experience(props) {
     },
     {
       title: 'QuestDB Translator',
-      type: 'Volunteer',
+      type: 'Contributor',
       location: '🌐 Remote, United Kingdom',
       description: 'Contribute open source database project',
       date: '2022',
@@ -107,7 +116,7 @@ export default function Experience(props) {
     },
     {
       title: 'Atlassian Translator',
-      type: 'Volunteer',
+      type: 'Contributor',
       location: '🌐 Remote, Australia',
       description: 'BitBucket.org Team',
       date: '2020-2021',
@@ -116,7 +125,7 @@ export default function Experience(props) {
     },
     {
       title: 'StopCovid19Tokyo Translator',
-      type: 'Volunteer',
+      type: 'Contributor',
       location: '🌐 Remote, Japan',
       description: 'Contribute open source project with Tokyo Metropolitan Government and Code of Japan Team',
       date: '2020-2021',
