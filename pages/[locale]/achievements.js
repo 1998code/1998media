@@ -1,152 +1,264 @@
-import { useState, useEffect } from 'react'
-import { Tooltip } from "@nextui-org/tooltip"
+import { useState, useEffect } from 'react';
+import { Tooltip } from '@nextui-org/tooltip';
 
 export default function Achievements(props) {
   function i18n(key) {
-    if (props.i18n && props.i18n['achievements'] && !props.i18n['achievements'][key]) {
-      console.log('Achievements Missing Translation: ' + key)
+    if (
+      props.i18n &&
+      props.i18n['achievements'] &&
+      !props.i18n['achievements'][key]
+    ) {
+      console.log('Achievements Missing Translation: ' + key);
     }
-    return props.i18n && props.i18n['achievements'] && props.i18n['achievements'][key] ? props.i18n['achievements'][key] : key
+    return props.i18n &&
+      props.i18n['achievements'] &&
+      props.i18n['achievements'][key]
+      ? props.i18n['achievements'][key]
+      : key;
   }
 
-  const unsplashPublicKey = "hjm0tzh_dDQx2REubp1NiT1P4jxE5wmnCbKQLbD-BZ8"
+  const unsplashPublicKey = 'hjm0tzh_dDQx2REubp1NiT1P4jxE5wmnCbKQLbD-BZ8';
 
-  const [totalViews, setTotalViews] = useState(0)
+  const [totalViews, setTotalViews] = useState(0);
   function getUnsplashStats() {
-    fetch(`https://api.unsplash.com/users/1998media/statistics?client_id=${unsplashPublicKey}`)
-      .then(response => response.json())
-      .then(data => {
-        setTotalViews(data.views.total)
+    fetch(
+      `https://api.unsplash.com/users/1998media/statistics?client_id=${unsplashPublicKey}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setTotalViews(data.views.total);
       })
       .catch((error) => {
-        console.error('Error:', error)
-      })
+        console.error('Error:', error);
+      });
   }
 
-  const [photos, setPhotos] = useState([])
+  const [photos, setPhotos] = useState([]);
   function getUnsplashPhotos() {
-    fetch(`https://api.unsplash.com/users/1998media/photos?client_id=${unsplashPublicKey}`)
-      .then(response => response.json())
-      .then(data => {
-        setPhotos(data)
+    fetch(
+      `https://api.unsplash.com/users/1998media/photos?client_id=${unsplashPublicKey}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setPhotos(data);
       })
       .catch((error) => {
-        console.error('Error:', error)
-      })
+        console.error('Error:', error);
+      });
   }
 
-  const totalReleases = photos.length
-  const avgViews = Math.floor(totalViews / totalReleases).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+  const totalReleases = photos.length;
+  const avgViews = Math.floor(totalViews / totalReleases)
+    .toString()
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
   const stats = [
-    { name: 'Total Views', stat: `${i18n("Over")} ${totalViews.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}` },
+    {
+      name: 'Total Views',
+      stat: `${i18n('Over')} ${totalViews.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`,
+    },
     { name: 'Total Releases', stat: `${totalReleases}` },
-    { name: 'Average Views', stat: `${i18n("Over")} ${avgViews}` },
-  ]
+    { name: 'Average Views', stat: `${i18n('Over')} ${avgViews}` },
+  ];
 
   useEffect(() => {
-    getUnsplashStats()
-    getUnsplashPhotos()
-  }, [])
+    getUnsplashStats();
+    getUnsplashPhotos();
+  }, []);
 
   return (
-    <div data-aos="zoom-in" data-aos-once className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
-      <img src="https://cdn.1998.media/bgs/App.png" className="fixed -z-[1] w-[25vw] top-14 -right-16" />
+    <div
+      data-aos="zoom-in"
+      data-aos-once
+      className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8"
+    >
+      <img
+        src="https://cdn.1998.media/bgs/App.png"
+        className="fixed -z-[1] w-[25vw] top-14 -right-16"
+      />
       <div className="max-w-7xl mx-auto">
         <div className="mx-auto text-left">
-          <a className="text-3xl font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl" href="#achievements">
-            {i18n("Trusted by customers from over 175 countries and regions")}
+          <a
+            className="text-3xl font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl"
+            href="#achievements"
+          >
+            {i18n('Trusted by customers from over 175 countries and regions')}
             <i className="far fa-earth-americas ml-2"></i>
           </a>
           <p className="mt-3 text-xl text-gray-500 sm:mt-4">
-            {i18n("People love my apps, and I'd believe you will, too.")} <i className="far fa-hand-holding-heart"></i>
+            {i18n("People love my apps, and I'd believe you will, too.")}{' '}
+            <i className="far fa-hand-holding-heart"></i>
           </p>
         </div>
       </div>
       <div className="mt-10 pb-12 sm:pb-16">
         <div className="relative max-w-7xl mx-auto">
-
           <div id="achievements" className="cursor-default">
             <h3 className="mb-6 text-lg font-medium leading-6 text-gray-900 dark:text-gray-100">
-                {i18n("Apple App Store (iOS, iPadOS, watchOS, App Clips, macOS, visionOS)")}
-                <i className="fab fa-app-store ml-2"></i>
+              {i18n(
+                'Apple App Store (iOS, iPadOS, watchOS, App Clips, macOS, visionOS)'
+              )}
+              <i className="fab fa-app-store ml-2"></i>
             </h3>
             <dl className="rounded-lg overflow-hidden bg-white/50 dark:bg-black/50 backdrop-blur-md shadow-lg sm:grid sm:grid-cols-2 md:grid-cols-3 divide-y divide-gray-200 dark:divide-gray-800 sm:divide-y-0 backlight">
               <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
-                <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">2024</dt>
-                <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Developer Tools in Taiwan")} 🇹🇼</dt>
-                <dd className="order-1 text-5xl font-extrabold text-cyan-600">{i18n("#1")}</dd>
+                <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">
+                  2024
+                </dt>
+                <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
+                  {i18n('Developer Tools in Taiwan')} 🇹🇼
+                </dt>
+                <dd className="order-1 text-5xl font-extrabold text-cyan-600">
+                  {i18n('#1')}
+                </dd>
               </div>
               <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
-                <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">2024</dt>
-                <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Developer Tools in Hong Kong")} 🇭🇰</dt>
-                <dd className="order-1 text-5xl font-extrabold text-cyan-600">{i18n("#1")}</dd>
+                <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">
+                  2024
+                </dt>
+                <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
+                  {i18n('Developer Tools in Hong Kong')} 🇭🇰
+                </dt>
+                <dd className="order-1 text-5xl font-extrabold text-cyan-600">
+                  {i18n('#1')}
+                </dd>
               </div>
               <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
-                <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">2023</dt>
-                <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Developer Tools in the United Kingdom")} 🇬🇧</dt>
-                <dd className="order-1 text-5xl font-extrabold text-cyan-600">{i18n("#1")}</dd>
+                <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">
+                  2023
+                </dt>
+                <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
+                  {i18n('Developer Tools in the United Kingdom')} 🇬🇧
+                </dt>
+                <dd className="order-1 text-5xl font-extrabold text-cyan-600">
+                  {i18n('#1')}
+                </dd>
               </div>
               <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
-                <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">2023</dt>
-                <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Developer Tools in the United States")} 🇺🇸</dt>
-                <dd className="order-1 text-5xl font-extrabold text-cyan-600">{i18n("#1")}</dd>
+                <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">
+                  2023
+                </dt>
+                <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
+                  {i18n('Developer Tools in the United States')} 🇺🇸
+                </dt>
+                <dd className="order-1 text-5xl font-extrabold text-cyan-600">
+                  {i18n('#1')}
+                </dd>
               </div>
               <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
-                <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">2023</dt>
-                <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Developer Tools in Canada")} 🇨🇦</dt>
-                <dd className="order-1 text-5xl font-extrabold text-blue-600">{i18n("#1")}</dd>
+                <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">
+                  2023
+                </dt>
+                <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
+                  {i18n('Developer Tools in Canada')} 🇨🇦
+                </dt>
+                <dd className="order-1 text-5xl font-extrabold text-blue-600">
+                  {i18n('#1')}
+                </dd>
               </div>
               <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
-                <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">2022</dt>
-                <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Graphics & Design App in Uzbekistan")} 🇺🇿</dt>
-                <dd className="order-1 text-5xl font-extrabold text-sky-600">{i18n("#1")}</dd>
+                <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">
+                  2022
+                </dt>
+                <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
+                  {i18n('Graphics & Design App in Uzbekistan')} 🇺🇿
+                </dt>
+                <dd className="order-1 text-5xl font-extrabold text-sky-600">
+                  {i18n('#1')}
+                </dd>
               </div>
               <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
-                <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">2022</dt>
-                <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Developer Tools in Kuwait")} 🇰🇼</dt>
-                <dd className="order-1 text-5xl font-extrabold text-pink-600">{i18n("#1")}</dd>
+                <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">
+                  2022
+                </dt>
+                <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
+                  {i18n('Developer Tools in Kuwait')} 🇰🇼
+                </dt>
+                <dd className="order-1 text-5xl font-extrabold text-pink-600">
+                  {i18n('#1')}
+                </dd>
               </div>
               <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
-                <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">2022</dt>
-                <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Developer Tools in Taiwan")} 🇹🇼</dt>
-                <dd className="order-1 text-5xl font-extrabold text-green-600">{i18n("#1")}</dd>
+                <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">
+                  2022
+                </dt>
+                <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
+                  {i18n('Developer Tools in Taiwan')} 🇹🇼
+                </dt>
+                <dd className="order-1 text-5xl font-extrabold text-green-600">
+                  {i18n('#1')}
+                </dd>
               </div>
               <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
-                <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">2022</dt>
-                <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Developer Tools in Canada")} 🇨🇦</dt>
-                <dd className="order-1 text-5xl font-extrabold text-blue-600">{i18n("#1")}</dd>
+                <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">
+                  2022
+                </dt>
+                <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
+                  {i18n('Developer Tools in Canada')} 🇨🇦
+                </dt>
+                <dd className="order-1 text-5xl font-extrabold text-blue-600">
+                  {i18n('#1')}
+                </dd>
               </div>
               <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
-                <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">2021</dt>
-                <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Developer Tools in the United States")} 🇺🇸</dt>
-                <dd className="order-1 text-5xl font-extrabold text-cyan-600">{i18n("#1")}</dd>
+                <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">
+                  2021
+                </dt>
+                <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
+                  {i18n('Developer Tools in the United States')} 🇺🇸
+                </dt>
+                <dd className="order-1 text-5xl font-extrabold text-cyan-600">
+                  {i18n('#1')}
+                </dd>
               </div>
               <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
-                <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">2021</dt>
-                <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Apple Worldwide Developers Conference (WWDC)")} </dt>
-                <dd className="order-1 text-5xl font-extrabold text-orange-600 dark:text-orange-300">{i18n("Winner")}</dd>
+                <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">
+                  2021
+                </dt>
+                <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
+                  {i18n('Apple Worldwide Developers Conference (WWDC)')} 
+                </dt>
+                <dd className="order-1 text-5xl font-extrabold text-orange-600 dark:text-orange-300">
+                  {i18n('Winner')}
+                </dd>
               </div>
               <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
-                <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">{i18n("Since")} 2020</dt>
-                <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">{i18n("Paid Apps in Different Categories Globally")} </dt>
-                <dd className="order-1 text-5xl font-extrabold text-teal-600">{i18n("Top-100")}</dd>
+                <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">
+                  {i18n('Since')} 2020
+                </dt>
+                <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
+                  {i18n('Paid Apps in Different Categories Globally')} 
+                </dt>
+                <dd className="order-1 text-5xl font-extrabold text-teal-600">
+                  {i18n('Top-100')}
+                </dd>
               </div>
             </dl>
-            <img className="dark:hidden my-6 rounded-lg hover:scale-95 transition-all" src="https://api.mapbox.com/styles/v1/mapbox/streets-v12/static/pin-l+b8172a(113.9745954,22.3526409),pin-s+1f89e3(121.1945767,25.0169013),pin-s+0b236f(-9.7459993,54.4364324),pin-s+0033a0(-95.7129,37.0902),pin-s+ff0000(-106.3468,56.1304),pin-s+0099b5(64.5853,41.3775),pin-s+007a3d(47.4818,29.3117)/11.7314,14.9358,1.32,0,35/1280x720@2x?access_token=pk.eyJ1IjoiMTk5OG1lZGlhIiwiYSI6ImNsdHRuaGg4ZzE1NDUya3N5MTd2dTgwbTYifQ.nTFoFutOK1E7O6KBSFPLVQ&logo=false&attribution=false" />
-            <img className="hidden dark:block my-6 rounded-lg hover:scale-95 transition-all" src="https://api.mapbox.com/styles/v1/1998media/clttnmr3900k501qw52w30alb/static/pin-l+b8172a(113.9745954,22.3526409),pin-s+1f89e3(121.1945767,25.0169013),pin-s+0b236f(-9.7459993,54.4364324),pin-s+0033a0(-95.7129,37.0902),pin-s+ff0000(-106.3468,56.1304),pin-s+0099b5(64.5853,41.3775),pin-s+007a3d(47.4818,29.3117)/11.7314,14.9358,1.32,0,35/1280x720@2x?access_token=pk.eyJ1IjoiMTk5OG1lZGlhIiwiYSI6ImNsdHRuaGg4ZzE1NDUya3N5MTd2dTgwbTYifQ.nTFoFutOK1E7O6KBSFPLVQ&logo=false&attribution=false" />
+            <img
+              className="dark:hidden my-6 rounded-lg hover:scale-95 transition-all"
+              src="https://api.mapbox.com/styles/v1/mapbox/streets-v12/static/pin-l+b8172a(113.9745954,22.3526409),pin-s+1f89e3(121.1945767,25.0169013),pin-s+0b236f(-9.7459993,54.4364324),pin-s+0033a0(-95.7129,37.0902),pin-s+ff0000(-106.3468,56.1304),pin-s+0099b5(64.5853,41.3775),pin-s+007a3d(47.4818,29.3117)/11.7314,14.9358,1.32,0,35/1280x720@2x?access_token=pk.eyJ1IjoiMTk5OG1lZGlhIiwiYSI6ImNsdHRuaGg4ZzE1NDUya3N5MTd2dTgwbTYifQ.nTFoFutOK1E7O6KBSFPLVQ&logo=false&attribution=false"
+            />
+            <img
+              className="hidden dark:block my-6 rounded-lg hover:scale-95 transition-all"
+              src="https://api.mapbox.com/styles/v1/1998media/clttnmr3900k501qw52w30alb/static/pin-l+b8172a(113.9745954,22.3526409),pin-s+1f89e3(121.1945767,25.0169013),pin-s+0b236f(-9.7459993,54.4364324),pin-s+0033a0(-95.7129,37.0902),pin-s+ff0000(-106.3468,56.1304),pin-s+0099b5(64.5853,41.3775),pin-s+007a3d(47.4818,29.3117)/11.7314,14.9358,1.32,0,35/1280x720@2x?access_token=pk.eyJ1IjoiMTk5OG1lZGlhIiwiYSI6ImNsdHRuaGg4ZzE1NDUya3N5MTd2dTgwbTYifQ.nTFoFutOK1E7O6KBSFPLVQ&logo=false&attribution=false"
+            />
           </div>
-          <img src="https://cdn.1998.media/bgs/Camera.png" className="fixed -z-[1] w-[25vw] top-25 -right-16" />
-          
+          <img
+            src="https://cdn.1998.media/bgs/Camera.png"
+            className="fixed -z-[1] w-[25vw] top-25 -right-16"
+          />
+
           <div id="impacts" className="pt-6">
             <h3 className="mt-6 text-lg font-medium leading-6 text-gray-900 dark:text-gray-100">
-              {i18n("3D Rendering and Photography @Unsplash")}
+              {i18n('3D Rendering and Photography @Unsplash')}
               <i className="far fa-image ml-2"></i>
             </h3>
             <dl className="mt-5 bg-white/50 dark:bg-black/50 backdrop-blur-md grid grid-cols-1 overflow-hidden rounded-lg shadow md:grid-cols-3 divide-y divide-gray-200 dark:divide-gray-800 md:divide-y-0 md:divide-x backlight">
               {stats.map((item) => (
                 <div key={item.name} className="px-4 py-5 sm:p-6">
-                  <dt className="text-base font-normal text-gray-900 dark:text-gray-100">{i18n(item.name)}</dt>
+                  <dt className="text-base font-normal text-gray-900 dark:text-gray-100">
+                    {i18n(item.name)}
+                  </dt>
                   <dd className="mt-1 flex items-baseline justify-between md:block lg:flex">
                     <div className="flex items-baseline text-2xl font-semibold text-emerald-600">
                       {item.stat}
@@ -159,20 +271,38 @@ export default function Achievements(props) {
               ))}
             </dl>
             <h4 className="mt-6 text-lg font-medium leading-6 text-gray-500">
-              {i18n("Random Sample")}
+              {i18n('Random Sample')}
               <i className="far fa-random ml-2"></i>
             </h4>
             <div className="grid grid-cols-1 gap-4 mt-5 sm:grid-cols-2">
               {photos.map((photo) => (
-                <div key={photo.id} className="group flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-105 border border-transparent hover:border-black dark:hover:border-white">
+                <div
+                  key={photo.id}
+                  className="group flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-105 border border-transparent hover:border-black dark:hover:border-white"
+                >
                   <a href={photo.links.html} target="_blank">
-                    <img className="h-[25vh] w-full object-cover" src={photo.urls.raw} alt={photo.alt_description}  />
-                    <Tooltip content={photo.color} placement="right" className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg">
-                      <div className="opacity-0 group-hover:opacity-100 absolute bottom-0 h-7 border-t border-r rounded-tr-md duration-500 transition-all" style={{backgroundColor: photo.color}}>
-                        {Object.entries(photo.topic_submissions).map(([topic, submission]) => 
-                          submission.status === 'approved' ? 
-                          <span className="p-1.5 text-white text-sm"><i className="fas fa-crown"></i> Featured in {topic.replaceAll('-', ' ')}</span>
-                          : null
+                    <img
+                      className="h-[25vh] w-full object-cover"
+                      src={photo.urls.raw}
+                      alt={photo.alt_description}
+                    />
+                    <Tooltip
+                      content={photo.color}
+                      placement="right"
+                      className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg"
+                    >
+                      <div
+                        className="opacity-0 group-hover:opacity-100 absolute bottom-0 h-7 border-t border-r rounded-tr-md duration-500 transition-all"
+                        style={{ backgroundColor: photo.color }}
+                      >
+                        {Object.entries(photo.topic_submissions).map(
+                          ([topic, submission]) =>
+                            submission.status === 'approved' ? (
+                              <span className="p-1.5 text-white text-sm">
+                                <i className="fas fa-crown"></i> Featured in{' '}
+                                {topic.replaceAll('-', ' ')}
+                              </span>
+                            ) : null
                         )}
                       </div>
                     </Tooltip>
@@ -181,9 +311,8 @@ export default function Achievements(props) {
               ))}
             </div>
           </div>
-
         </div>
       </div>
     </div>
-  )
+  );
 }

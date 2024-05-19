@@ -2,8 +2,8 @@
 module.exports = {
   darkMode: ['class', '[class="darkmode--activated"]'],
   content: [
-    "./pages/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
+    './pages/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
@@ -11,11 +11,9 @@ module.exports = {
         9: '9',
       },
       cursor: {
-        "cell": "cell",
-      }
+        cell: 'cell',
+      },
     },
   },
-  plugins: [
-    require('@tailwindcss/aspect-ratio'),
-  ],
-}
+  plugins: [require('@tailwindcss/aspect-ratio')],
+};

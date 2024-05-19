@@ -1,16 +1,18 @@
 export default function Faq(props) {
   function i18n(key) {
     if (props.i18n && props.i18n['faq'] && !props.i18n['faq'][key]) {
-      console.log('FAQ Missing Translation: ' + key)
+      console.log('FAQ Missing Translation: ' + key);
     }
-    return props.i18n && props.i18n['faq'] && props.i18n['faq'][key] ? props.i18n['faq'][key] : key
+    return props.i18n && props.i18n['faq'] && props.i18n['faq'][key]
+      ? props.i18n['faq'][key]
+      : key;
   }
   const faqs = [
     {
       question: 'How to support your projects?',
       answer: () => (
         <a href="https://github.com/sponsors/1998code">
-          {i18n("Github Sponsorship")}
+          {i18n('Github Sponsorship')}
           <i className="ml-1 fa fa-external-link fa-sm"></i>
         </a>
       ),
@@ -19,27 +21,44 @@ export default function Faq(props) {
       question: 'Where does your Open Source Software (OSS) project host?',
       answer: () => (
         <span>
-          <a href="https://github.com/1998code">Github<i className="ml-1 fa fa-external-link fa-sm"></i></a> 
+          <a href="https://github.com/1998code">
+            Github<i className="ml-1 fa fa-external-link fa-sm"></i>
+          </a>
           <i className="fa fa-pipe px-3"></i>
-          <a href="https://vercel.com/?utm_source=1998code&utm_campaign=oss">Vercel<i className="ml-1 fa fa-external-link fa-sm"></i></a>
+          <a href="https://vercel.com/?utm_source=1998code&utm_campaign=oss">
+            Vercel<i className="ml-1 fa fa-external-link fa-sm"></i>
+          </a>
           <i className="fa fa-pipe px-3"></i>
-          <a href="https://www.digitalocean.com/?refcode=ce873177d9ab&utm_medium=opensource">DigitalOcean<i className="ml-1 fa fa-external-link fa-sm"></i></a>
+          <a href="https://www.digitalocean.com/?refcode=ce873177d9ab&utm_medium=opensource">
+            DigitalOcean<i className="ml-1 fa fa-external-link fa-sm"></i>
+          </a>
         </span>
       ),
     },
-  ]
+  ];
   return (
-    <div id="faq" data-aos="zoom-in" data-aos-once className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:py-20 lg:px-8 md:grid md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+    <div
+      id="faq"
+      data-aos="zoom-in"
+      data-aos-once
+      className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:py-20 lg:px-8 md:grid md:grid-cols-2 lg:grid-cols-3 lg:gap-8"
+    >
       <div>
-        <a className="text-3xl font-extrabold text-gray-900 dark:text-gray-100" href="#faq">
-          {i18n("Ask")}
+        <a
+          className="text-3xl font-extrabold text-gray-900 dark:text-gray-100"
+          href="#faq"
+        >
+          {i18n('Ask')}
           <i className="fa fa-question-circle ml-2"></i>
         </a>
         <p className="mt-4 text-lg text-gray-500">
-          {i18n("Cannot find what you are looking for")}?
+          {i18n('Cannot find what you are looking for')}?
           <br />
-          <a href="#contact" className="font-medium text-orange-600 dark:text-orange-300 hover:text-orange-500">
-            {i18n("Contact now.")}
+          <a
+            href="#contact"
+            className="font-medium text-orange-600 dark:text-orange-300 hover:text-orange-500"
+          >
+            {i18n('Contact now.')}
           </a>
         </p>
       </div>
@@ -47,12 +66,16 @@ export default function Faq(props) {
         <dl className="space-y-12">
           {faqs.map((faq) => (
             <div key={faq.question}>
-              <dt className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">{i18n(faq.question)}</dt>
-              <dd className="mt-2 text-base text-gray-500"><faq.answer /></dd>
+              <dt className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
+                {i18n(faq.question)}
+              </dt>
+              <dd className="mt-2 text-base text-gray-500">
+                <faq.answer />
+              </dd>
             </div>
           ))}
         </dl>
       </div>
     </div>
-  )
+  );
 }

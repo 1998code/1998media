@@ -28,6 +28,7 @@
     "franc-min": "^6.2.0",
     "next": "^14.0.0",
     "node-geocoder": "^4.3.0",
+    "prettier": "^3.2.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
