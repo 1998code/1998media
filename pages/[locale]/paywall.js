@@ -2,6 +2,7 @@ import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { franc } from 'franc-min';
+import { Tooltip } from '@nextui-org/tooltip';
 
 export default function Paywall() {
   const [loading, setLoading] = useState(true);
@@ -25,15 +26,17 @@ export default function Paywall() {
     return I18n && I18n['blog'] && I18n['blog'][key] ? I18n['blog'][key] : key;
   }
   useEffect(() => {
-    const path = window.location.pathname.replace('/', '');
+    const path = window.location.pathname.replace('/', '').split('/')[0];
     getI18nData(path);
   }, []);
 
   const [loadingBlog, setLoadingBlog] = useState(true);
+  const [allBlog, setAllBlog] = useState(false);
   const [blogs, setBlogs] = useState([]);
   const [offset, setOffset] = useState(0);
   function getBlogData() {
     setLoadingBlog(true);
+    scrollToBottom();
     axios
       .get(`/api/paywall?status=public&offset=${offset}`)
       .then((res) => {
@@ -45,13 +48,15 @@ export default function Paywall() {
           return prevBlogs.concat(newBlogs);
         });
         setLoadingBlog(false);
-        scrollToBottom();
-        setOffset((prevOffset) => prevOffset + 10);
       })
       .catch((err) => {
         console.log(err);
+        alert('Error Occured: ' + err);
       });
   }
+  useEffect(() => {
+    getBlogData();
+  }, [offset]);
 
   function nextPage() {
     setOffset((prevOffset) => prevOffset + 10);
@@ -74,15 +79,15 @@ export default function Paywall() {
   }
 
   function scrollToBottom() {
-    const anchor = blogs[blogs.length - 1].title;
-    const element = document.getElementById(anchor);
-    element.scrollIntoView({ behavior: 'smooth' });
+    setTimeout(() => {
+      const element = document.getElementById("1");
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        console.warn('Element with id "1" not found');
+      }
+    }, 1000);
   }
-
-  useEffect(() => {
-    getBlogData();
-  }, [offset]);
-
   return (
     <div>
       <Head>
@@ -111,11 +116,28 @@ export default function Paywall() {
                 href="#blog"
               >
                 {i18n('Blog')}
-                <i className="fab fa-medium ml-2"></i>
+                <i className="fab fa-medium mx-2"></i>
               </a>
-              <p className="mt-2 max-w-2xl text-xl text-gray-500">
-                {i18n('Find out the latest posts and tutorials.')}
-              </p>
+              <div className="inline-flex text-sm">
+                <button
+                  onClick={() => setAllBlog(true)}
+                  className={`${
+                    allBlog ? 'bg-orange-500 text-white' : 'bg-white text-black'
+                  } p-2 rounded-l-lg`}
+                >
+                  <i className="fa fa-books mr-1" />
+                  {i18n('Show All')}
+                </button>
+                <button
+                  onClick={() => setAllBlog(false)}
+                  className={`${
+                    allBlog ? 'bg-white text-black' : 'bg-orange-500 text-white'
+                  } p-2 rounded-r-lg`}
+                >
+                  {i18n('Only')}
+                  <i className="fa fa-book ml-1" />
+                </button>
+              </div>
             </div>
             <div className="mt-8 mx-auto grid gap-5">
               <div className="dark:text-white flex justify-between gap-3">
@@ -124,14 +146,18 @@ export default function Paywall() {
               </div>
               {blogs
                 .filter((post) => {
-                  const userLanguage = window.location.pathname
-                    .replace('/', '')
-                    .replace('/paywall', '');
-                  const postLanguage = languageCheck(post.title);
-                  if (userLanguage.includes('zh')) {
-                    return postLanguage === 'zh';
+                  if (allBlog) {
+                    return true;
                   } else {
-                    return postLanguage === 'en';
+                    const userLanguage = window.location.pathname
+                      .replace('/', '')
+                      .replace('/paywall', '');
+                    const postLanguage = languageCheck(post.title);
+                    if (userLanguage.includes('zh')) {
+                      return postLanguage === 'zh';
+                    } else {
+                      return postLanguage === 'en';
+                    }
                   }
                 })
                 .map((post) => (
@@ -148,6 +174,13 @@ export default function Paywall() {
                         <time dateTime={post.date.slice(0, 10)}>
                           {post.date.slice(0, 10)}
                         </time>
+                        <Tooltip
+                          content={i18n('Subscription Required')}
+                          placement="top"
+                          className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg"
+                        >
+                          <i className="fa fa-crown text-yellow-500 ml-1" />
+                        </Tooltip>
                       </div>
                       <div className="flex-1">
                         <a
@@ -171,7 +204,27 @@ export default function Paywall() {
                       )}
                     </div>
                   </a>
-                ))}
+                ))
+              }
+              {/* Skeleton Placeholder x 5 */}
+              {loadingBlog && Array.from({ length: 5 }, (_, i) => (
+                <div
+                  id={i}
+                  className="flex items-center rounded-lg bg-white dark:bg-black overflow-hidden transform transition duration-500 border border-transparent hover:border-black dark:hover:border-white backlight"
+                >
+                  <div className="flex-1 p-6 flex flex-col justify-between">
+                    <div className="w-28 h-5 bg-gray-100 dark:bg-gray-900 rounded-md animate-pulse">
+                    </div>
+                    <div className="flex-1">
+                      <div className="w-30 h-10 block mt-2 text-lg md:text-2xl font-semibold bg-gray-100 dark:bg-gray-900 rounded-md animate-pulse">
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex-shrink-0">
+                    <div className="w-[25vw] h-32 bg-gray-100 dark:bg-gray-900 animate-pulse"></div>
+                  </div>
+                </div>
+              ))}
             </div>
             <div className="mt-8 text-center">
               <button

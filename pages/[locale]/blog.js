@@ -11,13 +11,30 @@ export default function Blog(props) {
       ? props.i18n['blog'][key]
       : key;
   }
+
+  const topPromo = {
+    "title": i18n("Get $10 OFF on Trip.com"),
+    "pubDate": new Date().toISOString(),
+    "link": "https://hk.trip.com/sale/4283/referee.html?locale=zh-HK&referCode=5253C1995FB313ED993BC64A068BDABA",
+    "guid": "https://hk.trip.com/sale/4283/referee.html?locale=zh-HK&referCode=5253C1995FB313ED993BC64A068BDABA",
+    "author": "MING",
+    // "thumbnail": "https://scontent-vie1-1.xx.fbcdn.net/v/t39.30808-6/276300699_5834005769959881_8535075502349926768_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=YJAM-OTlB0MQ7kNvgEznQBD&_nc_ht=scontent-vie1-1.xx&oh=00_AYBD9SJKSzi0uxF_T0G7LaSB-mSqM7GYZ7v--IK7p5HxIw&oe=6650E2F1",
+    "thumbnail": i18n("https://ak-d.tripcdn.com/images/0a14l12000aqs8zq3AC37.jpg_.webp"),
+    "description": "",
+    "content": "",
+    "enclosure": {},
+    "categories": [
+        "Trip.com",
+        "Promotion",
+        "Discount",
+        "Featured"
+    ]
+  };
+
   const [payWallURL, setPayWallURL] = useState(false);
   const [blogs, setBlogs] = useState([]);
   useEffect(() => {
     getBlogData();
-    // window.addEventListener('resize', () => {
-    //   getBlogData()
-    // })
 
     setPayWallURL(`${window.location.pathname}/paywall`);
   }, []);
@@ -27,11 +44,7 @@ export default function Blog(props) {
         'https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@1998design'
       )
       .then((res) => {
-        // if (window.innerWidth <= 1024) {
-        setBlogs(res.data.items);
-        // } else {
-        //   setBlogs(res.data.items.slice(0, 9));
-        // }
+        setBlogs([topPromo, ...res.data.items]);
       })
       .catch((err) => {
         console.log(err);
@@ -90,17 +103,15 @@ export default function Blog(props) {
                 key={post.title}
                 className="flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight"
               >
-                {post.description.includes('medium-feed-image') && (
-                  <div className="flex-shrink-0">
-                    <a href={post.link} target="_blank">
-                      <img
-                        className="h-48 w-full object-cover"
-                        src={post.description.split('src="')[1].split('"')[0]}
-                        alt={post.title}
-                      />
-                    </a>
-                  </div>
-                )}
+                <div className="flex-shrink-0">
+                  <a href={post.link} target="_blank">
+                    <img
+                      className="h-48 w-full object-cover"
+                      src={post.thumbnail ? post.thumbnail : post.description.split('src="')[1].split('"')[0]}
+                      alt={post.title}
+                    />
+                  </a>
+                </div>
                 <div className="flex-1 p-6 flex flex-col justify-between">
                   <div className=" text-gray-400 text-xs">
                     <i className="far fa-calendar mr-1"></i>
