@@ -60,22 +60,23 @@ export default function Projects(props) {
             {i18n('Find out the latest inspiration.')}
           </p>
         </div>
-        <div className="mx-auto grid gap-5 md:grid-cols-4 lg:max-w-none items-center">
+        <div className="mx-auto grid gap-5 md:grid-cols-4 lg:max-w-none items-end">
           <img
-            className="w-full col-span-3 hover:scale-95 transition duration-300 rounded-lg"
+            className="w-full col-span-2 hover:scale-95 transition duration-300 rounded-lg"
             src="https://gitstats.1998.media/api?username=1998code&show_icons=true&bg_color=30,e96443,904e95&title_color=fff&text_color=fff&icon_color=fff&hide_border=true"
             alt="Performance"
           />
           <img
             className="w-full col-span-3 md:col-span-1 dark:hidden hover:scale-95 transition duration-300 rounded-lg"
-            src="https://gitstats.1998.media/api/top-langs/?username=1998code&langs_count=8&layout=default&hide_border=true"
+            src="https://gitstats.1998.media/api/top-langs/?username=1998code&langs_count=4&layout=default&hide_border=true"
             alt="Top Languages"
           />
           <img
             className="w-full col-span-3 md:col-span-1 hidden dark:block hover:scale-95 transition duration-300 rounded-lg backlight"
-            src="https://gitstats.1998.media/api/top-langs/?username=1998code&langs_count=8&layout=default&bg_color=000&title_color=fff&text_color=fff&hide_border=true"
+            src="https://gitstats.1998.media/api/top-langs/?username=1998code&langs_count=4&layout=default&bg_color=000&title_color=fff&text_color=fff&hide_border=true"
             alt="Top Languages"
           />
+          <img className="col-span-3 md:col-span-1" src="https://lapras-card-generator-auto.vercel.app/api/svg?b1=%23020E27&b2=%230E5593&i1=%23030E21&i2=%231688BF&l=en&u=MING" />
         </div>
         <img
           id="projectChart"
