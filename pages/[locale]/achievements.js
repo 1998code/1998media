@@ -274,7 +274,7 @@ export default function Achievements(props) {
               {i18n('Random Sample')}
               <i className="far fa-random ml-2"></i>
             </h4>
-            <div className="grid grid-cols-1 gap-4 mt-5 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-4 mt-5 sm:grid-cols-2 lg:grid-cols-3">
               {photos.map((photo) => (
                 <div
                   key={photo.id}

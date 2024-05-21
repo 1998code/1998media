@@ -9,7 +9,7 @@ export default function Skills(props) {
   }
   const certs = [
     {
-      name: 'User Experience (UX) Design',
+      name: 'User Experience Design',
       icons: 'fa-google',
       href: 'https://coursera.org/verify/KDTDPH6RCXZD',
       bgColor: 'bg-blue-500',
@@ -220,7 +220,7 @@ export default function Skills(props) {
                 <div
                   className={classNames(
                     cert.bgColor,
-                    'flex-shrink-0 flex items-center justify-center w-16 text-white text-sm font-medium rounded-l-md'
+                    'flex-shrink-0 flex items-center justify-center w-20 text-white text-sm font-medium rounded-l-md'
                   )}
                 >
                   <i className={classNames('fa-brands', cert.icons)}>
@@ -258,7 +258,7 @@ export default function Skills(props) {
                 <div
                   className={classNames(
                     software.bgColor,
-                    'flex-shrink-0 flex items-center justify-center w-16 text-white text-sm font-medium rounded-l-md'
+                    'flex-shrink-0 flex items-center justify-center w-20 text-white text-sm font-medium rounded-l-md'
                   )}
                 >
                   <i className={classNames('fa-brands', software.icons)}>
@@ -296,7 +296,7 @@ export default function Skills(props) {
                 <div
                   className={classNames(
                     language.bgColor,
-                    'flex-shrink-0 flex items-center justify-center w-16 text-white text-sm font-medium rounded-l-md'
+                    'flex-shrink-0 flex items-center justify-center w-20 text-white text-sm font-medium rounded-l-md'
                   )}
                 >
                   <i className={classNames('fa-brands', language.icons)}>
@@ -334,7 +334,7 @@ export default function Skills(props) {
                 <div
                   className={classNames(
                     speakWrite.bgColor,
-                    'flex-shrink-0 flex items-center justify-center w-16 text-white text-xs font-medium rounded-l-md'
+                    'flex-shrink-0 flex items-center justify-center w-20 text-white text-xs font-medium rounded-l-md'
                   )}
                 >
                   {i18n(speakWrite.icons)}

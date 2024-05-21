@@ -78,7 +78,7 @@ export default function openAPI(props) {
             {i18n('Free to use.')}
           </p>
         </div>
-        <div className="bg-white dark:bg-black shadow overflow-hidden rounded-2xl mt-8 backlight">
+        <div className="bg-white dark:bg-black shadow overflow-hidden rounded-md mt-8 backlight">
           <ul
             role="list"
             className="divide-y divide-gray-200 dark:divide-gray-800"
@@ -96,7 +96,7 @@ export default function openAPI(props) {
                     <div className="flex flex-wrap items-center justify-between gap-3">
                       <div className="flex gap-3">
                         <span
-                          className={`w-32 border px-2 inline-flex items-center text-xs leading-5 font-semibold rounded-full ${item.textColor} ${item.bgColor}`}
+                          className={`w-32 border border-white px-2 inline-flex items-center text-xs leading-5 font-semibold rounded-full ${item.textColor} ${item.bgColor}`}
                         >
                           {i18n(item.type)}
                         </span>
@@ -112,7 +112,7 @@ export default function openAPI(props) {
                       <a
                         href={item.href}
                         target="_blank"
-                        className={`border px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${item.textColor} hover:bg-white dark:hover:bg-black`}
+                        className={`border border-white px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${item.textColor} hover:bg-white dark:hover:bg-black`}
                       >
                         {i18n('TRY')}
                       </a>
