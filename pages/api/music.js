@@ -10,7 +10,7 @@ export default async function (req, res) {
   }
 
   // Generate token
-  const p8 = process.env.APPLE_MUSIC_p8;
+  const p8 = process.env.APPLE_MUSIC_p8.replace(/\\n/g, '\n');
   const payload = {
     iss: process.env.APPLE_MUSIC_TEAM_ID,
     iat: Math.floor(new Date().getTime() / 1000),
