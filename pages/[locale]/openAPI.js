@@ -14,6 +14,16 @@ export default function openAPI(props) {
 
   const lists = [
     {
+      title: 'Apple Music',
+      type: 'GET / AUDIO',
+      status: 'Available',
+      code: '/api/music?path={TEXT(STRING)}',
+      href: '/api/music?path=me/recent/played/tracks',
+      date: '24Q2',
+      textColor: 'text-red-600 dark:text-red-100',
+      bgColor: 'bg-red-100 dark:bg-red-900',
+    },
+    {
       title: 'Generative AI',
       type: 'GET / AI',
       status: 'Available',

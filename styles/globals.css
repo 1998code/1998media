@@ -36,7 +36,7 @@ a {
 
 .DocSearch-Button {
   position: fixed;
-  bottom: 125px;
+  top: 30px;
   left: 45%;
   opacity: 25%;
   z-index: 100;
@@ -77,3 +77,15 @@ a {
   box-shadow: var(---backlight);
   transition: box-shadow 0.2s ease-in-out;
 }
+
+audio::-webkit-media-controls-play-button,
+audio::-webkit-media-controls-panel {
+  background-color: #fff;
+  color: #000;
+}
+
+/* .darkmode--activated
+audio::-webkit-media-controls-play-button,
+audio::-webkit-media-controls-panel {
+  background-color: gray;
+} */

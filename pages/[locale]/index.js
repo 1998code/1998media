@@ -22,6 +22,7 @@ const Faq = dynamic(() => import('./faq'));
 const Contact = dynamic(() => import('./contact'));
 const Credits = dynamic(() => import('./credits'));
 const Footer = dynamic(() => import('./footer'));
+const Music = dynamic(() => import('./music'));
 
 import Cursor from '../../components/Cursor';
 import {
@@ -143,6 +144,18 @@ export default function Home() {
       : key;
   }
 
+  // useEffect to watch if the user interacts with the page, then show music player
+  const [interacted, setInteracted] = useState(false);
+  useEffect(() => {
+    const handleInteracted = () => {
+      setInteracted(true);
+    };
+    window.addEventListener('click', handleInteracted);
+    return () => {
+      window.removeEventListener('click', handleInteracted);
+    };
+  })
+
   return (
     <div>
       <Head>
@@ -178,6 +191,12 @@ export default function Home() {
             <Loading />
           ) : (
             <div>
+              <DocSearch
+                appId="01IRDDJXZ4"
+                indexName="1998"
+                apiKey="a8c97c33f935922cf3fa01ff8ea67f10"
+                placeholder="Search & Learn More..."
+              />
               <Header i18n={I18n} />
               <About i18n={I18n} />
               <Achievements i18n={I18n} />
@@ -192,12 +211,10 @@ export default function Home() {
               <Contact i18n={I18n} />
               <Credits i18n={I18n} />
               <Footer i18n={I18n} />
-              <DocSearch
-                appId="01IRDDJXZ4"
-                indexName="1998"
-                apiKey="a8c97c33f935922cf3fa01ff8ea67f10"
-                placeholder="Search & Learn More..."
-              />
+              {/* <Music i18n={I18n} /> */}
+              {interacted && (
+                <Music i18n={I18n} />
+              )}
               <div
                 className="elfsight-app-d9c75342-d244-4ae0-91fd-78feae7b7d90"
                 data-elfsight-app-lazy
