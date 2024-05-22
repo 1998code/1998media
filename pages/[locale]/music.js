@@ -70,12 +70,12 @@ export default function Music(props) {
               {music.map((item, index) => (
                 <div 
                   key={index} 
-                  className={`p-3 flex items-center justify-between ${index === music.findIndex((music) => music.id === currentPlaying.id) ? 'bg-red-100 text-red-800' : ''}`}
+                  className={`p-3 flex items-center justify-between ${index === music.findIndex((music) => music.id === currentPlaying.id) ? 'bg-red-100 dark:bg-red-800 text-red-800 dark:text-red-100' : 'dark:text-white'}`}
                 >
                   <div className="flex items-center gap-3">
                     <img src={item.attributes.artwork.url.replace("{w}","50").replace("{h}","50")} className="w-10 h-10 rounded-lg shadow-lg" />
                     <div className="flex flex-col">
-                      <div className="text-xs font-bold dark:text-white whitespace-nowrap">
+                      <div className="text-xs font-bold whitespace-nowrap">
                         {item.attributes.name}
                       </div>
                       <div className="text-[10px] text-gray-500 whitespace-nowrap">
