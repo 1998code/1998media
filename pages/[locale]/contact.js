@@ -23,7 +23,7 @@ export default function Contact(props) {
       <div className="max-w-7xl mx-auto bg-orange-600 lg:bg-transparent lg:px-8">
         <div className="lg:grid lg:grid-cols-12">
           <div className="relative z-10 lg:col-start-1 lg:row-start-1 lg:col-span-4 lg:py-16 lg:bg-transparent">
-            <div className="max-w-md mx-auto px-4 pt-8 sm:px-6 sm:max-w-none lg:p-0">
+            <div className="mx-auto px-4 pt-8 sm:px-6 lg:p-0">
               <div className="aspect-w-1 aspect-h-1">
                 <Tooltip
                   content="Powered by Apple Map"
@@ -110,7 +110,7 @@ export default function Contact(props) {
                 />
               </svg>
             </div>
-            <div className="relative max-w-md mx-auto py-12 px-4 space-y-6 sm:py-16 sm:px-6 sm:max-w-none lg:p-0 lg:col-start-4 lg:col-span-6">
+            <div className="relative mx-auto py-12 px-4 space-y-6 sm:py-16 sm:px-6 lg:p-0 lg:col-start-4 lg:col-span-6">
               <h2 className="text-3xl font-extrabold text-white" id="contact">
                 {i18n('Contact')}
               </h2>

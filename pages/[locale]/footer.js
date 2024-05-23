@@ -79,18 +79,36 @@ export default function Footer(props) {
       data-aos-once
       className="right-0 max-w-7xl mx-auto pt-12 pb-20 px-4 overflow-hidden sm:px-6 lg:px-8"
     >
-      <div className="flex flex-wrap items-center justify-between gap-3">
+      <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-end justify-between gap-3">
         <div>
-          <span className="ext-gray-600 dark:text-gray-400">
+          <span className="text-gray-600 dark:text-gray-400">
             {i18n('Made with')} <i className="fa fa-heart" /> {i18n('by MING')}{' '}
             | {i18n('Open Source')}
             {i18n('.')}
           </span>
           <br />
-          <span className="mt-1 ext-gray-600 dark:text-gray-400 text-sm">
-            {i18n('Ver.')} 24.5.19 | {i18n('Since')} 2020 | {diffYearNDay}
+          <span className="text-gray-600 dark:text-gray-400 text-sm">
+            {i18n('Ver.')} 24.5.23 | {i18n('Since')} 2020 | {diffYearNDay}
           </span>
         </div>
+        {ip && (
+          <span className="text-xs text-gray-600 dark:text-gray-400">
+            {i18n('You come from')}:{' '}
+            <a href={`https://whatismyipaddress.com/ip/${ip}`} target="_blank">
+              {ip}
+            </a>{' '}
+            | {i18n(geo)} (
+            <a
+              href={`https://www.google.com/maps/@${latitude},${longitude},11z`}
+              target="_blank"
+            >
+              {i18n(latitude)}
+              {i18n(',')}
+              {i18n(longitude)}
+            </a>
+            )
+          </span>
+        )}
         <div className="flex justify-center space-x-6">
           {navigation.social.map((item) => (
             <Tooltip
@@ -102,7 +120,7 @@ export default function Footer(props) {
                 key={item.name}
                 href={item.href}
                 target="_blank"
-                className="ext-gray-600 dark:text-gray-400 hover:text-gray-500"
+                className="text-gray-600 dark:text-gray-400 hover:text-gray-500"
               >
                 <span className="sr-only">{i18n(item.name)}</span>
                 <item.icon aria-hidden="true" />
@@ -114,7 +132,7 @@ export default function Footer(props) {
 
       <hr className="mt-3" />
 
-      <div className="mt-1 text-xs ext-gray-600 dark:text-gray-400 pt-3 gap-3 flex flex-wrap justify-between">
+      <div className="mt-1 text-xs text-gray-600 dark:text-gray-400 pt-3 gap-3 flex flex-wrap justify-between">
         <span className="flex items-center gap-3">
           {i18n('Compatible with')}:
           <Tooltip
@@ -153,24 +171,6 @@ export default function Footer(props) {
             <i className="fab fa-opera"></i>
           </Tooltip>
         </span>
-        {ip && (
-          <p className="ext-gray-600 dark:text-gray-400">
-            {i18n('You come from')}:{' '}
-            <a href={`https://whatismyipaddress.com/ip/${ip}`} target="_blank">
-              {ip}
-            </a>{' '}
-            | {i18n(geo)} (
-            <a
-              href={`https://www.google.com/maps/@${latitude},${longitude},11z`}
-              target="_blank"
-            >
-              {i18n(latitude)}
-              {i18n(',')}
-              {i18n(longitude)}
-            </a>
-            )
-          </p>
-        )}
         <div className="flex items-center gap-3">
           {navigation.main.map((item) => (
             <a

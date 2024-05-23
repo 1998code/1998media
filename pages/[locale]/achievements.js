@@ -68,6 +68,7 @@ export default function Achievements(props) {
 
   return (
     <div
+      id="achievements"
       data-aos="zoom-in"
       data-aos-once
       className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8"
@@ -93,7 +94,7 @@ export default function Achievements(props) {
       </div>
       <div className="mt-10 pb-12 sm:pb-16">
         <div className="relative max-w-7xl mx-auto">
-          <div id="achievements" className="cursor-default">
+          <div className="cursor-default">
             <h3 className="mb-6 text-lg font-medium leading-6 text-gray-900 dark:text-gray-100">
               {i18n(
                 'Apple App Store (iOS, iPadOS, watchOS, App Clips, macOS, visionOS)'
