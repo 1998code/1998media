@@ -80,7 +80,7 @@ export default function Paywall() {
 
   function scrollToBottom() {
     setTimeout(() => {
-      const element = document.getElementById("1");
+      const element = document.getElementById('1');
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
       } else {
@@ -204,27 +204,25 @@ export default function Paywall() {
                       )}
                     </div>
                   </a>
-                ))
-              }
+                ))}
               {/* Skeleton Placeholder x 5 */}
-              {loadingBlog && Array.from({ length: 5 }, (_, i) => (
-                <div
-                  id={i}
-                  className="flex items-center rounded-lg bg-white dark:bg-black overflow-hidden transform transition duration-500 border border-transparent hover:border-black dark:hover:border-white backlight"
-                >
-                  <div className="flex-1 p-6 flex flex-col justify-between">
-                    <div className="w-28 h-5 bg-gray-100 dark:bg-gray-900 rounded-md animate-pulse">
-                    </div>
-                    <div className="flex-1">
-                      <div className="w-30 h-10 block mt-2 text-lg md:text-2xl font-semibold bg-gray-100 dark:bg-gray-900 rounded-md animate-pulse">
+              {loadingBlog &&
+                Array.from({ length: 5 }, (_, i) => (
+                  <div
+                    id={i}
+                    className="flex items-center rounded-lg bg-white dark:bg-black overflow-hidden transform transition duration-500 border border-transparent hover:border-black dark:hover:border-white backlight"
+                  >
+                    <div className="flex-1 p-6 flex flex-col justify-between">
+                      <div className="w-28 h-5 bg-gray-100 dark:bg-gray-900 rounded-md animate-pulse"></div>
+                      <div className="flex-1">
+                        <div className="w-30 h-10 block mt-2 text-lg md:text-2xl font-semibold bg-gray-100 dark:bg-gray-900 rounded-md animate-pulse"></div>
                       </div>
                     </div>
+                    <div className="flex-shrink-0">
+                      <div className="w-[25vw] h-32 bg-gray-100 dark:bg-gray-900 animate-pulse"></div>
+                    </div>
                   </div>
-                  <div className="flex-shrink-0">
-                    <div className="w-[25vw] h-32 bg-gray-100 dark:bg-gray-900 animate-pulse"></div>
-                  </div>
-                </div>
-              ))}
+                ))}
             </div>
             <div className="mt-8 text-center">
               <button

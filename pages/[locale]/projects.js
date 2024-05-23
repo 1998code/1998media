@@ -76,7 +76,10 @@ export default function Projects(props) {
             src="https://gitstats.1998.media/api/top-langs/?username=1998code&langs_count=4&layout=default&bg_color=000&title_color=fff&text_color=fff&hide_border=true"
             alt="Top Languages"
           />
-          <img className="col-span-3 md:col-span-1" src="https://lapras-card-generator-auto.vercel.app/api/svg?b1=%23020E27&b2=%230E5593&i1=%23030E21&i2=%231688BF&l=en&u=MING" />
+          <img
+            className="col-span-3 md:col-span-1"
+            src="https://lapras-card-generator-auto.vercel.app/api/svg?b1=%23020E27&b2=%230E5593&i1=%23030E21&i2=%231688BF&l=en&u=MING"
+          />
         </div>
         <img
           id="projectChart"

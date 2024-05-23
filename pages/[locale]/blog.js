@@ -13,22 +13,19 @@ export default function Blog(props) {
   }
 
   const topPromo = {
-    "title": i18n("Get $10 OFF on Trip.com"),
-    "pubDate": new Date().toISOString(),
-    "link": "https://hk.trip.com/sale/4283/referee.html?locale=zh-HK&referCode=5253C1995FB313ED993BC64A068BDABA",
-    "guid": "https://hk.trip.com/sale/4283/referee.html?locale=zh-HK&referCode=5253C1995FB313ED993BC64A068BDABA",
-    "author": "MING",
+    title: i18n('Get $10 OFF on Trip.com'),
+    pubDate: new Date().toISOString(),
+    link: 'https://hk.trip.com/sale/4283/referee.html?locale=zh-HK&referCode=5253C1995FB313ED993BC64A068BDABA',
+    guid: 'https://hk.trip.com/sale/4283/referee.html?locale=zh-HK&referCode=5253C1995FB313ED993BC64A068BDABA',
+    author: 'MING',
     // "thumbnail": "https://scontent-vie1-1.xx.fbcdn.net/v/t39.30808-6/276300699_5834005769959881_8535075502349926768_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=YJAM-OTlB0MQ7kNvgEznQBD&_nc_ht=scontent-vie1-1.xx&oh=00_AYBD9SJKSzi0uxF_T0G7LaSB-mSqM7GYZ7v--IK7p5HxIw&oe=6650E2F1",
-    "thumbnail": i18n("https://ak-d.tripcdn.com/images/0a14l12000aqs8zq3AC37.jpg_.webp"),
-    "description": "",
-    "content": "",
-    "enclosure": {},
-    "categories": [
-        "Trip.com",
-        "Promotion",
-        "Discount",
-        "Featured"
-    ]
+    thumbnail: i18n(
+      'https://ak-d.tripcdn.com/images/0a14l12000aqs8zq3AC37.jpg_.webp'
+    ),
+    description: '',
+    content: '',
+    enclosure: {},
+    categories: ['Trip.com', 'Promotion', 'Discount', 'Featured'],
   };
 
   const [payWallURL, setPayWallURL] = useState(false);
@@ -107,7 +104,11 @@ export default function Blog(props) {
                   <a href={post.link} target="_blank">
                     <img
                       className="h-48 w-full object-cover"
-                      src={post.thumbnail ? post.thumbnail : post.description.split('src="')[1].split('"')[0]}
+                      src={
+                        post.thumbnail
+                          ? post.thumbnail
+                          : post.description.split('src="')[1].split('"')[0]
+                      }
                       alt={post.title}
                     />
                   </a>

@@ -154,7 +154,7 @@ export default function Home() {
     return () => {
       window.removeEventListener('click', handleInteracted);
     };
-  })
+  });
 
   return (
     <div>
@@ -212,9 +212,7 @@ export default function Home() {
               <Credits i18n={I18n} />
               <Footer i18n={I18n} />
               {/* <Music i18n={I18n} /> */}
-              {interacted && (
-                <Music i18n={I18n} />
-              )}
+              {interacted && <Music i18n={I18n} />}
               <div
                 className="elfsight-app-d9c75342-d244-4ae0-91fd-78feae7b7d90"
                 data-elfsight-app-lazy

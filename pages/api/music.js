@@ -1,11 +1,35 @@
 import jwt from 'jsonwebtoken';
+import qqMusic from 'qq-music-api';
 
 export default async function (req, res) {
-  const path = req.query.path;
+  const { provider, path } = req.query;
+
+  if (provider === 'qq') {
+    await qqMusic
+    .api(req.query.type, {
+      key: req.query.key,
+      t: req.query.t,
+      type: req.query.typeID,
+      singermid: req.query.singermid,
+      albummid: req.query.albummid,
+      songmid: req.query.songmid,
+    })
+    .then((data) => {
+      console.log(data);
+      res.status(200).json(data);
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err });
+    });
+  };
 
   const origin = req.headers.referer;
 
-  if (origin && origin.includes('www.1998.media/api/origin') && path.includes('me/')) {
+  if (
+    origin &&
+    origin.includes('www.1998.media/api/origin') &&
+    path.includes('me/')
+  ) {
     return res.status(403).json({ error: 'Forbidden' });
   }
 
@@ -18,21 +42,22 @@ export default async function (req, res) {
   };
   const signOptions = {
     algorithm: 'ES256',
-    header : {
+    header: {
       alg: 'ES256',
       kid: process.env.APPLE_MUSIC_KEY_ID,
-    }
+    },
   };
   const token = jwt.sign(payload, p8, signOptions);
 
   await fetch(`https://api.music.apple.com/v1/${path}`, {
     method: 'GET',
     headers: {
-      'Authorization': `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
       'Music-User-Token': process.env.APPLE_MUSIC_USER_TOKEN,
     },
-  }).then(response => response.json())
-    .then(data => {
+  })
+    .then((response) => response.json())
+    .then((data) => {
       res.status(200).json(data);
     })
     .catch((error) => {

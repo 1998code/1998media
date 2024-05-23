@@ -15,11 +15,10 @@ export default function Music(props) {
     fetchMusicList();
   }, []);
 
- 
   const [timer, setTimer] = useState(0);
   useEffect(() => {
     const interval = setInterval(() => {
-      setTimer(prevTimer => prevTimer + 1);
+      setTimer((prevTimer) => prevTimer + 1);
     }, 1000);
     // Clear interval on component unmount
     return () => clearInterval(interval);
@@ -50,8 +49,11 @@ export default function Music(props) {
   // switch to next song per 30 sec
   useEffect(() => {
     if (timer % 30 === 0 && music.length > 0) {
-      const currentIndex = music.findIndex((item) => item.id === currentPlaying.id);
-      const nextIndex = currentIndex + 1 === music.length ? 0 : currentIndex + 1;
+      const currentIndex = music.findIndex(
+        (item) => item.id === currentPlaying.id
+      );
+      const nextIndex =
+        currentIndex + 1 === music.length ? 0 : currentIndex + 1;
       // setCurrentPlaying({});
       setCurrentPlaying(music[nextIndex]);
       audioRef.current.play();
@@ -60,20 +62,25 @@ export default function Music(props) {
 
   return (
     <div className="fixed w-screen flex items-center justify-center bottom-0 sm:bottom-5 z-[10]">
-      { music.length > 0 && currentPlaying ? (
+      {music.length > 0 && currentPlaying ? (
         <Tooltip
           content={
             <div className="flex flex-col sm:min-w-[500px] divide-y max-h-[50vh] overflow-auto">
               <div className="text-sm font-bold dark:text-white p-2">
-                {i18n("My Recent Playlist")}
+                {i18n('My Recent Playlist')}
               </div>
               {music.map((item, index) => (
-                <div 
-                  key={index} 
+                <div
+                  key={index}
                   className={`p-3 flex items-center justify-between ${index === music.findIndex((music) => music.id === currentPlaying.id) ? 'bg-red-100 dark:bg-red-600 text-red-800 dark:text-red-100' : 'dark:text-white'}`}
                 >
                   <div className="flex items-center gap-3">
-                    <img src={item.attributes.artwork.url.replace("{w}","50").replace("{h}","50")} className="w-10 h-10 rounded-lg shadow-lg" />
+                    <img
+                      src={item.attributes.artwork.url
+                        .replace('{w}', '50')
+                        .replace('{h}', '50')}
+                      className="w-10 h-10 rounded-lg shadow-lg"
+                    />
                     <div className="flex flex-col">
                       <div className="text-xs font-bold whitespace-nowrap">
                         {item.attributes.name}
@@ -84,9 +91,19 @@ export default function Music(props) {
                     </div>
                   </div>
                   <div className="text-[10px] text-gray-500 text-right">
-                    <span>{index === music.findIndex((music) => music.id === currentPlaying.id) && i18n("Now Playing")}</span>
-                    <br/>
-                    <span>{Math.floor(item.attributes.durationInMillis / 60000)}:{Math.floor((item.attributes.durationInMillis % 60000) / 1000)}</span>
+                    <span>
+                      {index ===
+                        music.findIndex(
+                          (music) => music.id === currentPlaying.id
+                        ) && i18n('Now Playing')}
+                    </span>
+                    <br />
+                    <span>
+                      {Math.floor(item.attributes.durationInMillis / 60000)}:
+                      {Math.floor(
+                        (item.attributes.durationInMillis % 60000) / 1000
+                      )}
+                    </span>
                   </div>
                 </div>
               ))}
@@ -96,7 +113,12 @@ export default function Music(props) {
           className="p-0 border text-xs dark:text-white bg-white/50 dark:bg-black backdrop-blur-lg rounded-lg"
         >
           <div className="group flex items-center min-w-[300px] h-[80px] p-1 shadow bg-gradient-to-r from-white/50 via-white to-white dark:from-black/50 dark:via-[#808080] dark:to-white dark:shadow-black backdrop-blur-lg rounded-xl">
-            <img src={currentPlaying.attributes.artwork.url.replace("{w}","500").replace("{h}","500")} className="sm:absolute sm:-left-7 top-2 w-[65px] h-[65px] rounded-xl shadow-lg hover:border transition-all" />
+            <img
+              src={currentPlaying.attributes.artwork.url
+                .replace('{w}', '500')
+                .replace('{h}', '500')}
+              className="sm:absolute sm:-left-7 top-2 w-[65px] h-[65px] rounded-xl shadow-lg hover:border transition-all"
+            />
             <div className="ml-12 flex items-center w-full h-full">
               <div className="flex flex-col justify-center items-start w-40">
                 <div className="text-sm font-bold text-left dark:text-white">
@@ -107,12 +129,33 @@ export default function Music(props) {
                 </div>
               </div>
               <div className="relative text-right">
-                <audio controls muted ref={audioRef} key={currentPlaying.attributes.previews[0].url} className="invisible sm:visible relative">
-                  <source src={currentPlaying.attributes.previews[0].url} type="audio/mpeg" />
-                  {i18n("Your browser does not support the audio element.")}
+                <audio
+                  controls
+                  muted
+                  ref={audioRef}
+                  key={currentPlaying.attributes.previews[0].url}
+                  className="invisible sm:visible relative"
+                >
+                  <source
+                    src={currentPlaying.attributes.previews[0].url}
+                    type="audio/mpeg"
+                  />
+                  {i18n('Your browser does not support the audio element.')}
                 </audio>
                 <div className="hidden group-hover:block absolute -bottom-2 right-5 text-[10px] text-gray-400 z-[1] whitespace-nowrap animate-pulse transition-all">
-                  {i18n("My Recent Playlist")} | {i18n("Next")}: <b>{music[(music.findIndex((item) => item.id === currentPlaying.id) + 1) % music.length].attributes.name}</b> in {30 - (timer % 30)}s
+                  {i18n('My Recent Playlist')} | {i18n('Next')}:{' '}
+                  <b>
+                    {
+                      music[
+                        (music.findIndex(
+                          (item) => item.id === currentPlaying.id
+                        ) +
+                          1) %
+                          music.length
+                      ].attributes.name
+                    }
+                  </b>{' '}
+                  in {30 - (timer % 30)}s
                 </div>
               </div>
             </div>
