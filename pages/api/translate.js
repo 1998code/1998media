@@ -5,8 +5,8 @@ export default async function (req, res) {
   const translation = await translatte(text, { from, to });
 
   res.status(200).json({
-    input:text,
-    output:translation.text,
+    input: text,
+    output: translation.text,
     from, to
   });
 }
