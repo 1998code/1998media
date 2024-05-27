@@ -15,32 +15,25 @@ export default function Experience(props) {
   }
   const positions = [
     {
-      title: 'Lapras Score Data Linkage',
-      type: 'Contributor',
-      location: '🌐 Remote',
-      description: 'Contribute open source web project',
-      date: '2024',
-      textColor: 'text-green-600 dark:text-green-100',
-      bgColor: 'bg-green-100 dark:bg-green-900',
+      title: 'Senior Software Engineer',
+      type: 'Full-time',
+      location: '🇭🇰 Hong Kong',
+      description: 'UI Design, Web, iOS Development, A.I. Research',
+      date: '2023-2025',
+      textColor: 'text-blue-600 dark:text-blue-100',
+      bgColor: 'bg-blue-100 dark:bg-blue-900',
     },
     {
-      title: 'Google AI SDK for Swift',
-      type: 'Contributor',
-      location: '🌐 Remote',
-      description: 'Contribute open source iOS project',
-      date: '2024',
-      textColor: 'text-green-600 dark:text-green-100',
-      bgColor: 'bg-green-100 dark:bg-green-900',
+      title: 'Software Engineer',
+      type: 'Full-time',
+      location: '🇭🇰 Hong Kong',
+      description: 'Web + iOS Development',
+      date: '2021-2023',
+      textColor: 'text-blue-600 dark:text-blue-100',
+      bgColor: 'bg-blue-100 dark:bg-blue-900',
     },
-    {
-      title: 'Google VertexAI for iOS',
-      type: 'Contributor',
-      location: '🌐 Remote',
-      description: 'Contribute open source iOS project',
-      date: '2024',
-      textColor: 'text-green-600 dark:text-green-100',
-      bgColor: 'bg-green-100 dark:bg-green-900',
-    },
+
+
     {
       title: 'Application Development Consultant',
       type: 'Freelance',
@@ -52,24 +45,6 @@ export default function Experience(props) {
       bgColor: 'bg-orange-100 dark:bg-orange-900',
     },
     {
-      title: 'Senior Software Engineer',
-      type: 'Full-time',
-      location: '🇭🇰 Hong Kong',
-      description: 'UI Design, Web, iOS Development, A.I. Research',
-      date: '2023-2025',
-      textColor: 'text-blue-600 dark:text-blue-100',
-      bgColor: 'bg-blue-100 dark:bg-blue-900',
-    },
-    {
-      title: 'QuestDB Translator',
-      type: 'Contributor',
-      location: '🌐 Remote, United Kingdom',
-      description: 'Contribute open source database project',
-      date: '2022',
-      textColor: 'text-green-600 dark:text-green-100',
-      bgColor: 'bg-green-100 dark:bg-green-900',
-    },
-    {
       title: 'Unsplash Artists',
       type: 'Freelance',
       location: '🌐 Remote',
@@ -77,15 +52,6 @@ export default function Experience(props) {
       date: '2022-NOW',
       textColor: 'text-orange-600 dark:text-orange-100',
       bgColor: 'bg-orange-100 dark:bg-orange-900',
-    },
-    {
-      title: 'Software Engineer',
-      type: 'Full-time',
-      location: '🇭🇰 Hong Kong',
-      description: 'Web + iOS Development',
-      date: '2021-2023',
-      textColor: 'text-blue-600 dark:text-blue-100',
-      bgColor: 'bg-blue-100 dark:bg-blue-900',
     },
     {
       title: 'Articles Writer',
@@ -107,6 +73,17 @@ export default function Experience(props) {
       textColor: 'text-orange-600 dark:text-orange-100',
       bgColor: 'bg-orange-100 dark:bg-orange-900',
     },
+    {
+      title: 'Designer / Photographer',
+      type: 'Freelance',
+      location: '🌐 Remote',
+      description:
+        'Start Freelance works on different platforms (Adobe Stock, Behance, Dribbble)',
+      date: '2019-NOW',
+      textColor: 'text-orange-600 dark:text-orange-100',
+      bgColor: 'bg-orange-100 dark:bg-orange-900',
+    },
+
     {
       title: 'Student Assistant',
       type: 'Part-time',
@@ -136,6 +113,43 @@ export default function Experience(props) {
       textColor: 'text-pink-600 dark:text-pink-100',
       bgColor: 'bg-pink-100 dark:bg-pink-900',
     },
+
+    {
+      title: 'Lapras Score Data Linkage',
+      type: 'Contributor',
+      location: '🌐 Remote',
+      description: 'Contribute open source web project',
+      date: '2024',
+      textColor: 'text-green-600 dark:text-green-100',
+      bgColor: 'bg-green-100 dark:bg-green-900',
+    },
+    {
+      title: 'Google AI SDK for Swift',
+      type: 'Contributor',
+      location: '🌐 Remote',
+      description: 'Contribute open source iOS project',
+      date: '2024',
+      textColor: 'text-green-600 dark:text-green-100',
+      bgColor: 'bg-green-100 dark:bg-green-900',
+    },
+    {
+      title: 'Google VertexAI for iOS',
+      type: 'Contributor',
+      location: '🌐 Remote',
+      description: 'Contribute open source iOS project',
+      date: '2024',
+      textColor: 'text-green-600 dark:text-green-100',
+      bgColor: 'bg-green-100 dark:bg-green-900',
+    },
+    {
+      title: 'QuestDB Translator',
+      type: 'Contributor',
+      location: '🌐 Remote, United Kingdom',
+      description: 'Contribute open source database project',
+      date: '2022',
+      textColor: 'text-green-600 dark:text-green-100',
+      bgColor: 'bg-green-100 dark:bg-green-900',
+    },
     {
       title: 'Atlassian Translator',
       type: 'Contributor',
@@ -154,16 +168,6 @@ export default function Experience(props) {
       date: '2020-2021',
       textColor: 'text-green-600 dark:text-green-100',
       bgColor: 'bg-green-100 dark:bg-green-900',
-    },
-    {
-      title: 'Designer / Photographer',
-      type: 'Freelance',
-      location: '🌐 Remote',
-      description:
-        'Start Freelance works on different platforms (Adobe Stock, Behance, Dribbble)',
-      date: '2019-NOW',
-      textColor: 'text-orange-600 dark:text-orange-100',
-      bgColor: 'bg-orange-100 dark:bg-orange-900',
     },
   ];
   function classNames(...classes) {
