@@ -22,6 +22,7 @@ export default function Experience(props) {
       date: '2023-2025',
       textColor: 'text-blue-600 dark:text-blue-100',
       bgColor: 'bg-blue-100 dark:bg-blue-900',
+      icon: 'fa fa-code',
     },
     {
       title: 'Software Engineer',
@@ -31,6 +32,7 @@ export default function Experience(props) {
       date: '2021-2023',
       textColor: 'text-blue-600 dark:text-blue-100',
       bgColor: 'bg-blue-100 dark:bg-blue-900',
+      icon: 'fa fa-code',
     },
 
     {
@@ -41,6 +43,7 @@ export default function Experience(props) {
       date: '2024',
       textColor: 'text-green-600 dark:text-green-100',
       bgColor: 'bg-green-100 dark:bg-green-900',
+      icon: 'far fa-rectangle',
     },
     {
       title: 'Google AI SDK for Swift',
@@ -50,6 +53,7 @@ export default function Experience(props) {
       date: '2024',
       textColor: 'text-green-600 dark:text-green-100',
       bgColor: 'bg-green-100 dark:bg-green-900',
+      icon: 'fab fa-google',
     },
     {
       title: 'Google VertexAI for iOS',
@@ -59,6 +63,7 @@ export default function Experience(props) {
       date: '2024',
       textColor: 'text-green-600 dark:text-green-100',
       bgColor: 'bg-green-100 dark:bg-green-900',
+      icon: 'fab fa-google',
     },
     {
       title: 'QuestDB Translator',
@@ -68,6 +73,7 @@ export default function Experience(props) {
       date: '2022',
       textColor: 'text-green-600 dark:text-green-100',
       bgColor: 'bg-green-100 dark:bg-green-900',
+      icon: 'far fa-database',
     },
     {
       title: 'Atlassian Translator',
@@ -77,6 +83,7 @@ export default function Experience(props) {
       date: '2020-2021',
       textColor: 'text-green-600 dark:text-green-100',
       bgColor: 'bg-green-100 dark:bg-green-900',
+      icon: 'fab fa-atlassian',
     },
     {
       title: 'StopCovid19Tokyo Translator',
@@ -87,6 +94,7 @@ export default function Experience(props) {
       date: '2020-2021',
       textColor: 'text-green-600 dark:text-green-100',
       bgColor: 'bg-green-100 dark:bg-green-900',
+      icon: 'far fa-virus',
     },
 
     {
@@ -98,6 +106,7 @@ export default function Experience(props) {
       date: '2024-NOW',
       textColor: 'text-orange-600 dark:text-orange-100',
       bgColor: 'bg-orange-100 dark:bg-orange-900',
+      icon: 'far fa-square',
     },
     {
       title: 'Unsplash Artists',
@@ -107,6 +116,7 @@ export default function Experience(props) {
       date: '2022-NOW',
       textColor: 'text-orange-600 dark:text-orange-100',
       bgColor: 'bg-orange-100 dark:bg-orange-900',
+      icon: 'far fa-image',
     },
     {
       title: 'Articles Writer',
@@ -117,6 +127,7 @@ export default function Experience(props) {
       date: '2020-NOW',
       textColor: 'text-orange-600 dark:text-orange-100',
       bgColor: 'bg-orange-100 dark:bg-orange-900',
+      icon: 'far fa-pen',
     },
     {
       title: 'Apple Developer',
@@ -127,6 +138,7 @@ export default function Experience(props) {
       date: '2020-NOW',
       textColor: 'text-orange-600 dark:text-orange-100',
       bgColor: 'bg-orange-100 dark:bg-orange-900',
+      icon: 'fab fa-apple',
     },
     {
       title: 'Designer / Photographer',
@@ -137,6 +149,7 @@ export default function Experience(props) {
       date: '2019-NOW',
       textColor: 'text-orange-600 dark:text-orange-100',
       bgColor: 'bg-orange-100 dark:bg-orange-900',
+      icon: 'fa fa-compass-drafting',
     },
 
     {
@@ -147,6 +160,7 @@ export default function Experience(props) {
       date: '2020-2021',
       textColor: 'text-pink-600 dark:text-pink-100',
       bgColor: 'bg-pink-100 dark:bg-pink-900',
+      icon: 'far fa-chart-bar',
     },
     {
       title: 'Student Developer',
@@ -157,6 +171,7 @@ export default function Experience(props) {
       date: '2020-2021',
       textColor: 'text-pink-600 dark:text-pink-100',
       bgColor: 'bg-pink-100 dark:bg-pink-900',
+      icon: 'far fa-robot',
     },
     {
       title: 'Student Assistant',
@@ -167,6 +182,7 @@ export default function Experience(props) {
       date: '2020-2021',
       textColor: 'text-pink-600 dark:text-pink-100',
       bgColor: 'bg-pink-100 dark:bg-pink-900',
+      icon: 'far fa-book',
     },
   ];
   function classNames(...classes) {
@@ -210,6 +226,7 @@ export default function Experience(props) {
                           'font-medium truncate'
                         )}
                       >
+                        <i class={`${position.icon} w-6`}></i>
                         {i18n(position.title)}
                       </div>
                       <div className="ml-2 flex-shrink-0 flex items-center gap-1">
