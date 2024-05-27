@@ -72,7 +72,7 @@ export default function Music(props) {
               {music.map((item, index) => (
                 <div
                   key={index}
-                  className={`p-3 flex items-center justify-between ${index === music.findIndex((music) => music.id === currentPlaying.id) ? 'bg-red-100 dark:bg-red-600 text-red-800 dark:text-red-100' : 'dark:text-white'}`}
+                  className={`p-3 flex items-center justify-between ${index === music.findIndex((music) => music.id === currentPlaying.id) ? 'bg-red-100 dark:bg-black text-red-800 dark:text-red-500' : 'dark:text-white'}`}
                 >
                   <div className="flex items-center gap-3">
                     <img
