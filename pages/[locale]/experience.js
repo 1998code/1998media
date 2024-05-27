@@ -36,7 +36,7 @@ export default function Experience(props) {
     {
       title: 'Lapras Score Data Linkage',
       type: 'Contributor',
-      location: '🌐 Remote',
+      location: '🌐 Remote, Japan',
       description: 'Contribute open source web project',
       date: '2024',
       textColor: 'text-green-600 dark:text-green-100',
