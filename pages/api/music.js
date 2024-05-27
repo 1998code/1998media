@@ -2,7 +2,9 @@ import jwt from 'jsonwebtoken';
 import qqMusic from 'qq-music-api';
 import opencc from 'node-opencc';
 
-export const maxDuration = 60;
+export const config = {
+  maxDuration: 60,
+};
 
 export default async function (req, res) {
   const { provider, path } = req.query;
