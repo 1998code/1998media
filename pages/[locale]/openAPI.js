@@ -64,6 +64,16 @@ export default function openAPI(props) {
       bgColor: 'bg-cyan-100 dark:bg-cyan-900',
     },
     {
+      title: 'QQ Music',
+      type: 'GET / AUDIO',
+      status: 'Available',
+      code: '/api/music?provider=qq&path={TEXT(STRING)}',
+      href: '/api/music?provider=qq&path=search/quick&key=%E3%81%AF%E3%81%98%E3%81%BE%E3%82%8A%E3%81%AE%E3%81%86%E3%81%9F',
+      date: '24Q2',
+      textColor: 'text-green-600 dark:text-green-100',
+      bgColor: 'bg-green-100 dark:bg-green-900',
+    },
+    {
       title: 'Request Headers',
       type: 'GET / NETWORK',
       status: 'Available',

@@ -1,26 +1,27 @@
 import jwt from 'jsonwebtoken';
 import qqMusic from 'qq-music-api';
+import opencc from 'node-opencc';
 
 export default async function (req, res) {
   const { provider, path } = req.query;
 
   if (provider === 'qq') {
     await qqMusic
-    .api(req.query.type, {
-      key: req.query.key,
-      t: req.query.t,
-      type: req.query.typeID,
-      singermid: req.query.singermid,
-      albummid: req.query.albummid,
-      songmid: req.query.songmid,
-    })
-    .then((data) => {
-      console.log(data);
-      res.status(200).json(data);
-    })
-    .catch((err) => {
-      res.status(500).json({ error: err });
-    });
+      .api(path, {
+        key: req.query.key,
+        t: req.query.t,
+        type: req.query.typeID,
+        singermid: req.query.singermid,
+        albummid: req.query.albummid,
+        songmid: req.query.songmid,
+      })
+      .then(async (data) => {
+        const trans = await convertJsonToTraditional(data);
+        res.status(200).json(trans);
+      })
+      .catch((err) => {
+        res.status(500).json({ error: err });
+      });
   };
 
   const origin = req.headers.referer;
@@ -64,4 +65,17 @@ export default async function (req, res) {
       console.error('Error:', error);
       res.status(500).json({ error });
     });
+}
+
+async function convertJsonToTraditional(jsonObj) {
+  let keys = Object.keys(jsonObj);
+  for (let i = 0; i < keys.length; i++) {
+    let key = keys[i];
+    if (typeof jsonObj[key] === 'string') {
+      jsonObj[key] = await opencc.simplifiedToTraditional(jsonObj[key]);
+    } else if (typeof jsonObj[key] === 'object') {
+      jsonObj[key] = await convertJsonToTraditional(jsonObj[key]);
+    }
+  }
+  return jsonObj;
 }

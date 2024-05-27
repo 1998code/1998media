@@ -29,6 +29,7 @@
     "jsonwebtoken": "^9.0.2",
     "next": "^15.0.0-rc.0",
     "node-geocoder": "^4.3.0",
+    "node-opencc": "^2.0.1",
     "prettier": "^3.2.5",
     "qq-music-api": "^1.1.2",
     "react": "^19.0.0-rc-935180c7e0-20240524",
