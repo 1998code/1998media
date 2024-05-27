@@ -19,7 +19,7 @@ export default function Experience(props) {
       type: 'Full-time',
       location: '🇭🇰 Hong Kong',
       description: 'UI Design, Web, iOS Development, A.I. Research',
-      date: '2023-2025',
+      date: '2023-NOW',
       textColor: 'text-blue-600 dark:text-blue-100',
       bgColor: 'bg-blue-100 dark:bg-blue-900',
       icon: 'fa fa-code',
