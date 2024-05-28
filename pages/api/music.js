@@ -18,6 +18,7 @@ export default async function (req, res) {
         singermid: req.query.singermid,
         albummid: req.query.albummid,
         songmid: req.query.songmid,
+        pageSize: req.query.pageSize,
       })
       .then(async (data) => {
         const trans = await convertJsonToTraditional(data);

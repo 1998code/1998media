@@ -65,7 +65,7 @@ export default function Music(props) {
   // Then get lyrics via /api/music?provider=qq&path=lyric&songmid=001IhSxX225n1g
   const [lyrics, setLyrics] = useState('');
   function searchSongMID(songName, singerName) {
-    fetch(`/api/music?provider=qq&path=search&key=${songName} ${singerName}`)
+    fetch(`/api/music?provider=qq&path=search&pageSize=3&key=${songName} ${singerName}`)
       .then((response) => response.json())
       .then((data) => {
         if (data.list.length === 0) {
