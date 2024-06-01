@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import axios from 'axios';
 import { franc } from 'franc-min';
+import { Tooltip } from '@nextui-org/tooltip';
 
 export default function Blog(props) {
   function i18n(key) {
@@ -31,11 +32,11 @@ export default function Blog(props) {
   const [payWallURL, setPayWallURL] = useState(false);
   const [blogs, setBlogs] = useState([]);
   useEffect(() => {
-    getBlogData();
+    getBlog();
 
     setPayWallURL(`${window.location.pathname}/paywall`);
   }, []);
-  function getBlogData() {
+  function getBlog() {
     axios
       .get(
         'https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@1998design'
@@ -64,14 +65,51 @@ export default function Blog(props) {
     }
   }
 
+  const [medals, setMedals] = useState([]);
+
+  function getMedals() {
+    axios
+      .post(`/api/trip?type=medal&locale=${window.location.pathname.split('#')[0].replace('/', '')}`)
+      .then((res) => {
+        setMedals(res.data.medalList);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  useEffect(() => {
+    getMedals();
+  }, []);
+
+  const [moment, setMoment] = useState([]);
+
+  function getMoment() {
+    axios
+      .post(`/api/trip?type=moment&locale=${window.location.pathname.split('#')[0].replace('/', '')}`)
+      .then((res) => {
+        console.log(res.data);
+        setMoment(res.data.resourceBlockList);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  useEffect(() => {
+    getMoment();
+  }
+  , []);
+
   return (
     <div
       id="blog"
       data-aos="zoom-in"
       data-aos-once
-      className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8"
+      className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8 space-y-16"
     >
-      <div className="relative max-w-7xl mx-auto">
+      <div className="relative max-w-7xl mx-auto space-y-8">
+        {/* Blog */}
         <div className="text-left flex flex-wrap">
           <a
             className="text-3xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl grow"
@@ -84,7 +122,7 @@ export default function Blog(props) {
             {i18n('Find out the latest posts and tutorials.')}
           </p>
         </div>
-        <div className="mt-8 mx-auto grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mx-auto grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {blogs
             .filter((post) => {
               const userLanguage = window.location.pathname.replace('/', '');
@@ -157,7 +195,7 @@ export default function Blog(props) {
               </div>
             ))}
         </div>
-        <div className="mt-8 text-center flex flex-wrap items-center gap-3">
+        <div className="text-center flex flex-wrap items-center gap-3">
           <a
             href={payWallURL}
             className="flex-1 block text-lg font-semibold text-white whitespace-nowrap bg-teal-600 hover:bg-teal-500 p-3 rounded-lg transition-all"
@@ -174,6 +212,67 @@ export default function Blog(props) {
             <i className="fab fa-medium mr-2"></i>
             {i18n('View all posts on Medium')} ({i18n('$5 per month')})
           </a>
+        </div>
+      </div>
+      {/* Moments */}
+      <div id="blog-trip" className="relative max-w-7xl mx-auto space-y-8">
+        <div className="text-left flex flex-wrap">
+          <a
+            className="text-3xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl grow"
+            href="#blog-trip"
+          >
+            {i18n('Trip Moments')}
+            <i className="far fa-planet-ringed ml-2"></i>
+          </a>
+          <p className="mt-2 max-w-2xl text-xl text-gray-500">
+            {i18n('Travel Around, Global Journey.')}
+          </p>
+        </div>
+        <div className="flex">
+          {medals.map((medal) => (
+            <Tooltip
+              content={medal.medalStageName}
+              placement="bottom"
+              className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg"
+            >
+            <img src={medal.medalStageIcon} alt={medal.medalStageName} className="h-16 w-16 hover:scale-105 transition-all" />
+            </Tooltip>
+          ))}
+        </div>
+        <div className="mx-auto grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {moment && moment.map((post) => (
+              <div
+                key={post.translateTitle || post.title}
+                className="flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight"
+              >
+                <div className="flex-shrink-0">
+                  <a href={post.shareURL} target="_blank">
+                    <img
+                      className="h-48 w-full object-cover"
+                      src={post.coverURL}
+                      alt={post.translateTitle || post.title}
+                    />
+                  </a>
+                </div>
+                <div className="flex-1 p-6 flex flex-col justify-between">
+                  <div className=" text-gray-400 text-xs">
+                    <i className="far fa-calendar mr-1"></i>
+                    <time dateTime={new Date(post.publishTime).toISOString().split('T')[0]}>
+                      {new Date(post.publishTime).toISOString().split('T')[0]}
+                    </time>
+                  </div>
+                  <div className="flex-1">
+                    <a
+                      href={post.shareURL}
+                      className="block mt-2 text-xl font-semibold text-gray-900 dark:text-gray-100"
+                      target="_blank"
+                    >
+                      {post.translateTitle || post.title}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            ))}
         </div>
       </div>
     </div>

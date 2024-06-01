@@ -44,7 +44,7 @@ export default function AI(props) {
             href="#ai"
           >
             {i18n('AI')}
-            <i className="fa fa-user-robot ml-2"></i>
+            <i className="far fa-user-robot ml-2"></i>
           </a>
           <p className="mt-2 max-w-2xl text-xl text-gray-500">
             {i18n('The latest prompt design and experimental results.')}
