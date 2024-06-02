@@ -93,6 +93,16 @@ export default function openAPI(props) {
       textColor: 'text-cyan-600 dark:text-cyan-100',
       bgColor: 'bg-cyan-100 dark:bg-cyan-900',
     },
+    {
+      title: 'Trip',
+      type: 'GET / Misc',
+      status: 'Available',
+      code: '/api/trip?type={TEXT(STRING)}&cid={TEXT(STRING)}&locale={LANG(CODE)}',
+      href: '/api/trip?type=moment&cid=09031029418990699836&locale=zh-TW',
+      date: '24Q2',
+      textColor: 'text-cyan-600 dark:text-cyan-100',
+      bgColor: 'bg-cyan-100 dark:bg-cyan-900',
+    }
   ];
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ');

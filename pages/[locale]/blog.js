@@ -69,7 +69,7 @@ export default function Blog(props) {
 
   function getMedals() {
     axios
-      .post(`/api/trip?type=medal&locale=${window.location.pathname.split('#')[0].replace('/', '')}`)
+      .post(`/api/trip?type=medal&cid=09031029418990699836&locale=${window.location.pathname.split('#')[0].replace('/', '')}`)
       .then((res) => {
         setMedals(res.data.medalList);
       })
@@ -86,7 +86,7 @@ export default function Blog(props) {
 
   function getMoment() {
     axios
-      .post(`/api/trip?type=moment&locale=${window.location.pathname.split('#')[0].replace('/', '')}`)
+      .post(`/api/trip?type=moment&cid=09031029418990699836&locale=${window.location.pathname.split('#')[0].replace('/', '')}`)
       .then((res) => {
         console.log(res.data);
         setMoment(res.data.resourceBlockList);

@@ -62,7 +62,7 @@ export default function Projects(props) {
         </div>
         <div className="mx-auto grid gap-5 md:grid-cols-4 lg:max-w-none items-end">
           <img
-            className="w-full col-span-2 hover:scale-95 transition duration-300 rounded-lg"
+            className="w-full col-span-3 md:col-span-2 hover:scale-95 transition duration-300 rounded-lg"
             src="https://gitstats.1998.media/api?username=1998code&show_icons=true&bg_color=30,e96443,904e95&title_color=fff&text_color=fff&icon_color=fff&hide_border=true"
             alt="Performance"
           />
