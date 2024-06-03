@@ -83,8 +83,7 @@ export default function Footer(props) {
         <div>
           <span className="text-gray-600 dark:text-gray-400">
             {i18n('Made with')} <i className="fa fa-heart" /> {i18n('by MING')}{' '}
-            | {i18n('Open Source')}
-            {i18n('.')}
+            | {i18n('Open Source')}{i18n('.')}
           </span>
           <br />
           <span className="text-gray-600 dark:text-gray-400 text-sm">

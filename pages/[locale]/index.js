@@ -168,6 +168,10 @@ export default function Home() {
         />
         <link rel="icon" href="https://cdn.1998.media/favicon23.jpg" />
         <link
+          href="https://fonts.1998.media/Core/Regular.css"
+          rel="stylesheet"
+        />
+        <link
           href="https://unpkg.com/aos@2.3.4/dist/aos.css"
           rel="stylesheet"
         />

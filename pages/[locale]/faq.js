@@ -9,7 +9,16 @@ export default function Faq(props) {
   }
   const faqs = [
     {
-      question: 'How to support your projects?',
+      question: 'Which font do you use in this website?',
+      answer: () => (
+        <a href="https://github.com/1998code/Core-Font">
+          <i className="mr-1 fab fa-github fa-sm"></i>
+          {i18n('Core Font - My 1st OS Design Font 🤗')}
+        </a>
+      ),
+    },
+    {
+      question: 'How to support your projects? 💰',
       answer: () => (
         <a href="https://github.com/sponsors/1998code">
           {i18n('Github Sponsorship')}
@@ -18,9 +27,10 @@ export default function Faq(props) {
       ),
     },
     {
-      question: 'Where does your Open Source Software (OSS) project host?',
+      question: 'Where does your Open Source Software (OSS) project host? 🌍',
       answer: () => (
         <span>
+          {i18n('Distributed globally with love on:')}{' '}
           <a href="https://github.com/1998code">
             Github<i className="ml-1 fa fa-external-link fa-sm"></i>
           </a>

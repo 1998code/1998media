@@ -74,7 +74,7 @@ export default function AI(props) {
                         {i18n(`Open in ${item.source}`)}
                       </p>
                     </div>
-                    <p className="mt-2 font-semibold text-gray-900 dark:text-gray-100 italic">
+                    <p className="mt-2 font-semibold text-gray-900 dark:text-gray-100">
                       "{i18n(item.prompt)}"{' '}
                       <span className="text-gray-500 text-xs">
                         - {item.version}
@@ -107,7 +107,7 @@ export default function AI(props) {
                         {i18n(`Open in ${item.source}`)}
                       </p>
                     </div>
-                    <p className="mt-2 text-xs md:text-sm font-semibold text-gray-900 dark:text-gray-100 italic">
+                    <p className="mt-2 text-xs md:text-sm font-semibold text-gray-900 dark:text-gray-100">
                       "{i18n(item.prompt)}"{' '}
                       <span className="text-gray-500 text-xs">
                         - {item.version}
