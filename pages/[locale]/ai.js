@@ -50,85 +50,78 @@ export default function AI(props) {
             {i18n('The latest prompt design and experimental results.')}
           </p>
         </div>
-        <div className="mt-8">
-          {/* Featured */}
-          <div className="flex flex-nowrap overflow-x-auto max-w-full gap-6">
-            {dalle.map(
-              (item, index) =>
-                item.featured === '🏆 Hall of Fame' && (
-                  <a
-                    href={item.sourceURL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group w-96"
-                  >
+        {/* Featured */}
+        <div className="flex flex-nowrap overflow-x-auto max-w-full gap-6 px-3 py-6">
+          {dalle.map(
+            (item, index) =>
+              item.featured === '🏆 Hall of Fame' && (
+                <a
+                  href={item.sourceURL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="min-w-[300px] flex flex-col gap-3 pb-3 rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight"
+                >
+                  <div>
                     <img
                       src={item.output}
-                      className="min-w-[350px] min-h-[350px] rounded-lg shadow-lg group-hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight transform transition duration-500"
+                      className="w-[300px] object-cover flex-1"
                     />
-                    <div className="mt-2 flex justify-between">
-                      <span className="text-sm text-gray-500">
-                        {i18n(item.featured)}
-                      </span>
-                      <p className="text-sm text-gray-500 group-hover:text-gray-400">
-                        {i18n(`Open in ${item.source}`)}
-                      </p>
-                    </div>
-                    <p className="mt-2 font-semibold text-gray-900 dark:text-gray-100">
-                      "{i18n(item.prompt)}"{' '}
-                      <span className="text-gray-500 text-xs">
-                        - {item.version}
-                      </span>
+                    <div className="invisible dark:visible absolute inset-0 bg-gradient-to-b from-transparent to-black h-[300px]"></div>
+                  </div>
+                  <div className="flex justify-between px-3">
+                    <span className="text-sm text-gray-500">
+                      {i18n(item.featured)}
+                    </span>
+                    <p className="text-sm text-gray-500 group-hover:text-gray-400">
+                      {i18n(`Open in ${item.source}`)}
                     </p>
-                  </a>
-                )
-            )}
-          </div>
-          {/* Other */}
-          <div className="flex flex-nowrap overflow-x-auto max-w-full gap-6 mt-8">
-            {dalle.map(
-              (item, index) =>
-                item.featured !== '🏆 Hall of Fame' && (
-                  <a
-                    href={item.sourceURL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group w-96"
-                  >
-                    <img
-                      src={item.output}
-                      className="min-w-[280px] min-h-[280px] rounded-lg shadow-lg group-hover:scale-95 transition-all"
-                    />
-                    <div className="mt-2 flex justify-between">
-                      <span className="text-sm text-gray-500">
-                        🌠 {i18n('NEW')}
-                      </span>
-                      <p className="text-sm text-gray-500 group-hover:text-gray-400">
-                        {i18n(`Open in ${item.source}`)}
-                      </p>
-                    </div>
-                    <p className="mt-2 text-xs md:text-sm font-semibold text-gray-900 dark:text-gray-100">
-                      "{i18n(item.prompt)}"{' '}
-                      <span className="text-gray-500 text-xs">
-                        - {item.version}
-                      </span>
-                    </p>
-                  </a>
-                )
-            )}
-          </div>
+                  </div>
+                  <p className="font-semibold text-transparent bg-clip-text bg-gradient-to-br from-gray-900 dark:from-gray-100 to-gray-500 dark:to-gray-500 px-3">
+                    "{i18n(item.prompt)}"{' '}
+                    <span className="text-gray-500 text-xs">
+                      - {item.version}
+                    </span>
+                  </p>
+                </a>
+              )
+          )}
         </div>
-        {/* <div className="mt-8 text-left flex flex-wrap items-center">
-          <a className="text-2xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl grow" href="#ai">
-            {i18n("Laboratory")}
-            <i className="far fa-server ml-2"></i>
-          </a>
-          <p className="mt-2 max-w-2xl text-lg text-gray-500 text-left lg:text-right">
-            {i18n("Models are running on cloud servers.")}<br/>
-            {i18n("Feel free to tryout and share your thoughts via contact below.")}
-          </p>
-          <iframe className="mt-6 w-full h-[1180px] md:h-[800px] lg:h-[750px] rounded-2xl backlight" src="https://whisper.1998.media/?__theme=dark" scrolling='no' frameBorder='0' />
-        </div> */}
+        {/* Other */}
+        <div className="flex flex-nowrap overflow-x-auto max-w-full gap-6 px-3 py-6">
+          {dalle.map(
+            (item, index) =>
+              item.featured !== '🏆 Hall of Fame' && (
+                <a
+                  href={item.sourceURL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="min-w-[250px] flex flex-col gap-3 pb-3 rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight"
+                >
+                  <div>
+                    <img
+                      src={item.output}
+                      className="w-[250px] object-cover flex-1"
+                    />
+                    <div className="invisible dark:visible absolute inset-0 bg-gradient-to-b from-transparent to-black h-[250px]"></div>
+                  </div>
+                  <div className="flex justify-between px-2">
+                    <span className="text-sm text-gray-500">
+                      🌠 {i18n('NEW')}
+                    </span>
+                    <p className="text-sm text-gray-500 group-hover:text-gray-400">
+                      {i18n(`Open in ${item.source}`)}
+                    </p>
+                  </div>
+                  <p className="text-xs md:text-sm font-semibold text-transparent bg-clip-text bg-gradient-to-br from-gray-900 dark:from-gray-100 to-gray-500 dark:to-gray-500 px-2">
+                    "{i18n(item.prompt)}"{' '}
+                    <span className="text-gray-500 text-xs">
+                      - {item.version}
+                    </span>
+                  </p>
+                </a>
+              )
+          )}
+        </div>
       </div>
     </div>
   );

@@ -99,7 +99,7 @@ export default function Blog(props) {
   useEffect(() => {
     getMoment();
   }
-  , []);
+    , []);
 
   return (
     <div
@@ -108,8 +108,8 @@ export default function Blog(props) {
       data-aos-once
       className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8 space-y-16"
     >
+      {/* Medium Blog */}
       <div className="relative max-w-7xl mx-auto space-y-8">
-        {/* Blog */}
         <div className="text-left flex flex-wrap">
           <a
             className="text-3xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl grow"
@@ -149,6 +149,7 @@ export default function Blog(props) {
                       }
                       alt={post.title}
                     />
+                    <div className="invisible dark:visible absolute inset-0 bg-gradient-to-b from-transparent to-black h-48"></div>
                   </a>
                 </div>
                 <div className="flex-1 p-6 flex flex-col justify-between">
@@ -235,44 +236,47 @@ export default function Blog(props) {
               placement="bottom"
               className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg"
             >
-            <img src={medal.medalStageIcon} alt={medal.medalStageName} className="h-16 w-16 hover:scale-105 transition-all" />
+              <img src={medal.medalStageIcon} alt={medal.medalStageName} className="h-16 w-16 hover:scale-105 transition-all" />
             </Tooltip>
           ))}
         </div>
-        <div className="mx-auto grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="mx-auto grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {moment && moment.map((post) => (
-              <div
-                key={post.translateTitle || post.title}
-                className="flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight"
-              >
-                <div className="flex-shrink-0">
-                  <a href={post.shareURL} target="_blank">
-                    <img
-                      className="h-48 w-full object-cover"
-                      src={post.coverURL}
-                      alt={post.translateTitle || post.title}
-                    />
-                  </a>
+            <a href={post.shareURL} target="_blank"
+              key={post.translateTitle || post.title}
+              className="flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight"
+            >
+              <div className="flex-shrink-0">
+                <img
+                  className="h-48 w-full object-cover"
+                  src={post.coverURL}
+                  alt={post.translateTitle || post.title}
+                />
+                <div className="invisible dark:visible absolute inset-0 bg-gradient-to-b from-transparent to-black h-48"></div>
+              </div>
+              <div className="flex-1 p-6 flex flex-col justify-between">
+                <div className=" text-gray-400 text-xs">
+                  <i className="far fa-calendar mr-1"></i>
+                  <time dateTime={new Date(post.publishTime).toISOString().split('T')[0]}>
+                    {new Date(post.publishTime).toISOString().split('T')[0]}
+                  </time>
+                  {!post.translateTitle && (
+                    <span>
+                      <i className="far fa-map-marker-alt ml-2 mr-1"></i>
+                      {post.title.split('「')[1].split('」')[0]}
+                    </span>
+                  )}
                 </div>
-                <div className="flex-1 p-6 flex flex-col justify-between">
-                  <div className=" text-gray-400 text-xs">
-                    <i className="far fa-calendar mr-1"></i>
-                    <time dateTime={new Date(post.publishTime).toISOString().split('T')[0]}>
-                      {new Date(post.publishTime).toISOString().split('T')[0]}
-                    </time>
-                  </div>
-                  <div className="flex-1">
-                    <a
-                      href={post.shareURL}
-                      className="block mt-2 text-xl font-semibold text-gray-900 dark:text-gray-100"
-                      target="_blank"
-                    >
-                      {post.translateTitle || post.title}
-                    </a>
+                <div className="flex-1">
+                  <div
+                    className="mt-2 text-xl font-semibold text-gray-900 dark:text-gray-100"
+                  >
+                    {post.translateTitle || post.title.split('」')[1]}
                   </div>
                 </div>
               </div>
-            ))}
+            </a>
+          ))}
         </div>
       </div>
     </div>

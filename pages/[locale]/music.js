@@ -94,7 +94,7 @@ export default function Music(props) {
       {music.length > 0 && currentPlaying ? (
         <a 
           href={currentPlaying.attributes?.url} target="_blank"
-          className="group flex items-center min-w-[300px] h-[80px] p-1 shadow bg-gradient-to-r from-white/50 via-white to-white dark:from-black/50 dark:via-[#808080] dark:to-white dark:shadow-black backdrop-blur-lg rounded-xl">
+          className="group flex items-center min-w-[300px] h-[80px] p-1 shadow bg-gradient-to-r from-white/50 via-white to-white dark:from-black/50 dark:via-[#808080] dark:to-white dark:shadow-black backdrop-blur-lg sm:rounded-xl">
           <Tooltip
             content={
               <div className="flex flex-col divide-y max-h-[50vh] overflow-auto">

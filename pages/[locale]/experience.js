@@ -216,7 +216,7 @@ export default function Experience(props) {
             {positions.map((position) => (
               <li key={position.title}>
                 <div
-                  className={`block ${position.bgColor} opacity-90 hover:opacity-100`}
+                  className={`${position.bgColor} opacity-90 hover:opacity-100`}
                 >
                   <div className="group px-4 py-4 sm:px-6">
                     <div className="flex items-center justify-between">

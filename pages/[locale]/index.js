@@ -168,10 +168,6 @@ export default function Home() {
         />
         <link rel="icon" href="https://cdn.1998.media/favicon23.jpg" />
         <link
-          href="https://fonts.1998.media/Core/Regular.css"
-          rel="stylesheet"
-        />
-        <link
           href="https://unpkg.com/aos@2.3.4/dist/aos.css"
           rel="stylesheet"
         />
@@ -215,7 +211,6 @@ export default function Home() {
               <Contact i18n={I18n} />
               <Credits i18n={I18n} />
               <Footer i18n={I18n} />
-              {/* <Music i18n={I18n} /> */}
               {interacted && <Music i18n={I18n} />}
               <div
                 className="elfsight-app-d9c75342-d244-4ae0-91fd-78feae7b7d90"

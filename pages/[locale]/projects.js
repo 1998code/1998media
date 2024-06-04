@@ -87,7 +87,7 @@ export default function Projects(props) {
           src="https://ghchart.rshah.org/1998code"
           alt="Github chart"
         />
-        <div className="mx-auto grid gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:max-w-none">
+        <div className="mx-auto grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {githubs.map(
             (repo) =>
               !repo.fork && (
@@ -99,7 +99,7 @@ export default function Projects(props) {
                 >
                   <div className="flex-shrink-0">
                     <img
-                      className="w-full object-cover"
+                      className="w-full object-cover dark:invert"
                       src={`https://opengraph.githubassets.com/286af552210001e9ea769373d5955f2c4d4a911070501bbd22fc7cb957761f48/1998code/${repo.name}`}
                       alt={repo.name.replaceAll('-', ' ')}
                     />

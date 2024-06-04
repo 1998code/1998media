@@ -9,9 +9,9 @@ export default function Faq(props) {
   }
   const faqs = [
     {
-      question: 'Which font do you use in this website?',
+      question: 'Do you have any 🆓 font that I can use for web/app project? ',
       answer: () => (
-        <a href="https://github.com/1998code/Core-Font">
+        <a href="https://github.com/1998code/Core-Font" className="hover:underline">
           <i className="mr-1 fab fa-github fa-sm"></i>
           {i18n('Core Font - My 1st OS Design Font 🤗')}
         </a>
@@ -20,7 +20,7 @@ export default function Faq(props) {
     {
       question: 'How to support your projects? 💰',
       answer: () => (
-        <a href="https://github.com/sponsors/1998code">
+        <a href="https://github.com/sponsors/1998code" className="hover:underline">
           {i18n('Github Sponsorship')}
           <i className="ml-1 fa fa-external-link fa-sm"></i>
         </a>
@@ -31,15 +31,15 @@ export default function Faq(props) {
       answer: () => (
         <span>
           {i18n('Distributed globally with love on:')}{' '}
-          <a href="https://github.com/1998code">
+          <a href="https://github.com/1998code" className="hover:underline">
             Github<i className="ml-1 fa fa-external-link fa-sm"></i>
           </a>
           <i className="fa fa-pipe px-3"></i>
-          <a href="https://vercel.com/?utm_source=1998code&utm_campaign=oss">
+          <a href="https://vercel.com/?utm_source=1998code&utm_campaign=oss" className="hover:underline">
             Vercel<i className="ml-1 fa fa-external-link fa-sm"></i>
           </a>
           <i className="fa fa-pipe px-3"></i>
-          <a href="https://www.digitalocean.com/?refcode=ce873177d9ab&utm_medium=opensource">
+          <a href="https://www.digitalocean.com/?refcode=ce873177d9ab&utm_medium=opensource" className="hover:underline">
             DigitalOcean<i className="ml-1 fa fa-external-link fa-sm"></i>
           </a>
         </span>
