@@ -9,7 +9,7 @@ export default function Faq(props) {
   }
   const faqs = [
     {
-      question: 'Do you have any 🆓 font that I can use for web/app project? ',
+      question: 'Do you have any 🆓 font that I can use for web/app project?',
       answer: () => (
         <a href="https://github.com/1998code/Core-Font" className="hover:underline">
           <i className="mr-1 fab fa-github fa-sm"></i>
