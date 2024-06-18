@@ -101,13 +101,14 @@ export default function Home() {
     'about',
     'achievements',
     'impacts',
-    'skills',
     'experience',
+    'skills',
     'projects',
-    'blog',
-    'connect',
-    'ai',
     'openAPI',
+    'ai',
+    'connect',
+    'blog',
+    'blog-trip',
     'faq',
     'contact',
   ];
@@ -200,13 +201,13 @@ export default function Home() {
               <Header i18n={I18n} />
               <About i18n={I18n} />
               <Achievements i18n={I18n} />
-              <Skills i18n={I18n} />
               <Experience i18n={I18n} />
+              <Skills i18n={I18n} />
               <Projects i18n={I18n} />
-              <Blog i18n={I18n} />
-              <Connect i18n={I18n} />
-              <AI i18n={I18n} />
               <OpenAPI i18n={I18n} />
+              <AI i18n={I18n} />
+              <Connect i18n={I18n} />
+              <Blog i18n={I18n} />
               <Faq i18n={I18n} />
               <Contact i18n={I18n} />
               <Credits i18n={I18n} />

@@ -13,21 +13,21 @@ export default function Blog(props) {
       : key;
   }
 
-  const topPromo = {
-    title: i18n('Get $10 OFF on Trip.com'),
-    pubDate: new Date().toISOString(),
-    link: 'https://hk.trip.com/sale/4283/referee.html?locale=zh-HK&referCode=5253C1995FB313ED993BC64A068BDABA',
-    guid: 'https://hk.trip.com/sale/4283/referee.html?locale=zh-HK&referCode=5253C1995FB313ED993BC64A068BDABA',
-    author: 'MING',
-    // "thumbnail": "https://scontent-vie1-1.xx.fbcdn.net/v/t39.30808-6/276300699_5834005769959881_8535075502349926768_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=YJAM-OTlB0MQ7kNvgEznQBD&_nc_ht=scontent-vie1-1.xx&oh=00_AYBD9SJKSzi0uxF_T0G7LaSB-mSqM7GYZ7v--IK7p5HxIw&oe=6650E2F1",
-    thumbnail: i18n(
-      'https://ak-d.tripcdn.com/images/0a14l12000aqs8zq3AC37.jpg_.webp'
-    ),
-    description: '',
-    content: '',
-    enclosure: {},
-    categories: ['Trip.com', 'Promotion', 'Discount', 'Featured'],
-  };
+  // const topPromo = {
+  //   title: i18n('Get $10 OFF on Trip.com'),
+  //   published: new Date(),
+  //   link: 'https://hk.trip.com/sale/4283/referee.html?locale=zh-HK&referCode=5253C1995FB313ED993BC64A068BDABA',
+  //   guid: 'https://hk.trip.com/sale/4283/referee.html?locale=zh-HK&referCode=5253C1995FB313ED993BC64A068BDABA',
+  //   author: 'MING',
+  //   // "thumbnail": "https://scontent-vie1-1.xx.fbcdn.net/v/t39.30808-6/276300699_5834005769959881_8535075502349926768_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=YJAM-OTlB0MQ7kNvgEznQBD&_nc_ht=scontent-vie1-1.xx&oh=00_AYBD9SJKSzi0uxF_T0G7LaSB-mSqM7GYZ7v--IK7p5HxIw&oe=6650E2F1",
+  //   thumbnail: i18n(
+  //     'https://ak-d.tripcdn.com/images/0a14l12000aqs8zq3AC37.jpg_.webp'
+  //   ),
+  //   description: '',
+  //   content: '',
+  //   enclosure: {},
+  //   category: ['Trip.com', 'Promotion', 'Discount', 'Featured'],
+  // };
 
   const [payWallURL, setPayWallURL] = useState(false);
   const [blogs, setBlogs] = useState([]);
@@ -39,10 +39,13 @@ export default function Blog(props) {
   function getBlog() {
     axios
       .get(
-        'https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@1998design'
+        '/api/medium'
       )
       .then((res) => {
-        setBlogs([topPromo, ...res.data.items]);
+        setBlogs([
+          // topPromo, 
+          ...res.data.items
+        ]);
       })
       .catch((err) => {
         console.log(err);
@@ -84,12 +87,22 @@ export default function Blog(props) {
 
   const [moment, setMoment] = useState([]);
 
+  const tripPromo = {
+    title: i18n('「Global」Get $10 OFF on Trip.com'),
+    coverURL: i18n(
+      'https://ak-d.tripcdn.com/images/0a14l12000aqs8zq3AC37.jpg_.webp'
+    ),
+    publishTime: new Date(),
+  };
+
   function getMoment() {
     axios
       .post(`/api/trip?type=moment&cid=09031029418990699836&locale=${window.location.pathname.split('#')[0].replace('/', '')}`)
       .then((res) => {
-        console.log(res.data);
-        setMoment(res.data.resourceBlockList);
+        setMoment([
+          tripPromo,
+          ...res.data.resourceBlockList.slice(0, 5)
+        ]);
       })
       .catch((err) => {
         console.log(err);
@@ -155,8 +168,11 @@ export default function Blog(props) {
                 <div className="flex-1 p-6 flex flex-col justify-between">
                   <div className=" text-gray-400 text-xs">
                     <i className="far fa-calendar mr-1"></i>
-                    <time dateTime={post.pubDate.slice(0, 10)}>
+                    {/* <time dateTime={post.pubDate.slice(0, 10)}>
                       {post.pubDate.slice(0, 10)}
+                    </time> */}
+                    <time dateTime={new Date(post.published).toISOString().split('T')[0]}>
+                      {new Date(post.published).toISOString().split('T')[0]}
                     </time>
                   </div>
                   <div className="flex-1">
@@ -169,7 +185,7 @@ export default function Blog(props) {
                     </a>
                   </div>
                   <span className="text-sm font-medium text-orange-600 space-x-2 mt-3">
-                    {post.categories.map((category, index) => {
+                    {post.category.map((category, index) => {
                       let level = 1;
                       for (let i = 0; i < index; i++) {
                         level -= 0.1;
@@ -229,16 +245,26 @@ export default function Blog(props) {
             {i18n('Travel Around, Global Journey.')}
           </p>
         </div>
-        <div className="flex">
-          {medals.map((medal) => (
-            <Tooltip
-              content={medal.medalStageName}
-              placement="bottom"
-              className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg"
-            >
-              <img src={medal.medalStageIcon} alt={medal.medalStageName} className="h-16 w-16 hover:scale-105 transition-all" />
-            </Tooltip>
-          ))}
+        <div className="flex justify-between items-center">
+          <div className="flex">
+            {medals.map((medal) => (
+              <Tooltip
+                content={medal.medalStageName}
+                placement="bottom"
+                className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg"
+              >
+                <img src={medal.medalStageIcon} alt={medal.medalStageName} className="h-16 w-16 hover:scale-105 transition-all" />
+              </Tooltip>
+            ))}
+          </div>
+          <a
+            href="https://blog.1998.media"
+            className="flex-1 md:flex-none block text-lg font-semibold text-white whitespace-nowrap bg-sky-600 hover:bg-sky-500 p-3 rounded-lg transition-all"
+            target="_blank"
+          >
+            <i className="fa fa-suitcase-rolling mr-2"></i>
+            {i18n('View all on Trip.com')}
+          </a>
         </div>
         <div className="mx-auto grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {moment && moment.map((post) => (

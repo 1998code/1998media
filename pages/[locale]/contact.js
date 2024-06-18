@@ -126,8 +126,8 @@ export default function Contact(props) {
                 {i18n('General Inquiry')}: Find@1998.media
                 <i className="fa fa-envelope ml-2" />
               </a>
-              <br />
-              <a
+              {/* <br /> */}
+              {/* <a
                 className="block w-full py-3 px-5 text-left bg-white dark:bg-green-800 border border-transparent rounded-md shadow-md text-base font-medium text-orange-700 dark:text-orange-300 hover:bg-gray-50 dark:hover:bg-green-900 sm:inline-block sm:w-auto"
                 href="mailto:safe@1998.media"
               >
@@ -139,7 +139,7 @@ export default function Contact(props) {
                     'Please encrypt your message with PGP. Unencrypted messages will be ignored.'
                   )}
                 </small>
-              </a>
+              </a> */}
             </div>
           </div>
         </div>
