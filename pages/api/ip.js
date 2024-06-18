@@ -6,22 +6,29 @@ export default async function (req, res) {
   const latitude = req.headers['x-vercel-ip-latitude'];
   const longitude = req.headers['x-vercel-ip-longitude'];
 
-  let geo = null;
-  if (latitude && longitude) {
-    const options = {
-      provider: 'openstreetmap',
-      language: req.query.l || 'en',
-    };
-    const geoCoder = NodeGeocoder(options);
-    const res = await geoCoder.reverse({ lat: latitude, lon: longitude });
+  let geo;
+  try {
+    if (latitude && longitude) {
+      const options = {
+        provider: 'openstreetmap',
+        language: req.query.l || 'en',
+      };
+      const geoCoder = NodeGeocoder(options);
+      const res = await geoCoder.reverse({ lat: latitude, lon: longitude });
+      geo = {
+        city: res[0].city,
+        state: res[0].state,
+      };
+    } else {
+      geo = {
+        city: 'Local',
+        state: 'Local',
+      };
+    }
+  } catch (error) {
     geo = {
-      city: res[0].city,
-      state: res[0].state,
-    };
-  } else {
-    geo = {
-      city: 'Unknown',
-      state: 'Unknown',
+      city: '?',
+      state: '?',
     };
   }
 
