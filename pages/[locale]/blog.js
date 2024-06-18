@@ -155,7 +155,7 @@ export default function Blog(props) {
                 <div className="flex-shrink-0">
                   <a href={post.link} target="_blank">
                     <img
-                      className="h-48 w-full object-cover"
+                      className="h-64 w-full object-cover"
                       src={
                         post.thumbnail
                           ? post.thumbnail
@@ -163,7 +163,7 @@ export default function Blog(props) {
                       }
                       alt={post.title}
                     />
-                    <div className="invisible dark:visible absolute inset-0 bg-gradient-to-b from-transparent to-black h-48"></div>
+                    <div className="invisible dark:visible absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black h-64"></div>
                   </a>
                 </div>
                 <div className="flex-1 p-6 flex flex-col justify-between">
@@ -275,11 +275,11 @@ export default function Blog(props) {
             >
               <div className="flex-shrink-0">
                 <img
-                  className="h-48 w-full object-cover"
+                  className="h-64 w-full object-cover"
                   src={post.coverURL}
                   alt={post.translateTitle || post.title}
                 />
-                <div className="invisible dark:visible absolute inset-0 bg-gradient-to-b from-transparent to-black h-48"></div>
+                <div className="invisible dark:visible absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black h-64"></div>
               </div>
               <div className="flex-1 p-6 flex flex-col justify-between">
                 <div className=" text-gray-400 text-xs">
