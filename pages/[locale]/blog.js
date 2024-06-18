@@ -89,6 +89,7 @@ export default function Blog(props) {
 
   const tripPromo = {
     title: i18n('「Global」Get $10 OFF on Trip.com'),
+    shareURL: 'https://hk.trip.com/sale/4283/referee.html?locale=zh-HK&referCode=5253C1995FB313ED993BC64A068BDABA',
     coverURL: i18n(
       'https://ak-d.tripcdn.com/images/0a14l12000aqs8zq3AC37.jpg_.webp'
     ),
