@@ -259,7 +259,7 @@ export default function Blog(props) {
             ))}
           </div>
           <a
-            href="https://blog.1998.media"
+            href="https://hk.trip.com/travel-guide/personal-home/E1B9A703A2E3FEF984D86D1D507FB324B4A7CBA7500F0E62A0BFA68DCC95C09E"
             className="flex-1 md:flex-none block text-lg font-semibold text-white whitespace-nowrap bg-sky-600 hover:bg-sky-500 p-3 rounded-lg transition-all"
             target="_blank"
           >
