@@ -30,8 +30,11 @@ export default function Music(props) {
     fetch(`/api/music?path=me/recent/played/tracks`)
       .then((response) => response.json())
       .then((data) => {
-        setMusic(data.data);
-        setCurrentPlaying(data.data[0]);
+        if (data.data) {
+          setMusic(data.data);
+          setCurrentPlaying(data.data[0]);
+        } 
+        else { }
       });
   }
 
@@ -91,7 +94,7 @@ export default function Music(props) {
   
   return (
     <div className="fixed w-screen flex items-center justify-center bottom-0 sm:bottom-5 z-[10]">
-      {music.length > 0 && currentPlaying ? (
+      {music && music.length > 0 && currentPlaying ? (
         <a 
           href={currentPlaying.attributes?.url} target="_blank"
           className="group flex items-center min-w-[300px] h-[80px] p-1 shadow bg-gradient-to-r from-white/50 via-white to-white dark:from-black/50 dark:via-[#808080] dark:to-white dark:shadow-black backdrop-blur-lg sm:rounded-xl">
