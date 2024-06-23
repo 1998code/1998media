@@ -15,7 +15,7 @@ export default function openAPI(props) {
   const lists = [
     {
       title: 'Apple Music',
-      type: 'GET / AUDIO',
+      type: 'GET',
       status: 'Available',
       code: '/api/music?path={TEXT(STRING)}',
       href: '/api/music?path=catalog/us/charts?types=songs',
@@ -25,7 +25,7 @@ export default function openAPI(props) {
     },
     {
       title: 'DNS Resolver',
-      type: 'GET / NETWORK',
+      type: 'GET',
       status: 'Available',
       code: '/api/dns?domain={URL(STRING)}',
       href: '/api/dns?domain=1998.media',
@@ -35,7 +35,7 @@ export default function openAPI(props) {
     },
     {
       title: 'Generative AI',
-      type: 'GET / AI',
+      type: 'GET',
       status: 'Available',
       code: '/api/ai?text={TEXT(STRING)}',
       href: '/api/ai?text=Hello%20World',
@@ -45,7 +45,7 @@ export default function openAPI(props) {
     },
     {
       title: 'IP Information',
-      type: 'GET / NETWORK',
+      type: 'GET',
       status: 'Available',
       code: '/api/ip',
       href: '/api/ip',
@@ -55,7 +55,7 @@ export default function openAPI(props) {
     },
     {
       title: 'Language Detection',
-      type: 'GET / NL',
+      type: 'GET',
       status: 'Available',
       code: '/api/nl?text={TEXT(STRING)}',
       href: '/api/nl?text=Hello%20World%21%20Thanks%20for%20using%20this%20API%2E',
@@ -65,7 +65,7 @@ export default function openAPI(props) {
     },
     {
       title: 'QQ Music',
-      type: 'GET / AUDIO',
+      type: 'GET',
       status: 'Available',
       code: '/api/music?provider=qq&path={TEXT(STRING)}',
       href: '/api/music?provider=qq&path=search/quick&key=%E3%81%AF%E3%81%98%E3%81%BE%E3%82%8A%E3%81%AE%E3%81%86%E3%81%9F',
@@ -75,7 +75,7 @@ export default function openAPI(props) {
     },
     {
       title: 'Request Headers',
-      type: 'GET / NETWORK',
+      type: 'GET',
       status: 'Available',
       code: '/api/origin',
       href: '/api/origin',
@@ -85,7 +85,7 @@ export default function openAPI(props) {
     },
     {
       title: 'Translate',
-      type: 'GET / NL',
+      type: 'GET',
       status: 'Available',
       code: '/api/translate?text={TEXT(STRING)}&from={LANG(CODE)}&to={LANG(CODE)}',
       href: '/api/translate?text=Hello!%20%E4%BB%8A%E6%97%A5%E5%A4%A9%E6%B0%A3%E9%BB%9E%E5%95%8A%EF%BC%9F&from=zh&to=ko',
@@ -95,7 +95,7 @@ export default function openAPI(props) {
     },
     {
       title: 'Trip',
-      type: 'GET / Misc',
+      type: 'GET',
       status: 'Available',
       code: '/api/trip?type={TEXT(STRING)}&cid={TEXT(STRING)}&locale={LANG(CODE)}',
       href: '/api/trip?type=moment&cid=09031029418990699836&locale=zh-TW',
@@ -146,7 +146,7 @@ export default function openAPI(props) {
                     <div className="flex flex-wrap items-center justify-between gap-3">
                       <div className="flex gap-3">
                         <span
-                          className={`w-32 border border-white px-2 inline-flex items-center text-xs leading-5 font-semibold rounded-full ${item.textColor} ${item.bgColor}`}
+                          className={`border border-white px-2 inline-flex items-center text-xs leading-5 font-semibold rounded-full ${item.textColor} ${item.bgColor}`}
                         >
                           {i18n(item.type)}
                         </span>

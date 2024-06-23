@@ -214,21 +214,24 @@ export default function Blog(props) {
             ))}
         </div>
         <div className="text-center flex flex-wrap items-center gap-3">
-          <a
+          {/* <a
             href={payWallURL}
             className="flex-1 block text-lg font-semibold text-white whitespace-nowrap bg-teal-600 hover:bg-teal-500 p-3 rounded-lg transition-all"
             target="_blank"
           >
             <i className="fa fa-circle-dollar mr-2"></i>
             {i18n('Subscribe with $2.99 per month')} ({i18n('Coming Soon')})
-          </a>
+          </a> */}
+
+          {/* md:flex-none deleted */}
           <a
             href="https://blog.1998.media"
-            className="flex-1 md:flex-none block text-lg font-semibold text-white whitespace-nowrap bg-orange-600 hover:bg-orange-500 p-3 rounded-lg transition-all"
+            className="flex-1 block text-lg font-semibold text-white whitespace-nowrap bg-orange-600 hover:bg-orange-500 p-3 rounded-lg transition-all"
             target="_blank"
           >
             <i className="fab fa-medium mr-2"></i>
-            {i18n('View all posts on Medium')} ({i18n('$5 per month')})
+            {i18n('View all posts on Medium')} 
+            {/* ({i18n('$5 per month')}) */}
           </a>
         </div>
       </div>

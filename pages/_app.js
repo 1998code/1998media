@@ -75,10 +75,10 @@ function MyApp({ Component, pageProps }) {
           media="(prefers-color-scheme: dark)"
           content="#000914"
         />
-        <script
+        {/* <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1941913120815371"
-        ></script>
+        ></script> */}
         <link
           rel="stylesheet"
           href="https://cdn.1998.media/css/fontawesome.css"

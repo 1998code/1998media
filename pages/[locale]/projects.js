@@ -29,11 +29,12 @@ export default function Projects(props) {
         ) {
           let filteredData = res.data.filter((repo) => !repo.fork);
           setGithubRaw(filteredData);
-          if (window.innerWidth <= 1024) {
-            setGithubs(filteredData.slice(0, 8));
-          } else {
-            setGithubs(filteredData.slice(0, 16));
-          }
+          setGithubs(filteredData.slice(0, 8));
+          // if (window.innerWidth <= 1024) {
+          //   setGithubs(filteredData.slice(0, 8));
+          // } else {
+          //   setGithubs(filteredData.slice(0, 16));
+          // }
         }
       })
       .catch((err) => {
