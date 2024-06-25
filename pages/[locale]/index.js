@@ -206,7 +206,7 @@ export default function Home() {
               <Projects i18n={I18n} />
               <OpenAPI i18n={I18n} />
               <AI i18n={I18n} />
-              <Connect i18n={I18n} />
+              {/* <Connect i18n={I18n} /> */}
               <Blog i18n={I18n} />
               <Faq i18n={I18n} />
               <Contact i18n={I18n} />

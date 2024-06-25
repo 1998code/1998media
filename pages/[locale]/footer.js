@@ -16,7 +16,7 @@ export default function Footer(props) {
     main: [
       { name: 'About', href: '#about' },
       { name: 'Blog', href: 'https://blog.1998.media' },
-      { name: 'Store', href: 'https://shop.1998.media' },
+      // { name: 'Store', href: 'https://shop.1998.media' },
       { name: 'Status', href: 'https://status.1998.media' },
     ],
     social: [
@@ -87,7 +87,7 @@ export default function Footer(props) {
           </span>
           <br />
           <span className="text-gray-600 dark:text-gray-400 text-sm">
-            {i18n('Ver.')} 24.6.23 | {i18n('Since')} 2020 | {diffYearNDay}
+            {i18n('Ver.')} 24.6.25 | {i18n('Since')} 2020 | {diffYearNDay}
           </span>
         </div>
         {ip && (
