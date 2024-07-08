@@ -21,7 +21,7 @@ export default function Navigation(props) {
       className="group fixed w-full flex items-center justify-center py-5 z-[100]"
     >
       <div className="flex items-center bg-white/50 dark:bg-black/50 dark:text-white pl-1 backdrop-blur-md rounded-full shadow-inner transition-all">
-        {props.sections
+        {props.sections && props.sections
           .map((section) => (
             <a
               key={section}
