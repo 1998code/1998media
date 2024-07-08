@@ -1,13 +1,12 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import Head from 'next/head';
 
 import axios from 'axios';
-import { DocSearch } from '@docsearch/react';
-import '@docsearch/css';
 
 import dynamic from 'next/dynamic';
 const Loading = dynamic(() => import('./loading'));
+const Navigation = dynamic(() => import('./navigation'));
 const Header = dynamic(() => import('./header'));
 const About = dynamic(() => import('./about'));
 const Achievements = dynamic(() => import('./achievements'));
@@ -106,35 +105,13 @@ export default function Home() {
     'projects',
     'openAPI',
     'ai',
-    'connect',
+    // 'connect',
     'blog',
-    'blog-trip',
+    'trip',
     'faq',
     'contact',
   ];
-  // When arrow up/down keys are pressed, scroll to the next/previous section
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
-        e.preventDefault();
-        let currentSection = sections.indexOf(
-          window.location.hash.replace('#', '')
-        );
-        if (e.key === 'ArrowUp') {
-          currentSection =
-            currentSection > 0 ? currentSection - 1 : sections.length - 1;
-        } else {
-          currentSection =
-            currentSection < sections.length - 1 ? currentSection + 1 : 0;
-        }
-        window.location.hash = sections[currentSection];
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  });
+  const [activeSection, setActiveSection] = useState('');
 
   function i18n(key) {
     if (I18n && I18n['index'] && !I18n['index'][key]) {
@@ -192,12 +169,7 @@ export default function Home() {
             <Loading />
           ) : (
             <div>
-              <DocSearch
-                appId="01IRDDJXZ4"
-                indexName="1998"
-                apiKey="a8c97c33f935922cf3fa01ff8ea67f10"
-                placeholder="Search & Learn More..."
-              />
+              <Navigation i18n={I18n} sections={sections} activeSection={activeSection} />
               <Header i18n={I18n} />
               <About i18n={I18n} />
               <Achievements i18n={I18n} />

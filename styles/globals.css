@@ -35,11 +35,13 @@ a {
 }
 
 .DocSearch-Button {
-  position: fixed;
-  top: 30px;
-  left: 45%;
-  opacity: 25%;
+  _position: fixed;
+  _top: 30px;
+  _left: 45%;
+  _opacity: 25%;
   z-index: 100;
+  margin: 0!important;
+  background: transparent!important;
 }
 .DocSearch-Button:hover {
   opacity: 100%;
@@ -89,3 +91,7 @@ audio::-webkit-media-controls-play-button,
 audio::-webkit-media-controls-panel {
   background-color: gray;
 } */
+
+div.eapps-widget {
+  position: inherit !important;
+}

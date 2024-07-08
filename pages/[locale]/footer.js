@@ -40,6 +40,11 @@ export default function Footer(props) {
         href: 'https://www.behance.net/1998design',
         icon: (props) => <i className="fab fa-behance fa-xl" />,
       },
+      {
+        name: 'Instagram',
+        href: 'https://instagram.com/1998trip',
+        icon: (props) => <i className="fab fa-instagram fa-xl" />,
+      }
     ],
   };
 
@@ -87,7 +92,7 @@ export default function Footer(props) {
           </span>
           <br />
           <span className="text-gray-600 dark:text-gray-400 text-sm">
-            {i18n('Ver.')} 24.6.25 | {i18n('Since')} 2020 | {diffYearNDay}
+            {i18n('Ver.')} 24.7.8 | {i18n('Since')} 2020 | {diffYearNDay}
           </span>
         </div>
         {ip && (

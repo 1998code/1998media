@@ -249,8 +249,8 @@ export default function Achievements(props) {
             className="fixed -z-[1] w-[25vw] top-25 -right-16"
           />
 
-          <div id="impacts" className="pt-6">
-            <h3 className="mt-6 text-lg font-medium leading-6 text-gray-900 dark:text-gray-100">
+          <div id="impacts" className="pt-16">
+            <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-gray-100">
               {i18n('3D Rendering and Photography @Unsplash')}
               <i className="far fa-image ml-2"></i>
             </h3>

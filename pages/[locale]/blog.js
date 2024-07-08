@@ -147,6 +147,7 @@ export default function Blog(props) {
                 return postLanguage === 'en';
               }
             })
+            .slice(0, 6)
             .map((post) => (
               <div
                 key={post.title}
@@ -236,11 +237,11 @@ export default function Blog(props) {
         </div>
       </div>
       {/* Moments */}
-      <div id="blog-trip" className="relative max-w-7xl mx-auto space-y-8">
+      <div id="trip" className="relative max-w-7xl mx-auto space-y-8 pt-16">
         <div className="text-left flex flex-wrap">
           <a
             className="text-3xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl grow"
-            href="#blog-trip"
+            href="#trip"
           >
             {i18n('Trip Moments')}
             <i className="far fa-planet-ringed ml-2"></i>
