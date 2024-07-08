@@ -147,11 +147,13 @@ export default function Contact(props) {
       </div>
 
       {/* China Only */}
-      { document.location.href.includes('zh-CN') && (
-        <a href="https://www.xiaohongshu.com/user/profile/6662438f00000000030300c4" target="_blank" className="relative block w-full mt-6 text-center md:text-right max-w-7xl mx-auto sm:px-6 lg:px-8">
-          <img className="rounded-3xl max-w-[500px]" src="https://cdn.1998.media/banners/Xiaohongshu.jpg" />
-        </a>
-      )}
+      {
+        typeof window !== 'undefined' && document.location.href.includes('zh-CN') && (
+          <a href="https://www.xiaohongshu.com/user/profile/6662438f00000000030300c4" target="_blank" className="relative block w-full mt-6 text-center md:text-right max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <img className="rounded-3xl max-w-[500px]" src="https://cdn.1998.media/banners/Xiaohongshu.jpg" />
+          </a>
+        )
+      }
     </div>
   );
 }
