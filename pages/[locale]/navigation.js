@@ -12,37 +12,8 @@ export default function Navigation(props) {
       : key;
   }
 
-  const [activeSection, setActiveSection] = useState('');
+  const [activeSection, setActiveSection] = useState('header');
   const sectionRefs = useRef({});
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      { threshold: 0.7 }
-    );
-
-    props.sections.forEach(section => {
-      const ref = sectionRefs.current[section];
-      if (ref) {
-        observer.observe(ref);
-      }
-    });
-
-    return () => {
-      props.sections.forEach(section => {
-        const ref = sectionRefs.current[section];
-        if (ref) {
-          observer.unobserve(ref);
-        }
-      });
-    };
-  }, [props.sections, props.activeSection]);
 
   return (
     <div
@@ -51,20 +22,23 @@ export default function Navigation(props) {
     >
       <div className="flex items-center bg-white/50 dark:bg-black/50 dark:text-white pl-1 backdrop-blur-md rounded-full shadow-inner transition-all">
         {props.sections
-          .filter(section => section !== 'header')
           .map((section) => (
             <a
               key={section}
               href={`#${section}`}
               ref={ref => sectionRefs.current[section] = ref}
               onClick={() => setActiveSection(section)}
-              className={`px-2 py-1 text-sm font-semibold ${activeSection === section ? 'opacity-100 bg-white text-orange-600 dark:text-orange-400 dark:bg-white/10 shadow' : 'opacity-50'} hover:opacity-80 rounded-full transition-all`}
+              className={`hidden lg:inline px-2 py-1 text-sm font-semibold ${activeSection === section ? 'opacity-100 bg-white text-orange-600 dark:text-orange-400 dark:bg-white/10 shadow' : 'opacity-50'} hover:opacity-80 rounded-full transition-all`}
             >
-              {i18n(section.charAt(0).toUpperCase() + section.replace(/ai/g, 'AI').slice(1).replace(/-/g, ' '))}
+              {
+                section !== 'header' ? 
+                i18n(section.charAt(0).toUpperCase() + section.replace(/ai/g, 'AI').slice(1).replace(/-/g, ' '))
+                : <i className="fad fa-house"></i>
+              }
             </a>
           ))}
         {/* Divider */}
-        <div className="h-6 w-0.5 bg-black/10 dark:bg-white/10 mx-2" />
+        <div className="hidden lg:inline h-6 w-0.5 bg-black/10 dark:bg-white/10 mx-2" />
         {/* Search */}
         <DocSearch
           appId="01IRDDJXZ4"
