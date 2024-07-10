@@ -66,6 +66,21 @@ export default function Achievements(props) {
     getUnsplashPhotos();
   }, []);
 
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImageURL, setSelectedImageURL] = useState(null);
+
+  const handleClick = (photo) => {
+    setSelectedImage(photo.urls.raw);
+    setSelectedImageURL(photo.links.html);
+    setIsDialogOpen(true);
+  };
+
+  const handleClose = () => {
+    setIsDialogOpen(false);
+    setSelectedImage(null);
+  };
+
   return (
     <div
       id="achievements"
@@ -275,41 +290,51 @@ export default function Achievements(props) {
               {i18n('Random Sample')}
               <i className="far fa-random ml-2"></i>
             </h4>
-            <div className="grid grid-cols-1 gap-4 mt-5 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid grid-cols-1 gap-4 mt-5 sm:grid-cols-2 lg:grid-cols-3">
               {photos.map((photo) => (
                 <div
                   key={photo.id}
                   className="group flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-105 border border-transparent hover:border-black dark:hover:border-white"
                 >
-                  <a href={photo.links.html} target="_blank">
-                    <img
-                      className="h-[25vh] w-full object-cover"
-                      src={photo.urls.raw}
-                      alt={photo.alt_description}
-                    />
-                    <Tooltip
-                      content={photo.color}
-                      placement="right"
-                      className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg"
+                  <img
+                    className="h-[25vh] w-full object-cover cursor-pointer"
+                    src={photo.urls.raw}
+                    alt={photo.alt_description}
+                    onClick={() => handleClick(photo)}
+                  />
+                  <Tooltip
+                    content={photo.color}
+                    placement="right"
+                    className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg"
+                  >
+                    <div
+                      className="opacity-0 group-hover:opacity-100 absolute bottom-0 h-7 border-t border-r rounded-tr-md duration-500 transition-all"
+                      style={{ backgroundColor: photo.color }}
                     >
-                      <div
-                        className="opacity-0 group-hover:opacity-100 absolute bottom-0 h-7 border-t border-r rounded-tr-md duration-500 transition-all"
-                        style={{ backgroundColor: photo.color }}
-                      >
-                        {Object.entries(photo.topic_submissions).map(
-                          ([topic, submission]) =>
-                            submission.status === 'approved' ? (
-                              <span className="p-1.5 text-white text-sm">
-                                <i className="fas fa-crown"></i> Featured in{' '}
-                                {topic.replaceAll('-', ' ')}
-                              </span>
-                            ) : null
-                        )}
-                      </div>
-                    </Tooltip>
-                  </a>
+                      {Object.entries(photo.topic_submissions).map(
+                        ([topic, submission]) =>
+                          submission.status === 'approved' ? (
+                            <span className="p-1.5 text-white text-sm">
+                              <i className="fas fa-crown"></i> Featured in{' '}
+                              {topic.replaceAll('-', ' ')}
+                            </span>
+                          ) : null
+                      )}
+                    </div>
+                  </Tooltip>
                 </div>
               ))}
+              <div className={`fixed z-10 inset-0 overflow-y-auto transition-all ease-out duration-500 ${isDialogOpen ? 'opacity-100 bg-gray-300/80 dark:bg-gray-800/80 backdrop-blur-lg' : 'opacity-0 pointer-events-none'}`}>
+                <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                  <div className="fixed inset-0 transition-all" aria-hidden="true" onClick={handleClose}>
+                    <div className="absolute inset-0 cursor-alias transition-all"></div>
+                  </div>
+                  <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                  <a href={selectedImageURL} target="_blank">
+                    <img src={selectedImage} alt="Selected" className="relative w-[80vw] h-[80vh] object-cover rounded-3xl" />
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
