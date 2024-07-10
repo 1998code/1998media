@@ -12,7 +12,28 @@ export default function Navigation(props) {
       : key;
   }
 
-  const sectionRefs = useRef({});
+  // Watch arrow-up and down to change the url hash
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        const index = props.sections.indexOf(props.activeSection);
+        if (index > 0) {
+          window.location.hash = props.sections[index - 1];
+        }
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        const index = props.sections.indexOf(props.activeSection);
+        if (index < props.sections.length - 1) {
+          window.location.hash = props.sections[index + 1];
+        }
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [props.activeSection]);
 
   return (
     <div
@@ -25,7 +46,6 @@ export default function Navigation(props) {
             <a
               key={section}
               href={`#${section}`}
-              ref={ref => sectionRefs.current[section] = ref}
               className={`hidden lg:inline px-2 py-1 text-sm font-semibold ${props.activeSection === section ? 'opacity-100 bg-white text-orange-600 dark:text-orange-400 dark:bg-white/10 shadow' : 'opacity-50'} hover:opacity-80 rounded-full transition-all`}
             >
               {

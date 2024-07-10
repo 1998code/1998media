@@ -214,7 +214,7 @@ export default function Experience(props) {
             className="divide-y divide-gray-200 dark:divide-gray-800"
           >
             {positions.map((position) => (
-              <li key={position.title}>
+              <li>
                 <div
                   className={`${position.bgColor} opacity-90 hover:opacity-100`}
                 >
@@ -226,7 +226,7 @@ export default function Experience(props) {
                           'font-medium truncate'
                         )}
                       >
-                        <i class={`${position.icon} w-6`}></i>
+                        <i className={`${position.icon} w-6`}></i>
                         {i18n(position.title)}
                       </div>
                       <div className="ml-2 flex-shrink-0 flex items-center gap-1">

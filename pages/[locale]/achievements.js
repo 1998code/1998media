@@ -17,6 +17,21 @@ export default function Achievements(props) {
       : key;
   }
 
+  const achievements = [
+    { year: '2024', title: 'Developer Tools in Taiwan', rank: '#1', flag: '🇹🇼', color: 'text-cyan-600' },
+    { year: '2024', title: 'Developer Tools in Hong Kong', rank: '#1', flag: '🇭🇰', color: 'text-cyan-600' },
+    { year: '2023', title: 'Developer Tools in the United Kingdom', rank: '#1', flag: '🇬🇧', color: 'text-cyan-600' },
+    { year: '2023', title: 'Developer Tools in the United States', rank: '#1', flag: '🇺🇸', color: 'text-cyan-600' },
+    { year: '2023', title: 'Developer Tools in Canada', rank: '#1', flag: '🇨🇦', color: 'text-blue-600' },
+    { year: '2022', title: 'Graphics & Design App in Uzbekistan', rank: '#1', flag: '🇺🇿', color: 'text-sky-600' },
+    { year: '2022', title: 'Developer Tools in Kuwait', rank: '#1', flag: '🇰🇼', color: 'text-pink-600' },
+    { year: '2022', title: 'Developer Tools in Taiwan', rank: '#1', flag: '🇹🇼', color: 'text-green-600' },
+    { year: '2022', title: 'Developer Tools in Canada', rank: '#1', flag: '🇨🇦', color: 'text-blue-600' },
+    { year: '2021', title: 'Developer Tools in the United States', rank: '#1', flag: '🇺🇸', color: 'text-cyan-600' },
+    { year: '2021', title: 'Apple Worldwide Developers Conference (WWDC)', rank: 'Winner', flag: '', color: 'text-orange-600 dark:text-orange-300' },
+    { year: 'Since 2020', title: 'Paid Apps in Different Categories Globally', rank: 'Top-100', flag: '', color: 'text-teal-600' },
+  ];
+
   const unsplashPublicKey = 'hjm0tzh_dDQx2REubp1NiT1P4jxE5wmnCbKQLbD-BZ8';
 
   const [totalViews, setTotalViews] = useState(0);
@@ -116,139 +131,20 @@ export default function Achievements(props) {
                 )}
                 <i className="fab fa-app-store ml-2"></i>
               </h3>
-              <dl className="rounded-lg overflow-hidden bg-white/50 dark:bg-black/50 backdrop-blur-md shadow-lg sm:grid sm:grid-cols-2 md:grid-cols-3 divide-y divide-gray-200 dark:divide-gray-800 sm:divide-y-0 backlight">
-                <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
-                  <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">
-                    2024
-                  </dt>
-                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
-                    {i18n('Developer Tools in Taiwan')} 🇹🇼
-                  </dt>
-                  <dd className="order-1 text-5xl font-extrabold text-cyan-600">
-                    {i18n('#1')}
-                  </dd>
-                </div>
-                <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
-                  <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">
-                    2024
-                  </dt>
-                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
-                    {i18n('Developer Tools in Hong Kong')} 🇭🇰
-                  </dt>
-                  <dd className="order-1 text-5xl font-extrabold text-cyan-600">
-                    {i18n('#1')}
-                  </dd>
-                </div>
-                <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
-                  <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">
-                    2023
-                  </dt>
-                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
-                    {i18n('Developer Tools in the United Kingdom')} 🇬🇧
-                  </dt>
-                  <dd className="order-1 text-5xl font-extrabold text-cyan-600">
-                    {i18n('#1')}
-                  </dd>
-                </div>
-                <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
-                  <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">
-                    2023
-                  </dt>
-                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
-                    {i18n('Developer Tools in the United States')} 🇺🇸
-                  </dt>
-                  <dd className="order-1 text-5xl font-extrabold text-cyan-600">
-                    {i18n('#1')}
-                  </dd>
-                </div>
-                <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
-                  <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">
-                    2023
-                  </dt>
-                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
-                    {i18n('Developer Tools in Canada')} 🇨🇦
-                  </dt>
-                  <dd className="order-1 text-5xl font-extrabold text-blue-600">
-                    {i18n('#1')}
-                  </dd>
-                </div>
-                <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
-                  <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">
-                    2022
-                  </dt>
-                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
-                    {i18n('Graphics & Design App in Uzbekistan')} 🇺🇿
-                  </dt>
-                  <dd className="order-1 text-5xl font-extrabold text-sky-600">
-                    {i18n('#1')}
-                  </dd>
-                </div>
-                <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
-                  <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">
-                    2022
-                  </dt>
-                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
-                    {i18n('Developer Tools in Kuwait')} 🇰🇼
-                  </dt>
-                  <dd className="order-1 text-5xl font-extrabold text-pink-600">
-                    {i18n('#1')}
-                  </dd>
-                </div>
-                <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
-                  <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">
-                    2022
-                  </dt>
-                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
-                    {i18n('Developer Tools in Taiwan')} 🇹🇼
-                  </dt>
-                  <dd className="order-1 text-5xl font-extrabold text-green-600">
-                    {i18n('#1')}
-                  </dd>
-                </div>
-                <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
-                  <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">
-                    2022
-                  </dt>
-                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
-                    {i18n('Developer Tools in Canada')} 🇨🇦
-                  </dt>
-                  <dd className="order-1 text-5xl font-extrabold text-blue-600">
-                    {i18n('#1')}
-                  </dd>
-                </div>
-                <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
-                  <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">
-                    2021
-                  </dt>
-                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
-                    {i18n('Developer Tools in the United States')} 🇺🇸
-                  </dt>
-                  <dd className="order-1 text-5xl font-extrabold text-cyan-600">
-                    {i18n('#1')}
-                  </dd>
-                </div>
-                <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
-                  <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">
-                    2021
-                  </dt>
-                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
-                    {i18n('Apple Worldwide Developers Conference (WWDC)')} 
-                  </dt>
-                  <dd className="order-1 text-5xl font-extrabold text-orange-600 dark:text-orange-300">
-                    {i18n('Winner')}
-                  </dd>
-                </div>
-                <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
-                  <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">
-                    {i18n('Since')} 2020
-                  </dt>
-                  <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
-                    {i18n('Paid Apps in Different Categories Globally')} 
-                  </dt>
-                  <dd className="order-1 text-5xl font-extrabold text-teal-600">
-                    {i18n('Top-100')}
-                  </dd>
-                </div>
+              <dl className="rounded-lg overflow-hidden bg-white/50 dark:bg-black/50 backdrop-blur-md shadow-lg sm:grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 divide-y divide-gray-200 dark:divide-gray-800 sm:divide-y-0 backlight">
+                {achievements.map((achievement) => (
+                  <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
+                    <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">
+                      {achievement.year}
+                    </dt>
+                    <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
+                      {i18n(achievement.title)} {achievement.flag}
+                    </dt>
+                    <dd className={`order-1 text-5xl font-extrabold ${achievement.color}`}>
+                      {i18n(achievement.rank)}
+                    </dd>
+                  </div>
+                ))}
               </dl>
               <img
                 className="dark:hidden my-6 rounded-lg hover:scale-95 transition-all"

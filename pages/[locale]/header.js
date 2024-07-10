@@ -10,7 +10,7 @@ export default function Header(props) {
   return (
     <div
       id="header"
-      className="h-[95vh] text-center flex flex-col justify-center bg-gradient-to-b dark:from-[var(--arc-palette-background)] dark:text-[var(--arc-palette-foregroundPrimary)]"
+      className="h-[90vh] text-center flex flex-col justify-center bg-gradient-to-b dark:from-[var(--arc-palette-background)] dark:text-[var(--arc-palette-foregroundPrimary)]"
     >
       <h1
         data-aos="zoom-in"

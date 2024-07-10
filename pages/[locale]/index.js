@@ -208,7 +208,7 @@ export default function Home() {
       };
     }, 3000);
   }, []);
-
+  
   return (
     <div>
       <Head>
