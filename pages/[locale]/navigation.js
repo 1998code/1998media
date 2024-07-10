@@ -12,7 +12,6 @@ export default function Navigation(props) {
       : key;
   }
 
-  const [activeSection, setActiveSection] = useState('header');
   const sectionRefs = useRef({});
 
   return (
@@ -27,8 +26,7 @@ export default function Navigation(props) {
               key={section}
               href={`#${section}`}
               ref={ref => sectionRefs.current[section] = ref}
-              onClick={() => setActiveSection(section)}
-              className={`hidden lg:inline px-2 py-1 text-sm font-semibold ${activeSection === section ? 'opacity-100 bg-white text-orange-600 dark:text-orange-400 dark:bg-white/10 shadow' : 'opacity-50'} hover:opacity-80 rounded-full transition-all`}
+              className={`hidden lg:inline px-2 py-1 text-sm font-semibold ${props.activeSection === section ? 'opacity-100 bg-white text-orange-600 dark:text-orange-400 dark:bg-white/10 shadow' : 'opacity-50'} hover:opacity-80 rounded-full transition-all`}
             >
               {
                 section !== 'header' ? 

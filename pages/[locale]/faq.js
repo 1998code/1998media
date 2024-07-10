@@ -45,13 +45,23 @@ export default function Faq(props) {
         </span>
       ),
     },
+    {
+      question: 'How to contact you for business partnership / collaboration? 🤝',
+      answer: () => (
+        <a href="#contact" className="hover:underline">
+          {i18n('Contact Now')}
+          <i className="ml-1 fa fa-external-link fa-sm"></i>
+        </a>
+      ),
+    },
+    
   ];
   return (
     <div
       id="faq"
       data-aos="zoom-in"
       data-aos-once
-      className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:py-20 lg:px-8 md:grid md:grid-cols-2 lg:grid-cols-3 lg:gap-8"
+      className="max-w-7xl mx-auto min-h-[75vh] py-16 px-4 sm:px-6 lg:py-20 lg:px-8 md:grid md:grid-cols-2 lg:grid-cols-3 lg:gap-8 items-center"
     >
       <div>
         <a

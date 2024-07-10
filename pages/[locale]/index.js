@@ -111,7 +111,7 @@ export default function Home() {
     'faq',
     'contact',
   ];
-  const [activeSection, setActiveSection] = useState('');
+  const [activeSection, setActiveSection] = useState('header');
 
   function i18n(key) {
     if (I18n && I18n['index'] && !I18n['index'][key]) {
@@ -134,6 +134,81 @@ export default function Home() {
     };
   });
 
+  // Wait the page loaded, if url contains #, scroll to the section
+  useEffect(() => {
+    setTimeout(() => {
+      if (window.location.hash) {
+        const hash = window.location.hash.replace('#', '');
+        if (sections.includes(hash)) {
+          setActiveSection(hash);
+          const element = document.getElementById(hash);
+          if (element) {
+            element.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+            });
+          } else {
+            console.log('Element not found');
+          }
+        } else {
+          console.log('Hash is not in sections');
+        }
+      } else {
+        console.log('window.location.hash is empty');
+      }
+    }, 2000);
+  }, [loading]);
+
+  // Watch hash changed, set the active section
+  useEffect(() => {
+    window.addEventListener('hashchange', () => {
+      const hash = window.location.hash.replace('#', '');
+      if (sections.includes(hash)) {
+        setActiveSection(hash);
+      }
+    });
+  });
+
+  // IntersectionObserver to watch the section, set the active section
+  useEffect(() => {
+    setTimeout(() => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setActiveSection(entry.target.id);
+              // change the url hash
+              if (window.location.hash !== '#' + entry.target.id) {
+                window.history.pushState(
+                  '',
+                  '',
+                  window.location.pathname + '#' + entry.target.id
+                );
+              }
+            }
+          });
+        },
+        { threshold: 0.50 }
+      );
+
+      sections.forEach((section) => {
+        const element = document.getElementById(section);
+        if (element) {
+          observer.observe(element);
+        }
+      });
+
+      return () => {
+        sections.forEach((section) => {
+          const element = document.getElementById(section);
+          if (element) {
+            observer.unobserve(element);
+          }
+        });
+      };
+    }, 3000);
+  }, []);
+
   return (
     <div>
       <Head>
@@ -145,11 +220,11 @@ export default function Home() {
           )}
         />
         <link rel="icon" href="https://cdn.1998.media/favicon23.jpg" />
-        <link
+        {/* <link
           href="https://unpkg.com/aos@2.3.4/dist/aos.css"
           rel="stylesheet"
-        />
-        <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+        /> */}
+        {/* <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script> */}
         <script
           type="module"
           src="https://unpkg.com/@splinetool/viewer/build/spline-viewer.js"
@@ -161,7 +236,7 @@ export default function Home() {
           defer
         ></script>
       </Head>
-      <script>AOS.init();</script>
+      {/* <script>AOS.init();</script> */}
       <main className="darkmode-ignore overflow-hidden">
         <RoomProvider id="1998-MEDIA" initialPresence={{ cursor: null }}>
           <CursorPointer />
