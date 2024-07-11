@@ -50,7 +50,7 @@ export default function Faq(props) {
       answer: () => (
         <a href="#contact" className="hover:underline">
           {i18n('Contact Now')}
-          <i className="ml-1 fa fa-external-link fa-sm"></i>
+          <i className="ml-1 far fa-arrow-circle-down fa-sm"></i>
         </a>
       ),
     },
@@ -79,6 +79,7 @@ export default function Faq(props) {
             className="font-medium text-orange-600 dark:text-orange-300 hover:text-orange-500"
           >
             {i18n('Contact now.')}
+            <i className="ml-1 far fa-arrow-circle-down"></i>
           </a>
         </p>
       </div>

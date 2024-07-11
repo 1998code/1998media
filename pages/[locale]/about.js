@@ -10,7 +10,7 @@ export default function About(props) {
   return (
     <div id="about" className="max-w-7xl mx-auto pt-16 pb-32">
       <div className="px-4 py-16 sm:px-6 lg:px-8 bg-orange-200 dark:bg-orange-800 bg-opacity-50 xl:rounded-xl" >
-        <div className="lg:flex flex-col lg:flex-row gap-3 lg:gap-8 items-center min-h-[65vh]">
+        <div className="lg:flex flex-col lg:flex-row gap-3 lg:gap-8 items-center h-[75vh]">
           <h2 className="-mt-0 lg:-mt-32 min-w-[36%] mx-auto text-3xl font-extrabold text-orange-900 dark:text-orange-100 text-center lg:text-left">
             <img
               src="https://cdn.1998.media/favicon23.jpg"

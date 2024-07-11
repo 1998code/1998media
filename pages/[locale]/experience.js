@@ -34,7 +34,17 @@ export default function Experience(props) {
       bgColor: 'bg-blue-100 dark:bg-blue-900',
       icon: 'fa fa-code',
     },
-
+    // Freelance
+    {
+      title: 'Check disposable email for Swift',
+      type: 'Contributor',
+      location: '🌐 Remote',
+      description: 'Contribute open source project',
+      date: '2024',
+      textColor: 'text-green-600 dark:text-green-100',
+      bgColor: 'bg-green-100 dark:bg-green-900',
+      icon: 'far fa-envelope-circle-check',
+    },
     {
       title: 'Lapras Score Data Linkage',
       type: 'Contributor',
@@ -235,9 +245,9 @@ export default function Experience(props) {
                         >
                           {i18n(position.type)}
                         </p>
-                        <i
+                        {/* <i
                           className={`far fa-circle-info ${position.textColor} dark:text-white`}
-                        />
+                        /> */}
                       </div>
                     </div>
                     <div className="!hidden mt-2 group-hover:!flex flex-wrap justify-between text-xs">

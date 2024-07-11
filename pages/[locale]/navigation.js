@@ -40,13 +40,13 @@ export default function Navigation(props) {
       id="navigation"
       className="group fixed w-full flex items-center justify-center py-5 z-[100]"
     >
-      <div className="flex items-center bg-white/50 dark:bg-black/50 dark:text-white pl-1 backdrop-blur-md rounded-full shadow-inner transition-all">
+      <div className="flex items-center bg-white/50 dark:bg-black/50 dark:text-white pl-1 backdrop-blur-md rounded-full shadow dark:shadow-gray-900 transition-all">
         {props.sections && props.sections
           .map((section) => (
             <a
               key={section}
               href={`#${section}`}
-              className={`hidden lg:inline px-2 py-1 text-sm font-semibold ${props.activeSection === section ? 'opacity-100 bg-white text-orange-600 dark:text-orange-400 dark:bg-white/10 shadow' : 'opacity-50'} hover:opacity-80 rounded-full transition-all`}
+              className={`hidden lg:inline px-2 py-1 text-sm font-semibold ${props.activeSection === section ? 'opacity-100 bg-white text-orange-600 dark:text-orange-400 dark:bg-white/10 shadow-inner dark:shadow-gray-900/50' : 'opacity-50'} hover:opacity-80 rounded-full transition-all`}
             >
               {
                 section !== 'header' ? 
