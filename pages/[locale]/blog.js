@@ -148,42 +148,30 @@ export default function Blog(props) {
             })
             .slice(0, 6)
             .map((post) => (
-              <div
-                key={post.title}
+              <a key={post.title} href={post.link} target="_blank"
                 className="flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight"
               >
                 <div className="flex-shrink-0">
-                  <a href={post.link} target="_blank">
-                    <img
-                      className="h-64 w-full object-cover"
-                      src={
-                        post.thumbnail
-                          ? post.thumbnail
-                          : post.description.split('src="')[1].split('"')[0]
-                      }
-                      alt={post.title}
-                    />
-                    <div className="invisible dark:visible absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black h-64"></div>
-                  </a>
+                  <img
+                    className="h-64 w-full object-cover"
+                    src={
+                      post.thumbnail
+                        ? post.thumbnail
+                        : post.description.split('src="')[1].split('"')[0]
+                    }
+                    alt={post.title}
+                  />
+                  <div className="invisible dark:visible absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black h-64"></div>
                 </div>
                 <div className="flex-1 p-6 flex flex-col justify-between">
                   <div className=" text-gray-400 text-xs">
                     <i className="far fa-calendar mr-1"></i>
-                    {/* <time dateTime={post.pubDate.slice(0, 10)}>
-                      {post.pubDate.slice(0, 10)}
-                    </time> */}
                     <time dateTime={new Date(post.published).toISOString().split('T')[0]}>
                       {new Date(post.published).toISOString().split('T')[0]}
                     </time>
                   </div>
-                  <div className="flex-1">
-                    <a
-                      href={post.link}
-                      className="block mt-2 text-xl font-semibold text-gray-900 dark:text-gray-100"
-                      target="_blank"
-                    >
-                      {post.title}
-                    </a>
+                  <div className="flex-1 mt-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
+                    {post.title}
                   </div>
                   <span className="text-sm font-medium text-orange-600 space-x-2 mt-3">
                     {post.category.map((category, index) => {
@@ -210,7 +198,7 @@ export default function Blog(props) {
                     })}
                   </span>
                 </div>
-              </div>
+              </a>
             ))}
         </div>
         <div className="text-center flex flex-wrap items-center gap-3">
