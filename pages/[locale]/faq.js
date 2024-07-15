@@ -78,7 +78,7 @@ export default function Faq(props) {
             href="#contact"
             className="font-medium text-orange-600 dark:text-orange-300 hover:text-orange-500"
           >
-            {i18n('Contact now.')}
+            {i18n('Contact now')}
             <i className="ml-1 far fa-arrow-circle-down"></i>
           </a>
         </p>
