@@ -209,6 +209,11 @@ export default function Home() {
     }, 3000);
   }, []);
   
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  function toggleSidebar() {
+    setSidebarOpen(!sidebarOpen);
+  }
+
   return (
     <div>
       <Head>
@@ -244,26 +249,28 @@ export default function Home() {
             <Loading />
           ) : (
             <div>
-              <Navigation i18n={I18n} sections={sections} activeSection={activeSection} />
-              <Header i18n={I18n} />
-              <About i18n={I18n} />
-              <Achievements i18n={I18n} />
-              <Experience i18n={I18n} />
-              <Skills i18n={I18n} />
-              <Projects i18n={I18n} />
-              <OpenAPI i18n={I18n} />
-              <AI i18n={I18n} />
-              {/* <Connect i18n={I18n} /> */}
-              <Blog i18n={I18n} />
-              <Faq i18n={I18n} />
-              <Contact i18n={I18n} />
-              <Credits i18n={I18n} />
-              <Footer i18n={I18n} />
-              {interacted && <Music i18n={I18n} />}
-              <div
-                className="elfsight-app-d9c75342-d244-4ae0-91fd-78feae7b7d90"
-                data-elfsight-app-lazy
-              ></div>
+              <Navigation i18n={I18n} sections={sections} activeSection={activeSection} sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
+              <div className={`${sidebarOpen && "pl-6 lg:pl-0"}`}>
+                <Header i18n={I18n} />
+                <About i18n={I18n} />
+                <Achievements i18n={I18n} />
+                <Experience i18n={I18n} />
+                <Skills i18n={I18n} />
+                <Projects i18n={I18n} />
+                <OpenAPI i18n={I18n} />
+                <AI i18n={I18n} />
+                {/* <Connect i18n={I18n} /> */}
+                <Blog i18n={I18n} />
+                <Faq i18n={I18n} />
+                <Contact i18n={I18n} />
+                <Credits i18n={I18n} />
+                <Footer i18n={I18n} />
+                {interacted && <Music i18n={I18n} />}
+                <div
+                  className="elfsight-app-d9c75342-d244-4ae0-91fd-78feae7b7d90"
+                  data-elfsight-app-lazy
+                ></div>
+              </div>
             </div>
           )}
         </RoomProvider>

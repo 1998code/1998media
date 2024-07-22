@@ -66,9 +66,10 @@ export default function AI(props) {
                       src={item.output}
                       className="w-[300px] object-cover flex-1"
                     />
-                    <div className="invisible dark:visible absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black h-[300px]"></div>
+                    {/* Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black h-[300px] rounded-lg group-hover:rounded-none"></div>
                   </div>
-                  <div className="-mt-10 flex justify-between px-3 z-[1]">
+                  <div className="-mt-11 flex justify-between px-3 z-[1]">
                     <span className="text-sm text-gray-500">
                       {i18n(item.featured)}
                     </span>
@@ -76,7 +77,7 @@ export default function AI(props) {
                       {i18n(`Open in ${item.source}`)}
                     </p>
                   </div>
-                  <p className="hidden group-hover:block font-semibold text-transparent bg-clip-text bg-gradient-to-br from-gray-900 dark:from-gray-100 to-gray-500 dark:to-gray-500 px-3 transition-all">
+                  <p className="hidden group-hover:block font-semibold text-transparent bg-clip-text bg-gradient-to-br from-gray-900 dark:from-gray-100 to-gray-500 dark:to-gray-500 px-3 pt-3 transition-all">
                     "{i18n(item.prompt)}"{' '}
                     <span className="text-gray-500 text-xs">
                       - {item.version}
@@ -102,9 +103,10 @@ export default function AI(props) {
                       src={item.output}
                       className="w-[250px] object-cover flex-1"
                     />
-                    <div className="invisible dark:visible absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black h-[250px]"></div>
+                    {/* Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black h-[250px] rounded-lg group-hover:rounded-none"></div>
                   </div>
-                  <div className="-mt-10 flex justify-between px-2 z-[1]">
+                  <div className="-mt-11 flex justify-between px-2 z-[1]">
                     <span className="text-sm text-gray-500">
                       🌠 {i18n('NEW')}
                     </span>
@@ -112,7 +114,7 @@ export default function AI(props) {
                       {i18n(`Open in ${item.source}`)}
                     </p>
                   </div>
-                  <p className="hidden group-hover:block text-xs md:text-sm font-semibold text-transparent bg-clip-text bg-gradient-to-br from-gray-900 dark:from-gray-100 to-gray-500 dark:to-gray-500 px-2 transition-all">
+                  <p className="hidden group-hover:block text-xs md:text-sm font-semibold text-transparent bg-clip-text bg-gradient-to-br from-gray-900 dark:from-gray-100 to-gray-500 dark:to-gray-500 px-2 pt-2 transition-all">
                     "{i18n(item.prompt)}"{' '}
                     <span className="text-gray-500 text-xs">
                       - {item.version}
