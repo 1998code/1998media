@@ -11,7 +11,6 @@ export default function Projects(props) {
       ? props.i18n['projects'][key]
       : key;
   }
-  const [githubs, setGithubs] = useState([]);
   const [githubRaw, setGithubRaw] = useState([]);
   useEffect(() => {
     getGithubData();
@@ -21,20 +20,13 @@ export default function Projects(props) {
   }, []);
   function getGithubData() {
     axios
-      .get('https://api.github.com/users/1998code/repos?sort=created_at')
+      .get('https://api.github.com/search/repositories?q=1998code/&sort=stars')
       .then((res) => {
         if (
           res.data.documentation_url !=
           'https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting'
         ) {
-          let filteredData = res.data.filter((repo) => !repo.fork);
-          setGithubRaw(filteredData);
-          setGithubs(filteredData.slice(0, 8));
-          // if (window.innerWidth <= 1024) {
-          //   setGithubs(filteredData.slice(0, 8));
-          // } else {
-          //   setGithubs(filteredData.slice(0, 16));
-          // }
+          setGithubRaw(res.data.items);
         }
       })
       .catch((err) => {
@@ -78,7 +70,7 @@ export default function Projects(props) {
             alt="Top Languages"
           />
           <img
-            className="col-span-3 md:col-span-1"
+            className="col-span-3 md:col-span-1 hover:scale-95 transition duration-300 rounded-lg"
             src="https://lapras-card-generator-auto.vercel.app/api/svg?b1=%23020E27&b2=%230E5593&i1=%23030E21&i2=%231688BF&l=en&u=MING"
           />
         </div>
@@ -89,9 +81,11 @@ export default function Projects(props) {
           alt="Github chart"
         />
         <div className="mx-auto grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {githubs.map(
-            (repo) =>
-              !repo.fork && (
+          {githubRaw
+            .filter((repo) => !repo.fork)
+            .slice(0, 8)
+            .map((repo) =>
+              (
                 <a
                   href={repo.html_url}
                   target="_blank"
