@@ -57,7 +57,7 @@ export default function Navigation(props) {
       className={`group fixed ${props.sidebarOpen ? "top-0 left-0" : "w-full flex items-center justify-center py-5"} select-none z-[100] transition-all`}
     >
       <div className={`flex bg-white/50 dark:bg-black/50 dark:text-white backdrop-blur-md shadow dark:shadow-gray-900 ${props.sidebarOpen ? "h-screen flex-col overflow-auto" : "items-center pl-1 rounded-full"} transition-all`}>
-        <div className="px-2 flex items-center gap-2 text-sm font-semibold">
+        <div className={`px-2 flex items-center gap-2 text-sm font-semibold ${props.sidebarOpen && "py-6"}`}>
           {/* Sidebar Toggle */}
           <button
             onClick={() => props.toggleSidebar()}
@@ -65,7 +65,7 @@ export default function Navigation(props) {
           >
             <i className={`fad fa-sidebar ${props.sidebarOpen && "rotate-90"}`}></i>
           </button>
-          {props.sidebarOpen ? <span className="hidden 2xl:inline">1998.MEDIA</span> : <></>}
+          {props.sidebarOpen ? <span className="hidden 2xl:inline">MING's Design</span> : <></>}
         </div>
 
         {props.sidebarOpen ?
