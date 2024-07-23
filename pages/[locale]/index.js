@@ -224,7 +224,7 @@ export default function Home() {
             'Experience the Art of Design - Your Vision, My Craftsmanship.'
           )}
         />
-        <link rel="icon" href="https://cdn.1998.media/favicon23.jpg" />
+        <link rel="icon" href="https://cdn.1998.media/favicon24.jpg" />
         {/* <link
           href="https://unpkg.com/aos@2.3.4/dist/aos.css"
           rel="stylesheet"

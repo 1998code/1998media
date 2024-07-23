@@ -49,7 +49,7 @@ export default function Faq(props) {
       question: 'How to contact you for business partnership / collaboration? 🤝',
       answer: () => (
         <a href="#contact" className="hover:underline">
-          {i18n('Contact Now')}
+          {i18n('Contact now')}
           <i className="ml-1 far fa-arrow-circle-down fa-sm"></i>
         </a>
       ),
