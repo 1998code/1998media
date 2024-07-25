@@ -83,7 +83,7 @@ export default function Navigation(props) {
             <a
               key={section}
               href={`#${section}`}
-              className={`px-2 py-1 text-sm font-semibold ${props.activeSection === section ? 'opacity-100 bg-white text-orange-600 dark:text-orange-400 dark:bg-white/10 shadow-inner dark:shadow-gray-900/50' : 'opacity-50'} ${!props.sidebarOpen && "hidden lg:inline rounded-full"} hover:opacity-80 transition-all`}
+              className={`px-2 text-sm font-semibold ${props.activeSection === section ? 'opacity-100 bg-white text-orange-600 dark:text-orange-400 dark:bg-white/10 shadow-inner dark:shadow-gray-900/50' : 'opacity-50'} ${props.sidebarOpen ? "py-3" : "hidden 2xl:inline py-1 rounded-full"} hover:opacity-80 transition-all`}
             >
               {
                 <div className="flex items-center gap-2">
