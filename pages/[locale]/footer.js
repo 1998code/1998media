@@ -44,7 +44,12 @@ export default function Footer(props) {
         name: 'Instagram',
         href: 'https://instagram.com/1998trip',
         icon: (props) => <i className="fab fa-instagram fa-xl" />,
-      }
+      },
+      {
+        name: 'YouTube',
+        href: 'https://www.youtube.com/@MingsExplorer',
+        icon: (props) => <i className="fab fa-youtube fa-xl" />,
+      },
     ],
   };
 
@@ -113,7 +118,7 @@ export default function Footer(props) {
             )
           </span>
         )}
-        <div className="flex justify-center space-x-6">
+        <div className="flex justify-center gap-3">
           {navigation.social.map((item) => (
             <Tooltip
               content={item.name}
@@ -137,7 +142,7 @@ export default function Footer(props) {
       <hr className="mt-3" />
 
       <div className="mt-1 text-xs text-gray-600 dark:text-gray-400 pt-3 gap-3 flex flex-wrap justify-between">
-        <span className="flex items-center gap-3">
+        <div className="flex items-center gap-3">
           {i18n('Compatible with')}:
           <Tooltip
             content="Safari 12+"
@@ -174,7 +179,7 @@ export default function Footer(props) {
           >
             <i className="fab fa-opera"></i>
           </Tooltip>
-        </span>
+        </div>
         <div className="flex items-center gap-3">
           {navigation.main.map((item) => (
             <a
