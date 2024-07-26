@@ -237,7 +237,7 @@ export default function Blog(props) {
             {i18n('Travel Around, Global Journey.')}
           </p>
         </div>
-        <div className="flex justify-between items-center">
+        <div className="flex flex-wrap justify-between items-center gap-3">
           <div className="flex">
             {medals.map((medal) => (
               <Tooltip
