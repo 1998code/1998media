@@ -54,7 +54,7 @@ export default function Navigation(props) {
   return (
     <div
       id="navigation"
-      className={`group fixed ${props.sidebarOpen ? "top-0 left-0" : "w-full flex items-center justify-center py-5"} select-none z-[100] transition-all`}
+      className={`group fixed ${props.sidebarOpen ? "top-0 left-0" : "w-full flex items-center justify-center py-3 sm:py-5"} select-none z-[100] transition-all`}
     >
       <div className={`flex bg-white/50 dark:bg-black/50 dark:text-white backdrop-blur-md shadow dark:shadow-gray-900 ${props.sidebarOpen ? "h-screen flex-col overflow-auto" : "items-center pl-1 rounded-full"} transition-all`}>
         <div className={`px-2 flex items-center gap-2 text-sm font-semibold ${props.sidebarOpen && "py-6"}`}>
@@ -83,12 +83,12 @@ export default function Navigation(props) {
             <a
               key={section}
               href={`#${section}`}
-              className={`px-2 text-sm font-semibold ${props.activeSection === section ? 'opacity-100 bg-white text-orange-600 dark:text-orange-400 dark:bg-white/10 shadow-inner dark:shadow-gray-900/50' : 'opacity-50'} ${props.sidebarOpen ? "py-3" : "hidden 2xl:inline py-1 rounded-full"} hover:opacity-80 transition-all`}
+              className={`px-2 text-sm font-semibold ${props.activeSection === section ? 'opacity-100 bg-white text-orange-600 dark:text-orange-400 dark:bg-white/10 shadow-inner dark:shadow-gray-900/50' : 'opacity-50'} ${props.sidebarOpen ? "py-3.5" : "hidden lg:inline py-1 rounded-full"} hover:opacity-80 transition-all`}
             >
               {
                 <div className="flex items-center gap-2">
                   <i className={`inline ${(section != "header" && !props.sidebarOpen) && "lg:hidden"} fad fa-${sectionIconMap[section]}`}></i>
-                  <span className={`hidden ${(section != "header" || props.sidebarOpen) && "2xl:inline"}`}>{i18n(section.charAt(0).toUpperCase() + section.replace(/ai/g, 'AI').slice(1).replace(/-/g, ' '))}</span>
+                  <span className={`hidden ${(section != "header" || props.sidebarOpen) && "lg:inline"}`}>{i18n(section.charAt(0).toUpperCase() + section.replace(/ai/g, 'AI').slice(1).replace(/-/g, ' '))}</span>
                 </div>
               }
             </a>
