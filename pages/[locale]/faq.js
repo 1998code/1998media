@@ -31,15 +31,15 @@ export default function Faq(props) {
       answer: () => (
         <span>
           {i18n('Distributed globally with love on:')}{' '}
-          <a href="https://github.com/1998code" className="hover:underline">
+          <a href="https://github.com/1998code" target="_blank" className="hover:underline">
             Github<i className="ml-1 fa fa-external-link fa-sm"></i>
           </a>
           <i className="fa fa-pipe px-3"></i>
-          <a href="https://vercel.com/?utm_source=1998code&utm_campaign=oss" className="hover:underline">
+          <a href="https://vercel.com/?utm_source=1998code&utm_campaign=oss" target="_blank" className="hover:underline">
             Vercel<i className="ml-1 fa fa-external-link fa-sm"></i>
           </a>
           <i className="fa fa-pipe px-3"></i>
-          <a href="https://www.digitalocean.com/?refcode=ce873177d9ab&utm_medium=opensource" className="hover:underline">
+          <a href="https://www.digitalocean.com/?refcode=ce873177d9ab&utm_medium=opensource" target="_blank" className="hover:underline">
             DigitalOcean<i className="ml-1 fa fa-external-link fa-sm"></i>
           </a>
         </span>
@@ -48,10 +48,17 @@ export default function Faq(props) {
     {
       question: 'How to contact you for business partnership / collaboration? 🤝',
       answer: () => (
-        <a href="#contact" className="hover:underline">
-          {i18n('Contact now')}
-          <i className="ml-1 far fa-arrow-circle-down fa-sm"></i>
-        </a>
+        <span>
+          <a href="#contact" className="hover:underline">
+            {i18n('Contact now')}
+            <i className="ml-1 far fa-arrow-circle-down fa-sm"></i>
+          </a>
+          <i className="fa fa-pipe px-3"></i>
+          <a href="https://view.officeapps.live.com/op/embed.aspx?src=https://cdn.1998.media/quote/Q1_Pricing.xlsx" target="_blank" className="hover:underline">
+            {i18n('Get Quote List')}
+            <i className="ml-1 far fa-external-link fa-sm"></i>
+          </a>
+        </span>
       ),
     },
     
