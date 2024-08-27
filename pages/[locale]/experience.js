@@ -15,11 +15,21 @@ export default function Experience(props) {
   }
   const positions = [
     {
+      title: 'Project Manager',
+      type: 'Full-time',
+      location: '🇭🇰 Hong Kong',
+      description: 'Leading team to develop web and mobile applications',
+      date: '2024-NOW',
+      textColor: 'text-blue-600 dark:text-blue-100',
+      bgColor: 'bg-blue-100 dark:bg-blue-900',
+      icon: 'fa fa-list-check',
+    },
+    {
       title: 'Senior Software Engineer',
       type: 'Full-time',
       location: '🇭🇰 Hong Kong',
       description: 'UI Design, Web, iOS Development, A.I. Research',
-      date: '2023-NOW',
+      date: '2023-2024',
       textColor: 'text-blue-600 dark:text-blue-100',
       bgColor: 'bg-blue-100 dark:bg-blue-900',
       icon: 'fa fa-code',
@@ -34,7 +44,7 @@ export default function Experience(props) {
       bgColor: 'bg-blue-100 dark:bg-blue-900',
       icon: 'fa fa-code',
     },
-    // Freelance
+
     {
       title: 'Check disposable email for Swift',
       type: 'Contributor',
@@ -251,7 +261,7 @@ export default function Experience(props) {
                       </div>
                     </div>
                     <div className="!hidden mt-2 group-hover:!flex flex-wrap justify-between text-xs">
-                      <div className="text-gray-600 dark:text-gray-400">
+                      <div className="text-gray-600 dark:text-white opacity-95">
                         {i18n(position.description)}
                       </div>
                       <div className="flex items-center gap-1 text-gray-600 dark:text-gray-400">
