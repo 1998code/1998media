@@ -38,7 +38,7 @@ export default function Experience(props) {
       title: 'Software Engineer',
       type: 'Full-time',
       location: '🇭🇰 Hong Kong',
-      description: 'Web + iOS Development',
+      description: 'Web, iOS Development',
       date: '2021-2023',
       textColor: 'text-blue-600 dark:text-blue-100',
       bgColor: 'bg-blue-100 dark:bg-blue-900',
