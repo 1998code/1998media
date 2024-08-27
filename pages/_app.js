@@ -77,8 +77,8 @@ function MyApp({ Component, pageProps }) {
 
 import Darkmode from 'darkmode-js';
 const options = {
-  bottom: '15px',
-  left: '25px',
+  bottom: '95vh',
+  right: '25px',
   time: '1.5s',
   mixColor: '#fff',
   backgroundColor: '#fff6eb',
