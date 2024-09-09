@@ -178,7 +178,7 @@ export default function Skills(props) {
     },
 
     {
-      name: 'Korean  (Passed the Test of Proficiency in Korean in 2018)',
+      name: 'Korean (Passed the Test of Proficiency in Korean in 2018)',
       icons: 'Intermediate',
       href: 'https://www.topik-hk.org/eng/index.asp',
       bgColor: 'bg-sky-600',

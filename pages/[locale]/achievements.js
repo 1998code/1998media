@@ -131,7 +131,7 @@ export default function Achievements(props) {
                 )}
                 <i className="fab fa-app-store ml-2"></i>
               </h3>
-              <dl className="rounded-lg overflow-hidden bg-white/50 dark:bg-black/50 backdrop-blur-md shadow-lg sm:grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 divide-y divide-gray-200 dark:divide-gray-800 sm:divide-y-0 backlight">
+              <dl className="rounded-lg overflow-hidden bg-white/50 dark:bg-black/50 backdrop-blur-md shadow-lg grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 divide-y divide-gray-200 dark:divide-gray-800 divide-y-0 backlight">
                 {achievements.map((achievement) => (
                   <div className="flex flex-col p-6 text-center hover:scale-105 transition-all">
                     <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">

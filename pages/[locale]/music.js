@@ -55,9 +55,7 @@ export default function Music(props) {
       const currentIndex = music.findIndex(
         (item) => item.id === currentPlaying.id
       );
-      const nextIndex =
-        currentIndex + 1 === music.length ? 0 : currentIndex + 1;
-      // setCurrentPlaying({});
+      const nextIndex = currentIndex + 1 === music.length ? 0 : currentIndex + 1;
       setCurrentPlaying(music[nextIndex]);
       audioRef.current.play();
     }
@@ -193,7 +191,7 @@ export default function Music(props) {
                 />
                 {i18n('Your browser does not support the audio element.')}
               </audio>
-              <div className="hidden group-hover:block absolute -bottom-3.5 right-5 text-[10px] text-gray-400 dark:text-gray-600 z-[1] whitespace-nowrap animate-pulse transition-all">
+              <div className="hidden sm:group-hover:block absolute -bottom-3.5 right-5 text-[10px] text-gray-400 dark:text-gray-600 z-[1] whitespace-nowrap animate-pulse transition-all">
                 {i18n('My Recent Playlist')} | {i18n('Next')}:{' '}
                 <b>
                   {
