@@ -183,7 +183,7 @@ export default function Music(props) {
                 muted
                 ref={audioRef}
                 key={currentPlaying.attributes.previews[0].url}
-                className="invisible sm:visible relative"
+                className="invisible md:visible relative"
               >
                 <source
                   src={currentPlaying.attributes.previews[0].url}
@@ -191,7 +191,7 @@ export default function Music(props) {
                 />
                 {i18n('Your browser does not support the audio element.')}
               </audio>
-              <div className="hidden sm:group-hover:block absolute -bottom-3.5 right-5 text-[10px] text-gray-400 dark:text-gray-600 z-[1] whitespace-nowrap animate-pulse transition-all">
+              <div className="hidden md:group-hover:block absolute -bottom-3.5 right-5 text-[10px] text-gray-400 dark:text-gray-600 z-[1] whitespace-nowrap animate-pulse transition-all">
                 {i18n('My Recent Playlist')} | {i18n('Next')}:{' '}
                 <b>
                   {

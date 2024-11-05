@@ -28,7 +28,7 @@
     "franc-min": "^6.2.0",
     "jsonwebtoken": "^9.0.2",
     "next": "^15.0.0-rc.0",
-    "node-geocoder": "^4.3.0",
+    "node-geocoder": "^4.4.0",
     "node-opencc": "^2.0.1",
     "prettier": "^3.2.5",
     "qq-music-api": "^1.1.2",

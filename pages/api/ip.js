@@ -3,8 +3,8 @@ import NodeGeocoder from 'node-geocoder';
 export default async function (req, res) {
   const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
-  const latitude = req.headers['x-vercel-ip-latitude'];
-  const longitude = req.headers['x-vercel-ip-longitude'];
+  const latitude = req.query.la || req.headers['x-vercel-ip-latitude'];
+  const longitude = req.query.lo || req.headers['x-vercel-ip-longitude'];
 
   let geo;
   try {
@@ -26,6 +26,7 @@ export default async function (req, res) {
       };
     }
   } catch (error) {
+    console.log(error);
     geo = {
       city: '?',
       state: '?',
