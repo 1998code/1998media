@@ -28,7 +28,7 @@ export default function openAPI(props) {
       type: 'GET',
       status: 'Available',
       code: '/api/dns?domain={URL(STRING)}',
-      href: '/api/dns?domain=1998.media',
+      href: '/api/dns?domain=www.1998.media',
       date: '24Q1',
       textColor: 'text-sky-600 dark:text-sky-100',
       bgColor: 'bg-sky-100 dark:bg-sky-900',
