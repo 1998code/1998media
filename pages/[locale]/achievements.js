@@ -18,6 +18,7 @@ export default function Achievements(props) {
   }
 
   const achievements = [
+    { year: '2024', title: 'Developer Tools in Maldives', rank: '#1', flag: '🇲🇻', color: 'text-cyan-600' },
     { year: '2024', title: 'Developer Tools in Taiwan', rank: '#1', flag: '🇹🇼', color: 'text-cyan-600' },
     { year: '2024', title: 'Developer Tools in Hong Kong', rank: '#1', flag: '🇭🇰', color: 'text-cyan-600' },
     { year: '2023', title: 'Developer Tools in the United Kingdom', rank: '#1', flag: '🇬🇧', color: 'text-cyan-600' },
