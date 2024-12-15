@@ -93,14 +93,13 @@ export default function Music(props) {
   return (
     <div className="fixed w-screen flex items-center justify-center bottom-0 sm:bottom-5 z-[10]">
       {music && music.length > 0 && currentPlaying ? (
-        <a 
-          href={currentPlaying.attributes?.url} target="_blank"
-          className="group flex items-center min-w-[300px] h-[80px] p-1 shadow bg-gradient-to-r from-white/50 via-white to-white dark:from-black/50 dark:via-[#808080] dark:to-white dark:shadow-black backdrop-blur-lg sm:rounded-xl">
+        <div
+          className="group flex items-center h-[80px] p-1 shadow border border-white bg-white/50 dark:bg-black/50 hover:bg-gradient-to-r from-white/50 via-white to-white dark:from-black/50 dark:via-[#808080] dark:to-white dark:shadow-black backdrop-blur-lg sm:rounded-xl">
           <Tooltip
             content={
-              <div className="flex flex-col divide-y max-h-[50vh] overflow-auto">
-                <div className="text-sm font-bold dark:text-white p-2">
-                  {i18n('My Recent Playlist')}
+              <div className="flex flex-col max-h-[50vh] overflow-auto">
+                <div className="text-sm md:text-2xl font-bold dark:text-white p-2">
+                  {i18n('My Recent Playlist on  Music')}
                 </div>
                 {music.map((item, index) => (
                   <div
@@ -141,7 +140,7 @@ export default function Music(props) {
               </div>
             }
             placement="top-start"
-            className="p-0 border text-xs dark:text-white bg-white/50 dark:bg-black backdrop-blur-lg rounded-lg"
+            className="min-w-[50px] mb-1.5 p-0 border text-xs dark:text-white bg-white/50 dark:bg-black backdrop-blur-lg rounded-lg md:rounded-2xl"
           >
             <img
               src={currentPlaying.attributes.artwork.url
@@ -153,19 +152,19 @@ export default function Music(props) {
           <div className="ml-12 flex items-center w-full h-full">
             <Tooltip
               content={
-                <div className="flex flex-col divide-y max-w-[450px] max-h-[50vh] overflow-auto">
-                  <div className="text-sm font-bold dark:text-white p-2">
+                <div className="flex flex-col max-w-[450px] max-h-[50vh] overflow-auto">
+                  <div className="text-sm md:text-2xl font-bold dark:text-white p-2">
                     {i18n('Lyrics')}
                   </div>
-                  <div className="text-xs p-2 whitespace-pre-wrap dark:text-white">
+                  <div className="text-sm p-2 whitespace-pre-wrap dark:text-white">
                     { 
-                      lyrics || (<i className="fa fa-circle-notch fa-spin" />)
+                      lyrics ? lyrics.replace(/\[\d{2}:\d{2}\.\d{2}\]/g, '') : (<i className="fa fa-circle-notch fa-spin" />)
                     }
                   </div>
                 </div>
               }
               placement="top-start"
-              className="mb-2 p-0 border text-xs dark:text-white bg-white/50 dark:bg-black backdrop-blur-lg rounded-lg"
+              className="min-w-[50px] mb-2 md:mb-5 p-0 border text-xs dark:text-white bg-white/50 dark:bg-black backdrop-blur-lg rounded-lg md:rounded-2xl"
             >
               <div className="flex flex-col justify-center items-start w-40">
                 <div className="text-sm font-bold text-left dark:text-white">
@@ -183,7 +182,7 @@ export default function Music(props) {
                 muted
                 ref={audioRef}
                 key={currentPlaying.attributes.previews[0].url}
-                className="invisible md:visible relative"
+                className="w-0 opacity-0 md:group-hover:opacity-100 md:group-hover:w-[250px] relative transition-all"
               >
                 <source
                   src={currentPlaying.attributes.previews[0].url}
@@ -192,7 +191,7 @@ export default function Music(props) {
                 {i18n('Your browser does not support the audio element.')}
               </audio>
               <div className="hidden md:group-hover:block absolute -bottom-3.5 right-5 text-[10px] text-gray-400 dark:text-gray-600 z-[1] whitespace-nowrap animate-pulse transition-all">
-                {i18n('My Recent Playlist')} | {i18n('Next')}:{' '}
+                {i18n('Next')}:{' '}
                 <b>
                   {
                     music[
@@ -208,7 +207,7 @@ export default function Music(props) {
               </div>
             </div>
           </div>
-        </a>
+        </div>
       ) : (
         <></>
       )}
