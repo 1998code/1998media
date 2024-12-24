@@ -54,7 +54,7 @@ export default function Navigation(props) {
   return (
     <div
       id="navigation"
-      className={`group fixed ${props.sidebarOpen ? "top-0 left-0" : "w-full flex items-center md:justify-center p-3 sm:py-5"} select-none z-[100] transition-all`}
+      className={`group fixed ${props.sidebarOpen ? "top-0 left-0" : "w-full flex items-center md:justify-center p-3.5 sm:py-5"} select-none z-[100] transition-all`}
     >
       <div className={`flex bg-white/50 dark:bg-black/50 dark:text-white backdrop-blur-md shadow dark:shadow-gray-900 ${props.sidebarOpen ? "h-screen flex-col overflow-auto" : "items-center pl-1 rounded-full"} transition-all`}>
         <div className={`px-2 flex items-center gap-2 text-sm font-semibold ${props.sidebarOpen && "py-6"}`}>
