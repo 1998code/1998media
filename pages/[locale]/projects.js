@@ -94,7 +94,7 @@ export default function Projects(props) {
                 >
                   <div className="flex-shrink-0">
                     <img
-                      className="w-full object-cover dark:invert"
+                      className="w-full object-cover"
                       src={`https://opengraph.githubassets.com/286af552210001e9ea769373d5955f2c4d4a911070501bbd22fc7cb957761f48/1998code/${repo.name}`}
                       alt={repo.name.replaceAll('-', ' ')}
                     />

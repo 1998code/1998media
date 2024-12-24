@@ -97,7 +97,7 @@ export default function Footer(props) {
           </span>
           <br />
           <span className="text-gray-600 dark:text-gray-400 text-sm">
-            {i18n('Ver.')} 24.12.15 | {i18n('Since')} 2020 | {diffYearNDay}
+            {i18n('Ver.')} 24.12.24 | {i18n('Since')} 2020 | {diffYearNDay}
           </span>
         </div>
         {ip && (
