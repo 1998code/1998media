@@ -94,7 +94,7 @@ export default function Music(props) {
     <div className="fixed w-screen flex items-center justify-center bottom-0 sm:bottom-5 z-[10]">
       {music && music.length > 0 && currentPlaying ? (
         <div
-          className="group flex items-center h-[80px] p-1 shadow border border-white bg-white/50 dark:bg-black/50 hover:bg-gradient-to-r from-white/50 via-white to-white dark:from-black/50 dark:via-[#808080] dark:to-white dark:shadow-black backdrop-blur-lg sm:rounded-xl">
+          className="group flex items-center w-full md:w-fit h-[80px] p-1 shadow md:border border-white bg-white/50 dark:bg-black/50 hover:bg-gradient-to-r from-white/50 via-white to-white dark:from-black/50 dark:via-[#808080] dark:to-white dark:shadow-black backdrop-blur-lg sm:rounded-xl">
           <Tooltip
             content={
               <div className="flex flex-col max-h-[50vh] overflow-auto">
