@@ -102,9 +102,11 @@ export default function Music(props) {
                   {i18n('My Recent Playlist on  Music')}
                 </div>
                 {music.map((item, index) => (
-                  <div
+                  <a
                     key={index}
-                    className={`p-3 flex items-center justify-between ${index === music.findIndex((music) => music.id === currentPlaying.id) ? 'bg-red-100 dark:bg-black text-red-800 dark:text-red-500' : 'dark:text-white'}`}
+                    href={item.attributes.url}
+                    target="_blank"
+                    className={`p-3 flex items-center justify-between ${index === music.findIndex((music) => music.id === currentPlaying.id) ? 'bg-red-100 dark:bg-black text-red-800 dark:text-red-500' : 'hover:bg-black/10 dark:text-white dark:hover:bg-white/10'}`}
                   >
                     <div className="flex items-center gap-3">
                       <img
@@ -135,7 +137,7 @@ export default function Music(props) {
                         {("0" + Math.floor((item.attributes.durationInMillis % 60000) / 1000)).slice(-2)}
                       </span>
                     </div>
-                  </div>
+                  </a>
                 ))}
               </div>
             }
