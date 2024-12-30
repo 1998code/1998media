@@ -106,7 +106,7 @@ export default function Music(props) {
                     key={index}
                     className={`p-3 flex items-center justify-between ${index === music.findIndex((music) => music.id === currentPlaying.id) ? 'bg-red-100 dark:bg-black text-red-800 dark:text-red-500' : 'dark:text-white'}`}
                   >
-                    <a href={currentPlaying.attributes?.url} target="_blank" className="flex items-center gap-3">
+                    <div className="flex items-center gap-3">
                       <img
                         src={item.attributes.artwork.url
                           .replace('{w}', '50')
@@ -121,7 +121,7 @@ export default function Music(props) {
                           {item.attributes.artistName}
                         </div>
                       </div>
-                    </a>
+                    </div>
                     <div className="text-[10px] text-gray-500 text-right">
                       <span>
                         {index ===
@@ -142,12 +142,14 @@ export default function Music(props) {
             placement="top-start"
             className="min-w-[50px] mb-1.5 p-0 border text-xs dark:text-white bg-white/50 dark:bg-black backdrop-blur-lg rounded-lg md:rounded-2xl"
           >
-            <img
-              src={currentPlaying.attributes.artwork.url
-                .replace('{w}', '500')
-                .replace('{h}', '500')}
-              className="sm:absolute sm:-left-7 top-2 w-[65px] h-[65px] rounded-xl shadow-lg hover:border transition-all"
-            />
+            <a href={currentPlaying.attributes?.url} target="_blank">
+              <img
+                src={currentPlaying.attributes.artwork.url
+                  .replace('{w}', '500')
+                  .replace('{h}', '500')}
+                className="sm:absolute sm:-left-7 top-2 w-[65px] h-[65px] rounded-xl shadow-lg hover:border transition-all"
+              />
+            </a>
           </Tooltip>
           <div className="ml-12 flex items-center w-full h-full">
             <Tooltip
@@ -166,14 +168,14 @@ export default function Music(props) {
               placement="top-start"
               className="min-w-[50px] mb-2 md:mb-5 p-0 border text-xs dark:text-white bg-white/50 dark:bg-black backdrop-blur-lg rounded-lg md:rounded-2xl"
             >
-              <div className="flex flex-col justify-center items-start w-40">
+              <a href={currentPlaying.attributes?.url} target="_blank" className="flex flex-col justify-center items-start w-40">
                 <div className="text-sm font-bold text-left dark:text-white">
                   {currentPlaying.attributes.name}
                 </div>
                 <div className="text-xs text-gray-500">
                   {currentPlaying.attributes.artistName}
                 </div>
-              </div>
+              </a>
             </Tooltip>
 
             <div className="relative text-right">
