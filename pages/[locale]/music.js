@@ -106,7 +106,7 @@ export default function Music(props) {
                     key={index}
                     className={`p-3 flex items-center justify-between ${index === music.findIndex((music) => music.id === currentPlaying.id) ? 'bg-red-100 dark:bg-black text-red-800 dark:text-red-500' : 'dark:text-white'}`}
                   >
-                    <div className="flex items-center gap-3">
+                    <a href={currentPlaying.attributes?.url} target="_blank" className="flex items-center gap-3">
                       <img
                         src={item.attributes.artwork.url
                           .replace('{w}', '50')
@@ -121,7 +121,7 @@ export default function Music(props) {
                           {item.attributes.artistName}
                         </div>
                       </div>
-                    </div>
+                    </a>
                     <div className="text-[10px] text-gray-500 text-right">
                       <span>
                         {index ===
