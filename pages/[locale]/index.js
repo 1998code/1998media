@@ -83,16 +83,16 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [I18n, setI18n] = useState({});
   function getI18nData(path) {
-    // axios
-    //   .get(`/api/i18n?lang=${path}`)
-    //   .then((res) => {
-    //     setI18n(res.data);
+    axios
+      .get(`/api/i18n?lang=${path}`)
+      .then((res) => {
+        setI18n(res.data);
         setLoading(false);
-    //   })
-    //   .catch((err) => {
-    //     alert('Error Occured: ' + err);
-    //     window.location.reload();
-    //   });
+      })
+      .catch((err) => {
+        alert('Error Occured: ' + err);
+        window.location.reload();
+      });
   }
 
   const sections = [
