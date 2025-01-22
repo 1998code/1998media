@@ -91,10 +91,10 @@ export default function Music(props) {
   }, [currentPlaying]);
   
   return (
-    <div className="fixed w-screen flex items-center justify-center bottom-0 sm:bottom-5 z-[10]">
+    <div className="fixed w-screen flex items-center justify-center bottom-0 md:bottom-5 z-[10]">
       {music && music.length > 0 && currentPlaying ? (
         <div
-          className="group flex items-center w-full md:w-fit h-[90px] md:h-[80px] p-1 shadow md:border border-white bg-white/50 dark:bg-black/50 hover:bg-gradient-to-r from-white/50 via-white to-white dark:from-black/50 dark:via-[#808080] dark:to-white dark:shadow-black backdrop-blur-lg sm:rounded-xl">
+          className="group flex items-center w-full md:w-fit h-[90px] md:h-[80px] p-1 shadow md:border border-white bg-white/50 dark:bg-black/50 hover:bg-gradient-to-r from-white/50 via-white to-white dark:from-black/50 dark:via-[#808080] dark:to-white dark:shadow-black backdrop-blur-lg md:rounded-xl">
           <Tooltip
             content={
               <div className="flex flex-col max-h-[50vh] overflow-auto">
@@ -149,7 +149,7 @@ export default function Music(props) {
                 src={currentPlaying.attributes.artwork.url
                   .replace('{w}', '500')
                   .replace('{h}', '500')}
-                className="sm:absolute sm:-left-7 top-2 w-[65px] h-[65px] rounded-xl shadow-lg hover:border transition-all"
+                className="md:absolute md:-left-7 top-2 min-w-[65px] h-[65px] rounded-xl shadow-lg hover:border transition-all"
               />
             </a>
           </Tooltip>
