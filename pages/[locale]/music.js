@@ -93,20 +93,23 @@ export default function Music(props) {
   return (
     <div className="fixed w-screen flex items-center justify-center bottom-0 md:bottom-5 z-[10]">
       {music && music.length > 0 && currentPlaying ? (
+        // <div
+        //   className="group flex items-center w-full md:w-fit h-[90px] md:h-[80px] p-1 shadow md:border border-white bg-white/50 dark:bg-black/50 hover:bg-gradient-to-r from-white/50 via-white to-white dark:from-black/50 dark:via-[#808080] dark:to-white dark:shadow-black backdrop-blur-lg md:rounded-xl">
         <div
-          className="group flex items-center w-full md:w-fit h-[90px] md:h-[80px] p-1 shadow md:border border-white bg-white/50 dark:bg-black/50 hover:bg-gradient-to-r from-white/50 via-white to-white dark:from-black/50 dark:via-[#808080] dark:to-white dark:shadow-black backdrop-blur-lg md:rounded-xl">
+          className="group flex items-center w-full md:w-fit h-[90px] md:h-[80px] p-1 shadow md:border border-white bg-white/50 dark:bg-black/50 dark:hover:bg-black dark:shadow-black backdrop-blur-lg md:rounded-xl transition-all">
           <Tooltip
             content={
               <div className="flex flex-col max-h-[50vh] overflow-auto">
-                <div className="text-sm md:text-2xl font-bold dark:text-white p-2">
-                  {i18n('My Recent Playlist on  Music')}
+                <div className="flex items-start justify-between text-sm md:text-2xl font-bold dark:text-white p-2">
+                  {i18n('My Recent Playlist')} {' '}
+                  <span class="text-red-600 text-sm">{i18n(' Music')}</span>
                 </div>
                 {music.map((item, index) => (
                   <a
                     key={index}
                     href={item.attributes.url}
                     target="_blank"
-                    className={`p-3 flex items-center justify-between ${index === music.findIndex((music) => music.id === currentPlaying.id) ? 'bg-red-100 dark:bg-black text-red-800 dark:text-red-500' : 'hover:bg-black/10 dark:text-white dark:hover:bg-white/10'}`}
+                    className={`p-3 flex items-center justify-between ${index === music.findIndex((music) => music.id === currentPlaying.id) ? 'bg-red-600 text-white' : 'hover:bg-black/10 dark:text-white dark:hover:bg-white/10'}`}
                   >
                     <div className="flex items-center gap-3">
                       <img
@@ -119,12 +122,12 @@ export default function Music(props) {
                         <div className="text-xs font-bold whitespace-nowrap">
                           {item.attributes.name}
                         </div>
-                        <div className="text-[10px] text-gray-500 whitespace-nowrap">
+                        <div className={`text-[10px]  ${index === music.findIndex((music) => music.id === currentPlaying.id) ? 'text-gray-100' : 'text-gray-500'} whitespace-nowrap`}>
                           {item.attributes.artistName}
                         </div>
                       </div>
                     </div>
-                    <div className="text-[10px] text-gray-500 text-right">
+                    <div className={`text-[10px] ${index === music.findIndex((music) => music.id === currentPlaying.id) ? 'text-gray-100' : 'text-gray-500'} text-right`}>
                       <span>
                         {index ===
                           music.findIndex(
@@ -142,7 +145,7 @@ export default function Music(props) {
               </div>
             }
             placement="top-start"
-            className="min-w-[50px] mb-1.5 p-0 border text-xs dark:text-white bg-white/50 dark:bg-black backdrop-blur-lg rounded-lg md:rounded-2xl"
+            className="min-w-[50px] mb-2 md:mb-10 p-0 border text-xs dark:text-white bg-white/50 dark:bg-black backdrop-blur-lg rounded-lg md:rounded-2xl"
           >
             <a href={currentPlaying.attributes?.url} target="_blank">
               <img
@@ -168,7 +171,7 @@ export default function Music(props) {
                 </div>
               }
               placement="top-start"
-              className="min-w-[50px] mb-2 md:mb-5 p-0 border text-xs dark:text-white bg-white/50 dark:bg-black backdrop-blur-lg rounded-lg md:rounded-2xl"
+              className="min-w-[50px] mb-5 p-0 border text-xs dark:text-white bg-white/50 dark:bg-black backdrop-blur-lg rounded-lg md:rounded-2xl"
             >
               <a href={currentPlaying.attributes?.url} target="_blank" className="flex flex-col justify-center items-start w-40">
                 <div className="text-sm font-bold text-left dark:text-white">
@@ -179,8 +182,9 @@ export default function Music(props) {
                 </div>
               </a>
             </Tooltip>
-
-            <div className="relative text-right">
+            
+            {/* No longer display player control */}
+            <div className="hidden relative text-right">
               <audio
                 controls
                 muted
