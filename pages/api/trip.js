@@ -57,7 +57,7 @@ export default function (req, res) {
                 ],
                 "source": "pc_h5",
                 "pageNo": 1,
-                "pageSize": 100,
+                "pageSize": 50,
                 "head": {
                     "cver": "1.0",
                     "cid": req.query.cid,

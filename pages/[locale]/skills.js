@@ -83,7 +83,7 @@ export default function Skills(props) {
       bgColor: 'bg-teal-500',
     },
     {
-      name: 'Microsoft SQL Server',
+      name: 'MS SQL Server',
       icons: 'fa-microsoft',
       href: '#',
       bgColor: 'bg-teal-500',
@@ -223,7 +223,7 @@ export default function Skills(props) {
                     'flex-shrink-0 flex items-center justify-center w-20 text-white text-sm font-medium rounded-l-md'
                   )}
                 >
-                  <i className={classNames('fa-brands', cert.icons)}>
+                  <i className={classNames('fab', cert.icons)}>
                     {cert.icons.includes('fa') ? '' : cert.icons}
                   </i>
                 </div>
@@ -248,7 +248,7 @@ export default function Skills(props) {
           </h2>
           <ul
             role="list"
-            className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4"
+            className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5"
           >
             {softwares.map((software) => (
               <li
@@ -261,7 +261,7 @@ export default function Skills(props) {
                     'flex-shrink-0 flex items-center justify-center w-20 text-white text-sm font-medium rounded-l-md'
                   )}
                 >
-                  <i className={classNames('fa-brands', software.icons)}>
+                  <i className={classNames('fab', software.icons)}>
                     {software.icons.includes('fa') ? '' : software.icons}
                   </i>
                 </div>
@@ -282,11 +282,11 @@ export default function Skills(props) {
         </div>
         <div className="mt-10">
           <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
-            {i18n('Languages & Technologies')}*
+            {i18n('Languages & Technologies')}
           </h2>
           <ul
             role="list"
-            className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4"
+            className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5"
           >
             {languages.map((language) => (
               <li
@@ -299,7 +299,7 @@ export default function Skills(props) {
                     'flex-shrink-0 flex items-center justify-center w-20 text-white text-sm font-medium rounded-l-md'
                   )}
                 >
-                  <i className={classNames('fa-brands', language.icons)}>
+                  <i className={classNames('fab', language.icons)}>
                     {language.icons.includes('fa') ? '' : language.icons}
                   </i>
                 </div>
@@ -324,7 +324,7 @@ export default function Skills(props) {
           </h2>
           <ul
             role="list"
-            className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2"
+            className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2 2xl:grid-cols-4"
           >
             {speakWrites.map((speakWrite) => (
               <li
