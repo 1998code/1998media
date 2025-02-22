@@ -22,6 +22,7 @@ export default function Experience(props) {
       date: '2024-NOW',
       textColor: 'text-blue-600 dark:text-blue-100',
       bgColor: 'bg-blue-100 dark:bg-blue-900',
+      borderColor: 'border-blue-600 dark:border-blue-100',
       icon: 'fa fa-list-check',
     },
     {
@@ -32,6 +33,7 @@ export default function Experience(props) {
       date: '2023-2024',
       textColor: 'text-blue-600 dark:text-blue-100',
       bgColor: 'bg-blue-100 dark:bg-blue-900',
+      borderColor: 'border-blue-600 dark:border-blue-100',
       icon: 'fa fa-code',
     },
     {
@@ -42,6 +44,7 @@ export default function Experience(props) {
       date: '2021-2023',
       textColor: 'text-blue-600 dark:text-blue-100',
       bgColor: 'bg-blue-100 dark:bg-blue-900',
+      borderColor: 'border-blue-600 dark:border-blue-100',
       icon: 'fa fa-code',
     },
 
@@ -51,8 +54,9 @@ export default function Experience(props) {
       location: '🌐 Remote',
       description: 'Contribute open source project',
       date: '2024',
-      textColor: 'text-green-600 dark:text-green-100',
-      bgColor: 'bg-green-100 dark:bg-green-900',
+      textColor: 'text-teal-600 dark:text-teal-100',
+      bgColor: 'bg-teal-100 dark:bg-teal-900',
+      borderColor: 'border-teal-600 dark:border-teal-100',
       icon: 'far fa-envelope-circle-check',
     },
     {
@@ -61,8 +65,9 @@ export default function Experience(props) {
       location: '🌐 Remote, Japan',
       description: 'Contribute open source web project',
       date: '2024',
-      textColor: 'text-green-600 dark:text-green-100',
-      bgColor: 'bg-green-100 dark:bg-green-900',
+      textColor: 'text-teal-600 dark:text-teal-100',
+      bgColor: 'bg-teal-100 dark:bg-teal-900',
+      borderColor: 'border-teal-600 dark:border-teal-100',
       icon: 'far fa-rectangle',
     },
     {
@@ -71,8 +76,9 @@ export default function Experience(props) {
       location: '🌐 Remote',
       description: 'Contribute open source iOS project',
       date: '2024',
-      textColor: 'text-green-600 dark:text-green-100',
-      bgColor: 'bg-green-100 dark:bg-green-900',
+      textColor: 'text-teal-600 dark:text-teal-100',
+      bgColor: 'bg-teal-100 dark:bg-teal-900',
+      borderColor: 'border-teal-600 dark:border-teal-100',
       icon: 'fab fa-google',
     },
     {
@@ -81,8 +87,9 @@ export default function Experience(props) {
       location: '🌐 Remote',
       description: 'Contribute open source iOS project',
       date: '2024',
-      textColor: 'text-green-600 dark:text-green-100',
-      bgColor: 'bg-green-100 dark:bg-green-900',
+      textColor: 'text-teal-600 dark:text-teal-100',
+      bgColor: 'bg-teal-100 dark:bg-teal-900',
+      borderColor: 'border-teal-600 dark:border-teal-100',
       icon: 'fab fa-google',
     },
     {
@@ -91,8 +98,9 @@ export default function Experience(props) {
       location: '🌐 Remote, United Kingdom',
       description: 'Contribute open source database project',
       date: '2022',
-      textColor: 'text-green-600 dark:text-green-100',
-      bgColor: 'bg-green-100 dark:bg-green-900',
+      textColor: 'text-teal-600 dark:text-teal-100',
+      bgColor: 'bg-teal-100 dark:bg-teal-900',
+      borderColor: 'border-teal-600 dark:border-teal-100',
       icon: 'far fa-database',
     },
     {
@@ -101,8 +109,9 @@ export default function Experience(props) {
       location: '🌐 Remote, Australia',
       description: 'BitBucket.org Team',
       date: '2020-2021',
-      textColor: 'text-green-600 dark:text-green-100',
-      bgColor: 'bg-green-100 dark:bg-green-900',
+      textColor: 'text-teal-600 dark:text-teal-100',
+      bgColor: 'bg-teal-100 dark:bg-teal-900',
+      borderColor: 'border-teal-600 dark:border-teal-100',
       icon: 'fab fa-atlassian',
     },
     {
@@ -112,8 +121,9 @@ export default function Experience(props) {
       description:
         'Contribute open source project with Tokyo Metropolitan Government and Code of Japan Team',
       date: '2020-2021',
-      textColor: 'text-green-600 dark:text-green-100',
-      bgColor: 'bg-green-100 dark:bg-green-900',
+      textColor: 'text-teal-600 dark:text-teal-100',
+      bgColor: 'bg-teal-100 dark:bg-teal-900',
+      borderColor: 'border-teal-600 dark:border-teal-100',
       icon: 'far fa-virus',
     },
 
@@ -124,8 +134,9 @@ export default function Experience(props) {
       description:
         'Provide professional advice on cross platform development and design',
       date: '2024-NOW',
-      textColor: 'text-orange-600 dark:text-orange-100',
-      bgColor: 'bg-orange-100 dark:bg-orange-900',
+      textColor: 'text-amber-600 dark:text-amber-100',
+      bgColor: 'bg-amber-100 dark:bg-amber-900',
+      borderColor: 'border-amber-600 dark:border-amber-100',
       icon: 'far fa-square',
     },
     {
@@ -134,8 +145,9 @@ export default function Experience(props) {
       location: '🌐 Remote',
       description: '3D Design + Photography',
       date: '2022-NOW',
-      textColor: 'text-orange-600 dark:text-orange-100',
-      bgColor: 'bg-orange-100 dark:bg-orange-900',
+      textColor: 'text-amber-600 dark:text-amber-100',
+      bgColor: 'bg-amber-100 dark:bg-amber-900',
+      borderColor: 'border-amber-600 dark:border-amber-100',
       icon: 'far fa-image',
     },
     {
@@ -145,8 +157,9 @@ export default function Experience(props) {
       description:
         'Write easy to understand tutorials that help thousands of developers',
       date: '2020-NOW',
-      textColor: 'text-orange-600 dark:text-orange-100',
-      bgColor: 'bg-orange-100 dark:bg-orange-900',
+      textColor: 'text-amber-600 dark:text-amber-100',
+      bgColor: 'bg-amber-100 dark:bg-amber-900',
+      borderColor: 'border-amber-600 dark:border-amber-100',
       icon: 'far fa-pen',
     },
     {
@@ -156,8 +169,9 @@ export default function Experience(props) {
       description:
         'Build and publish app for iOS, iPadOS, watchOS, and macOS platforms',
       date: '2020-NOW',
-      textColor: 'text-orange-600 dark:text-orange-100',
-      bgColor: 'bg-orange-100 dark:bg-orange-900',
+      textColor: 'text-amber-600 dark:text-amber-100',
+      bgColor: 'bg-amber-100 dark:bg-amber-900',
+      borderColor: 'border-amber-600 dark:border-amber-100',
       icon: 'fab fa-apple',
     },
     {
@@ -167,8 +181,9 @@ export default function Experience(props) {
       description:
         'Start Freelance works on different platforms (Adobe Stock, Behance, Dribbble)',
       date: '2019-NOW',
-      textColor: 'text-orange-600 dark:text-orange-100',
-      bgColor: 'bg-orange-100 dark:bg-orange-900',
+      textColor: 'text-amber-600 dark:text-amber-100',
+      bgColor: 'bg-amber-100 dark:bg-amber-900',
+      borderColor: 'border-amber-600 dark:border-amber-100',
       icon: 'fa fa-compass-drafting',
     },
 
@@ -178,8 +193,9 @@ export default function Experience(props) {
       location: '🇭🇰 Hong Kong',
       description: 'Data analytics and visualisation',
       date: '2020-2021',
-      textColor: 'text-pink-600 dark:text-pink-100',
-      bgColor: 'bg-pink-100 dark:bg-pink-900',
+      textColor: 'text-slate-600 dark:text-slate-100',
+      bgColor: 'bg-slate-100 dark:bg-slate-900',
+      borderColor: 'border-slate-600 dark:border-slate-100',
       icon: 'far fa-chart-bar',
     },
     {
@@ -189,8 +205,9 @@ export default function Experience(props) {
       description:
         'Participate in Artificial Intelligence (A.I.) and Natural Language Processing (N.L.P) research field',
       date: '2020-2021',
-      textColor: 'text-pink-600 dark:text-pink-100',
-      bgColor: 'bg-pink-100 dark:bg-pink-900',
+      textColor: 'text-slate-600 dark:text-slate-100',
+      bgColor: 'bg-slate-100 dark:bg-slate-900',
+      borderColor: 'border-slate-600 dark:border-slate-100',
       icon: 'far fa-robot',
     },
     {
@@ -200,8 +217,9 @@ export default function Experience(props) {
       description:
         "Develop website & design booklet for University's Language Scolar Program",
       date: '2020-2021',
-      textColor: 'text-pink-600 dark:text-pink-100',
-      bgColor: 'bg-pink-100 dark:bg-pink-900',
+      textColor: 'text-slate-600 dark:text-slate-100',
+      bgColor: 'bg-slate-100 dark:bg-slate-900',
+      borderColor: 'border-slate-600 dark:border-slate-100',
       icon: 'far fa-book',
     },
   ];
@@ -250,14 +268,11 @@ export default function Experience(props) {
                         {i18n(position.title)}
                       </div>
                       <div className="ml-2 flex-shrink-0 flex items-center gap-1">
-                        <p
-                          className={`border px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${position.textColor} ${position.bgColor}`}
+                        <div
+                          className={`border px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${position.textColor} ${position.bgColor} ${position.borderColor}`}
                         >
                           {i18n(position.type)}
-                        </p>
-                        {/* <i
-                          className={`far fa-circle-info ${position.textColor} dark:text-white`}
-                        /> */}
+                        </div>
                       </div>
                     </div>
                     <div className="!hidden mt-2 group-hover:!flex flex-wrap justify-between text-xs">
