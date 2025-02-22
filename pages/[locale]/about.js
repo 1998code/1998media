@@ -11,7 +11,7 @@ export default function About(props) {
     <div id="about" className="max-w-7xl mx-auto pt-16 pb-32">
       <div className="px-4 py-16 sm:px-6 lg:px-8 bg-orange-200 dark:bg-orange-800 bg-opacity-50 xl:rounded-xl" >
         <div className="lg:flex flex-col lg:flex-row gap-3 lg:gap-8 items-center min-h-[75vh]">
-          <h2 className="-mt-0 lg:-mt-32 min-w-[36%] mx-auto text-3xl font-extrabold text-orange-900 dark:text-orange-100 text-center lg:text-left">
+          <h2 className="-mt-0 lg:-mt-32 min-w-[36%] mx-auto text-3xl font-extrabold text-orange-900 dark:text-orange-100 text-center lg:text-left lg:min-w-[50%]">
             <img
               src="https://cdn.1998.media/favicon24.jpg"
               className="rounded-full w-24 h-24"
@@ -25,8 +25,9 @@ export default function About(props) {
             <br/>
             {i18n('leading on')}{' '}
             <span className="text-teal-700 dark:text-orange-300">
-              <i className="far fa-sidebar"></i> {i18n('UI Design,')}{' '}
-              {i18n('and')}{' '}<br/>
+              <i className="far fa-sidebar"></i> {i18n('UI Design,')}
+              <br/>
+              {i18n('and')}{' '}
               <i className="far fa-command"></i> {i18n('App Development')}{i18n('.')}
             </span>
             <br />
@@ -41,7 +42,7 @@ export default function About(props) {
                 {i18n('unlimited')}
               </span>{' '}
               {i18n('creativity')} <i className="far fa-paintbrush-pencil"></i> ,{' '}
-              {i18n('growing from a great IT environment.')}
+              {i18n('growing from a great IT environment')}{i18n('.')}
             </div>
           </h2>
           <div className="-ml-8 flex flex-wrap lg:flex-col lg:-ml-4 space-y-3">
