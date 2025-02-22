@@ -20,7 +20,7 @@ export default function Credits(props) {
         {i18n('Special Thanks')}
       </h2>
       <div className="flex flex-wrap gap-3">
-        <a href="https://vercel.com/?utm_source=1998code&utm_campaign=oss">
+        <a href="https://vercel.com/?utm_source=1998code&utm_campaign=oss" target="_blank">
           <Image
             className="h-10 rounded-lg border border-black dark:border-white"
             src="https://cdn.1998.media/logos/Vercel.svg"
@@ -29,7 +29,7 @@ export default function Credits(props) {
             height={40}
           />
         </a>
-        <a href="https://betteruptime.com/?ref=i41">
+        <a href="https://betteruptime.com/?ref=i41" target="_blank">
           <Image
             className="h-10 rounded-lg p-2 border border-black dark:border-white dark:bg-white"
             src="https://cdn.1998.media/logos/BetterUptime.png"
@@ -38,7 +38,7 @@ export default function Credits(props) {
             height={40}
           />
         </a>
-        <div>
+        <a href="https://docsearch.algolia.com/?ref=1998.media" target="_blank">
           <Image
             className="h-10 rounded-lg bg-white p-2 dark:hidden border border-black"
             src="https://docsearch.algolia.com/img/docsearch-logo.svg"
@@ -53,8 +53,8 @@ export default function Credits(props) {
             width={150}
             height={40}
           />
-        </div>
-        <a href="https://www.digitalocean.com/?refcode=ce873177d9ab&utm_medium=opensource">
+        </a>
+        <a href="https://www.digitalocean.com/?refcode=ce873177d9ab&utm_medium=opensource" target="_blank">
           <Image
             className="h-10 rounded-lg bg-white p-2 border border-black"
             src="https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/SVG/DO_Logo_icon_blue.svg"

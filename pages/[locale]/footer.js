@@ -50,6 +50,11 @@ export default function Footer(props) {
         href: 'https://www.youtube.com/@MingsExplorer',
         icon: (props) => <i className="fab fa-youtube fa-xl" />,
       },
+      {
+        name: 'Tiktok',
+        href: 'https://www.tiktok.com/@ming.explorer',
+        icon: (props) => <i className="fab fa-tiktok fa-xl" />,
+      },
     ],
   };
 
@@ -97,7 +102,7 @@ export default function Footer(props) {
           </span>
           <br />
           <span className="text-gray-600 dark:text-gray-400 text-sm">
-            {i18n('Since')} 2020 | {diffYearNDay}
+            {diffYearNDay} | {i18n('Since')} 2020{i18n('.')}
           </span>
         </div>
         {ip && (
