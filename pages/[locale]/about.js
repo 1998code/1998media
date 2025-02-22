@@ -36,12 +36,13 @@ export default function About(props) {
               {i18n('As an')} <i className="far fa-person-to-portal"></i>{' '}
               <span className="border-b-2 border-orange-500">
                 {i18n('outgoing & motivated')}
-              </span>{' '}
+              </span>
+              <br />
               <i className="far fa-person-from-portal"></i> {i18n('person with')}{' '}
               <span className="underline decoration-orange-500 decoration-wavy decoration-2">
                 {i18n('unlimited')}
               </span>{' '}
-              {i18n('creativity')} <i className="far fa-paintbrush-pencil"></i> ,{' '}
+              {i18n('creativity')} <i className="far fa-paintbrush-pencil"></i> {i18n(',')}<br/>
               {i18n('growing from a great IT environment')}{i18n('.')}
             </div>
           </h2>
