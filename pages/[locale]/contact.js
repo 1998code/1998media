@@ -18,13 +18,13 @@ export default function Contact(props) {
       className="relative py-16"
     >
       <div
-        className="hidden absolute top-0 inset-x-0 h-1/2 lg:block"
+        className="hidden absolute top-0 inset-x-0 h-1/2 md:block"
         aria-hidden="true"
       />
-      <div className="max-w-7xl mx-auto bg-orange-600 lg:bg-transparent lg:px-8">
-        <div className="lg:grid lg:grid-cols-12">
-          <div className="relative z-10 lg:col-start-1 lg:row-start-1 lg:col-span-4 lg:py-16 lg:bg-transparent">
-            <div className="mx-auto px-4 pt-8 sm:px-6 lg:p-0">
+      <div className="max-w-7xl mx-auto bg-orange-600 md:bg-transparent md:px-8">
+        <div className="md:grid md:grid-cols-12">
+          <div className="relative z-10 md:col-start-1 md:row-start-1 md:col-span-4 md:py-16 md:bg-transparent">
+            <div className="mx-auto px-4 pt-8 sm:px-6 md:p-0">
               <div className="aspect-w-1 aspect-h-1">
                 <Tooltip
                   content="Powered by Apple Map"
@@ -32,16 +32,16 @@ export default function Contact(props) {
                   className="p-1 mt-2 border text-xs dark:text-white bg-white dark:bg-black rounded-lg"
                 >
                   <img
-                    className="object-cover object-center rounded-xl lg:rounded-3xl shadow-2xl hover:scale-105 transition duration-500"
+                    className="object-cover object-center rounded-xl md:rounded-3xl shadow-2xl hover:scale-105 transition duration-500"
                     src="https://snapshot.apple-mapkit.com/api/v1/snapshot?center=22.34501591896432%2C114.17990720272064&t=standard&scale=1&spn=0.3175427580212222%2C0.34332275390625&size=500x500&lang=en-US&poi=0&annotations=%5B%7B%22point%22%3A%2222.428117752075195%2C114.208251953125%22%2C%22markerStyle%22%3A%22large%22%2C%22color%22%3A%22006d8f%22%2C%22glyphText%22%3A%22S%22%7D%2C%7B%22point%22%3A%2222.30408477783203%2C114.17972564697266%22%2C%22markerStyle%22%3A%22balloon%22%2C%22color%22%3A%22b92d5d%22%2C%22glyphText%22%3A%22P%22%7D%2C%7B%22point%22%3A%2222.336124420166016%2C114.1732177734375%22%2C%22markerStyle%22%3A%22balloon%22%2C%22color%22%3A%22e63b7a%22%2C%22glyphText%22%3A%22C%22%7D%5D&teamId=9PAHLTG8AD&keyId=FD3N2TP9F5&signature=7EQjssZqx9iYI1uJYqBU8ZDgqHPJrbZadAfT8G6rTwXM2l08vy6XREcWCWOk4gWLeQUIC80SUJLz8ZE0pqlC1w"
                   />
                 </Tooltip>
               </div>
             </div>
           </div>
-          <div className="relative bg-orange-600 lg:col-start-3 lg:row-start-1 lg:col-span-10 lg:rounded-3xl lg:grid lg:grid-cols-10 lg:items-center">
+          <div className="relative bg-orange-600 md:col-start-3 md:row-start-1 md:col-span-10 md:rounded-3xl md:grid md:grid-cols-10 md:items-center">
             <div
-              className="hidden absolute inset-0 overflow-hidden rounded-3xl lg:block"
+              className="hidden absolute inset-0 overflow-hidden rounded-3xl md:block"
               aria-hidden="true"
             >
               <svg
@@ -111,7 +111,7 @@ export default function Contact(props) {
                 />
               </svg>
             </div>
-            <div className="relative mx-auto py-12 px-4 space-y-6 sm:py-16 sm:px-6 lg:p-0 lg:col-start-4 lg:col-span-6">
+            <div className="relative mx-auto py-12 px-4 space-y-6 sm:py-16 sm:px-6 md:p-0 md:col-start-4 md:col-span-6">
               <h2 className="text-3xl font-extrabold text-white" id="contact">
                 {i18n('Contact')}
               </h2>
@@ -149,7 +149,7 @@ export default function Contact(props) {
       {/* China Only */}
       {
         typeof window !== 'undefined' && document.location.href.includes('zh-CN') && (
-          <a href="https://www.xiaohongshu.com/user/profile/6662438f00000000030300c4" target="_blank" className="relative block w-full mt-6 text-center md:text-right max-w-7xl mx-auto sm:px-6 lg:px-8">
+          <a href="https://www.xiaohongshu.com/user/profile/6662438f00000000030300c4" target="_blank" className="relative block w-full mt-6 text-center md:text-right max-w-7xl mx-auto sm:px-6 md:px-8">
             <img className="rounded-3xl max-w-[500px]" src="https://cdn.1998.media/banners/Xiaohongshu.jpg" />
           </a>
         )

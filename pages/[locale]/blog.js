@@ -166,15 +166,15 @@ export default function Blog(props) {
                 <div className="flex-1 p-6 flex flex-col justify-between">
                   <div className=" text-gray-400 text-xs">
                     <i className="far fa-calendar mr-1"></i>
-                    <time dateTime={new Date(post.published).toISOString().split('T')[0]}>
-                      {new Date(post.published).toISOString().split('T')[0]}
+                    <time dateTime={new Date(post.pubDate).toISOString().split('T')[0]}>
+                      {new Date(post.pubDate).toISOString().split('T')[0]}
                     </time>
                   </div>
                   <div className="flex-1 mt-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
                     {post.title}
                   </div>
                   <span className="text-sm font-medium text-orange-600 space-x-2 mt-3">
-                    {post.category.map((category, index) => {
+                    {post.categories.map((category, index) => {
                       let level = 1;
                       for (let i = 0; i < index; i++) {
                         level -= 0.1;
