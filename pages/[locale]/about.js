@@ -32,7 +32,7 @@ export default function About(props) {
             </span>
             <br />
             <br />
-            <div class="opacity-85">
+            <div className="opacity-85">
               {i18n('As an')} <i className="far fa-person-to-portal"></i>{' '}
               <span className="border-b-2 border-orange-500">
                 {i18n('outgoing & motivated')}
@@ -42,11 +42,12 @@ export default function About(props) {
               <span className="underline decoration-orange-500 decoration-wavy decoration-2">
                 {i18n('unlimited')}
               </span>{' '}
-              {i18n('creativity')} <i className="far fa-paintbrush-pencil"></i> {i18n(',')}<br/>
+              {i18n('creativity')} <i className="far fa-paintbrush-pencil"></i> {i18n(',')}
+              <br/>
               {i18n('growing from a great IT environment')}{i18n('.')}
             </div>
           </h2>
-          <div className="-ml-8 flex flex-wrap lg:flex-col lg:-ml-4 space-y-3">
+          <div className="mt-8 lg:mt-0 flex flex-wrap lg:flex-col space-y-3">
             <div className="mt-4 ml-8 flex flex-grow flex-shrink-0 justify-center lg:items-center lg:ml-4">
               <img
                 className="h-24 dark:hidden"

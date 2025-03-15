@@ -232,7 +232,7 @@ export default function Home() {
         {/* <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script> */}
         <script
           type="module"
-          src="https://unpkg.com/@splinetool/viewer/build/spline-viewer.js"
+          src="https://cdn.jsdelivr.net/npm/@splinetool/viewer@1.9.79/build/spline-viewer.min.js"
           defer
         ></script>
         <script

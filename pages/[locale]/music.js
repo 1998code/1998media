@@ -102,7 +102,7 @@ export default function Music(props) {
               <div className="flex flex-col max-h-[50vh] overflow-auto">
                 <div className="flex items-start justify-between text-sm md:text-2xl font-bold dark:text-white p-2">
                   {i18n('My Recent Playlist')} {' '}
-                  <span class="text-red-600 text-sm">{i18n(' Music')}</span>
+                  <span className="text-red-600 text-sm">{i18n(' Music')}</span>
                 </div>
                 {music.map((item, index) => (
                   <a
@@ -144,7 +144,7 @@ export default function Music(props) {
                 ))}
               </div>
             }
-            placement="top-start"
+            placement="top-center"
             className="min-w-[50px] mb-2 md:mb-10 p-0 border text-xs dark:text-white bg-white/50 dark:bg-black backdrop-blur-lg rounded-lg md:rounded-2xl"
           >
             <a href={currentPlaying.attributes?.url} target="_blank">
@@ -170,7 +170,7 @@ export default function Music(props) {
                   </div>
                 </div>
               }
-              placement="top-start"
+              placement="top-center"
               className="min-w-[50px] mb-5 p-0 border text-xs dark:text-white bg-white/50 dark:bg-black backdrop-blur-lg rounded-lg md:rounded-2xl"
             >
               <a href={currentPlaying.attributes?.url} target="_blank" className="flex flex-col justify-center items-start w-40">
