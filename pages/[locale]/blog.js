@@ -13,28 +13,13 @@ export default function Blog(props) {
       : key;
   }
 
-  // const topPromo = {
-  //   title: i18n('Get $10 OFF on Trip.com'),
-  //   published: new Date(),
-  //   link: 'https://hk.trip.com/sale/4283/referee.html?locale=zh-HK&referCode=5253C1995FB313ED993BC64A068BDABA',
-  //   guid: 'https://hk.trip.com/sale/4283/referee.html?locale=zh-HK&referCode=5253C1995FB313ED993BC64A068BDABA',
-  //   author: 'MING',
-  //   // "thumbnail": "https://scontent-vie1-1.xx.fbcdn.net/v/t39.30808-6/276300699_5834005769959881_8535075502349926768_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=YJAM-OTlB0MQ7kNvgEznQBD&_nc_ht=scontent-vie1-1.xx&oh=00_AYBD9SJKSzi0uxF_T0G7LaSB-mSqM7GYZ7v--IK7p5HxIw&oe=6650E2F1",
-  //   thumbnail: i18n(
-  //     'https://ak-d.tripcdn.com/images/0a14l12000aqs8zq3AC37.jpg_.webp'
-  //   ),
-  //   description: '',
-  //   content: '',
-  //   enclosure: {},
-  //   category: ['Trip.com', 'Promotion', 'Discount', 'Featured'],
-  // };
-
   const [payWallURL, setPayWallURL] = useState(false);
   const [blogs, setBlogs] = useState([]);
   useEffect(() => {
     getBlog();
 
-    setPayWallURL(`${window.location.pathname}/paywall`);
+    // setPayWallURL(`${window.location.pathname}/paywall`);
+    setPayWallURL(`https://post.1998.media`);
   }, []);
   function getBlog() {
     axios
@@ -202,16 +187,14 @@ export default function Blog(props) {
             ))}
         </div>
         <div className="text-center flex flex-wrap items-center gap-3">
-          {/* <a
+          <a
             href={payWallURL}
             className="flex-1 block text-lg font-semibold text-white whitespace-nowrap bg-teal-600 hover:bg-teal-500 p-3 rounded-lg transition-all"
             target="_blank"
           >
             <i className="fa fa-circle-dollar mr-2"></i>
-            {i18n('Subscribe with $2.99 per month')} ({i18n('Coming Soon')})
-          </a> */}
-
-          {/* md:flex-none deleted */}
+            {i18n('Subscribe with $4.99 per month')}
+          </a>
           <a
             href="https://blog.1998.media"
             className="flex-1 block text-lg font-semibold text-white whitespace-nowrap bg-orange-600 hover:bg-orange-500 p-3 rounded-lg transition-all"
@@ -223,6 +206,7 @@ export default function Blog(props) {
           </a>
         </div>
       </div>
+
       {/* Moments */}
       <div id="trip" className="relative max-w-7xl mx-auto space-y-8 pt-16">
         <div className="text-left flex flex-wrap">

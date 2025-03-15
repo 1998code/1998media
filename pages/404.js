@@ -6,7 +6,7 @@ export default function Custom404() {
       title: 'Blog',
       description: 'Read the latest articles',
       icon: 'fas fa-square-rss',
-      url: 'https://blog.1998.media',
+      url: 'https://post.1998.media',
     },
   ];
 
