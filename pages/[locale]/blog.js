@@ -21,11 +21,11 @@ export default function Blog(props) {
   }, []);
   function getBlog() {
     axios
-      .get( '/api/post' )
+      .get('/api/post')
       .then((res) => {
         setBlogs([
-          // topPromo, 
-          ...res.data.items
+          // topPromo,
+          ...res.data.items,
         ]);
       })
       .catch((err) => {
@@ -53,7 +53,9 @@ export default function Blog(props) {
 
   function getMedals() {
     axios
-      .post(`/api/trip?type=medal&cid=09031029418990699836&locale=${window.location.pathname.split('#')[0].replace('/', '')}`)
+      .post(
+        `/api/trip?type=medal&cid=09031029418990699836&locale=${window.location.pathname.split('#')[0].replace('/', '')}`
+      )
       .then((res) => {
         setMedals(res.data.medalList);
       })
@@ -70,7 +72,8 @@ export default function Blog(props) {
 
   const tripPromo = {
     title: i18n('「Global」Get $10 OFF on Trip.com'),
-    shareURL: 'https://hk.trip.com/sale/4283/referee.html?locale=zh-HK&referCode=5253C1995FB313ED993BC64A068BDABA',
+    shareURL:
+      'https://hk.trip.com/sale/4283/referee.html?locale=zh-HK&referCode=5253C1995FB313ED993BC64A068BDABA',
     coverURL: i18n(
       'https://ak-d.tripcdn.com/images/0a14l12000aqs8zq3AC37.jpg_.webp'
     ),
@@ -79,12 +82,11 @@ export default function Blog(props) {
 
   function getMoment() {
     axios
-      .post(`/api/trip?type=moment&cid=09031029418990699836&locale=${window.location.pathname.split('#')[0].replace('/', '')}`)
+      .post(
+        `/api/trip?type=moment&cid=09031029418990699836&locale=${window.location.pathname.split('#')[0].replace('/', '')}`
+      )
       .then((res) => {
-        setMoment([
-          tripPromo,
-          ...res.data.resourceBlockList.slice(0, 5)
-        ]);
+        setMoment([tripPromo, ...res.data.resourceBlockList.slice(0, 5)]);
       })
       .catch((err) => {
         console.log(err);
@@ -93,8 +95,7 @@ export default function Blog(props) {
 
   useEffect(() => {
     getMoment();
-  }
-    , []);
+  }, []);
 
   return (
     <div
@@ -129,17 +130,29 @@ export default function Blog(props) {
             })
             .slice(0, 6)
             .map((post) => (
-              <a key={post.title} href={post.link} target="_blank"
+              <a
+                key={post.title}
+                href={post.link}
+                target="_blank"
                 className="flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight"
               >
                 <div className="flex-shrink-0">
-                  <img loading="lazy" className="h-64 w-full object-cover" src={ post.enclosure.link } alt={post.title} />
+                  <img
+                    loading="lazy"
+                    className="h-64 w-full object-cover"
+                    src={post.enclosure.link}
+                    alt={post.title}
+                  />
                   <div className="invisible dark:visible absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black h-64"></div>
                 </div>
                 <div className="flex-1 p-6 flex flex-col justify-between">
                   <div className=" text-gray-400 text-xs">
                     <i className="far fa-calendar mr-1"></i>
-                    <time dateTime={new Date(post.pubDate).toISOString().split('T')[0]}>
+                    <time
+                      dateTime={
+                        new Date(post.pubDate).toISOString().split('T')[0]
+                      }
+                    >
                       {new Date(post.pubDate).toISOString().split('T')[0]}
                     </time>
                   </div>
@@ -198,7 +211,12 @@ export default function Blog(props) {
                 placement="bottom"
                 className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg"
               >
-                <img loading="lazy" src={medal.medalStageIcon} alt={medal.medalStageName} className="h-16 w-16 hover:scale-105 transition-all" />
+                <img
+                  loading="lazy"
+                  src={medal.medalStageIcon}
+                  alt={medal.medalStageName}
+                  className="h-16 w-16 hover:scale-105 transition-all"
+                />
               </Tooltip>
             ))}
           </div>
@@ -212,42 +230,48 @@ export default function Blog(props) {
           </a>
         </div>
         <div className="mx-auto grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {moment && moment.map((post) => (
-            <a href={post.shareURL} target="_blank"
-              key={post.translateTitle || post.title}
-              className="flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight"
-            >
-              <div className="flex-shrink-0">
-                <img loading="lazy"
-                  className="h-64 w-full object-cover"
-                  src={post.coverURL}
-                  alt={post.translateTitle || post.title}
-                />
-                <div className="invisible dark:visible absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black h-64"></div>
-              </div>
-              <div className="flex-1 p-6 flex flex-col justify-between">
-                <div className=" text-gray-400 text-xs">
-                  <i className="far fa-calendar mr-1"></i>
-                  <time dateTime={new Date(post.publishTime).toISOString().split('T')[0]}>
-                    {new Date(post.publishTime).toISOString().split('T')[0]}
-                  </time>
-                  {!post.translateTitle && (
-                    <span>
-                      <i className="far fa-map-marker-alt ml-2 mr-1"></i>
-                      {post.title.split('「')[1].split('」')[0]}
-                    </span>
-                  )}
+          {moment &&
+            moment.map((post) => (
+              <a
+                href={post.shareURL}
+                target="_blank"
+                key={post.translateTitle || post.title}
+                className="flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight"
+              >
+                <div className="flex-shrink-0">
+                  <img
+                    loading="lazy"
+                    className="h-64 w-full object-cover"
+                    src={post.coverURL}
+                    alt={post.translateTitle || post.title}
+                  />
+                  <div className="invisible dark:visible absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black h-64"></div>
                 </div>
-                <div className="flex-1">
-                  <div
-                    className="mt-2 text-xl font-semibold text-gray-900 dark:text-gray-100"
-                  >
-                    {post.translateTitle || post.title.split('」')[1]}
+                <div className="flex-1 p-6 flex flex-col justify-between">
+                  <div className=" text-gray-400 text-xs">
+                    <i className="far fa-calendar mr-1"></i>
+                    <time
+                      dateTime={
+                        new Date(post.publishTime).toISOString().split('T')[0]
+                      }
+                    >
+                      {new Date(post.publishTime).toISOString().split('T')[0]}
+                    </time>
+                    {!post.translateTitle && (
+                      <span>
+                        <i className="far fa-map-marker-alt ml-2 mr-1"></i>
+                        {post.title.split('「')[1].split('」')[0]}
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex-1">
+                    <div className="mt-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
+                      {post.translateTitle || post.title.split('」')[1]}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </a>
-          ))}
+              </a>
+            ))}
         </div>
       </div>
     </div>

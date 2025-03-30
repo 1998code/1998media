@@ -18,19 +18,97 @@ export default function Achievements(props) {
   }
 
   const achievements = [
-    { year: '2024', title: 'Developer Tools in Maldives', rank: '#1', flag: '🇲🇻', color: 'text-cyan-600' },
-    { year: '2024', title: 'Developer Tools in Taiwan', rank: '#1', flag: '🇹🇼', color: 'text-cyan-600' },
-    { year: '2024', title: 'Developer Tools in Hong Kong', rank: '#1', flag: '🇭🇰', color: 'text-cyan-600' },
-    { year: '2023', title: 'Developer Tools in the United Kingdom', rank: '#1', flag: '🇬🇧', color: 'text-cyan-600' },
-    { year: '2023', title: 'Developer Tools in the United States', rank: '#1', flag: '🇺🇸', color: 'text-cyan-600' },
-    { year: '2023', title: 'Developer Tools in Canada', rank: '#1', flag: '🇨🇦', color: 'text-blue-600' },
-    { year: '2022', title: 'Graphics & Design App in Uzbekistan', rank: '#1', flag: '🇺🇿', color: 'text-sky-600' },
-    { year: '2022', title: 'Developer Tools in Kuwait', rank: '#1', flag: '🇰🇼', color: 'text-pink-600' },
-    { year: '2022', title: 'Developer Tools in Taiwan', rank: '#1', flag: '🇹🇼', color: 'text-green-600' },
-    { year: '2022', title: 'Developer Tools in Canada', rank: '#1', flag: '🇨🇦', color: 'text-blue-600' },
-    { year: '2021', title: 'Developer Tools in the United States', rank: '#1', flag: '🇺🇸', color: 'text-cyan-600' },
-    { year: '2021', title: 'Apple Worldwide Developers Conference (WWDC)', rank: 'Winner', flag: '', color: 'text-orange-600 dark:text-orange-300' },
-    { year: 'Since 2020', title: 'Paid Apps in Different Categories Globally', rank: 'Top-100', flag: '', color: 'text-teal-600' },
+    {
+      year: '2024',
+      title: 'Developer Tools in Maldives',
+      rank: '#1',
+      flag: '🇲🇻',
+      color: 'text-cyan-600',
+    },
+    {
+      year: '2024',
+      title: 'Developer Tools in Taiwan',
+      rank: '#1',
+      flag: '🇹🇼',
+      color: 'text-cyan-600',
+    },
+    {
+      year: '2024',
+      title: 'Developer Tools in Hong Kong',
+      rank: '#1',
+      flag: '🇭🇰',
+      color: 'text-cyan-600',
+    },
+    {
+      year: '2023',
+      title: 'Developer Tools in the United Kingdom',
+      rank: '#1',
+      flag: '🇬🇧',
+      color: 'text-cyan-600',
+    },
+    {
+      year: '2023',
+      title: 'Developer Tools in the United States',
+      rank: '#1',
+      flag: '🇺🇸',
+      color: 'text-cyan-600',
+    },
+    {
+      year: '2023',
+      title: 'Developer Tools in Canada',
+      rank: '#1',
+      flag: '🇨🇦',
+      color: 'text-blue-600',
+    },
+    {
+      year: '2022',
+      title: 'Graphics & Design App in Uzbekistan',
+      rank: '#1',
+      flag: '🇺🇿',
+      color: 'text-sky-600',
+    },
+    {
+      year: '2022',
+      title: 'Developer Tools in Kuwait',
+      rank: '#1',
+      flag: '🇰🇼',
+      color: 'text-pink-600',
+    },
+    {
+      year: '2022',
+      title: 'Developer Tools in Taiwan',
+      rank: '#1',
+      flag: '🇹🇼',
+      color: 'text-green-600',
+    },
+    {
+      year: '2022',
+      title: 'Developer Tools in Canada',
+      rank: '#1',
+      flag: '🇨🇦',
+      color: 'text-blue-600',
+    },
+    {
+      year: '2021',
+      title: 'Developer Tools in the United States',
+      rank: '#1',
+      flag: '🇺🇸',
+      color: 'text-cyan-600',
+    },
+    {
+      year: '2021',
+      title: 'Apple Worldwide Developers Conference (WWDC)',
+      rank: 'Winner',
+      flag: '',
+      color: 'text-orange-600 dark:text-orange-300',
+    },
+    {
+      year: 'Since 2020',
+      title: 'Paid Apps in Different Categories Globally',
+      rank: 'Top-100',
+      flag: '',
+      color: 'text-teal-600',
+    },
   ];
 
   const unsplashPublicKey = 'hjm0tzh_dDQx2REubp1NiT1P4jxE5wmnCbKQLbD-BZ8';
@@ -104,7 +182,8 @@ export default function Achievements(props) {
         data-aos-once
         className="relative px-4 sm:px-6 lg:px-8"
       >
-        <img loading="lazy"
+        <img
+          loading="lazy"
           src="https://cdn.1998.media/bgs/App.png"
           className="absolute -z-[1] w-[25vw] top-14 -right-16"
         />
@@ -141,22 +220,27 @@ export default function Achievements(props) {
                     <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
                       {i18n(achievement.title)} {achievement.flag}
                     </dt>
-                    <dd className={`order-1 text-5xl font-extrabold ${achievement.color}`}>
+                    <dd
+                      className={`order-1 text-5xl font-extrabold ${achievement.color}`}
+                    >
                       {i18n(achievement.rank)}
                     </dd>
                   </div>
                 ))}
               </dl>
-              <img loading="lazy"
+              <img
+                loading="lazy"
                 className="dark:hidden my-6 rounded-lg hover:scale-95 transition-all"
                 src="https://api.mapbox.com/styles/v1/mapbox/streets-v12/static/pin-l+b8172a(113.9745954,22.3526409),pin-s+1f89e3(121.1945767,25.0169013),pin-s+0b236f(-9.7459993,54.4364324),pin-s+0033a0(-95.7129,37.0902),pin-s+ff0000(-106.3468,56.1304),pin-s+0099b5(64.5853,41.3775),pin-s+007a3d(47.4818,29.3117)/11.7314,14.9358,1.32,0,35/1280x720@2x?access_token=pk.eyJ1IjoiMTk5OG1lZGlhIiwiYSI6ImNsdHRuaGg4ZzE1NDUya3N5MTd2dTgwbTYifQ.nTFoFutOK1E7O6KBSFPLVQ&logo=false&attribution=false"
               />
-              <img loading="lazy"
+              <img
+                loading="lazy"
                 className="hidden dark:block my-6 rounded-lg hover:scale-95 transition-all"
                 src="https://api.mapbox.com/styles/v1/1998media/clttnmr3900k501qw52w30alb/static/pin-l+b8172a(113.9745954,22.3526409),pin-s+1f89e3(121.1945767,25.0169013),pin-s+0b236f(-9.7459993,54.4364324),pin-s+0033a0(-95.7129,37.0902),pin-s+ff0000(-106.3468,56.1304),pin-s+0099b5(64.5853,41.3775),pin-s+007a3d(47.4818,29.3117)/11.7314,14.9358,1.32,0,35/1280x720@2x?access_token=pk.eyJ1IjoiMTk5OG1lZGlhIiwiYSI6ImNsdHRuaGg4ZzE1NDUya3N5MTd2dTgwbTYifQ.nTFoFutOK1E7O6KBSFPLVQ&logo=false&attribution=false"
               />
             </div>
-            <img loading="lazy"
+            <img
+              loading="lazy"
               src="https://cdn.1998.media/bgs/Camera.png"
               className="absolute -z-[1] w-[25vw] top-25 -right-72"
             />
@@ -193,7 +277,8 @@ export default function Achievements(props) {
                     key={photo.id}
                     className="group flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-105 border border-transparent hover:border-black dark:hover:border-white"
                   >
-                    <img loading="lazy"
+                    <img
+                      loading="lazy"
                       className="h-[25vh] w-full object-cover cursor-pointer"
                       src={photo.urls.raw}
                       alt={photo.alt_description}
@@ -221,20 +306,35 @@ export default function Achievements(props) {
                     </Tooltip>
                   </div>
                 ))}
-
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className={`fixed z-[101] inset-0 overflow-y-auto transition-all ease-out duration-500 ${isDialogOpen ? 'opacity-100 bg-gray-300/80 dark:bg-gray-800/80 backdrop-blur-lg' : 'opacity-0 pointer-events-none'}`}>
+      <div
+        className={`fixed z-[101] inset-0 overflow-y-auto transition-all ease-out duration-500 ${isDialogOpen ? 'opacity-100 bg-gray-300/80 dark:bg-gray-800/80 backdrop-blur-lg' : 'opacity-0 pointer-events-none'}`}
+      >
         <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-          <div className="fixed inset-0 transition-all" aria-hidden="true" onClick={handleClose}>
+          <div
+            className="fixed inset-0 transition-all"
+            aria-hidden="true"
+            onClick={handleClose}
+          >
             <div className="absolute inset-0 cursor-alias transition-all"></div>
           </div>
-          <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+          <span
+            className="hidden sm:inline-block sm:align-middle sm:h-screen"
+            aria-hidden="true"
+          >
+            &#8203;
+          </span>
           <a href={selectedImageURL} target="_blank">
-            <img loading="lazy" src={selectedImage} alt="Selected" className="relative w-[80vw] h-[80vh] object-cover rounded-3xl" />
+            <img
+              loading="lazy"
+              src={selectedImage}
+              alt="Selected"
+              className="relative w-[80vw] h-[80vh] object-cover rounded-3xl"
+            />
           </a>
         </div>
       </div>

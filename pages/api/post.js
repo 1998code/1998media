@@ -1,6 +1,8 @@
 export default async function (req, res) {
   try {
-    const response = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://post.1998.media/rss/');
+    const response = await fetch(
+      'https://api.rss2json.com/v1/api.json?rss_url=https://post.1998.media/rss/'
+    );
     const feed = await response.json();
     res.json(feed);
   } catch (error) {

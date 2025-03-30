@@ -33,8 +33,8 @@ export default function Music(props) {
         if (data.data) {
           setMusic(data.data);
           setCurrentPlaying(data.data[0]);
-        } 
-        else { }
+        } else {
+        }
       });
   }
 
@@ -55,7 +55,8 @@ export default function Music(props) {
       const currentIndex = music.findIndex(
         (item) => item.id === currentPlaying.id
       );
-      const nextIndex = currentIndex + 1 === music.length ? 0 : currentIndex + 1;
+      const nextIndex =
+        currentIndex + 1 === music.length ? 0 : currentIndex + 1;
       setCurrentPlaying(music[nextIndex]);
       audioRef.current.play();
     }
@@ -66,7 +67,9 @@ export default function Music(props) {
   // Then get lyrics via /api/music?provider=qq&path=lyric&songmid=001IhSxX225n1g
   const [lyrics, setLyrics] = useState('');
   function searchSongMID(songName, singerName) {
-    fetch(`/api/music?provider=qq&path=search&pageSize=3&key=${songName} ${singerName}`)
+    fetch(
+      `/api/music?provider=qq&path=search&pageSize=3&key=${songName} ${singerName}`
+    )
       .then((response) => response.json())
       .then((data) => {
         if (data.list.length === 0) {
@@ -86,23 +89,27 @@ export default function Music(props) {
   useEffect(() => {
     if (currentPlaying.id) {
       setLyrics('');
-      searchSongMID(currentPlaying.attributes.name, currentPlaying.attributes.artistName);
+      searchSongMID(
+        currentPlaying.attributes.name,
+        currentPlaying.attributes.artistName
+      );
     }
   }, [currentPlaying]);
-  
+
   return (
     <div className="fixed w-screen flex items-center justify-center bottom-0 md:bottom-5 z-[10]">
       {music && music.length > 0 && currentPlaying ? (
         // <div
         //   className="group flex items-center w-full md:w-fit h-[90px] md:h-[80px] p-1 shadow md:border border-white bg-white/50 dark:bg-black/50 hover:bg-gradient-to-r from-white/50 via-white to-white dark:from-black/50 dark:via-[#808080] dark:to-white dark:shadow-black backdrop-blur-lg md:rounded-xl">
-        <div
-          className="group flex items-center w-full md:w-fit h-[90px] md:h-[80px] p-1 shadow md:border border-white bg-white/50 dark:bg-black/50 dark:hover:bg-black dark:shadow-black backdrop-blur-lg md:rounded-xl transition-all">
+        <div className="group flex items-center w-full md:w-fit h-[90px] md:h-[80px] p-1 shadow md:border border-white bg-white/50 dark:bg-black/50 dark:hover:bg-black dark:shadow-black backdrop-blur-lg md:rounded-xl transition-all">
           <Tooltip
             content={
               <div className="flex flex-col max-h-[50vh] overflow-auto">
                 <div className="flex items-start justify-between text-sm md:text-2xl font-bold dark:text-white p-2">
-                  {i18n('My Recent Playlist')} {' '}
-                  <span className="text-red-600 text-sm">{i18n(' Music')}</span>
+                  {i18n('My Recent Playlist')}{' '}
+                  <span className="text-red-600 text-sm">
+                    {i18n(' Music')}
+                  </span>
                 </div>
                 {music.map((item, index) => (
                   <a
@@ -112,7 +119,8 @@ export default function Music(props) {
                     className={`p-3 flex items-center justify-between ${index === music.findIndex((music) => music.id === currentPlaying.id) ? 'bg-red-600 text-white' : 'hover:bg-black/10 dark:text-white dark:hover:bg-white/10'}`}
                   >
                     <div className="flex items-center gap-3">
-                      <img loading="lazy"
+                      <img
+                        loading="lazy"
                         src={item.attributes.artwork.url
                           .replace('{w}', '50')
                           .replace('{h}', '50')}
@@ -122,12 +130,16 @@ export default function Music(props) {
                         <div className="text-xs font-bold whitespace-nowrap">
                           {item.attributes.name}
                         </div>
-                        <div className={`text-[10px]  ${index === music.findIndex((music) => music.id === currentPlaying.id) ? 'text-gray-100' : 'text-gray-500'} whitespace-nowrap`}>
+                        <div
+                          className={`text-[10px]  ${index === music.findIndex((music) => music.id === currentPlaying.id) ? 'text-gray-100' : 'text-gray-500'} whitespace-nowrap`}
+                        >
                           {item.attributes.artistName}
                         </div>
                       </div>
                     </div>
-                    <div className={`text-[10px] ${index === music.findIndex((music) => music.id === currentPlaying.id) ? 'text-gray-100' : 'text-gray-500'} text-right`}>
+                    <div
+                      className={`text-[10px] ${index === music.findIndex((music) => music.id === currentPlaying.id) ? 'text-gray-100' : 'text-gray-500'} text-right`}
+                    >
                       <span>
                         {index ===
                           music.findIndex(
@@ -137,7 +149,12 @@ export default function Music(props) {
                       <br />
                       <span>
                         {Math.floor(item.attributes.durationInMillis / 60000)}:
-                        {("0" + Math.floor((item.attributes.durationInMillis % 60000) / 1000)).slice(-2)}
+                        {(
+                          '0' +
+                          Math.floor(
+                            (item.attributes.durationInMillis % 60000) / 1000
+                          )
+                        ).slice(-2)}
                       </span>
                     </div>
                   </a>
@@ -148,7 +165,8 @@ export default function Music(props) {
             className="min-w-[50px] mb-2 md:mb-10 p-0 border text-xs dark:text-white bg-white/50 dark:bg-black backdrop-blur-lg rounded-lg md:rounded-2xl"
           >
             <a href={currentPlaying.attributes?.url} target="_blank">
-              <img loading="lazy"
+              <img
+                loading="lazy"
                 src={currentPlaying.attributes.artwork.url
                   .replace('{w}', '500')
                   .replace('{h}', '500')}
@@ -164,16 +182,22 @@ export default function Music(props) {
                     {i18n('Lyrics')}
                   </div>
                   <div className="text-sm p-2 whitespace-pre-wrap dark:text-white">
-                    { 
-                      lyrics ? lyrics.replace(/\[\d{2}:\d{2}\.\d{2}\]/g, '') : (<i className="fa fa-circle-notch fa-spin" />)
-                    }
+                    {lyrics ? (
+                      lyrics.replace(/\[\d{2}:\d{2}\.\d{2}\]/g, '')
+                    ) : (
+                      <i className="fa fa-circle-notch fa-spin" />
+                    )}
                   </div>
                 </div>
               }
               placement="top-center"
               className="min-w-[50px] mb-5 p-0 border text-xs dark:text-white bg-white/50 dark:bg-black backdrop-blur-lg rounded-lg md:rounded-2xl"
             >
-              <a href={currentPlaying.attributes?.url} target="_blank" className="flex flex-col justify-center items-start w-40">
+              <a
+                href={currentPlaying.attributes?.url}
+                target="_blank"
+                className="flex flex-col justify-center items-start w-40"
+              >
                 <div className="text-sm font-bold text-left dark:text-white">
                   {currentPlaying.attributes.name}
                 </div>
@@ -182,7 +206,7 @@ export default function Music(props) {
                 </div>
               </a>
             </Tooltip>
-            
+
             {/* No longer display player control */}
             <div className="hidden relative text-right">
               <audio
@@ -207,7 +231,7 @@ export default function Music(props) {
                         (item) => item.id === currentPlaying.id
                       ) +
                         1) %
-                      music.length
+                        music.length
                     ].attributes.name
                   }
                 </b>{' '}

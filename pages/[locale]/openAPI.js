@@ -102,7 +102,7 @@ export default function openAPI(props) {
       date: '24Q2',
       textColor: 'text-cyan-600 dark:text-cyan-100',
       bgColor: 'bg-cyan-100 dark:bg-cyan-900',
-    }
+    },
   ];
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ');

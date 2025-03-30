@@ -27,7 +27,7 @@ export default async function (req, res) {
       .catch((err) => {
         res.status(500).json({ error: err });
       });
-  };
+  }
 
   const origin = req.headers.referer;
 

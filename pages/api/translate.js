@@ -7,6 +7,7 @@ export default async function (req, res) {
   res.status(200).json({
     input: text,
     output: translation.text,
-    from, to
+    from,
+    to,
   });
 }

@@ -184,7 +184,7 @@ export default function Home() {
             }
           });
         },
-        { threshold: 0.50 }
+        { threshold: 0.5 }
       );
 
       sections.forEach((section) => {
@@ -204,7 +204,7 @@ export default function Home() {
       };
     }, 3000);
   }, []);
-  
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
   function toggleSidebar() {
     setSidebarOpen(!sidebarOpen);
@@ -245,8 +245,14 @@ export default function Home() {
             <Loading />
           ) : (
             <div>
-              <Navigation i18n={I18n} sections={sections} activeSection={activeSection} sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
-              <div className={`${sidebarOpen && "pl-6 lg:pl-0"}`}>
+              <Navigation
+                i18n={I18n}
+                sections={sections}
+                activeSection={activeSection}
+                sidebarOpen={sidebarOpen}
+                toggleSidebar={toggleSidebar}
+              />
+              <div className={`${sidebarOpen && 'pl-6 lg:pl-0'}`}>
                 <Header i18n={I18n} />
                 <About i18n={I18n} />
                 <Achievements i18n={I18n} />
