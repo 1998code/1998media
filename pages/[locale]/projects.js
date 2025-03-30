@@ -54,27 +54,27 @@ export default function Projects(props) {
           </p>
         </div>
         <div className="mx-auto grid gap-5 md:grid-cols-4 lg:max-w-none items-end">
-          <img
+          <img loading="lazy"
             className="w-full col-span-3 md:col-span-2 hover:scale-95 transition duration-300 rounded-lg"
             src="https://gitstats.1998.media/api?username=1998code&show_icons=true&bg_color=30,e96443,904e95&title_color=fff&text_color=fff&icon_color=fff&hide_border=true"
             alt="Performance"
           />
-          <img
+          <img loading="lazy"
             className="w-full col-span-3 md:col-span-1 dark:hidden hover:scale-95 transition duration-300 rounded-lg"
             src="https://gitstats.1998.media/api/top-langs/?username=1998code&langs_count=4&layout=default&hide_border=true"
             alt="Top Languages"
           />
-          <img
+          <img loading="lazy"
             className="w-full col-span-3 md:col-span-1 hidden dark:block hover:scale-95 transition duration-300 rounded-lg backlight"
             src="https://gitstats.1998.media/api/top-langs/?username=1998code&langs_count=4&layout=default&bg_color=000&title_color=fff&text_color=fff&hide_border=true"
             alt="Top Languages"
           />
-          <img
+          <img loading="lazy"
             className="col-span-3 md:col-span-1 hover:scale-95 transition duration-300 rounded-lg"
             src="https://lapras-card-generator-auto.vercel.app/api/svg?b1=%23020E27&b2=%230E5593&i1=%23030E21&i2=%231688BF&l=en&u=MING"
           />
         </div>
-        <img
+        <img loading="lazy"
           id="projectChart"
           className="w-full p-3 hover:scale-95 transition duration-300 rounded-lg backlight"
           src="https://ghchart.rshah.org/1998code"
@@ -93,7 +93,7 @@ export default function Projects(props) {
                   className="flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight"
                 >
                   <div className="flex-shrink-0">
-                    <img
+                    <img loading="lazy"
                       className="w-full object-cover"
                       src={`https://opengraph.githubassets.com/286af552210001e9ea769373d5955f2c4d4a911070501bbd22fc7cb957761f48/1998code/${repo.name}`}
                       alt={repo.name.replaceAll('-', ' ')}

@@ -133,7 +133,7 @@ export default function Blog(props) {
                 className="flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight"
               >
                 <div className="flex-shrink-0">
-                  <img className="h-64 w-full object-cover" src={ post.enclosure.link } alt={post.title} />
+                  <img loading="lazy" className="h-64 w-full object-cover" src={ post.enclosure.link } alt={post.title} />
                   <div className="invisible dark:visible absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black h-64"></div>
                 </div>
                 <div className="flex-1 p-6 flex flex-col justify-between">
@@ -198,7 +198,7 @@ export default function Blog(props) {
                 placement="bottom"
                 className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg"
               >
-                <img src={medal.medalStageIcon} alt={medal.medalStageName} className="h-16 w-16 hover:scale-105 transition-all" />
+                <img loading="lazy" src={medal.medalStageIcon} alt={medal.medalStageName} className="h-16 w-16 hover:scale-105 transition-all" />
               </Tooltip>
             ))}
           </div>
@@ -218,7 +218,7 @@ export default function Blog(props) {
               className="flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight"
             >
               <div className="flex-shrink-0">
-                <img
+                <img loading="lazy"
                   className="h-64 w-full object-cover"
                   src={post.coverURL}
                   alt={post.translateTitle || post.title}

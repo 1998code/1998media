@@ -62,7 +62,7 @@ export default function AI(props) {
                   className="min-w-[300px] flex flex-col gap-3 pb-3 rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight"
                 >
                   <div>
-                    <img
+                    <img loading="lazy"
                       src={item.output}
                       className="w-[300px] object-cover flex-1"
                     />
@@ -99,7 +99,7 @@ export default function AI(props) {
                   className="min-w-[250px] flex flex-col gap-3 pb-3 rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight"
                 >
                   <div>
-                    <img
+                    <img loading="lazy"
                       src={item.output}
                       className="w-[250px] object-cover flex-1"
                     />

@@ -104,7 +104,7 @@ export default function Achievements(props) {
         data-aos-once
         className="relative px-4 sm:px-6 lg:px-8"
       >
-        <img
+        <img loading="lazy"
           src="https://cdn.1998.media/bgs/App.png"
           className="absolute -z-[1] w-[25vw] top-14 -right-16"
         />
@@ -147,16 +147,16 @@ export default function Achievements(props) {
                   </div>
                 ))}
               </dl>
-              <img
+              <img loading="lazy"
                 className="dark:hidden my-6 rounded-lg hover:scale-95 transition-all"
                 src="https://api.mapbox.com/styles/v1/mapbox/streets-v12/static/pin-l+b8172a(113.9745954,22.3526409),pin-s+1f89e3(121.1945767,25.0169013),pin-s+0b236f(-9.7459993,54.4364324),pin-s+0033a0(-95.7129,37.0902),pin-s+ff0000(-106.3468,56.1304),pin-s+0099b5(64.5853,41.3775),pin-s+007a3d(47.4818,29.3117)/11.7314,14.9358,1.32,0,35/1280x720@2x?access_token=pk.eyJ1IjoiMTk5OG1lZGlhIiwiYSI6ImNsdHRuaGg4ZzE1NDUya3N5MTd2dTgwbTYifQ.nTFoFutOK1E7O6KBSFPLVQ&logo=false&attribution=false"
               />
-              <img
+              <img loading="lazy"
                 className="hidden dark:block my-6 rounded-lg hover:scale-95 transition-all"
                 src="https://api.mapbox.com/styles/v1/1998media/clttnmr3900k501qw52w30alb/static/pin-l+b8172a(113.9745954,22.3526409),pin-s+1f89e3(121.1945767,25.0169013),pin-s+0b236f(-9.7459993,54.4364324),pin-s+0033a0(-95.7129,37.0902),pin-s+ff0000(-106.3468,56.1304),pin-s+0099b5(64.5853,41.3775),pin-s+007a3d(47.4818,29.3117)/11.7314,14.9358,1.32,0,35/1280x720@2x?access_token=pk.eyJ1IjoiMTk5OG1lZGlhIiwiYSI6ImNsdHRuaGg4ZzE1NDUya3N5MTd2dTgwbTYifQ.nTFoFutOK1E7O6KBSFPLVQ&logo=false&attribution=false"
               />
             </div>
-            <img
+            <img loading="lazy"
               src="https://cdn.1998.media/bgs/Camera.png"
               className="absolute -z-[1] w-[25vw] top-25 -right-72"
             />
@@ -193,7 +193,7 @@ export default function Achievements(props) {
                     key={photo.id}
                     className="group flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-105 border border-transparent hover:border-black dark:hover:border-white"
                   >
-                    <img
+                    <img loading="lazy"
                       className="h-[25vh] w-full object-cover cursor-pointer"
                       src={photo.urls.raw}
                       alt={photo.alt_description}
@@ -234,7 +234,7 @@ export default function Achievements(props) {
           </div>
           <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
           <a href={selectedImageURL} target="_blank">
-            <img src={selectedImage} alt="Selected" className="relative w-[80vw] h-[80vh] object-cover rounded-3xl" />
+            <img loading="lazy" src={selectedImage} alt="Selected" className="relative w-[80vw] h-[80vh] object-cover rounded-3xl" />
           </a>
         </div>
       </div>

@@ -112,7 +112,7 @@ export default function Music(props) {
                     className={`p-3 flex items-center justify-between ${index === music.findIndex((music) => music.id === currentPlaying.id) ? 'bg-red-600 text-white' : 'hover:bg-black/10 dark:text-white dark:hover:bg-white/10'}`}
                   >
                     <div className="flex items-center gap-3">
-                      <img
+                      <img loading="lazy"
                         src={item.attributes.artwork.url
                           .replace('{w}', '50')
                           .replace('{h}', '50')}
@@ -148,7 +148,7 @@ export default function Music(props) {
             className="min-w-[50px] mb-2 md:mb-10 p-0 border text-xs dark:text-white bg-white/50 dark:bg-black backdrop-blur-lg rounded-lg md:rounded-2xl"
           >
             <a href={currentPlaying.attributes?.url} target="_blank">
-              <img
+              <img loading="lazy"
                 src={currentPlaying.attributes.artwork.url
                   .replace('{w}', '500')
                   .replace('{h}', '500')}

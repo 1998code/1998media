@@ -12,7 +12,7 @@ export default function About(props) {
       <div className="px-4 py-16 sm:px-6 lg:px-8 bg-orange-200 dark:bg-orange-800 bg-opacity-50 xl:rounded-xl" >
         <div className="lg:flex flex-col lg:flex-row gap-3 lg:gap-8 items-center min-h-[75vh]">
           <h2 className="-mt-0 lg:-mt-32 min-w-[36%] mx-auto text-3xl font-extrabold text-orange-900 dark:text-orange-100 text-center lg:text-left lg:min-w-[50%]">
-            <img
+            <img loading="lazy"
               src="https://cdn.1998.media/favicon24.jpg"
               className="rounded-full w-24 h-24"
             />
@@ -49,42 +49,42 @@ export default function About(props) {
           </h2>
           <div className="mt-8 lg:mt-0 flex flex-wrap lg:flex-col space-y-3">
             <div className="mt-4 ml-8 flex flex-grow flex-shrink-0 justify-center lg:items-center lg:ml-4">
-              <img
+              <img loading="lazy"
                 className="h-24 dark:hidden"
                 src="https://cdn.1998.media/logos/CityU.png"
                 alt="CityU"
               />
-              <img
+              <img loading="lazy"
                 className="h-24 lg:h-32 hidden dark:block"
                 src="https://cdn.1998.media/logos/CityU_dark.png"
                 alt="CityU"
               />
             </div>
             <div className="mt-4 ml-8 flex flex-grow flex-shrink-0 justify-center lg:items-center lg:ml-4">
-              <img
+              <img loading="lazy"
                 className="h-24 dark:hidden"
                 src="https://cdn.1998.media/logos/PolyU.webp"
                 alt="PolyU"
               />
-              <img
+              <img loading="lazy"
                 className="h-24 lg:h-32 hidden dark:block"
                 src="https://cdn.1998.media/logos/PolyU_dark.webp"
                 alt="PolyU"
               />
             </div>
             <div className="mt-4 ml-8 flex flex-grow flex-shrink-0 justify-center lg:items-center lg:ml-4">
-              <img
+              <img loading="lazy"
                 className="h-24 dark:hidden"
                 src="https://cdn.1998.media/logos/Google.png"
                 alt="Google"
               />
-              <img
+              <img loading="lazy"
                 className="h-24 lg:h-32 hidden dark:block"
                 src="https://cdn.1998.media/logos/Google_dark.png"
                 alt="Google"
               />
             </div>
-            <img src="https://cdn.1998.media/bgs/Calculator.png" />
+            <img loading="lazy" src="https://cdn.1998.media/bgs/Calculator.png" />
           </div>
         </div>
       </div>

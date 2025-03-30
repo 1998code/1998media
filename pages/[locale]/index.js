@@ -1,10 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
-
 import Head from 'next/head';
-
 import axios from 'axios';
-
 import dynamic from 'next/dynamic';
+import Cursor from '../../components/Cursor';
+import {
+  RoomProvider,
+  useOthers,
+  useMyPresence,
+} from '../../liveblocks.config';
+
 const Loading = dynamic(() => import('./loading'));
 const Navigation = dynamic(() => import('./navigation'));
 const Header = dynamic(() => import('./header'));
@@ -22,12 +26,6 @@ const Credits = dynamic(() => import('./credits'));
 const Footer = dynamic(() => import('./footer'));
 const Music = dynamic(() => import('./music'));
 
-import Cursor from '../../components/Cursor';
-import {
-  RoomProvider,
-  useOthers,
-  useMyPresence,
-} from '../../liveblocks.config';
 const COLORS = ['#0EA293', '#576CBC', '#19A7CE'];
 function CursorPointer() {
   const [{ cursor }, updateMyPresence] = useMyPresence();
