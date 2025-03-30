@@ -17,15 +17,11 @@ export default function Blog(props) {
   const [blogs, setBlogs] = useState([]);
   useEffect(() => {
     getBlog();
-
-    // setPayWallURL(`${window.location.pathname}/paywall`);
     setPayWallURL(`https://post.1998.media`);
   }, []);
   function getBlog() {
     axios
-      .get(
-        '/api/medium'
-      )
+      .get( '/api/post' )
       .then((res) => {
         setBlogs([
           // topPromo, 
@@ -106,7 +102,7 @@ export default function Blog(props) {
       data-aos-once
       className="relative px-4 sm:px-6 lg:px-8 space-y-16"
     >
-      {/* Medium Blog */}
+      {/* Blog */}
       <div id="blog" className="relative max-w-7xl mx-auto space-y-8 pt-16">
         <div className="text-left flex flex-wrap">
           <a
@@ -114,7 +110,7 @@ export default function Blog(props) {
             href="#blog"
           >
             {i18n('Blog')}
-            <i className="fab fa-medium ml-2"></i>
+            <i className="far fa-ghost ml-2"></i>
           </a>
           <p className="mt-2 max-w-2xl text-xl text-gray-500">
             {i18n('Find out the latest posts and tutorials.')}
@@ -137,15 +133,7 @@ export default function Blog(props) {
                 className="flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight"
               >
                 <div className="flex-shrink-0">
-                  <img
-                    className="h-64 w-full object-cover"
-                    src={
-                      post.thumbnail
-                        ? post.thumbnail
-                        : post.description.split('src="')[1].split('"')[0]
-                    }
-                    alt={post.title}
-                  />
+                  <img className="h-64 w-full object-cover" src={ post.enclosure.link } alt={post.title} />
                   <div className="invisible dark:visible absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black h-64"></div>
                 </div>
                 <div className="flex-1 p-6 flex flex-col justify-between">
@@ -158,7 +146,7 @@ export default function Blog(props) {
                   <div className="flex-1 mt-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
                     {post.title}
                   </div>
-                  <span className="text-sm font-medium text-orange-600 space-x-2 mt-3">
+                  {/* <span className="text-sm font-medium text-orange-600 space-x-2 mt-3">
                     {post.categories.map((category, index) => {
                       let level = 1;
                       for (let i = 0; i < index; i++) {
@@ -181,29 +169,10 @@ export default function Blog(props) {
                         </a>
                       );
                     })}
-                  </span>
+                  </span> */}
                 </div>
               </a>
             ))}
-        </div>
-        <div className="text-center flex flex-wrap items-center gap-3">
-          <a
-            href={payWallURL}
-            className="flex-1 block text-lg font-semibold text-white whitespace-nowrap bg-teal-600 hover:bg-teal-500 p-3 rounded-lg transition-all"
-            target="_blank"
-          >
-            <i className="fa fa-circle-dollar mr-2"></i>
-            {i18n('Subscribe with $4.99 per month')}
-          </a>
-          <a
-            href="https://blog.1998.media"
-            className="flex-1 block text-lg font-semibold text-white whitespace-nowrap bg-orange-600 hover:bg-orange-500 p-3 rounded-lg transition-all"
-            target="_blank"
-          >
-            <i className="fab fa-medium mr-2"></i>
-            {i18n('View all posts on Medium')} 
-            {/* ({i18n('$5 per month')}) */}
-          </a>
         </div>
       </div>
 

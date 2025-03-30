@@ -14,7 +14,6 @@ const Skills = dynamic(() => import('./skills'));
 const Experience = dynamic(() => import('./experience'));
 const Projects = dynamic(() => import('./projects'));
 const Blog = dynamic(() => import('./blog'));
-const Connect = dynamic(() => import('./connect'));
 const AI = dynamic(() => import('./ai'));
 const OpenAPI = dynamic(() => import('./openAPI'));
 const Faq = dynamic(() => import('./faq'));
@@ -105,7 +104,6 @@ export default function Home() {
     'projects',
     'openAPI',
     'ai',
-    // 'connect',
     'blog',
     'trip',
     'faq',
@@ -177,7 +175,7 @@ export default function Home() {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
               setActiveSection(entry.target.id);
-              // change the url hash
+              // Change the url hash
               if (window.location.hash !== '#' + entry.target.id) {
                 window.history.pushState(
                   '',
@@ -259,7 +257,6 @@ export default function Home() {
                 <Projects i18n={I18n} />
                 <OpenAPI i18n={I18n} />
                 <AI i18n={I18n} />
-                {/* <Connect i18n={I18n} /> */}
                 <Blog i18n={I18n} />
                 <Faq i18n={I18n} />
                 <Contact i18n={I18n} />
