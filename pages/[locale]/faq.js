@@ -72,7 +72,7 @@ export default function Faq(props) {
           </a>
           <i className="fa fa-pipe px-3"></i>
           <a
-            href="https://view.officeapps.live.com/op/embed.aspx?src=https://cdn.1998.media/quote/Q1_Pricing.xlsx"
+            href="https://view.officeapps.live.com/op/embed.aspx?src=https://cdn.1998.media/quote/Q2_Pricing.xlsx"
             target="_blank"
             className="hover:underline"
           >
