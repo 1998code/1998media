@@ -23,13 +23,11 @@ export default function Faq(props) {
     {
       question: 'How to support your projects? 💰',
       answer: () => (
-        <a
-          href="https://github.com/sponsors/1998code"
-          className="hover:underline"
-        >
-          {i18n('Github Sponsorship')}
-          <i className="ml-1 fa fa-external-link fa-sm"></i>
-        </a>
+        <iframe 
+          src="https://github.com/sponsors/1998code/button" 
+          title="Sponsor 1998code" 
+          height="32" width="114" 
+       />
       ),
     },
     {
