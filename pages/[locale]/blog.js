@@ -260,7 +260,7 @@ export default function Blog(props) {
                     {!post.translateTitle && (
                       <span>
                         <i className="far fa-map-marker-alt ml-2 mr-1"></i>
-                        {post.title.split('「')[1].split('」')[0]}
+                        {post.title.split('「')[1] && post.title.split('「')[1].split('」')[0]}
                       </span>
                     )}
                   </div>
