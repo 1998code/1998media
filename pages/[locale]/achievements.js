@@ -203,6 +203,10 @@ export default function Achievements(props) {
     setIsSpatialPhoto(false);
   };
 
+  // Detect Safari browser
+  const isSafari = typeof window !== 'undefined' &&
+    /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
   return (
     <>
       <div
@@ -311,11 +315,21 @@ export default function Achievements(props) {
                     Unsplash
                   </button>
                   <button
-                    onClick={() => setActiveTab('spatial')}
-                    className={`px-4 py-2 text-sm font-medium rounded-md transition-all ${activeTab === 'spatial'
-                      ? 'bg-blue-600 text-white shadow-sm'
-                      : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
+                    onClick={(e) => {
+                      if (!isSafari) {
+                        e.preventDefault();
+                        alert('Only Safari is supported.');
+                        return;
+                      }
+                      setActiveTab('spatial');
+                    }}
+                    className={`px-4 py-2 text-sm font-medium rounded-md transition-all ${!isSafari
+                      ? 'bg-transparent text-gray-400 opacity-60 cursor-not-allowed'
+                      : activeTab === 'spatial'
+                        ? 'bg-blue-600 text-white shadow-sm'
+                        : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
                       }`}
+                    type="button"
                   >
                     Spatial
                   </button>
