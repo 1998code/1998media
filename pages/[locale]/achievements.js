@@ -111,6 +111,8 @@ export default function Achievements(props) {
     },
   ];
 
+  const [activeTab, setActiveTab] = useState('unsplash');
+
   const unsplashPublicKey = 'hjm0tzh_dDQx2REubp1NiT1P4jxE5wmnCbKQLbD-BZ8';
 
   const [totalViews, setTotalViews] = useState(0);
@@ -140,6 +142,19 @@ export default function Achievements(props) {
         console.error('Error:', error);
       });
   }
+
+  const spatialPhotos = [
+    {
+      id: 'akasaka-palace',
+      title: 'Akasaka Palace',
+      url: 'https://cdn.1998.media/spatial/photo/AkasakaPalaceByMing.HEIC'
+    },
+    {
+      id: 'golden-gate-bridge',
+      title: 'Golden Gate Bridge',
+      url: 'https://cdn.1998.media/spatial/photo/GoldenGateBridgeByMing.HEIC'
+    }
+  ];
 
   const totalReleases = photos.length;
   const avgViews = Math.floor(totalViews / totalReleases)
@@ -267,46 +282,91 @@ export default function Achievements(props) {
                   </div>
                 ))}
               </dl>
-              <h4 className="mt-6 text-lg font-medium leading-6 text-gray-500">
-                {i18n('Random Sample')}
-                <i className="far fa-random ml-2"></i>
-              </h4>
-              <div className="grid grid-cols-1 gap-4 mt-5 sm:grid-cols-2 lg:grid-cols-3">
-                {photos.map((photo) => (
-                  <div
-                    key={photo.id}
-                    className="group flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-105 border border-transparent hover:border-black dark:hover:border-white"
+              <div className="mt-6 flex justify-between items-center">
+                <h4 className="text-lg font-medium leading-6 text-gray-500">
+                  {i18n('Random Sample')}
+                  <i className="far fa-random ml-2"></i>
+                </h4>
+                <div className="flex bg-white/50 dark:bg-black/50 backdrop-blur-md rounded-lg p-1 border border-gray-200 dark:border-gray-700">
+                  <button
+                    onClick={() => setActiveTab('unsplash')}
+                    className={`px-4 py-2 text-sm font-medium rounded-md transition-all ${activeTab === 'unsplash'
+                      ? 'bg-blue-600 text-white shadow-sm'
+                      : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
+                      }`}
                   >
-                    <img
-                      loading="lazy"
-                      className="h-[25vh] w-full object-cover cursor-pointer"
-                      src={photo.urls.raw}
-                      alt={photo.alt_description}
-                      onClick={() => handleClick(photo)}
-                    />
-                    <Tooltip
-                      content={photo.color}
-                      placement="right"
-                      className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg"
-                    >
-                      <div
-                        className="opacity-0 group-hover:opacity-100 absolute bottom-0 h-7 border-t border-r rounded-tr-md duration-500 transition-all"
-                        style={{ backgroundColor: photo.color }}
-                      >
-                        {Object.entries(photo.topic_submissions).map(
-                          ([topic, submission]) =>
-                            submission.status === 'approved' ? (
-                              <span className="p-1.5 text-white text-sm">
-                                <i className="fas fa-crown"></i> Featured in{' '}
-                                {topic.replaceAll('-', ' ')}
-                              </span>
-                            ) : null
-                        )}
-                      </div>
-                    </Tooltip>
-                  </div>
-                ))}
+                    Unsplash
+                  </button>
+                  <button
+                    onClick={() => setActiveTab('spatial')}
+                    className={`px-4 py-2 text-sm font-medium rounded-md transition-all ${activeTab === 'spatial'
+                      ? 'bg-blue-600 text-white shadow-sm'
+                      : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
+                      }`}
+                  >
+                    Spatial
+                  </button>
+                </div>
               </div>
+              {activeTab === 'unsplash' && (
+                <div className="grid grid-cols-1 gap-4 mt-5 sm:grid-cols-2 lg:grid-cols-3">
+                  {photos.map((photo) => (
+                    <div
+                      key={photo.id}
+                      className="group flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-105 border border-transparent hover:border-black dark:hover:border-white"
+                    >
+                      <img
+                        loading="lazy"
+                        className="h-[25vh] w-full object-cover cursor-pointer"
+                        src={photo.urls.raw}
+                        alt={photo.alt_description}
+                        onClick={() => handleClick(photo)}
+                      />
+                      <Tooltip
+                        content={photo.color}
+                        placement="right"
+                        className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-2xl"
+                      >
+                        <div
+                          className="opacity-0 group-hover:opacity-100 absolute bottom-0 h-7 border-t border-r rounded-tr-md duration-500 transition-all"
+                          style={{ backgroundColor: photo.color }}
+                        >
+                          {Object.entries(photo.topic_submissions).map(
+                            ([topic, submission]) =>
+                              submission.status === 'approved' ? (
+                                <span className="p-1.5 text-white text-sm">
+                                  <i className="fa fa-crown"></i> Featured in{' '}
+                                  {topic.replaceAll('-', ' ')}
+                                </span>
+                              ) : <span className="p-1.5 text-white text-sm"><i className="fa fa-thumbs-up"></i></span>
+                          )}
+                        </div>
+                      </Tooltip>
+                    </div>
+                  ))}
+                </div>)}
+              {activeTab === 'spatial' && (
+                <div className="grid grid-cols-1 gap-4 mt-5 sm:grid-cols-2 lg:grid-cols-3">
+                  {spatialPhotos.map((photo) => (
+                    <div
+                      key={photo.id}
+                      className="group flex flex-col rounded-2xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-105 border border-transparent hover:border-black dark:hover:border-white"
+                    >
+                      <img
+                        loading="lazy"
+                        className="h-[25vh] w-full object-cover cursor-pointer -mb-12"
+                        src={photo.url}
+                        alt={photo.title}
+                        controls
+                      />
+                      <div className="p-3 z-[1]">
+                        <h3 className="text-sm text-right font-medium text-gray-900 dark:text-gray-100">
+                          {photo.title}
+                        </h3>
+                      </div>
+                    </div>
+                  ))}
+                </div>)}
             </div>
           </div>
         </div>
