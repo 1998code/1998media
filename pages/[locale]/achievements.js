@@ -178,16 +178,24 @@ export default function Achievements(props) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedImageURL, setSelectedImageURL] = useState(null);
+  const [isSpatialPhoto, setIsSpatialPhoto] = useState(false);
 
   const handleClick = (photo) => {
-    setSelectedImage(photo.urls.raw);
-    setSelectedImageURL(photo.links.html);
+    // Support both Unsplash photos and spatial photos
+    const imageUrl = photo.urls?.raw || photo.url;
+    const linkUrl = photo.links?.html || photo.url;
+    const isSpatial = !photo.urls; // If no urls property, it's a spatial photo
+    
+    setSelectedImage(imageUrl);
+    setSelectedImageURL(linkUrl);
+    setIsSpatialPhoto(isSpatial);
     setIsDialogOpen(true);
   };
 
   const handleClose = () => {
     setIsDialogOpen(false);
     setSelectedImage(null);
+    setIsSpatialPhoto(false);
   };
 
   return (
@@ -357,10 +365,10 @@ export default function Achievements(props) {
                         className="h-[25vh] w-full object-cover cursor-pointer -mb-12"
                         src={photo.url}
                         alt={photo.title}
-                        controls
+                        onClick={() => handleClick(photo)}
                       />
                       <div className="p-3 z-[1]">
-                        <h3 className="text-sm text-right font-medium text-gray-900 dark:text-gray-100">
+                        <h3 className="text-sm text-right font-medium text-gray-100">
                           {photo.title}
                         </h3>
                       </div>
@@ -394,6 +402,7 @@ export default function Achievements(props) {
               src={selectedImage}
               alt="Selected"
               className="relative w-[80vw] h-[80vh] object-cover rounded-3xl"
+              {...(isSpatialPhoto && { controls: true })}
             />
           </a>
         </div>
