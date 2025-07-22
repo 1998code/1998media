@@ -186,6 +186,11 @@ export default function Achievements(props) {
     const linkUrl = photo.links?.html || photo.url;
     const isSpatial = !photo.urls; // If no urls property, it's a spatial photo
     
+    // If it's a spatial photo and it's already selected, do nothing
+    if (isSpatial && isSpatialPhoto && selectedImage === imageUrl && isDialogOpen) {
+      return;
+    }
+    
     setSelectedImage(imageUrl);
     setSelectedImageURL(linkUrl);
     setIsSpatialPhoto(isSpatial);
@@ -362,10 +367,16 @@ export default function Achievements(props) {
                     >
                       <img
                         loading="lazy"
-                        className="h-[25vh] w-full object-cover cursor-pointer -mb-12"
+                        className={`h-[25vh] w-full object-cover -mb-12 ${
+                          isSpatialPhoto && selectedImage === photo.url && isDialogOpen 
+                            ? 'cursor-default' 
+                            : 'cursor-pointer'
+                        }`}
                         src={photo.url}
                         alt={photo.title}
-                        onClick={() => handleClick(photo)}
+                        {...(!(isSpatialPhoto && selectedImage === photo.url && isDialogOpen) && {
+                          onClick: () => handleClick(photo)
+                        })}
                       />
                       <div className="p-3 z-[1]">
                         <h3 className="text-sm text-right font-medium text-gray-100">
@@ -396,15 +407,25 @@ export default function Achievements(props) {
           >
             &#8203;
           </span>
-          <a href={selectedImageURL} target="_blank">
+          {/* Modal image: Only wrap in <a> for Unsplash photos */}
+          {isSpatialPhoto ? (
             <img
               loading="lazy"
               src={selectedImage}
               alt="Selected"
               className="relative w-[80vw] h-[80vh] object-cover rounded-3xl"
-              {...(isSpatialPhoto && { controls: true })}
+              controls
             />
-          </a>
+          ) : (
+            <a href={selectedImageURL} target="_blank">
+              <img
+                loading="lazy"
+                src={selectedImage}
+                alt="Selected"
+                className="relative w-[80vw] h-[80vh] object-cover rounded-3xl"
+              />
+            </a>
+          )}
         </div>
       </div>
     </>
