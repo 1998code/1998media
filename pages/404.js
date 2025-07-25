@@ -3,9 +3,15 @@ import Head from 'next/head';
 export default function Custom404() {
   const links = [
     {
+      title: 'Home',
+      description: 'Return to the homepage',
+      icon: 'fas fa-home',
+      url: '/',
+    },
+    {
       title: 'Blog',
       description: 'Read the latest articles',
-      icon: 'fas fa-square-rss',
+      icon: 'fas fa-rss',
       url: 'https://post.1998.media',
     },
   ];
@@ -44,7 +50,7 @@ export default function Custom404() {
                 >
                   <div className="flex-shrink-0">
                     <i
-                      className={'text-sky-700 fa-3x ' + link.icon}
+                      className={'text-sky-700 text-3xl ' + link.icon}
                       aria-hidden="true"
                     />
                   </div>
@@ -69,19 +75,11 @@ export default function Custom404() {
                     </p>
                   </div>
                   <div className="flex-shrink-0 self-center">
-                    <i className="fa fa-square-arrow-up-right text-gray-400"></i>
+                    <i className="fa fa-arrow-up-right text-gray-400"></i>
                   </div>
                 </li>
               ))}
             </ul>
-            <div className="mt-8">
-              <a
-                href="/"
-                className="text-base font-medium text-sky-600 hover:text-sky-500"
-              >
-                Or go back home<span aria-hidden="true"> &rarr;</span>
-              </a>
-            </div>
           </div>
         </div>
       </main>

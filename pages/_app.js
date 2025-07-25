@@ -20,6 +20,7 @@ function MyApp({ Component, pageProps }) {
     const pages = [
       '/about',
       '/achievements',
+      '/gallery',
       '/ai',
       '/blog',
       '/connect',
@@ -60,13 +61,15 @@ function MyApp({ Component, pageProps }) {
         />
       </Head>
       {notHome && (
-        <a
-          href={`/`}
-          className="absolute top-5 left-5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 z-[1]"
-        >
-          <i className="fa fa-arrow-left mr-2" />
-          <i className="fa fa-home" />
-        </a>
+        <div className="relative max-w-7xl mx-auto mt-6 -mb-10">
+          <a
+            href={`/`}
+            className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 z-[1]"
+          >
+            <i className="fa fa-arrow-left mr-2" />
+            <i className="fa fa-home" />
+          </a>
+        </div>
       )}
       <Component {...pageProps} />
       <Analytics />

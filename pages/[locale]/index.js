@@ -14,6 +14,7 @@ const Navigation = dynamic(() => import('./navigation'));
 const Header = dynamic(() => import('./header'));
 const About = dynamic(() => import('./about'));
 const Achievements = dynamic(() => import('./achievements'));
+const Gallery = dynamic(() => import('./gallery'));
 const Skills = dynamic(() => import('./skills'));
 const Experience = dynamic(() => import('./experience'));
 const Projects = dynamic(() => import('./projects'));
@@ -251,6 +252,7 @@ export default function Home() {
                 <Header i18n={I18n} />
                 <About i18n={I18n} />
                 <Achievements i18n={I18n} />
+                <Gallery i18n={I18n} />
                 <Experience i18n={I18n} />
                 <Skills i18n={I18n} />
                 <Projects i18n={I18n} />
