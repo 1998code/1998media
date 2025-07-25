@@ -109,6 +109,10 @@ export default function Gallery(props) {
         if (typeof window !== 'undefined') {
             const params = new URLSearchParams(window.location.search);
             if (params.get('type') === 'Spatial') {
+                const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+                if (!isSafari) {
+                    alert('Only Safari is supported for Spatial view.');
+                }
                 setActiveTab('spatial');
             }
         }
