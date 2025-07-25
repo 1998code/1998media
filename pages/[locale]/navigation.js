@@ -45,7 +45,7 @@ export default function Navigation(props) {
     header: 'house',
     about: 'info-circle',
     achievements: 'earth-americas',
-    impacts: 'image',
+    gallery: 'image',
     experience: 'briefcase',
     skills: 'tools',
     projects: 'project-diagram',
@@ -60,7 +60,7 @@ export default function Navigation(props) {
   return (
     <div
       id="navigation"
-      className={`group fixed ${props.sidebarOpen ? 'top-0 left-0' : 'w-full flex items-center md:justify-center p-3.5 sm:py-5'} select-none z-[100] transition-all`}
+      className={`group fixed ${props.sidebarOpen ? 'top-0 left-0 md:min-w-[10vw]' : 'w-full flex items-center md:justify-center p-3.5 sm:py-5'} select-none z-[100] transition-all`}
     >
       <div
         className={`flex bg-white/50 dark:bg-black/50 dark:text-white backdrop-blur-md shadow dark:shadow-gray-900 ${props.sidebarOpen ? 'h-screen flex-col overflow-auto' : 'items-center pl-1 rounded-full'} transition-all`}
@@ -84,8 +84,8 @@ export default function Navigation(props) {
           )}
         </div>
 
-        {props.sidebarOpen ? (
-          <div className="hidden 2xl:inline">
+        {props.sidebarOpen && (
+          <div className="hidden 2xl:inline mb-3">
             <DocSearch
               appId="01IRDDJXZ4"
               indexName="1998"
@@ -93,8 +93,6 @@ export default function Navigation(props) {
               placeholder="Search & Learn More..."
             />
           </div>
-        ) : (
-          <></>
         )}
 
         {props.sections &&
@@ -102,7 +100,7 @@ export default function Navigation(props) {
             <a
               key={section}
               href={`#${section}`}
-              className={`px-2 text-sm font-semibold ${props.activeSection === section ? 'opacity-100 bg-white text-orange-600 dark:text-orange-400 dark:bg-white/10 shadow-inner dark:shadow-gray-900/50' : 'opacity-50'} ${props.sidebarOpen ? 'py-3.5' : 'hidden lg:inline py-1 rounded-full'} hover:opacity-80 transition-all`}
+              className={`px-2 text-sm font-semibold ${props.activeSection === section ? 'opacity-100 bg-white text-orange-600 dark:text-orange-400 dark:bg-white/10 shadow-inner dark:shadow-gray-900/50' : 'opacity-50'} ${props.sidebarOpen ? 'py-3.5 hover:bg-orange-100 dark:hover:bg-gray-900' : 'hidden lg:inline py-1 rounded-full hover:opacity-80'} transition-all`}
             >
               {
                 <div className="flex items-center gap-2">
@@ -130,9 +128,7 @@ export default function Navigation(props) {
         )}
 
         {/* Search */}
-        {props.sidebarOpen ? (
-          <></>
-        ) : (
+        {!props.sidebarOpen && (
           <DocSearch
             appId="01IRDDJXZ4"
             indexName="1998"

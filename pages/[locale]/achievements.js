@@ -145,20 +145,41 @@ export default function Achievements(props) {
 
   const spatialPhotos = [
     {
+      id: 'tokyo-tower-night-video',
+      title: 'Tokyo Tower Night',
+      url: 'https://cdn.1998.media/spatial/video/TokyoTowerNight.MOV',
+      type: 'video',
+    },
+    {
       id: 'akasaka-palace',
       title: 'Akasaka Palace',
-      url: 'https://cdn.1998.media/spatial/photo/AkasakaPalaceByMing.HEIC'
+      url: 'https://cdn.1998.media/spatial/photo/AkasakaPalaceByMing.HEIC',
+      type: 'photo',
     },
     {
       id: 'golden-gate-bridge',
       title: 'Golden Gate Bridge',
-      url: 'https://cdn.1998.media/spatial/photo/GoldenGateBridgeByMing.HEIC'
+      url: 'https://cdn.1998.media/spatial/photo/GoldenGateBridgeByMing.HEIC',
+      type: 'photo',
+    },
+    {
+      id: 'sf-sea-video',
+      title: 'San Francisco Sea',
+      url: 'https://cdn.1998.media/spatial/video/SanFranciscoSea.MOV',
+      type: 'video',
     },
     {
       id: 'sf-night-pano',
       title: 'San Francisco Night Panorama',
-      url: 'https://cdn.1998.media/spatial/pano/SanFranciscoNight.HEIC'
-    }
+      url: 'https://cdn.1998.media/spatial/pano/SanFranciscoNight.HEIC',
+      type: 'photo',
+    },
+    {
+      id: 'nagoya-night-pano',
+      title: 'Nagoya Station Night Panorama',
+      url: 'https://cdn.1998.media/spatial/pano/NagoyaStationNight.HEIC',
+      type: 'photo',
+    },
   ];
 
   const totalReleases = photos.length;
@@ -190,16 +211,40 @@ export default function Achievements(props) {
     const imageUrl = photo.urls?.raw || photo.url;
     const linkUrl = photo.links?.html || photo.url;
     const isSpatial = !photo.urls; // If no urls property, it's a spatial photo
-    
+
     // If it's a spatial photo and it's already selected, do nothing
     if (isSpatial && isSpatialPhoto && selectedImage === imageUrl && isDialogOpen) {
       return;
     }
-    
-    setSelectedImage(imageUrl);
-    setSelectedImageURL(linkUrl);
-    setIsSpatialPhoto(isSpatial);
-    setIsDialogOpen(true);
+
+    if (isSpatial && photo.id && photo.id.includes('pano')) {
+      setSelectedImage(imageUrl);
+      setSelectedImageURL(linkUrl);
+      setIsSpatialPhoto(isSpatial);
+      setIsDialogOpen(false);
+      setTimeout(() => {
+        const img = document.getElementById('img');
+        if (img && img.requestFullscreen) {
+          img.requestFullscreen();
+        }
+      }, 100);
+    } else if (isSpatial) {
+      setSelectedImage(imageUrl);
+      setSelectedImageURL(linkUrl);
+      setIsSpatialPhoto(isSpatial);
+      setIsDialogOpen(false);
+      setTimeout(() => {
+        const img = document.getElementById('img');
+        if (img && img.requestFullscreen) {
+          img.requestFullscreen();
+        }
+      }, 100);
+    } else {
+      setSelectedImage(imageUrl);
+      setSelectedImageURL(linkUrl);
+      setIsSpatialPhoto(isSpatial);
+      setIsDialogOpen(true);
+    }
   };
 
   const handleClose = () => {
@@ -282,32 +327,11 @@ export default function Achievements(props) {
               className="absolute -z-[1] w-[25vw] top-25 -right-72"
             />
 
-            <div id="impacts" className="pt-16">
-              <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-gray-100">
-                {i18n('3D Rendering and Photography @Unsplash')}
-                <i className="far fa-image ml-2"></i>
-              </h3>
-              <dl className="mt-5 bg-white/50 dark:bg-black/50 backdrop-blur-md grid grid-cols-1 overflow-hidden rounded-lg shadow md:grid-cols-3 divide-y divide-gray-200 dark:divide-gray-800 md:divide-y-0 md:divide-x backlight">
-                {stats.map((item) => (
-                  <div key={item.name} className="px-4 py-5 sm:p-6">
-                    <dt className="text-base font-normal text-gray-900 dark:text-gray-100">
-                      {i18n(item.name)}
-                    </dt>
-                    <dd className="mt-1 flex items-baseline justify-between md:block lg:flex">
-                      <div className="flex items-baseline text-2xl font-semibold text-emerald-600">
-                        {item.stat}
-                      </div>
-                      <div className="bg-green-800 text-green-100 inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium md:mt-2 lg:mt-0">
-                        <i className="flex-shrink-0 self-center fa fa-caret-up" />
-                      </div>
-                    </dd>
-                  </div>
-                ))}
-              </dl>
+            <div id="gallery" className="pt-16">
               <div className="mt-6 flex justify-between items-center">
                 <h4 className="text-lg font-medium leading-6 text-gray-500">
-                  {i18n('Random Sample')}
-                  <i className="far fa-random ml-2"></i>
+                  {i18n('Gallery')}
+                  <i className="far fa-eyes ml-2"></i>
                 </h4>
                 <div className="flex bg-white/50 dark:bg-black/50 backdrop-blur-md rounded-lg p-1 border border-gray-200 dark:border-gray-700">
                   <button
@@ -341,42 +365,64 @@ export default function Achievements(props) {
                 </div>
               </div>
               {activeTab === 'unsplash' && (
-                <div className="grid grid-cols-1 gap-4 mt-5 sm:grid-cols-2 lg:grid-cols-3">
-                  {photos.map((photo) => (
-                    <div
-                      key={photo.id}
-                      className="group flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-105 border border-transparent hover:border-black dark:hover:border-white"
-                    >
-                      <img
-                        loading="lazy"
-                        className="h-[25vh] w-full object-cover cursor-pointer"
-                        src={photo.urls.raw}
-                        alt={photo.alt_description}
-                        onClick={() => handleClick(photo)}
-                      />
-                      <Tooltip
-                        content={photo.color}
-                        placement="right"
-                        className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-2xl"
+                <div>
+                  <dl className="mt-5 bg-white/50 dark:bg-black/50 backdrop-blur-md grid grid-cols-1 overflow-hidden rounded-lg shadow md:grid-cols-3 divide-y divide-gray-200 dark:divide-gray-800 md:divide-y-0 md:divide-x backlight">
+                    {stats.map((item) => (
+                      <div key={item.name} className="px-4 py-5 sm:p-6">
+                        <dt className="flex items-baseline justify-between gap-1">
+                          <div className="text-base font-normal text-gray-900 dark:text-gray-100">
+                            {i18n(item.name)}
+                          </div>
+                          <div className="bg-green-800 text-green-100 inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium md:mt-2 lg:mt-0">
+                            <i className="flex-shrink-0 self-center fa fa-caret-up" />
+                          </div>
+                        </dt>
+                        <dd className="mt-1 flex items-baseline justify-between md:block">
+                          <div className="flex items-baseline text-2xl font-semibold text-emerald-600">
+                            {item.stat}
+                          </div>
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                  <div className="grid grid-cols-1 gap-4 mt-5 sm:grid-cols-2 lg:grid-cols-3">
+                    {photos.map((photo) => (
+                      <div
+                        key={photo.id}
+                        className="group flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-105 border border-transparent hover:border-black dark:hover:border-white"
                       >
-                        <div
-                          className="opacity-0 group-hover:opacity-100 absolute bottom-0 h-7 border-t border-r rounded-tr-md duration-500 transition-all"
-                          style={{ backgroundColor: photo.color }}
+                        <img
+                          loading="lazy"
+                          className="h-[25vh] w-full object-cover cursor-pointer"
+                          src={photo.urls.raw}
+                          alt={photo.alt_description}
+                          onClick={() => handleClick(photo)}
+                        />
+                        <Tooltip
+                          content={photo.color}
+                          placement="right"
+                          className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-2xl"
                         >
-                          {Object.entries(photo.topic_submissions).map(
-                            ([topic, submission]) =>
-                              submission.status === 'approved' ? (
-                                <span className="p-1.5 text-white text-sm">
-                                  <i className="fa fa-crown"></i> Featured in{' '}
-                                  {topic.replaceAll('-', ' ')}
-                                </span>
-                              ) : <span className="p-1.5 text-white text-sm"><i className="fa fa-thumbs-up"></i></span>
-                          )}
-                        </div>
-                      </Tooltip>
-                    </div>
-                  ))}
-                </div>)}
+                          <div
+                            className="opacity-0 group-hover:opacity-100 absolute bottom-0 h-7 border-t border-r rounded-tr-md duration-500 transition-all"
+                            style={{ backgroundColor: photo.color }}
+                          >
+                            {Object.entries(photo.topic_submissions).map(
+                              ([topic, submission]) =>
+                                submission.status === 'approved' ? (
+                                  <span className="p-1.5 text-white text-sm">
+                                    <i className="fa fa-crown"></i> Featured in{' '}
+                                    {topic.replaceAll('-', ' ')}
+                                  </span>
+                                ) : <span className="p-1.5 text-white text-sm"><i className="fa fa-thumbs-up"></i></span>
+                            )}
+                          </div>
+                        </Tooltip>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
               {activeTab === 'spatial' && (
                 <div className="grid grid-cols-1 gap-4 mt-5 sm:grid-cols-2 lg:grid-cols-3">
                   {spatialPhotos.map((photo) => (
@@ -384,22 +430,59 @@ export default function Achievements(props) {
                       key={photo.id}
                       className="group flex flex-col rounded-2xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-105 border border-transparent hover:border-black dark:hover:border-white"
                     >
-                      <img
-                        loading="lazy"
-                        className={`h-[25vh] w-full object-cover -mb-12 ${
-                          isSpatialPhoto && selectedImage === photo.url && isDialogOpen 
-                            ? 'cursor-default' 
-                            : 'cursor-pointer'
-                        }`}
-                        src={photo.url}
-                        alt={photo.title}
-                        {...(!(isSpatialPhoto && selectedImage === photo.url && isDialogOpen) && {
-                          onClick: () => handleClick(photo)
-                        })}
-                      />
-                      <div className="p-3 z-[1]">
-                        <h3 className="text-sm text-right font-medium text-gray-100">
-                          {photo.title}
+                      {photo.type === 'video' ? (
+                        <div
+                          className={`relative h-[25vh] w-full -mb-14 ${
+                            isSpatialPhoto && selectedImage === photo.url && isDialogOpen 
+                              ? 'cursor-default' 
+                              : 'cursor-pointer'
+                          }`}
+                          onClick={!(isSpatialPhoto && selectedImage === photo.url && isDialogOpen) ? () => handleClick(photo) : undefined}
+                        >
+                          <video
+                            src={photo.url}
+                            muted
+                            autoPlay
+                            loop
+                            playsInline
+                            controls={false}
+                            className="absolute inset-0 w-full h-full object-cover rounded-t-2xl"
+                            style={{ zIndex: 1 }}
+                          />
+                          {/* <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 bg-black/60 rounded-full px-3.5 py-1.5 pointer-events-none">
+                            <i className="far fa-play text-white text-lg"></i>
+                          </span> */}
+                        </div>
+                      ) : (
+                        <img
+                          loading="lazy"
+                          className={`h-[25vh] w-full object-cover -mb-14 ${
+                            isSpatialPhoto && selectedImage === photo.url && isDialogOpen 
+                              ? 'cursor-default' 
+                              : 'cursor-pointer'
+                          }`}
+                          src={photo.url}
+                          alt={photo.title}
+                          {...(!(isSpatialPhoto && selectedImage === photo.url && isDialogOpen) && {
+                            onClick: () => handleClick(photo)
+                          })}
+                        />
+                      )}
+                      <div className="p-1.5 z-[1]">
+                        <h3 className="text-sm font-medium text-gray-100 flex items-center justify-between w-full">
+                          {/* Icon left, title right */}
+                          <span className="flex-shrink-0 flex items-center">
+                            <span className="rounded-lg bg-white/50 dark:bg-black/40 backdrop-blur-sm px-1.5 py-0.5">
+                              {photo.type === 'video' ? (
+                                <i className="fal fa-video text-base text-gray-400" title="Spatial Video"></i>
+                              ) : photo.id && photo.id.includes('pano') ? (
+                                <i className="fal fa-panorama text-base text-gray-400" title="Panorama"></i>
+                              ) : (
+                                <i className="fal fa-cube text-base text-gray-400" title="Spatial Photo"></i>
+                              )}
+                            </span>
+                          </span>
+                          <span className="flex-1 text-right">{photo.title}</span>
                         </h3>
                       </div>
                     </div>
@@ -427,24 +510,28 @@ export default function Achievements(props) {
             &#8203;
           </span>
           {/* Modal image: Only wrap in <a> for Unsplash photos */}
-          {isSpatialPhoto ? (
-            <img
-              loading="lazy"
-              src={selectedImage}
-              alt="Selected"
-              className="relative w-[80vw] h-[80vh] object-cover"
-              controls
-            />
-          ) : (
-            <a href={selectedImageURL} target="_blank">
+          <a href={selectedImageURL} target="_blank">
+            {isSpatialPhoto && selectedImage && selectedImage.endsWith('.MOV') ? (
+              <video
+                id="img"
+                src={selectedImage}
+                className="relative w-[80vw] h-[80vh] object-cover rounded-3xl"
+                autoPlay
+                muted
+                playsInline
+                controls
+                poster="https://cdn.1998.media/spatial/video/SanFranciscoSea.MOV.jpg"
+              />
+            ) : (
               <img
+                id={isSpatialPhoto ? 'img' : undefined}
                 loading="lazy"
                 src={selectedImage}
                 alt="Selected"
                 className="relative w-[80vw] h-[80vh] object-cover rounded-3xl"
               />
-            </a>
-          )}
+            )}
+          </a>
         </div>
       </div>
     </>

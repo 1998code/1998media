@@ -96,7 +96,7 @@ export default function Home() {
     'header',
     'about',
     'achievements',
-    'impacts',
+    'gallery',
     'experience',
     'skills',
     'projects',
