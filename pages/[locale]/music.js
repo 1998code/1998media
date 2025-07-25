@@ -2,9 +2,15 @@ import { useEffect, useState, useRef } from 'react';
 import { Tooltip } from '@nextui-org/tooltip';
 
 export default function Music(props) {
+  // Track if fallback is used
+  const [usingCharts, setUsingCharts] = useState(false);
   function i18n(key) {
     if (props.i18n && props.i18n['music'] && !props.i18n['music'][key]) {
       console.log('music Missing Translation: ' + key);
+    }
+    // Replace playlist title if using charts fallback
+    if (usingCharts && key === 'My Recent Playlist') {
+      return 'Apple Music US Charts';
     }
     return props.i18n && props.i18n['music'] && props.i18n['music'][key]
       ? props.i18n['music'][key]
@@ -28,13 +34,40 @@ export default function Music(props) {
   const [currentPlaying, setCurrentPlaying] = useState({});
   function fetchMusicList() {
     fetch(`/api/music?path=me/recent/played/tracks`)
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) throw new Error('recent tracks error');
+        return response.json();
+      })
       .then((data) => {
-        if (data.data) {
+        if (data.data && data.data.length > 0) {
           setMusic(data.data);
           setCurrentPlaying(data.data[0]);
+          setUsingCharts(false);
         } else {
+          throw new Error('No recent tracks');
         }
+      })
+      .catch(() => {
+        // fallback to charts
+        fetch(`/api/music?path=catalog/us/charts?types=songs`)
+          .then((response) => response.json())
+          .then((data) => {
+            if (
+              data.results &&
+              data.results.songs &&
+              data.results.songs.length > 0 &&
+              data.results.songs[0].data &&
+              data.results.songs[0].data.length > 0
+            ) {
+              setMusic(data.results.songs[0].data);
+              setCurrentPlaying(data.results.songs[0].data[0]);
+              setUsingCharts(true);
+            } else {
+              setMusic([]);
+              setCurrentPlaying({});
+              setUsingCharts(true);
+            }
+          });
       });
   }
 
