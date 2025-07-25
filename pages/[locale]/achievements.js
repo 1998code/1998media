@@ -153,6 +153,11 @@ export default function Achievements(props) {
       id: 'golden-gate-bridge',
       title: 'Golden Gate Bridge',
       url: 'https://cdn.1998.media/spatial/photo/GoldenGateBridgeByMing.HEIC'
+    },
+    {
+      id: 'sf-night-pano',
+      title: 'San Francisco Night Panorama',
+      url: 'https://cdn.1998.media/spatial/pano/SanFranciscoNight.HEIC'
     }
   ];
 
@@ -427,7 +432,7 @@ export default function Achievements(props) {
               loading="lazy"
               src={selectedImage}
               alt="Selected"
-              className="relative w-[80vw] h-[80vh] object-cover rounded-3xl"
+              className="relative w-[80vw] h-[80vh] object-cover"
               controls
             />
           ) : (
