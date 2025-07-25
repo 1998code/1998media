@@ -61,10 +61,10 @@ function MyApp({ Component, pageProps }) {
         />
       </Head>
       {notHome && (
-        <div className="relative max-w-7xl mx-auto mt-6 -mb-10">
+        <div className="relative max-w-7xl mx-auto mt-6 -mb-10 z-[99]">
           <a
             href={`/`}
-            className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 z-[1]"
+            className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
           >
             <i className="fa fa-arrow-left mr-2" />
             <i className="fa fa-home" />

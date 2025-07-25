@@ -211,70 +211,72 @@ export default function Gallery(props) {
                         </div>
                     </div>
                 </div>
-                <div className="mt-10 pb-12 sm:pb-16">
-                    <div className="relative max-w-7xl mx-auto">
-                        <div className="cursor-default">
-                            {activeTab === 'unsplash' && (
-                                <div>
-                                     <dl className="mt-5 bg-white/50 dark:bg-black/50 backdrop-blur-md grid grid-cols-1 overflow-hidden rounded-lg shadow md:grid-cols-3 divide-y divide-gray-200 dark:divide-gray-800 md:divide-y-0 md:divide-x backlight">
-                                        {stats.map((item) => (
-                                            <div key={item.name} className="px-4 py-5 sm:p-6">
-                                                <dt className="flex items-baseline justify-between gap-1">
-                                                    <div className="text-base font-normal text-gray-900 dark:text-gray-100">
-                                                        {i18n(item.name)}
-                                                    </div>
-                                                    <div className="bg-green-800 text-green-100 inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium md:mt-2 lg:mt-0">
-                                                        <i className="flex-shrink-0 self-center fa fa-caret-up" />
-                                                    </div>
-                                                </dt>
-                                                <dd className="mt-1 flex items-baseline justify-between md:block">
-                                                    <div className="flex items-baseline text-2xl font-semibold text-emerald-600">
-                                                        {item.stat}
-                                                    </div>
-                                                </dd>
-                                            </div>
-                                        ))}
-                                    </dl>
-                                    <div className="grid grid-cols-1 gap-4 mt-5 sm:grid-cols-2 lg:grid-cols-3">
-                                        {photos.map((photo) => (
-                                            <div
-                                                key={photo.id}
-                                                className="group flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-105 border border-transparent hover:border-black dark:hover:border-white"
+                <div className="relative mt-6 max-w-7xl mx-auto">
+                    <div className="relative overflow-hidden">
+                        <div
+                            className={`flex w-full transition-transform duration-500 ${activeTab === 'unsplash' ? 'translate-x-0' : '-translate-x-full'}`}
+                        >
+                            {/* Unsplash Tab */}
+                            <div className="w-full shrink-0 px-1 overflow-hidden">
+                                <dl className="bg-white/50 dark:bg-black/50 backdrop-blur-md grid grid-cols-1 overflow-hidden rounded-lg shadow md:grid-cols-3 divide-y divide-gray-200 dark:divide-gray-800 md:divide-y-0 md:divide-x backlight">
+                                    {stats.map((item) => (
+                                        <div key={item.name} className="px-4 py-5 sm:p-6">
+                                            <dt className="flex items-baseline justify-between gap-1">
+                                                <div className="text-base font-normal text-gray-900 dark:text-gray-100">
+                                                    {i18n(item.name)}
+                                                </div>
+                                                <div className="bg-green-800 text-green-100 inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium md:mt-2 lg:mt-0">
+                                                    <i className="flex-shrink-0 self-center fa fa-caret-up" />
+                                                </div>
+                                            </dt>
+                                            <dd className="mt-1 flex items-baseline justify-between md:block">
+                                                <div className="flex items-baseline text-2xl font-semibold text-emerald-600">
+                                                    {item.stat}
+                                                </div>
+                                            </dd>
+                                        </div>
+                                    ))}
+                                </dl>
+                                <div className="grid grid-cols-1 gap-4 my-5 sm:grid-cols-2 lg:grid-cols-3">
+                                    {photos.map((photo) => (
+                                        <div
+                                            key={photo.id}
+                                            className="group flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-[1.01] border border-transparent hover:border-black dark:hover:border-white"
+                                        >
+                                            <img
+                                                loading="lazy"
+                                                className="h-[25vh] w-full object-cover cursor-pointer"
+                                                src={photo.urls.raw}
+                                                alt={photo.alt_description}
+                                                onClick={() => handleClick(photo)}
+                                            />
+                                            <Tooltip
+                                                content={photo.color}
+                                                placement="right"
+                                                className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-2xl"
                                             >
-                                                <img
-                                                    loading="lazy"
-                                                    className="h-[25vh] w-full object-cover cursor-pointer"
-                                                    src={photo.urls.raw}
-                                                    alt={photo.alt_description}
-                                                    onClick={() => handleClick(photo)}
-                                                />
-                                                <Tooltip
-                                                    content={photo.color}
-                                                    placement="right"
-                                                    className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-2xl"
+                                                <div
+                                                    className={`opacity-0 group-hover:opacity-100 absolute bottom-0 h-7 border-t border-r rounded-tr-md duration-500 transition-all`}
+                                                    style={{ backgroundColor: photo.color }}
                                                 >
-                                                    <div
-                                                        className="opacity-0 group-hover:opacity-100 absolute bottom-0 h-7 border-t border-r rounded-tr-md duration-500 transition-all"
-                                                        style={{ backgroundColor: photo.color }}
-                                                    >
-                                                        {Object.entries(photo.topic_submissions).map(
-                                                            ([topic, submission]) =>
-                                                                submission.status === 'approved' ? (
-                                                                    <span className="p-1.5 text-white text-sm">
-                                                                        <i className="fa fa-crown"></i> Featured in{' '}
-                                                                        {topic.replaceAll('-', ' ')}
-                                                                    </span>
-                                                                ) : <span className="p-1.5 text-white text-sm"><i className="fa fa-thumbs-up"></i></span>
-                                                        )}
-                                                    </div>
-                                                </Tooltip>
-                                            </div>
-                                        ))}
-                                    </div>
+                                                    {Object.entries(photo.topic_submissions).map(
+                                                        ([topic, submission]) =>
+                                                            submission.status === 'approved' ? (
+                                                                <span className="p-1.5 text-white text-sm">
+                                                                    <i className="fa fa-crown"></i> Featured in{' '}
+                                                                    {topic.replaceAll('-', ' ')}
+                                                                </span>
+                                                            ) : <span className="p-1.5 text-white text-sm"><i className="fa fa-thumbs-up"></i></span>
+                                                    )}
+                                                </div>
+                                            </Tooltip>
+                                        </div>
+                                    ))}
                                 </div>
-                            )}
-                            {activeTab === 'spatial' && (
-                                <div className="grid grid-cols-1 gap-4 mt-5 sm:grid-cols-2 lg:grid-cols-3">
+                            </div>
+                            {/* Spatial Tab */}
+                            <div className="w-full shrink-0 overflow-hidden">
+                                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                                     {spatialPhotos.map((photo) => (
                                         <div
                                             key={photo.id}
@@ -283,8 +285,8 @@ export default function Gallery(props) {
                                             {photo.type === 'video' ? (
                                                 <div
                                                     className={`relative h-[25vh] w-full -mb-14 ${isSpatialPhoto && selectedImage === photo.url && isDialogOpen
-                                                            ? 'cursor-default'
-                                                            : 'cursor-pointer'
+                                                        ? 'cursor-default'
+                                                        : 'cursor-pointer'
                                                         }`}
                                                     onClick={!(isSpatialPhoto && selectedImage === photo.url && isDialogOpen) ? () => handleClick(photo) : undefined}
                                                 >
@@ -303,8 +305,8 @@ export default function Gallery(props) {
                                                 <img
                                                     loading="lazy"
                                                     className={`h-[25vh] w-full object-cover -mb-14 ${isSpatialPhoto && selectedImage === photo.url && isDialogOpen
-                                                            ? 'cursor-default'
-                                                            : 'cursor-pointer'
+                                                        ? 'cursor-default'
+                                                        : 'cursor-pointer'
                                                         }`}
                                                     src={photo.url}
                                                     alt={photo.title}
@@ -331,7 +333,8 @@ export default function Gallery(props) {
                                             </div>
                                         </div>
                                     ))}
-                                </div>)}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
