@@ -198,7 +198,7 @@ export default function Gallery(props) {
                                 type="button"
                             >
                                 <i className="fas fa-cube mr-2"></i>
-                                Spatial
+                                {i18n('Spatial')}
                             </button>
                         </div>
                     </div>
