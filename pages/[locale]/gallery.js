@@ -18,6 +18,7 @@ export default function Gallery(props) {
     }
 
     const unsplashPublicKey = 'hjm0tzh_dDQx2REubp1NiT1P4jxE5wmnCbKQLbD-BZ8';
+    // Always start with 'unsplash' for SSR compatibility
     const [activeTab, setActiveTab] = useState('unsplash');
     const [totalViews, setTotalViews] = useState(0);
     const [photos, setPhotos] = useState([]);
@@ -104,6 +105,13 @@ export default function Gallery(props) {
     useEffect(() => {
         getUnsplashStats();
         getUnsplashPhotos();
+        // Only run this client-side
+        if (typeof window !== 'undefined') {
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('type') === 'Spatial') {
+                setActiveTab('spatial');
+            }
+        }
     }, []);
 
     const [isDialogOpen, setIsDialogOpen] = useState(false);
