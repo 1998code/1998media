@@ -13,8 +13,6 @@ export default function Contact(props) {
   return (
     <div
       id="contact"
-      data-aos="zoom-in"
-      data-aos-once
       className="relative py-16"
     >
       <div

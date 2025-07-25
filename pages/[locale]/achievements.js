@@ -260,8 +260,6 @@ export default function Achievements(props) {
   return (
     <>
       <div
-        data-aos="zoom-in"
-        data-aos-once
         className="relative px-4 sm:px-6 lg:px-8"
       >
         <img

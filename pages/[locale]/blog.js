@@ -99,8 +99,6 @@ export default function Blog(props) {
 
   return (
     <div
-      data-aos="zoom-in"
-      data-aos-once
       className="relative px-4 sm:px-6 lg:px-8 space-y-16"
     >
       {/* Blog */}

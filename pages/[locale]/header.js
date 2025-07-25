@@ -13,9 +13,6 @@ export default function Header(props) {
       className="h-[90vh] text-center flex flex-col justify-center bg-gradient-to-b dark:from-[var(--arc-palette-background)] dark:text-[var(--arc-palette-foregroundPrimary)]"
     >
       <h1
-        data-aos="zoom-in"
-        data-aos-delay="250"
-        data-aos-duration="500"
         className="text-8xl font-bold mb-3 dark:text-white px-3"
       >
         {i18n('Hi')} <i className="fa-light fa-hand-wave text-orange-500"></i>{' '}
@@ -26,9 +23,6 @@ export default function Header(props) {
         !
       </h1>
       <h2
-        data-aos="zoom-in"
-        data-aos-delay="750"
-        data-aos-duration="500"
         className="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-orange-500 to-orange-400 px-3"
       >
         {i18n('Glad to see you here')}{' '}

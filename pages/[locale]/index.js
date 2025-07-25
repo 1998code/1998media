@@ -221,11 +221,6 @@ export default function Home() {
           )}
         />
         <link rel="icon" href="https://cdn.1998.media/favicon24.jpg" />
-        {/* <link
-          href="https://unpkg.com/aos@2.3.4/dist/aos.css"
-          rel="stylesheet"
-        /> */}
-        {/* <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script> */}
         <script
           type="module"
           src="https://cdn.jsdelivr.net/npm/@splinetool/viewer@1.9.79/build/spline-viewer.min.js"
