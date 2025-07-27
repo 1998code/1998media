@@ -50,6 +50,7 @@ export default function Gallery(props) {
     }
 
     const spatialPhotos = [
+        // Tokyo
         {
             id: 'tokyo-tower-night-video',
             title: 'Tokyo Tower Night',
@@ -62,6 +63,7 @@ export default function Gallery(props) {
             url: 'https://cdn.1998.media/spatial/photo/AkasakaPalaceByMing.HEIC',
             type: 'photo',
         },
+        // San Francisco
         {
             id: 'golden-gate-bridge',
             title: 'Golden Gate Bridge',
@@ -79,6 +81,25 @@ export default function Gallery(props) {
             title: 'San Francisco Night Panorama',
             url: 'https://cdn.1998.media/spatial/pano/SanFranciscoNight.HEIC',
             type: 'photo',
+        },
+        // Nagoya
+        {
+            id: 'nagoya-rocket-video',
+            title: 'Nagoya Rocket',
+            url: 'https://cdn.1998.media/spatial/video/NagoyaRocket.MOV',
+            type: 'video',
+        },
+        {
+            id: 'nagoya-station-day-video',
+            title: 'Nagoya Station Day',
+            url: 'https://cdn.1998.media/spatial/video/NagoyaStationDay.MOV',
+            type: 'video',
+        },
+        {
+            id: 'nagoya-station-night-video',
+            title: 'Nagoya Station Night',
+            url: 'https://cdn.1998.media/spatial/video/NagoyaStationNight.MOV',
+            type: 'video',
         },
         {
             id: 'nagoya-night-pano',
