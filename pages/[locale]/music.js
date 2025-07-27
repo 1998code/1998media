@@ -10,7 +10,7 @@ export default function Music(props) {
     }
     // Replace playlist title if using charts fallback
     if (usingCharts && key === 'My Recent Playlist') {
-      return 'Apple Music US Charts';
+      return 'US Top 20 Charts';
     }
     return props.i18n && props.i18n['music'] && props.i18n['music'][key]
       ? props.i18n['music'][key]
@@ -229,7 +229,7 @@ export default function Music(props) {
               <a
                 href={currentPlaying.attributes?.url}
                 target="_blank"
-                className="flex flex-col justify-center items-start w-40"
+                className="flex flex-col justify-center items-start min-w-40"
               >
                 <div className="text-sm font-bold text-left dark:text-white">
                   {currentPlaying.attributes.name}
