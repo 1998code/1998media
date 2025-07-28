@@ -107,6 +107,24 @@ export default function Gallery(props) {
             url: 'https://cdn.1998.media/spatial/pano/NagoyaStationNight.HEIC',
             type: 'photo',
         },
+        {
+            id: 'nagoya-station-day1',
+            title: 'Nagoya Station Day',
+            url: 'https://cdn.1998.media/spatial/photo/NagoyaStationDay1ByMing.HEIC',
+            type: 'photo',
+        },
+        {
+            id: 'nagoya-station-night1',
+            title: 'Nagoya Station Night',
+            url: 'https://cdn.1998.media/spatial/photo/NagoyaStationNight1ByMing.HEIC',
+            type: 'photo',
+        },
+        {
+            id: 'nagoya-station-day2',
+            title: 'Nagoya Station Day',
+            url: 'https://cdn.1998.media/spatial/photo/NagoyaStationDay2ByMing.HEIC',
+            type: 'photo',
+        },
     ];
 
     const totalReleases = photos.length;
