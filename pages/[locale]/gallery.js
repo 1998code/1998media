@@ -50,6 +50,19 @@ export default function Gallery(props) {
     }
 
     const spatialPhotos = [
+        // China
+        {
+            id: 'juzizhou',
+            title: 'Juzizhou',
+            url: 'https://cdn.1998.media/spatial/photo/JuzizhouByMing.HEIC',
+            type: 'photo',
+        },
+        {
+            id: 'changsha-south-station',
+            title: 'Changsha South Station',
+            url: 'https://cdn.1998.media/spatial/photo/ChangshaSouthStationByMing.HEIC',
+            type: 'photo',
+        },
         // Tokyo
         {
             id: 'tokyo-tower-night-video',
