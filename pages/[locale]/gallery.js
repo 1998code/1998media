@@ -273,7 +273,7 @@ export default function Gallery(props) {
                         </div>
                     </div>
                 </div>
-                <div className="relative mt-6 max-w-7xl mx-auto">
+                <div className="relative my-6 max-w-7xl mx-auto">
                     <div className="relative overflow-hidden">
                         <div
                             className={`flex w-full transition-transform duration-500 ${activeTab === 'unsplash' ? 'translate-x-0' : '-translate-x-full'}`}
