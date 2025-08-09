@@ -27,11 +27,35 @@ export default function Gallery(props) {
 
     // Handle URL parameters on component mount
     useEffect(() => {
+        console.log('useEffect running, checking URL parameters...');
         const urlParams = new URLSearchParams(window.location.search);
         const typeParam = urlParams.get('type');
+        console.log('URL type parameter:', typeParam);
         
-        if (typeParam === 'spatial') {
-            setActiveTab('spatial');
+        if (typeParam?.toLowerCase() === 'spatial') {
+            console.log('URL parameter detected: type=spatial (case-insensitive)');
+            
+            // Check if Safari before setting spatial tab
+            const isSafari = typeof window !== 'undefined' && 
+                /^((?!chrome|android).)*safari/i.test(navigator.userAgent) && 
+                !navigator.userAgent.includes('Chrome') && 
+                !navigator.userAgent.includes('Firefox') && 
+                !navigator.userAgent.includes('Edge');
+            console.log('Is Safari:', isSafari);
+            console.log('User Agent:', navigator.userAgent);
+            
+            if (isSafari) {
+                console.log('Setting activeTab to spatial');
+                setActiveTab('spatial');
+            } else {
+                console.log('Not Safari - showing alert and staying on Unsplash');
+                // Not Safari - show alert and stay on Unsplash (don't set spatial tab)
+                alert('Only Safari is supported for Spatial content.');
+                // Ensure we're on Unsplash tab
+                setActiveTab('unsplash');
+            }
+        } else {
+            console.log('No spatial type parameter found');
         }
     }, []);
 
@@ -201,17 +225,6 @@ export default function Gallery(props) {
     useEffect(() => {
         getUnsplashStats();
         getUnsplashPhotos();
-        // Only run this client-side
-        if (typeof window !== 'undefined') {
-            const params = new URLSearchParams(window.location.search);
-            if (params.get('type') === 'Spatial') {
-                const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-                if (!isSafari) {
-                    alert('Only Safari is supported for Spatial view.');
-                }
-                setActiveTab('spatial');
-            }
-        }
     }, []);
 
     const [isDialogOpen, setIsDialogOpen] = useState(false);
