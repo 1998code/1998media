@@ -50,7 +50,13 @@ export default function Gallery(props) {
     }
 
     const spatialPhotos = [
-        // China
+        // Changsha
+        {
+            id: 'juzizhou-pan',
+            title: 'Juzizhou Panorama',
+            url: 'https://cdn.1998.media/spatial/pano/Juzizhou.HEIC',
+            type: 'photo',
+        },
         {
             id: 'juzizhou',
             title: 'Juzizhou',
@@ -297,7 +303,7 @@ export default function Gallery(props) {
                                     {photos.map((photo) => (
                                         <div
                                             key={photo.id}
-                                            className="group flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-[1.01] border border-transparent hover:border-black dark:hover:border-white"
+                                            className="group flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-[0.98] border border-transparent hover:border-black dark:hover:border-white"
                                         >
                                             <img
                                                 loading="lazy"
@@ -336,7 +342,7 @@ export default function Gallery(props) {
                                     {spatialPhotos.map((photo) => (
                                         <div
                                             key={photo.id}
-                                            className="group flex flex-col rounded-2xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-105 border border-transparent hover:border-black dark:hover:border-white"
+                                            className="group flex flex-col rounded-2xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-[0.98] border border-transparent hover:border-black dark:hover:border-white"
                                         >
                                             {photo.type === 'video' ? (
                                                 <div
