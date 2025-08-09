@@ -20,6 +20,7 @@ export default function Gallery(props) {
     const unsplashPublicKey = 'hjm0tzh_dDQx2REubp1NiT1P4jxE5wmnCbKQLbD-BZ8';
     // Always start with 'unsplash' for SSR compatibility
     const [activeTab, setActiveTab] = useState('unsplash');
+    const [spatialFilter, setSpatialFilter] = useState('all');
     const [totalViews, setTotalViews] = useState(0);
     const [photos, setPhotos] = useState([]);
 
@@ -150,6 +151,21 @@ export default function Gallery(props) {
     const avgViews = Math.floor(totalViews / (totalReleases || 1))
         .toString()
         .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+    // Filter spatial photos based on spatial filter
+    const getFilteredSpatialPhotos = () => {
+        switch (spatialFilter) {
+            case 'photo':
+                return spatialPhotos.filter(photo => photo.type === 'photo' && (!photo.id || !photo.id.includes('pano')));
+            case 'video':
+                return spatialPhotos.filter(photo => photo.type === 'video');
+            case 'panorama':
+                return spatialPhotos.filter(photo => photo.type === 'photo' && photo.id && photo.id.includes('pano'));
+            case 'all':
+            default:
+                return spatialPhotos;
+        }
+    };
 
     const stats = [
         {
@@ -289,6 +305,53 @@ export default function Gallery(props) {
                             </button>
                         </div>
                     </div>
+                    {/* Spatial Filter Tabs - Only show when Spatial tab is active */}
+                    {activeTab === 'spatial' && (
+                        <div className="flex justify-center mt-4">
+                            <div className="flex bg-white/30 dark:bg-black/30 backdrop-blur-md rounded-lg p-1 border border-gray-200/50 dark:border-gray-700/50">
+                                <button
+                                    onClick={() => setSpatialFilter('all')}
+                                    className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${spatialFilter === 'all'
+                                        ? 'bg-blue-500 text-white shadow-sm'
+                                        : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
+                                        }`}
+                                >
+                                    <i className="fas fa-th mr-1"></i>
+                                    ALL
+                                </button>
+                                <button
+                                    onClick={() => setSpatialFilter('photo')}
+                                    className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${spatialFilter === 'photo'
+                                        ? 'bg-blue-500 text-white shadow-sm'
+                                        : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
+                                        }`}
+                                >
+                                    <i className="fal fa-cube mr-1"></i>
+                                    Spatial Photo
+                                </button>
+                                <button
+                                    onClick={() => setSpatialFilter('video')}
+                                    className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${spatialFilter === 'video'
+                                        ? 'bg-blue-500 text-white shadow-sm'
+                                        : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
+                                        }`}
+                                >
+                                    <i className="fal fa-video mr-1"></i>
+                                    Spatial Video
+                                </button>
+                                <button
+                                    onClick={() => setSpatialFilter('panorama')}
+                                    className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${spatialFilter === 'panorama'
+                                        ? 'bg-blue-500 text-white shadow-sm'
+                                        : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
+                                        }`}
+                                >
+                                    <i className="fal fa-panorama mr-1"></i>
+                                    Panorama
+                                </button>
+                            </div>
+                        </div>
+                    )}
                 </div>
                 <div className="relative my-6 max-w-7xl mx-auto">
                     <div className="relative overflow-hidden">
@@ -356,7 +419,7 @@ export default function Gallery(props) {
                             {/* Spatial Tab */}
                             <div className="w-full shrink-0 overflow-hidden">
                                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                                    {spatialPhotos.map((photo) => (
+                                    {getFilteredSpatialPhotos().map((photo) => (
                                         <div
                                             key={photo.id}
                                             className="group flex flex-col rounded-2xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-[0.98] border border-transparent hover:border-black dark:hover:border-white"
