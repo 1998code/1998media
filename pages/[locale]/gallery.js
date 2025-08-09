@@ -331,7 +331,7 @@ export default function Gallery(props) {
                             <div className="relative flex bg-white/30 dark:bg-black/30 backdrop-blur-md rounded-xl p-1 border border-gray-200/50 dark:border-gray-700/50">
                                 {/* Sliding Background */}
                                 <div 
-                                    className="absolute top-1 bottom-1 bg-blue-500 rounded-md transition-all duration-300 ease-out shadow-sm"
+                                    className="absolute top-1 bottom-1 bg-emerald-500 rounded-md transition-all duration-300 ease-out shadow-sm"
                                     style={{
                                         left: spatialFilter === 'all' ? '4px' : 
                                               spatialFilter === 'photo' ? '68px' :
