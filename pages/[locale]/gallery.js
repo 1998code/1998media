@@ -229,6 +229,23 @@ export default function Gallery(props) {
 
     return (
         <>
+            <style jsx>{`
+                @keyframes pan-infinite {
+                    0% {
+                        transform: translateX(0%);
+                    }
+                    100% {
+                        transform: translateX(-200%);
+                    }
+                }
+                .animate-pan-slow {
+                    animation: pan-infinite 25s linear infinite;
+                    width: 300%;
+                }
+                .animate-pan-slow:hover {
+                    animation-play-state: paused;
+                }
+            `}</style>
             <div className="relative px-4 sm:px-6 lg:px-8">
                 <div id="gallery" className="pt-16 max-w-7xl mx-auto">
                     <div className="flex items-center justify-between">
@@ -288,7 +305,7 @@ export default function Gallery(props) {
                                                     {i18n(item.name)}
                                                 </div>
                                                 <div className="bg-green-800 text-green-100 inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium md:mt-2 lg:mt-0">
-                                                    <i className="flex-shrink-0 self-center fa fa-caret-up" />
+                                                    <i className="flex-shrink-0 self-center fa fa-arrow-up-right" />
                                                 </div>
                                             </dt>
                                             <dd className="mt-1 flex items-baseline justify-between md:block">
@@ -364,18 +381,51 @@ export default function Gallery(props) {
                                                     />
                                                 </div>
                                             ) : (
-                                                <img
-                                                    loading="lazy"
-                                                    className={`h-[25vh] w-full object-cover -mb-14 ${isSpatialPhoto && selectedImage === photo.url && isDialogOpen
-                                                        ? 'cursor-default'
-                                                        : 'cursor-pointer'
-                                                        }`}
-                                                    src={photo.url}
-                                                    alt={photo.title}
-                                                    {...(!(isSpatialPhoto && selectedImage === photo.url && isDialogOpen) && {
-                                                        onClick: () => handleClick(photo)
-                                                    })}
-                                                />
+                                                <div className="relative h-[25vh] w-full -mb-14 overflow-hidden">
+                                                    {photo.id && photo.id.includes('pano') ? (
+                                                        <div 
+                                                            className={`flex h-full animate-pan-slow ${isSpatialPhoto && selectedImage === photo.url && isDialogOpen
+                                                                ? 'cursor-default'
+                                                                : 'cursor-pointer'
+                                                            }`}
+                                                            {...(!(isSpatialPhoto && selectedImage === photo.url && isDialogOpen) && {
+                                                                onClick: () => handleClick(photo)
+                                                            })}
+                                                        >
+                                                            <img
+                                                                loading="lazy"
+                                                                className="h-full min-w-full object-cover object-left flex-shrink-0"
+                                                                src={photo.url}
+                                                                alt={photo.title}
+                                                            />
+                                                            <img
+                                                                loading="lazy"
+                                                                className="h-full min-w-full object-cover object-center flex-shrink-0"
+                                                                src={photo.url}
+                                                                alt={photo.title}
+                                                            />
+                                                            <img
+                                                                loading="lazy"
+                                                                className="h-full min-w-full object-cover object-right flex-shrink-0"
+                                                                src={photo.url}
+                                                                alt={photo.title}
+                                                            />
+                                                        </div>
+                                                    ) : (
+                                                        <img
+                                                            loading="lazy"
+                                                            className={`h-full w-full object-cover ${isSpatialPhoto && selectedImage === photo.url && isDialogOpen
+                                                                ? 'cursor-default'
+                                                                : 'cursor-pointer'
+                                                            }`}
+                                                            src={photo.url}
+                                                            alt={photo.title}
+                                                            {...(!(isSpatialPhoto && selectedImage === photo.url && isDialogOpen) && {
+                                                                onClick: () => handleClick(photo)
+                                                            })}
+                                                        />
+                                                    )}
+                                                </div>
                                             )}
                                             <div className="p-1.5 z-[1]">
                                                 <h3 className="text-sm font-medium text-gray-100 flex items-center justify-between w-full">
