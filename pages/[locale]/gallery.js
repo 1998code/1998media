@@ -21,6 +21,7 @@ export default function Gallery(props) {
     // Always start with 'unsplash' for SSR compatibility
     const [activeTab, setActiveTab] = useState('unsplash');
     const [spatialFilter, setSpatialFilter] = useState('all');
+    const [isTransitioning, setIsTransitioning] = useState(false);
     const [totalViews, setTotalViews] = useState(0);
     const [photos, setPhotos] = useState([]);
 
@@ -152,6 +153,17 @@ export default function Gallery(props) {
         .toString()
         .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
+    // Handle spatial filter change with animation
+    const handleSpatialFilterChange = (newFilter) => {
+        if (newFilter === spatialFilter) return;
+        
+        setIsTransitioning(true);
+        setTimeout(() => {
+            setSpatialFilter(newFilter);
+            setTimeout(() => setIsTransitioning(false), 50);
+        }, 250);
+    };
+
     // Filter spatial photos based on spatial filter
     const getFilteredSpatialPhotos = () => {
         switch (spatialFilter) {
@@ -272,15 +284,23 @@ export default function Gallery(props) {
                             {i18n('Gallery')}
                             <i className="far fa-eyes ml-2"></i>
                         </a>
-                        <div className="flex bg-white/50 dark:bg-black/50 backdrop-blur-md rounded-lg p-1 border border-gray-200 dark:border-gray-700">
+                        <div className="relative flex bg-white/50 dark:bg-black/50 backdrop-blur-md rounded-xl p-1 border border-gray-200 dark:border-gray-700">
+                            {/* Sliding Background for Main Tabs */}
+                            <div 
+                                className="absolute top-1 bottom-1 bg-emerald-600 rounded-md transition-all duration-300 ease-out shadow-sm"
+                                style={{
+                                    left: activeTab === 'unsplash' ? '4px' : '106px',
+                                    width: activeTab === 'unsplash' ? '98px' : '80px'
+                                }}
+                            />
                             <button
                                 onClick={() => setActiveTab('unsplash')}
-                                className={`p-2 text-sm font-medium rounded-md transition-all ${activeTab === 'unsplash'
-                                    ? 'bg-blue-600 text-white shadow-sm'
+                                className={`relative z-10 p-2 text-sm font-medium rounded-md transition-all duration-300 ${activeTab === 'unsplash'
+                                    ? 'text-white'
                                     : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
                                     }`}
                             >
-                                <i className="fab fa-unsplash mr-2"></i>
+                                <i className="fab fa-unsplash mr-1"></i>
                                 Unsplash
                             </button>
                             <button
@@ -292,15 +312,15 @@ export default function Gallery(props) {
                                     }
                                     setActiveTab('spatial');
                                 }}
-                                className={`p-2 text-sm font-medium rounded-md transition-all ${!isSafari
+                                className={`relative z-10 p-2 text-sm font-medium rounded-md transition-all duration-300 ${!isSafari
                                     ? 'bg-transparent text-gray-400 opacity-60 cursor-not-allowed'
                                     : activeTab === 'spatial'
-                                        ? 'bg-blue-600 text-white shadow-sm'
+                                        ? 'text-white'
                                         : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
                                     }`}
                                 type="button"
                             >
-                                <i className="fas fa-cube mr-2"></i>
+                                <i className="fas fa-cube mr-1"></i>
                                 {i18n('Spatial')}
                             </button>
                         </div>
@@ -308,11 +328,25 @@ export default function Gallery(props) {
                     {/* Spatial Filter Tabs - Only show when Spatial tab is active */}
                     {activeTab === 'spatial' && (
                         <div className="flex justify-center mt-4">
-                            <div className="flex bg-white/30 dark:bg-black/30 backdrop-blur-md rounded-lg p-1 border border-gray-200/50 dark:border-gray-700/50">
+                            <div className="relative flex bg-white/30 dark:bg-black/30 backdrop-blur-md rounded-xl p-1 border border-gray-200/50 dark:border-gray-700/50">
+                                {/* Sliding Background */}
+                                <div 
+                                    className="absolute top-1 bottom-1 bg-blue-500 rounded-md transition-all duration-300 ease-out shadow-sm"
+                                    style={{
+                                        left: spatialFilter === 'all' ? '4px' : 
+                                              spatialFilter === 'photo' ? '68px' :
+                                              spatialFilter === 'video' ? '190px' : 
+                                              '310px',
+                                        width: spatialFilter === 'all' ? '64px' :
+                                               spatialFilter === 'photo' ? '120px' :
+                                               spatialFilter === 'video' ? '116px' :
+                                               '95px'
+                                    }}
+                                />
                                 <button
-                                    onClick={() => setSpatialFilter('all')}
-                                    className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${spatialFilter === 'all'
-                                        ? 'bg-blue-500 text-white shadow-sm'
+                                    onClick={() => handleSpatialFilterChange('all')}
+                                    className={`relative z-10 px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-300 ${spatialFilter === 'all'
+                                        ? 'text-white'
                                         : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
                                         }`}
                                 >
@@ -320,9 +354,9 @@ export default function Gallery(props) {
                                     ALL
                                 </button>
                                 <button
-                                    onClick={() => setSpatialFilter('photo')}
-                                    className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${spatialFilter === 'photo'
-                                        ? 'bg-blue-500 text-white shadow-sm'
+                                    onClick={() => handleSpatialFilterChange('photo')}
+                                    className={`relative z-10 px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-300 ${spatialFilter === 'photo'
+                                        ? 'text-white'
                                         : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
                                         }`}
                                 >
@@ -330,9 +364,9 @@ export default function Gallery(props) {
                                     Spatial Photo
                                 </button>
                                 <button
-                                    onClick={() => setSpatialFilter('video')}
-                                    className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${spatialFilter === 'video'
-                                        ? 'bg-blue-500 text-white shadow-sm'
+                                    onClick={() => handleSpatialFilterChange('video')}
+                                    className={`relative z-10 px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-300 ${spatialFilter === 'video'
+                                        ? 'text-white'
                                         : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
                                         }`}
                                 >
@@ -340,9 +374,9 @@ export default function Gallery(props) {
                                     Spatial Video
                                 </button>
                                 <button
-                                    onClick={() => setSpatialFilter('panorama')}
-                                    className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${spatialFilter === 'panorama'
-                                        ? 'bg-blue-500 text-white shadow-sm'
+                                    onClick={() => handleSpatialFilterChange('panorama')}
+                                    className={`relative z-10 px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-300 ${spatialFilter === 'panorama'
+                                        ? 'text-white'
                                         : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
                                         }`}
                                 >
@@ -418,8 +452,16 @@ export default function Gallery(props) {
                             </div>
                             {/* Spatial Tab */}
                             <div className="w-full shrink-0 overflow-hidden">
-                                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                                    {getFilteredSpatialPhotos().map((photo) => (
+                                <div className="relative overflow-hidden">
+                                    <div 
+                                        className="transition-all duration-500 ease-in-out"
+                                        style={{
+                                            transform: isTransitioning ? 'translateX(20px)' : 'translateX(0)',
+                                            opacity: isTransitioning ? 0 : 1
+                                        }}
+                                    >
+                                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                                            {getFilteredSpatialPhotos().map((photo) => (
                                         <div
                                             key={photo.id}
                                             className="group flex flex-col rounded-2xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-[0.98] border border-transparent hover:border-black dark:hover:border-white"
@@ -507,7 +549,9 @@ export default function Gallery(props) {
                                                 </h3>
                                             </div>
                                         </div>
-                                    ))}
+                                            ))}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
