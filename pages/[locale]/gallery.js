@@ -52,7 +52,7 @@ export default function Gallery(props) {
     const spatialPhotos = [
         // Changsha
         {
-            id: 'juzizhou-pan',
+            id: 'juzizhou-pano',
             title: 'Juzizhou Panorama',
             url: 'https://cdn.1998.media/spatial/pano/Juzizhou.HEIC',
             type: 'photo',
