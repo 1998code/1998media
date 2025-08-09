@@ -25,6 +25,16 @@ export default function Gallery(props) {
     const [totalViews, setTotalViews] = useState(0);
     const [photos, setPhotos] = useState([]);
 
+    // Handle URL parameters on component mount
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const typeParam = urlParams.get('type');
+        
+        if (typeParam === 'spatial') {
+            setActiveTab('spatial');
+        }
+    }, []);
+
     function getUnsplashStats() {
         fetch(
             `https://api.unsplash.com/users/1998media/statistics?client_id=${unsplashPublicKey}`
@@ -251,6 +261,12 @@ export default function Gallery(props) {
         setSelectedImage(null);
         setIsSpatialPhoto(false);
     };
+
+    // Fetch data on component mount
+    useEffect(() => {
+        getUnsplashStats();
+        getUnsplashPhotos();
+    }, []);
 
     const isSafari = typeof window !== 'undefined' &&
         /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
