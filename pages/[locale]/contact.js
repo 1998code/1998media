@@ -27,7 +27,7 @@ export default function Contact(props) {
                 <Tooltip
                   content="Powered by Apple Map"
                   placement="bottom"
-                  className="p-1 mt-2 border text-xs dark:text-white bg-white dark:bg-black rounded-lg"
+                  className="p-1 mt-2 border text-xs dark:text-white bg-white dark:bg-black rounded-xl"
                 >
                   <img
                     loading="lazy"
@@ -120,7 +120,7 @@ export default function Contact(props) {
                 )}
               </p>
               <a
-                className="block w-full py-3 px-5 text-center bg-white dark:bg-black border border-transparent rounded-md shadow-md text-base font-medium text-orange-700 dark:text-orange-300 hover:bg-gray-50 dark:hover:bg-gray-900 sm:inline-block sm:w-auto"
+                className="block w-full py-3 px-5 text-center bg-white dark:bg-black border border-transparent rounded-xl shadow-md text-base font-medium text-orange-700 dark:text-orange-300 hover:bg-gray-50 dark:hover:bg-gray-900 sm:inline-block sm:w-auto"
                 href="mailto:find@1998.media"
               >
                 {i18n('General Inquiry')}: Find@1998.media
@@ -128,7 +128,7 @@ export default function Contact(props) {
               </a>
               {/* <br /> */}
               {/* <a
-                className="block w-full py-3 px-5 text-left bg-white dark:bg-green-800 border border-transparent rounded-md shadow-md text-base font-medium text-orange-700 dark:text-orange-300 hover:bg-gray-50 dark:hover:bg-green-900 sm:inline-block sm:w-auto"
+                className="block w-full py-3 px-5 text-left bg-white dark:bg-green-800 border border-transparent rounded-xl shadow-md text-base font-medium text-orange-700 dark:text-orange-300 hover:bg-gray-50 dark:hover:bg-green-900 sm:inline-block sm:w-auto"
                 href="mailto:safe@1998.media"
               >
                 {i18n('Security Issue')}: Safe@1998.media

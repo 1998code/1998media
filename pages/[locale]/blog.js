@@ -132,7 +132,7 @@ export default function Blog(props) {
                 key={post.title}
                 href={post.link}
                 target="_blank"
-                className="flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight"
+                className="flex flex-col rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight"
               >
                 <div className="flex-shrink-0">
                   <img
@@ -207,7 +207,7 @@ export default function Blog(props) {
               <Tooltip
                 content={medal.medalStageName}
                 placement="bottom"
-                className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg"
+                className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-xl"
               >
                 <img
                   loading="lazy"
@@ -220,7 +220,7 @@ export default function Blog(props) {
           </div>
           <a
             href="https://hk.trip.com/travel-guide/personal-home/E1B9A703A2E3FEF984D86D1D507FB324B4A7CBA7500F0E62A0BFA68DCC95C09E"
-            className="flex-1 md:flex-none block text-lg font-semibold text-white whitespace-nowrap bg-sky-600 hover:bg-sky-500 p-3 rounded-lg transition-all"
+            className="flex-1 md:flex-none block text-lg font-semibold text-white whitespace-nowrap bg-sky-600 hover:bg-sky-500 p-3 rounded-xl transition-all"
             target="_blank"
           >
             <i className="fa fa-suitcase-rolling mr-2"></i>
@@ -234,7 +234,7 @@ export default function Blog(props) {
                 href={post.shareURL}
                 target="_blank"
                 key={post.translateTitle || post.title}
-                className="flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight"
+                className="flex flex-col rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight"
               >
                 <div className="flex-shrink-0">
                   <img

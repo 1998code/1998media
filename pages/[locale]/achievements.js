@@ -145,7 +145,7 @@ export default function Achievements(props) {
                 )}
                 <i className="fab fa-app-store ml-2"></i>
               </h3>
-              <dl className="rounded-lg overflow-hidden bg-white/50 dark:bg-black/50 backdrop-blur-md shadow-lg grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 backlight">
+              <dl className="rounded-xl overflow-hidden bg-white/50 dark:bg-black/50 backdrop-blur-md shadow-lg grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 backlight">
                 {achievements.map((achievement) => (
                   <div className="flex flex-col p-6 text-center lg:text-left hover:scale-105 transition-all">
                     <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">
@@ -164,12 +164,12 @@ export default function Achievements(props) {
               </dl>
               <img
                 loading="lazy"
-                className="dark:hidden my-6 rounded-lg hover:scale-95 transition-all"
+                className="dark:hidden my-6 rounded-xl hover:scale-95 transition-all"
                 src="https://api.mapbox.com/styles/v1/mapbox/streets-v12/static/pin-l+b8172a(113.9745954,22.3526409),pin-s+1f89e3(121.1945767,25.0169013),pin-s+0b236f(-9.7459993,54.4364324),pin-s+0033a0(-95.7129,37.0902),pin-s+ff0000(-106.3468,56.1304),pin-s+0099b5(64.5853,41.3775),pin-s+007a3d(47.4818,29.3117)/11.7314,14.9358,1.32,0,35/1280x720@2x?access_token=pk.eyJ1IjoiMTk5OG1lZGlhIiwiYSI6ImNsdHRuaGg4ZzE1NDUya3N5MTd2dTgwbTYifQ.nTFoFutOK1E7O6KBSFPLVQ&logo=false&attribution=false"
               />
               <img
                 loading="lazy"
-                className="hidden dark:block my-6 rounded-lg hover:scale-95 transition-all"
+                className="hidden dark:block my-6 rounded-xl hover:scale-95 transition-all"
                 src="https://api.mapbox.com/styles/v1/1998media/clttnmr3900k501qw52w30alb/static/pin-l+b8172a(113.9745954,22.3526409),pin-s+1f89e3(121.1945767,25.0169013),pin-s+0b236f(-9.7459993,54.4364324),pin-s+0033a0(-95.7129,37.0902),pin-s+ff0000(-106.3468,56.1304),pin-s+0099b5(64.5853,41.3775),pin-s+007a3d(47.4818,29.3117)/11.7314,14.9358,1.32,0,35/1280x720@2x?access_token=pk.eyJ1IjoiMTk5OG1lZGlhIiwiYSI6ImNsdHRuaGg4ZzE1NDUya3N5MTd2dTgwbTYifQ.nTFoFutOK1E7O6KBSFPLVQ&logo=false&attribution=false"
               />
             </div>

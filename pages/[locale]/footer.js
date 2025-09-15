@@ -127,7 +127,7 @@ export default function Footer(props) {
             <Tooltip
               content={item.name}
               placement="top"
-              className="p-1 mb-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg"
+              className="p-1 mb-1 border text-xs dark:text-white bg-white dark:bg-black rounded-xl"
             >
               <a
                 key={item.name}
@@ -151,35 +151,35 @@ export default function Footer(props) {
           <Tooltip
             content="Safari 12+"
             placement="bottom"
-            className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg"
+            className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-xl"
           >
             <i className="fab fa-safari"></i>
           </Tooltip>
           <Tooltip
             content="Chrome 64+"
             placement="top"
-            className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg"
+            className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-xl"
           >
             <i className="fab fa-chrome"></i>
           </Tooltip>
           <Tooltip
             content="Firefox 67+"
             placement="bottom"
-            className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg"
+            className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-xl"
           >
             <i className="fab fa-firefox-browser" />
           </Tooltip>
           <Tooltip
             content="Microsoft Edge 79+"
             placement="top"
-            className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg"
+            className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-xl"
           >
             <i className="fab fa-edge"></i>
           </Tooltip>
           <Tooltip
             content="Opera 51+"
             placement="bottom"
-            className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-lg"
+            className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-xl"
           >
             <i className="fab fa-opera"></i>
           </Tooltip>

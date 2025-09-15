@@ -23,7 +23,7 @@ export default function Credits(props) {
           target="_blank"
         >
           <Image
-            className="h-10 rounded-lg border border-black dark:border-white"
+            className="h-10 rounded-xl border border-black dark:border-white"
             src="https://cdn.1998.media/logos/Vercel.svg"
             alt="Vercel"
             width={200}
@@ -32,7 +32,7 @@ export default function Credits(props) {
         </a>
         <a href="https://betteruptime.com/?ref=i41" target="_blank">
           <Image
-            className="h-10 rounded-lg p-2 border border-black dark:border-white dark:bg-white"
+            className="h-10 rounded-xl p-2 border border-black dark:border-white dark:bg-white"
             src="https://cdn.1998.media/logos/BetterUptime.png"
             alt="BetterUptime"
             width={40}
@@ -41,14 +41,14 @@ export default function Credits(props) {
         </a>
         <a href="https://docsearch.algolia.com/?ref=1998.media" target="_blank">
           <Image
-            className="h-10 rounded-lg bg-white p-2 dark:hidden border border-black"
+            className="h-10 rounded-xl bg-white p-2 dark:hidden border border-black"
             src="https://docsearch.algolia.com/img/docsearch-logo.svg"
             alt="Algolia"
             width={150}
             height={40}
           />
           <Image
-            className="h-10 rounded-lg hidden p-2 dark:bg-black dark:block border border-white"
+            className="h-10 rounded-xl hidden p-2 dark:bg-black dark:block border border-white"
             src="https://docsearch.algolia.com/img/docsearch-logo-white.svg"
             alt="Docsearch"
             width={150}
@@ -60,7 +60,7 @@ export default function Credits(props) {
           target="_blank"
         >
           <Image
-            className="h-10 rounded-lg bg-white p-2 border border-black"
+            className="h-10 rounded-xl bg-white p-2 border border-black"
             src="https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/SVG/DO_Logo_icon_blue.svg"
             alt="DigitalOcean"
             width={40}

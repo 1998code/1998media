@@ -157,7 +157,7 @@ export default function Music(props) {
                         src={item.attributes.artwork.url
                           .replace('{w}', '50')
                           .replace('{h}', '50')}
-                        className="w-10 h-10 rounded-lg shadow-lg"
+                        className="w-10 h-10 rounded-xl shadow-lg"
                       />
                       <div className="flex flex-col">
                         <div className="text-xs font-bold whitespace-nowrap">
@@ -195,7 +195,7 @@ export default function Music(props) {
               </div>
             }
             placement="top-center"
-            className="min-w-[50px] mb-2 md:mb-10 p-0 border text-xs dark:text-white bg-white/50 dark:bg-black backdrop-blur-lg rounded-lg md:rounded-2xl"
+            className="min-w-[50px] mb-2 md:mb-10 p-0 border text-xs dark:text-white bg-white/50 dark:bg-black backdrop-blur-lg rounded-xl md:rounded-2xl"
           >
             <a href={currentPlaying.attributes?.url} target="_blank">
               <img
@@ -224,7 +224,7 @@ export default function Music(props) {
                 </div>
               }
               placement="top-center"
-              className="min-w-[50px] mb-5 p-0 border text-xs dark:text-white bg-white/50 dark:bg-black backdrop-blur-lg rounded-lg md:rounded-2xl"
+              className="min-w-[50px] mb-5 p-0 border text-xs dark:text-white bg-white/50 dark:bg-black backdrop-blur-lg rounded-xl md:rounded-2xl"
             >
               <a
                 href={currentPlaying.attributes?.url}

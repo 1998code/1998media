@@ -57,7 +57,7 @@ export default function AI(props) {
                   href={item.sourceURL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="min-w-[300px] flex flex-col gap-3 pb-3 rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight"
+                  className="min-w-[300px] flex flex-col gap-3 pb-3 rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight"
                 >
                   <div>
                     <img
@@ -66,7 +66,7 @@ export default function AI(props) {
                       className="w-[300px] object-cover flex-1"
                     />
                     {/* Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black h-[300px] rounded-lg group-hover:rounded-none"></div>
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black h-[300px] rounded-xl group-hover:rounded-none"></div>
                   </div>
                   <div className="-mt-11 flex justify-between px-3 z-[1]">
                     <span className="text-sm text-gray-500">
@@ -95,7 +95,7 @@ export default function AI(props) {
                   href={item.sourceURL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="min-w-[250px] flex flex-col gap-3 pb-3 rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight"
+                  className="min-w-[250px] flex flex-col gap-3 pb-3 rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight"
                 >
                   <div>
                     <img
@@ -104,7 +104,7 @@ export default function AI(props) {
                       className="w-[250px] object-cover flex-1"
                     />
                     {/* Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black h-[250px] rounded-lg group-hover:rounded-none"></div>
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black h-[250px] rounded-xl group-hover:rounded-none"></div>
                   </div>
                   <div className="-mt-11 flex justify-between px-2 z-[1]">
                     <span className="text-sm text-gray-500">

@@ -54,32 +54,32 @@ export default function Projects(props) {
         <div className="mx-auto grid gap-5 md:grid-cols-4 lg:max-w-none items-end">
           <img
             loading="lazy"
-            className="w-full col-span-3 md:col-span-2 hover:scale-95 transition duration-300 rounded-lg"
+            className="w-full col-span-3 md:col-span-2 hover:scale-95 transition duration-300 rounded-xl"
             src="https://gitstats.1998.media/api?username=1998code&show_icons=true&bg_color=30,e96443,904e95&title_color=fff&text_color=fff&icon_color=fff&hide_border=true"
             alt="Performance"
           />
           <img
             loading="lazy"
-            className="w-full col-span-3 md:col-span-1 dark:hidden hover:scale-95 transition duration-300 rounded-lg"
+            className="w-full col-span-3 md:col-span-1 dark:hidden hover:scale-95 transition duration-300 rounded-xl"
             src="https://gitstats.1998.media/api/top-langs/?username=1998code&langs_count=4&layout=default&hide_border=true"
             alt="Top Languages"
           />
           <img
             loading="lazy"
-            className="w-full col-span-3 md:col-span-1 hidden dark:block hover:scale-95 transition duration-300 rounded-lg backlight"
+            className="w-full col-span-3 md:col-span-1 hidden dark:block hover:scale-95 transition duration-300 rounded-xl backlight"
             src="https://gitstats.1998.media/api/top-langs/?username=1998code&langs_count=4&layout=default&bg_color=000&title_color=fff&text_color=fff&hide_border=true"
             alt="Top Languages"
           />
           <img
             loading="lazy"
-            className="col-span-3 md:col-span-1 hover:scale-95 transition duration-300 rounded-lg"
+            className="col-span-3 md:col-span-1 hover:scale-95 transition duration-300 rounded-xl"
             src="https://lapras-card-generator-auto.vercel.app/api/svg?b1=%23020E27&b2=%230E5593&i1=%23030E21&i2=%231688BF&l=en&u=MING"
           />
         </div>
         <img
           loading="lazy"
           id="projectChart"
-          className="w-full p-3 hover:scale-95 transition duration-300 rounded-lg backlight"
+          className="w-full p-3 hover:scale-95 transition duration-300 rounded-xl backlight"
           src="https://ghchart.rshah.org/1998code"
           alt="Github chart"
         />
@@ -92,7 +92,7 @@ export default function Projects(props) {
                 href={repo.html_url}
                 target="_blank"
                 key={repo.name}
-                className="flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight"
+                className="flex flex-col rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight"
               >
                 <div className="flex-shrink-0">
                   <img
@@ -124,7 +124,7 @@ export default function Projects(props) {
         </div>
         <div
           id="projectFlattenDataTable"
-          className="rounded-lg overflow-hidden dark:hidden"
+          className="rounded-xl overflow-hidden dark:hidden"
         >
           <Grid data={githubRaw} canDownload={false} />
         </div>

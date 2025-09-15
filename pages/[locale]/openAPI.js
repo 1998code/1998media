@@ -126,7 +126,7 @@ export default function openAPI(props) {
             {i18n('Free to use.')}
           </p>
         </div>
-        <div className="bg-white dark:bg-black shadow overflow-hidden rounded-md mt-8 backlight">
+        <div className="bg-white dark:bg-black shadow overflow-hidden rounded-xl mt-8 backlight">
           <ul
             role="list"
             className="divide-y divide-gray-200 dark:divide-gray-800"
@@ -169,7 +169,7 @@ export default function openAPI(props) {
                       className={`${highlighted === item.title ? 'flex' : 'hidden'} mt-2 flex-wrap justify-between gap-3 text-xs`}
                     >
                       <code
-                        className={`flex-1 ${item.textColor} bg-white dark:bg-black/50 p-2 rounded-md`}
+                        className={`flex-1 ${item.textColor} bg-white dark:bg-black/50 p-2 rounded-xl`}
                       >
                         {i18n(item.code)}
                       </code>

@@ -279,7 +279,7 @@ export default function BF6EventData() {
               {/* Week Selector */}
               <div className="flex items-center justify-center space-x-2 mb-4">
                 <span className="text-gray-300 font-mono text-sm">WEEK:</span>
-                <div className="flex bg-black/50 rounded-lg p-1 border border-orange-500/30">
+                <div className="flex bg-black/50 rounded-xl p-1 border border-orange-500/30">
                   <button
                     onClick={() => handleWeekChange('all')}
                     className={`px-3 py-1 rounded text-sm font-mono transition-colors ${
@@ -324,11 +324,11 @@ export default function BF6EventData() {
                     }
                   }}
                   placeholder="Enter soldier name..."
-                  className="flex-1 bg-black/50 border-2 border-orange-500/50 rounded-lg px-4 py-2 text-white font-mono placeholder-gray-400 focus:border-orange-500 focus:outline-none transition-colors"
+                  className="flex-1 bg-black/50 border-2 border-orange-500/50 rounded-xl px-4 py-2 text-white font-mono placeholder-gray-400 focus:border-orange-500 focus:outline-none transition-colors"
                 />
                 <button 
                   onClick={handleUserSearch}
-                  className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg transition-all duration-300 font-mono border-2 border-orange-400 hover:border-orange-300 shadow-lg hover:shadow-xl"
+                  className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-xl transition-all duration-300 font-mono border-2 border-orange-400 hover:border-orange-300 shadow-lg hover:shadow-xl"
                 >
                   SEARCH
                 </button>
@@ -337,7 +337,7 @@ export default function BF6EventData() {
             
             <button 
               onClick={fetchBF6Data}
-              className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg transition-colors font-mono border border-orange-400"
+              className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-xl transition-colors font-mono border border-orange-400"
             >
               RETRY
             </button>
@@ -414,7 +414,7 @@ export default function BF6EventData() {
                     {/* Week Selector */}
                     <div className="flex items-center space-x-2">
                       <span className="text-gray-300 font-mono text-sm">WEEK:</span>
-                      <div className="flex bg-black/50 rounded-lg p-1 border border-orange-500/30">
+                      <div className="flex bg-black/50 rounded-xl p-1 border border-orange-500/30">
                         <button
                           onClick={() => handleWeekChange('all')}
                           className={`px-3 py-1 rounded text-sm font-mono transition-colors ${
@@ -457,11 +457,11 @@ export default function BF6EventData() {
                       onChange={(e) => setSearchUser(e.target.value)}
                       onKeyPress={handleKeyPress}
                       placeholder="Search different soldier..."
-                      className="flex-1 bg-black/50 border-2 border-orange-500/50 rounded-lg px-4 py-2 text-white font-mono placeholder-gray-400 focus:border-orange-500 focus:outline-none transition-colors"
+                      className="flex-1 bg-black/50 border-2 border-orange-500/50 rounded-xl px-4 py-2 text-white font-mono placeholder-gray-400 focus:border-orange-500 focus:outline-none transition-colors"
                     />
                     <button 
                       onClick={handleUserSearch}
-                      className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg transition-all duration-300 font-mono border-2 border-orange-400 hover:border-orange-300 shadow-lg hover:shadow-xl"
+                      className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-xl transition-all duration-300 font-mono border-2 border-orange-400 hover:border-orange-300 shadow-lg hover:shadow-xl"
                     >
                       SEARCH
                     </button>
@@ -475,7 +475,7 @@ export default function BF6EventData() {
           <div className="container mx-auto px-4">
             {weekLoading && (
               <div className="text-center mb-4">
-                <div className="inline-flex items-center space-x-2 bg-black/40 backdrop-blur-md rounded-lg px-4 py-2 border border-orange-500/30">
+                <div className="inline-flex items-center space-x-2 bg-black/40 backdrop-blur-md rounded-xl px-4 py-2 border border-orange-500/30">
                   <div className="animate-spin rounded-full h-4 w-4 border-2 border-orange-500 border-t-transparent"></div>
                   <span className="text-orange-400 font-mono text-sm">Loading week data...</span>
                 </div>
@@ -508,7 +508,7 @@ export default function BF6EventData() {
                 <img 
                   src={mostPlayedClass.image.ar16X9} 
                   alt={mostPlayedClass.name}
-                  className="w-full h-24 object-cover rounded-lg border border-orange-500/30 mt-auto"
+                  className="w-full h-24 object-cover rounded-xl border border-orange-500/30 mt-auto"
                 />
               </motion.div>
 
@@ -525,7 +525,7 @@ export default function BF6EventData() {
                 <img 
                   src={mostPlayedMode.image.ar16X9} 
                   alt={mostPlayedMode.name}
-                  className="w-full h-24 object-cover rounded-lg border border-orange-500/30 mt-auto"
+                  className="w-full h-24 object-cover rounded-xl border border-orange-500/30 mt-auto"
                 />
               </motion.div>
 
@@ -692,14 +692,14 @@ export default function BF6EventData() {
               <div className="flex space-x-3 justify-center">
                 <button 
                   onClick={() => fetchBF6Data(locale, currentUser, selectedWeek)}
-                  className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg transition-all duration-300 font-mono border-2 border-orange-400 hover:border-orange-300 shadow-lg hover:shadow-xl text-sm"
+                  className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-xl transition-all duration-300 font-mono border-2 border-orange-400 hover:border-orange-300 shadow-lg hover:shadow-xl text-sm"
                 >
                   REFRESH DATA
                 </button>
                 
                 <button 
                   onClick={handleShare}
-                  className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition-all duration-300 font-mono border-2 border-blue-400 hover:border-blue-300 shadow-lg hover:shadow-xl text-sm flex items-center space-x-2"
+                  className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-xl transition-all duration-300 font-mono border-2 border-blue-400 hover:border-blue-300 shadow-lg hover:shadow-xl text-sm flex items-center space-x-2"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />

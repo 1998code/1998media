@@ -213,7 +213,7 @@ export default function Skills(props) {
             {certs.map((cert) => (
               <li
                 key={cert.name}
-                className="col-span-1 flex shadow-sm rounded-lg overflow-hidden border border-transparent dark:hover:border-white hover:scale-95 backlight transition-all"
+                className="col-span-1 flex shadow-sm rounded-xl overflow-hidden border border-transparent dark:hover:border-white hover:scale-95 backlight transition-all"
               >
                 <div
                   className={classNames(
@@ -251,7 +251,7 @@ export default function Skills(props) {
             {softwares.map((software) => (
               <li
                 key={software.name}
-                className="col-span-1 flex shadow-sm rounded-lg overflow-hidden border border-transparent dark:hover:border-white hover:scale-95 backlight transition-all"
+                className="col-span-1 flex shadow-sm rounded-xl overflow-hidden border border-transparent dark:hover:border-white hover:scale-95 backlight transition-all"
               >
                 <div
                   className={classNames(
@@ -289,7 +289,7 @@ export default function Skills(props) {
             {languages.map((language) => (
               <li
                 key={language.name}
-                className="col-span-1 flex shadow-sm rounded-lg overflow-hidden border border-transparent dark:hover:border-white hover:scale-95 backlight transition-all"
+                className="col-span-1 flex shadow-sm rounded-xl overflow-hidden border border-transparent dark:hover:border-white hover:scale-95 backlight transition-all"
               >
                 <div
                   className={classNames(
@@ -327,7 +327,7 @@ export default function Skills(props) {
             {speakWrites.map((speakWrite) => (
               <li
                 key={speakWrite.name}
-                className="col-span-1 flex shadow-sm rounded-lg overflow-hidden border border-transparent dark:hover:border-white hover:scale-95 backlight transition-all"
+                className="col-span-1 flex shadow-sm rounded-xl overflow-hidden border border-transparent dark:hover:border-white hover:scale-95 backlight transition-all"
               >
                 <div
                   className={classNames(

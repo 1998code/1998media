@@ -35,12 +35,6 @@ export default function Gallery(props) {
         if (typeParam?.toLowerCase() === 'spatial') {
             console.log('URL parameter detected: type=spatial (case-insensitive)');
             
-            // Check if Safari before setting spatial tab
-            const isSafari = typeof window !== 'undefined' && 
-                /^((?!chrome|android).)*safari/i.test(navigator.userAgent) && 
-                !navigator.userAgent.includes('Chrome') && 
-                !navigator.userAgent.includes('Firefox') && 
-                !navigator.userAgent.includes('Edge');
             console.log('Is Safari:', isSafari);
             console.log('User Agent:', navigator.userAgent);
             
@@ -50,7 +44,7 @@ export default function Gallery(props) {
             } else {
                 console.log('Not Safari - showing alert and staying on Unsplash');
                 // Not Safari - show alert and stay on Unsplash (don't set spatial tab)
-                alert('Only Safari is supported for Spatial content.');
+                alert(i18n('Only Safari is supported for Spatial content.'));
                 // Ensure we're on Unsplash tab
                 setActiveTab('unsplash');
             }
@@ -85,7 +79,15 @@ export default function Gallery(props) {
             });
     }
 
-    const spatialPhotos = [
+    // Safari detection function
+    const isSafari = typeof window !== 'undefined' && 
+        /^((?!chrome|android).)*safari/i.test(navigator.userAgent) && 
+        !navigator.userAgent.includes('Chrome') && 
+        !navigator.userAgent.includes('Firefox') && 
+        !navigator.userAgent.includes('Edge');
+
+    // Only initialize spatial photos data for Safari to save traffic
+    const spatialPhotos = isSafari ? [
         // Changsha
         {
             id: 'juzizhou-pano',
@@ -180,7 +182,7 @@ export default function Gallery(props) {
             url: 'https://cdn.1998.media/spatial/photo/NagoyaStationDay2ByMing.HEIC',
             type: 'photo',
         },
-    ];
+    ] : [];
 
     const totalReleases = photos.length;
     const avgViews = Math.floor(totalViews / (totalReleases || 1))
@@ -211,6 +213,117 @@ export default function Gallery(props) {
             default:
                 return spatialPhotos;
         }
+    };
+
+    // Render spatial tab content only for Safari
+    const renderSpatialTab = () => {
+        if (!isSafari) return null;
+        
+        return (
+            <div className="w-full shrink-0 overflow-hidden">
+                <div className="relative overflow-hidden">
+                    <div 
+                        className="transition-all duration-500 ease-in-out"
+                        style={{
+                            transform: isTransitioning ? 'translateX(20px)' : 'translateX(0)',
+                            opacity: isTransitioning ? 0 : 1
+                        }}
+                    >
+                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                            {getFilteredSpatialPhotos().map((photo) => (
+                                <div
+                                    key={photo.id}
+                                    className="group flex flex-col rounded-2xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-[0.98] border border-transparent hover:border-black dark:hover:border-white"
+                                >
+                                    {photo.type === 'video' ? (
+                                        <div
+                                            className={`relative h-[25vh] w-full -mb-14 ${isSpatialPhoto && selectedImage === photo.url && isDialogOpen
+                                                ? 'cursor-default'
+                                                : 'cursor-pointer'
+                                                }`}
+                                            onClick={!(isSpatialPhoto && selectedImage === photo.url && isDialogOpen) ? () => handleClick(photo) : undefined}
+                                        >
+                                            <video
+                                                src={photo.url}
+                                                muted
+                                                autoPlay
+                                                loop
+                                                playsInline
+                                                controls={false}
+                                                className="absolute inset-0 w-full h-full object-cover rounded-t-2xl"
+                                                style={{ zIndex: 1 }}
+                                            />
+                                        </div>
+                                    ) : (
+                                        <div className="relative h-[25vh] w-full -mb-14 overflow-hidden">
+                                            {photo.id && photo.id.includes('pano') ? (
+                                                <div 
+                                                    className={`flex h-full animate-pan-slow ${isSpatialPhoto && selectedImage === photo.url && isDialogOpen
+                                                        ? 'cursor-default'
+                                                        : 'cursor-pointer'
+                                                    }`}
+                                                    {...(!(isSpatialPhoto && selectedImage === photo.url && isDialogOpen) && {
+                                                        onClick: () => handleClick(photo)
+                                                    })}
+                                                >
+                                                    <img
+                                                        loading="lazy"
+                                                        className="h-full min-w-full object-cover object-left flex-shrink-0"
+                                                        src={photo.url}
+                                                        alt={photo.title}
+                                                    />
+                                                    <img
+                                                        loading="lazy"
+                                                        className="h-full min-w-full object-cover object-center flex-shrink-0"
+                                                        src={photo.url}
+                                                        alt={photo.title}
+                                                    />
+                                                    <img
+                                                        loading="lazy"
+                                                        className="h-full min-w-full object-cover object-right flex-shrink-0"
+                                                        src={photo.url}
+                                                        alt={photo.title}
+                                                    />
+                                                </div>
+                                            ) : (
+                                                <img
+                                                    loading="lazy"
+                                                    className={`h-full w-full object-cover ${isSpatialPhoto && selectedImage === photo.url && isDialogOpen
+                                                        ? 'cursor-default'
+                                                        : 'cursor-pointer'
+                                                    }`}
+                                                    src={photo.url}
+                                                    alt={photo.title}
+                                                    {...(!(isSpatialPhoto && selectedImage === photo.url && isDialogOpen) && {
+                                                        onClick: () => handleClick(photo)
+                                                    })}
+                                                />
+                                            )}
+                                        </div>
+                                    )}
+                                    <div className="p-1.5 z-[1]">
+                                        <h3 className="text-sm font-medium text-gray-100 flex items-center justify-between w-full">
+                                            <span className="flex-shrink-0 flex items-center">
+                                                <span className="rounded-xl bg-white/50 dark:bg-black/40 backdrop-blur-sm px-1.5 py-0.5">
+                                                    {photo.type === 'video' ? (
+                                                        <i className="fal fa-video text-base dark:text-gray-400" title="Spatial Video"></i>
+                                                    ) : photo.id && photo.id.includes('pano') ? (
+                                                        <i className="fal fa-panorama text-base dark:text-gray-400" title="Panorama"></i>
+                                                    ) : (
+                                                        <i className="fal fa-cube text-base dark:text-gray-400" title="Spatial Photo"></i>
+                                                    )}
+                                                </span>
+                                            </span>
+                                            <span className="flex-1 text-right">{photo.title}</span>
+                                        </h3>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
     };
 
     const stats = [
@@ -281,8 +394,6 @@ export default function Gallery(props) {
         getUnsplashPhotos();
     }, []);
 
-    const isSafari = typeof window !== 'undefined' &&
-        /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
     return (
         <>
@@ -313,10 +424,10 @@ export default function Gallery(props) {
                             {i18n('Gallery')}
                             <i className="far fa-eyes ml-2"></i>
                         </a>
-                        <div className="relative flex bg-white/50 dark:bg-black/50 backdrop-blur-md rounded-xl p-1 border border-gray-200 dark:border-gray-700">
+                        <div className="relative flex bg-white/50 dark:bg-black/50 backdrop-blur-md rounded-2xl p-1 border border-gray-200 dark:border-gray-700">
                             {/* Sliding Background for Main Tabs */}
                             <div 
-                                className="absolute top-1 bottom-1 bg-emerald-600 rounded-md transition-all duration-300 ease-out shadow-sm"
+                                className="absolute top-1 bottom-1 bg-emerald-600 rounded-xl transition-all duration-300 ease-out shadow-sm"
                                 style={{
                                     left: activeTab === 'unsplash' ? '4px' : '106px',
                                     width: activeTab === 'unsplash' ? '98px' : '80px'
@@ -324,7 +435,7 @@ export default function Gallery(props) {
                             />
                             <button
                                 onClick={() => setActiveTab('unsplash')}
-                                className={`relative z-10 p-2 text-sm font-medium rounded-md transition-all duration-300 ${activeTab === 'unsplash'
+                                className={`relative z-10 p-2 text-sm font-medium rounded-xl transition-all duration-300 ${activeTab === 'unsplash'
                                     ? 'text-white'
                                     : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
                                     }`}
@@ -336,12 +447,12 @@ export default function Gallery(props) {
                                 onClick={(e) => {
                                     if (!isSafari) {
                                         e.preventDefault();
-                                        alert('Only Safari is supported.');
+                                        alert(i18n('Only Safari is supported.'));
                                         return;
                                     }
                                     setActiveTab('spatial');
                                 }}
-                                className={`relative z-10 p-2 text-sm font-medium rounded-md transition-all duration-300 ${!isSafari
+                                className={`relative z-10 p-2 text-sm font-medium rounded-xl transition-all duration-300 ${!isSafari
                                     ? 'bg-transparent text-gray-400 opacity-60 cursor-not-allowed'
                                     : activeTab === 'spatial'
                                         ? 'text-white'
@@ -354,13 +465,13 @@ export default function Gallery(props) {
                             </button>
                         </div>
                     </div>
-                    {/* Spatial Filter Tabs - Only show when Spatial tab is active */}
-                    {activeTab === 'spatial' && (
+                    {/* Spatial Filter Tabs - Only show when Spatial tab is active and Safari is detected */}
+                    {activeTab === 'spatial' && isSafari && (
                         <div className="flex justify-center mt-4">
                             <div className="relative flex bg-white/30 dark:bg-black/30 backdrop-blur-md rounded-xl p-1 border border-gray-200/50 dark:border-gray-700/50">
                                 {/* Sliding Background */}
                                 <div 
-                                    className="absolute top-1 bottom-1 bg-emerald-500 rounded-md transition-all duration-300 ease-out shadow-sm"
+                                    className="absolute top-1 bottom-1 bg-emerald-500 rounded-xl transition-all duration-300 ease-out shadow-sm"
                                     style={{
                                         left: spatialFilter === 'all' ? '4px' : 
                                               spatialFilter === 'photo' ? '68px' :
@@ -374,7 +485,7 @@ export default function Gallery(props) {
                                 />
                                 <button
                                     onClick={() => handleSpatialFilterChange('all')}
-                                    className={`relative z-10 px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-300 ${spatialFilter === 'all'
+                                    className={`relative z-10 px-3 py-1.5 text-xs font-medium rounded-xl transition-all duration-300 ${spatialFilter === 'all'
                                         ? 'text-white'
                                         : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
                                         }`}
@@ -384,7 +495,7 @@ export default function Gallery(props) {
                                 </button>
                                 <button
                                     onClick={() => handleSpatialFilterChange('photo')}
-                                    className={`relative z-10 px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-300 ${spatialFilter === 'photo'
+                                    className={`relative z-10 px-3 py-1.5 text-xs font-medium rounded-xl transition-all duration-300 ${spatialFilter === 'photo'
                                         ? 'text-white'
                                         : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
                                         }`}
@@ -394,7 +505,7 @@ export default function Gallery(props) {
                                 </button>
                                 <button
                                     onClick={() => handleSpatialFilterChange('video')}
-                                    className={`relative z-10 px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-300 ${spatialFilter === 'video'
+                                    className={`relative z-10 px-3 py-1.5 text-xs font-medium rounded-xl transition-all duration-300 ${spatialFilter === 'video'
                                         ? 'text-white'
                                         : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
                                         }`}
@@ -404,7 +515,7 @@ export default function Gallery(props) {
                                 </button>
                                 <button
                                     onClick={() => handleSpatialFilterChange('panorama')}
-                                    className={`relative z-10 px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-300 ${spatialFilter === 'panorama'
+                                    className={`relative z-10 px-3 py-1.5 text-xs font-medium rounded-xl transition-all duration-300 ${spatialFilter === 'panorama'
                                         ? 'text-white'
                                         : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
                                         }`}
@@ -423,7 +534,7 @@ export default function Gallery(props) {
                         >
                             {/* Unsplash Tab */}
                             <div className="w-full shrink-0 px-1 overflow-hidden">
-                                <dl className="bg-white/50 dark:bg-black/50 backdrop-blur-md grid grid-cols-1 overflow-hidden rounded-lg shadow md:grid-cols-3 divide-y divide-gray-200 dark:divide-gray-800 md:divide-y-0 md:divide-x backlight">
+                                <dl className="bg-white/50 dark:bg-black/50 backdrop-blur-md grid grid-cols-1 overflow-hidden rounded-xl shadow md:grid-cols-3 divide-y divide-gray-200 dark:divide-gray-800 md:divide-y-0 md:divide-x backlight">
                                     {stats.map((item) => (
                                         <div key={item.name} className="px-4 py-5 sm:p-6">
                                             <dt className="flex items-baseline justify-between gap-1">
@@ -446,7 +557,7 @@ export default function Gallery(props) {
                                     {photos.map((photo) => (
                                         <div
                                             key={photo.id}
-                                            className="group flex flex-col rounded-lg overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-[0.98] border border-transparent hover:border-black dark:hover:border-white"
+                                            className="group flex flex-col rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-[0.98] border border-transparent hover:border-black dark:hover:border-white"
                                         >
                                             <img
                                                 loading="lazy"
@@ -479,110 +590,8 @@ export default function Gallery(props) {
                                     ))}
                                 </div>
                             </div>
-                            {/* Spatial Tab */}
-                            <div className="w-full shrink-0 overflow-hidden">
-                                <div className="relative overflow-hidden">
-                                    <div 
-                                        className="transition-all duration-500 ease-in-out"
-                                        style={{
-                                            transform: isTransitioning ? 'translateX(20px)' : 'translateX(0)',
-                                            opacity: isTransitioning ? 0 : 1
-                                        }}
-                                    >
-                                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                                            {getFilteredSpatialPhotos().map((photo) => (
-                                        <div
-                                            key={photo.id}
-                                            className="group flex flex-col rounded-2xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-[0.98] border border-transparent hover:border-black dark:hover:border-white"
-                                        >
-                                            {photo.type === 'video' ? (
-                                                <div
-                                                    className={`relative h-[25vh] w-full -mb-14 ${isSpatialPhoto && selectedImage === photo.url && isDialogOpen
-                                                        ? 'cursor-default'
-                                                        : 'cursor-pointer'
-                                                        }`}
-                                                    onClick={!(isSpatialPhoto && selectedImage === photo.url && isDialogOpen) ? () => handleClick(photo) : undefined}
-                                                >
-                                                    <video
-                                                        src={photo.url}
-                                                        muted
-                                                        autoPlay
-                                                        loop
-                                                        playsInline
-                                                        controls={false}
-                                                        className="absolute inset-0 w-full h-full object-cover rounded-t-2xl"
-                                                        style={{ zIndex: 1 }}
-                                                    />
-                                                </div>
-                                            ) : (
-                                                <div className="relative h-[25vh] w-full -mb-14 overflow-hidden">
-                                                    {photo.id && photo.id.includes('pano') ? (
-                                                        <div 
-                                                            className={`flex h-full animate-pan-slow ${isSpatialPhoto && selectedImage === photo.url && isDialogOpen
-                                                                ? 'cursor-default'
-                                                                : 'cursor-pointer'
-                                                            }`}
-                                                            {...(!(isSpatialPhoto && selectedImage === photo.url && isDialogOpen) && {
-                                                                onClick: () => handleClick(photo)
-                                                            })}
-                                                        >
-                                                            <img
-                                                                loading="lazy"
-                                                                className="h-full min-w-full object-cover object-left flex-shrink-0"
-                                                                src={photo.url}
-                                                                alt={photo.title}
-                                                            />
-                                                            <img
-                                                                loading="lazy"
-                                                                className="h-full min-w-full object-cover object-center flex-shrink-0"
-                                                                src={photo.url}
-                                                                alt={photo.title}
-                                                            />
-                                                            <img
-                                                                loading="lazy"
-                                                                className="h-full min-w-full object-cover object-right flex-shrink-0"
-                                                                src={photo.url}
-                                                                alt={photo.title}
-                                                            />
-                                                        </div>
-                                                    ) : (
-                                                        <img
-                                                            loading="lazy"
-                                                            className={`h-full w-full object-cover ${isSpatialPhoto && selectedImage === photo.url && isDialogOpen
-                                                                ? 'cursor-default'
-                                                                : 'cursor-pointer'
-                                                            }`}
-                                                            src={photo.url}
-                                                            alt={photo.title}
-                                                            {...(!(isSpatialPhoto && selectedImage === photo.url && isDialogOpen) && {
-                                                                onClick: () => handleClick(photo)
-                                                            })}
-                                                        />
-                                                    )}
-                                                </div>
-                                            )}
-                                            <div className="p-1.5 z-[1]">
-                                                <h3 className="text-sm font-medium text-gray-100 flex items-center justify-between w-full">
-                                                    <span className="flex-shrink-0 flex items-center">
-                                                        <span className="rounded-lg bg-white/50 dark:bg-black/40 backdrop-blur-sm px-1.5 py-0.5">
-                                                            {photo.type === 'video' ? (
-                                                                <i className="fal fa-video text-base dark:text-gray-400" title="Spatial Video"></i>
-                                                            ) : photo.id && photo.id.includes('pano') ? (
-                                                                <i className="fal fa-panorama text-base dark:text-gray-400" title="Panorama"></i>
-                                                            ) : (
-                                                                <i className="fal fa-cube text-base dark:text-gray-400" title="Spatial Photo"></i>
-                                                            )}
-                                                        </span>
-                                                    </span>
-                                                    <span className="flex-1 text-right">{photo.title}</span>
-                                                </h3>
-                                            </div>
-                                        </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            {/* Spatial Tab - Only render for Safari to save traffic */}
+                            {renderSpatialTab()}
                         </div>
                     </div>
                 </div>
