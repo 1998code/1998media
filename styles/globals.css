@@ -102,3 +102,23 @@ audio::-webkit-media-controls-panel {
 div.eapps-widget {
   position: inherit !important;
 }
+
+/* Panorama animation */
+@keyframes pan-infinite {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-33.333%);
+  }
+}
+
+.animate-pan-slow {
+  animation: pan-infinite 20s linear infinite;
+  width: 300%;
+  will-change: transform;
+}
+
+.animate-pan-slow:hover {
+  animation-play-state: paused;
+}

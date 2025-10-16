@@ -24,9 +24,30 @@ export default function Gallery(props) {
     const [isTransitioning, setIsTransitioning] = useState(false);
     const [totalViews, setTotalViews] = useState(0);
     const [photos, setPhotos] = useState([]);
+    const [isSafari, setIsSafari] = useState(false);
+    const [isClient, setIsClient] = useState(false);
+    const [spatialPhotosReady, setSpatialPhotosReady] = useState(false);
 
-    // Handle URL parameters on component mount
+    // Initialize client-side state and Safari detection
     useEffect(() => {
+        setIsClient(true);
+        
+        // Safari detection - only run on client side
+        const safariDetection = /^((?!chrome|android).)*safari/i.test(navigator.userAgent) && 
+            !navigator.userAgent.includes('Chrome') && 
+            !navigator.userAgent.includes('Firefox') && 
+            !navigator.userAgent.includes('Edge');
+        
+        setIsSafari(safariDetection);
+        
+        // Set spatial photos ready after Safari detection with a small delay for DOM readiness
+        if (safariDetection) {
+            setTimeout(() => {
+                console.log('Setting spatial photos ready');
+                setSpatialPhotosReady(true);
+            }, 100);
+        }
+        
         console.log('useEffect running, checking URL parameters...');
         const urlParams = new URLSearchParams(window.location.search);
         const typeParam = urlParams.get('type');
@@ -35,10 +56,10 @@ export default function Gallery(props) {
         if (typeParam?.toLowerCase() === 'spatial') {
             console.log('URL parameter detected: type=spatial (case-insensitive)');
             
-            console.log('Is Safari:', isSafari);
+            console.log('Is Safari:', safariDetection);
             console.log('User Agent:', navigator.userAgent);
             
-            if (isSafari) {
+            if (safariDetection) {
                 console.log('Setting activeTab to spatial');
                 setActiveTab('spatial');
             } else {
@@ -79,15 +100,27 @@ export default function Gallery(props) {
             });
     }
 
-    // Safari detection function
-    const isSafari = typeof window !== 'undefined' && 
-        /^((?!chrome|android).)*safari/i.test(navigator.userAgent) && 
-        !navigator.userAgent.includes('Chrome') && 
-        !navigator.userAgent.includes('Firefox') && 
-        !navigator.userAgent.includes('Edge');
-
-    // Only initialize spatial photos data for Safari to save traffic
-    const spatialPhotos = isSafari ? [
+    // Only initialize spatial photos data for Safari to save traffic - but ensure consistent SSR
+    const spatialPhotos = spatialPhotosReady ? [
+        // Osaka (Expo)
+        {
+            id: 'osaka-expo-pano',
+            title: 'Osaka Expo Panorama',
+            url: 'https://cdn.1998.media/spatial/pano/OsakaExpo.HEIC',
+            type: 'photo',
+        },
+        {
+            id: 'osaka-expo-east-gate',
+            title: 'Osaka Expo East Gate',
+            url: 'https://cdn.1998.media/spatial/photo/OsakaExpoEastGate.HEIC',
+            type: 'photo',
+        },
+        {
+            id: 'osaka-expo-water-plaza',
+            title: 'Osaka Expo Water Plaza',
+            url: 'https://cdn.1998.media/spatial/photo/OsakaExpoWaterPlaza.HEIC',
+            type: 'photo',
+        },
         // Changsha
         {
             id: 'juzizhou-pano',
@@ -202,22 +235,32 @@ export default function Gallery(props) {
 
     // Filter spatial photos based on spatial filter
     const getFilteredSpatialPhotos = () => {
-        switch (spatialFilter) {
-            case 'photo':
-                return spatialPhotos.filter(photo => photo.type === 'photo' && (!photo.id || !photo.id.includes('pano')));
-            case 'video':
-                return spatialPhotos.filter(photo => photo.type === 'video');
-            case 'panorama':
-                return spatialPhotos.filter(photo => photo.type === 'photo' && photo.id && photo.id.includes('pano'));
-            case 'all':
-            default:
-                return spatialPhotos;
+        const filtered = (() => {
+            switch (spatialFilter) {
+                case 'photo':
+                    return spatialPhotos.filter(photo => photo.type === 'photo' && (!photo.id || !photo.id.includes('pano')));
+                case 'video':
+                    return spatialPhotos.filter(photo => photo.type === 'video');
+                case 'panorama':
+                    return spatialPhotos.filter(photo => photo.type === 'photo' && photo.id && photo.id.includes('pano'));
+                case 'all':
+                default:
+                    return spatialPhotos;
+            }
+        })();
+        
+        console.log('Filtered spatial photos:', filtered.length, 'Filter:', spatialFilter);
+        if (spatialFilter === 'panorama' || spatialFilter === 'all') {
+            const panos = filtered.filter(photo => photo.id && photo.id.includes('pano'));
+            console.log('Panorama photos found:', panos.length, panos.map(p => p.id));
         }
+        
+        return filtered;
     };
 
     // Render spatial tab content only for Safari
     const renderSpatialTab = () => {
-        if (!isSafari) return null;
+        if (!isClient || !isSafari) return null;
         
         return (
             <div className="w-full shrink-0 overflow-hidden">
@@ -258,6 +301,7 @@ export default function Gallery(props) {
                                         <div className="relative h-[25vh] w-full -mb-14 overflow-hidden">
                                             {photo.id && photo.id.includes('pano') ? (
                                                 <div 
+                                                    key={`pano-${photo.id}`}
                                                     className={`flex h-full animate-pan-slow ${isSpatialPhoto && selectedImage === photo.url && isDialogOpen
                                                         ? 'cursor-default'
                                                         : 'cursor-pointer'
@@ -265,6 +309,7 @@ export default function Gallery(props) {
                                                     {...(!(isSpatialPhoto && selectedImage === photo.url && isDialogOpen) && {
                                                         onClick: () => handleClick(photo)
                                                     })}
+                                                    onAnimationStart={() => console.log('Panorama animation started for:', photo.id)}
                                                 >
                                                     <img
                                                         loading="lazy"
@@ -397,23 +442,6 @@ export default function Gallery(props) {
 
     return (
         <>
-            <style jsx>{`
-                @keyframes pan-infinite {
-                    0% {
-                        transform: translateX(0%);
-                    }
-                    100% {
-                        transform: translateX(-200%);
-                    }
-                }
-                .animate-pan-slow {
-                    animation: pan-infinite 25s linear infinite;
-                    width: 300%;
-                }
-                .animate-pan-slow:hover {
-                    animation-play-state: paused;
-                }
-            `}</style>
             <div className="relative px-4 sm:px-6 lg:px-8">
                 <div id="gallery" className="pt-16 max-w-7xl mx-auto">
                     <div className="flex items-center justify-between">
@@ -445,14 +473,14 @@ export default function Gallery(props) {
                             </button>
                             <button
                                 onClick={(e) => {
-                                    if (!isSafari) {
+                                    if (!isClient || !isSafari) {
                                         e.preventDefault();
                                         alert(i18n('Only Safari is supported.'));
                                         return;
                                     }
                                     setActiveTab('spatial');
                                 }}
-                                className={`relative z-10 p-2 text-sm font-medium rounded-xl transition-all duration-300 ${!isSafari
+                                className={`relative z-10 p-2 text-sm font-medium rounded-xl transition-all duration-300 ${!isClient || !isSafari
                                     ? 'bg-transparent text-gray-400 opacity-60 cursor-not-allowed'
                                     : activeTab === 'spatial'
                                         ? 'text-white'
@@ -466,7 +494,7 @@ export default function Gallery(props) {
                         </div>
                     </div>
                     {/* Spatial Filter Tabs - Only show when Spatial tab is active and Safari is detected */}
-                    {activeTab === 'spatial' && isSafari && (
+                    {activeTab === 'spatial' && isClient && isSafari && (
                         <div className="flex justify-center mt-4">
                             <div className="relative flex bg-white/30 dark:bg-black/30 backdrop-blur-md rounded-xl p-1 border border-gray-200/50 dark:border-gray-700/50">
                                 {/* Sliding Background */}
