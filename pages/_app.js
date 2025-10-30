@@ -51,6 +51,11 @@ function MyApp({ Component, pageProps }) {
           media="(prefers-color-scheme: dark)"
           content="#000914"
         />
+        {/* Resource hints for performance */}
+        <link rel="preconnect" href="https://cdn.1998.media" />
+        <link rel="dns-prefetch" href="https://cdn.1998.media" />
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+        <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
         {/* <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1941913120815371"
@@ -78,21 +83,29 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-import Darkmode from 'darkmode-js';
-const options = {
-  bottom: '93.5vh',
-  right: '25px',
-  time: '1.5s',
-  mixColor: '#fff',
-  backgroundColor: '#fff6eb',
-  buttonColorDark: '#000',
-  buttonColorLight: '#fff6eb',
-  saveInCookies: true,
-  label:
-    '<i class="fa fa-moon-over-sun text-orange-300 dark:text-orange-500" />',
-  autoMatchOsTheme: true,
-};
-const darkmode = new Darkmode(options);
-darkmode.showWidget();
-
 export default MyApp;
+
+// Initialize darkmode after component mounts to avoid blocking initial render
+if (typeof window !== 'undefined') {
+  // Defer darkmode initialization to not block page load
+  setTimeout(() => {
+    import('darkmode-js').then((module) => {
+      const Darkmode = module.default;
+      const options = {
+        bottom: '93.5vh',
+        right: '25px',
+        time: '1.5s',
+        mixColor: '#fff',
+        backgroundColor: '#fff6eb',
+        buttonColorDark: '#000',
+        buttonColorLight: '#fff6eb',
+        saveInCookies: true,
+        label:
+          '<i class="fa fa-moon-over-sun text-orange-300 dark:text-orange-500" />',
+        autoMatchOsTheme: true,
+      };
+      const darkmode = new Darkmode(options);
+      darkmode.showWidget();
+    });
+  }, 100);
+}
