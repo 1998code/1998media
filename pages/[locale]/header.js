@@ -1,4 +1,29 @@
+import { useState, useEffect } from 'react';
+
 export default function Header(props) {
+  const [bannerVisible, setBannerVisible] = useState(false);
+
+  useEffect(() => {
+    // Check if locale banner is dismissed
+    const dismissed = sessionStorage.getItem('locale-switcher-dismissed');
+    setBannerVisible(!dismissed);
+
+    // Listen for storage changes in case banner is dismissed
+    const checkBanner = () => {
+      const isDismissed = sessionStorage.getItem('locale-switcher-dismissed');
+      setBannerVisible(!isDismissed);
+    };
+
+    window.addEventListener('storage', checkBanner);
+    // Also check periodically for same-tab changes
+    const interval = setInterval(checkBanner, 500);
+
+    return () => {
+      window.removeEventListener('storage', checkBanner);
+      clearInterval(interval);
+    };
+  }, []);
+
   function i18n(key) {
     if (props.i18n && props.i18n['header'] && !props.i18n['header'][key]) {
       console.log('Header Missing Translation: ' + key);
@@ -12,7 +37,7 @@ export default function Header(props) {
       id="header"
       className="h-[90vh] text-center flex flex-col justify-center bg-gradient-to-b dark:from-[var(--arc-palette-background)] dark:text-[var(--arc-palette-foregroundPrimary)]"
     >
-      <h1 className="text-8xl font-bold mb-3 dark:text-white px-3">
+      <h1 className={`text-8xl font-bold mb-3 dark:text-white px-3 transition-all duration-300 ${bannerVisible ? 'pt-16' : ''}`}>
         {i18n('Hi')} <i className="fa-light fa-hand-wave text-orange-500"></i>{' '}
         {i18n("I'm")}{' '}
         <span className="text-orange-600 dark:text-orange-300 underline decoration-dotted decoration-2 underline-offset-8">
