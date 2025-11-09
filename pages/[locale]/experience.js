@@ -232,28 +232,53 @@ export default function Experience(props) {
   }
 
   // Filter positions based on active tab
-  const filteredPositions = activeTab === 'all'
-    ? positions
-    : positions.filter(p => p.type.toLowerCase().replaceAll(' ', '-') === activeTab.toLowerCase());
+  const filteredPositions =
+    activeTab === 'all'
+      ? positions
+      : positions.filter(
+          (p) =>
+            p.type.toLowerCase().replaceAll(' ', '-') ===
+            activeTab.toLowerCase()
+        );
 
   // Tab configuration with colors matching position types
   const tabs = [
     { id: 'all', label: 'All', icon: 'fa-th', color: 'bg-orange-600' },
-    { id: 'full-time', label: 'Full-time', icon: 'fa-briefcase', color: 'bg-blue-600' },
-    { id: 'contributor', label: 'Contributor', icon: 'fa-code-branch', color: 'bg-teal-600' },
-    { id: 'freelance', label: 'Freelance', icon: 'fa-laptop-code', color: 'bg-amber-600' },
-    { id: 'part-time', label: 'Part-time', icon: 'fa-clock', color: 'bg-slate-800' },
+    {
+      id: 'full-time',
+      label: 'Full-time',
+      icon: 'fa-briefcase',
+      color: 'bg-blue-600',
+    },
+    {
+      id: 'contributor',
+      label: 'Contributor',
+      icon: 'fa-code-branch',
+      color: 'bg-teal-600',
+    },
+    {
+      id: 'freelance',
+      label: 'Freelance',
+      icon: 'fa-laptop-code',
+      color: 'bg-amber-600',
+    },
+    {
+      id: 'part-time',
+      label: 'Part-time',
+      icon: 'fa-clock',
+      color: 'bg-slate-800',
+    },
   ];
 
   // Get active tab color
   const getActiveTabColor = () => {
-    const activeTabData = tabs.find(tab => tab.id === activeTab);
+    const activeTabData = tabs.find((tab) => tab.id === activeTab);
     return activeTabData?.color || 'bg-gray-600';
   };
 
   // Calculate tab position and width for sliding background
   const getTabStyles = () => {
-    const tabIndex = tabs.findIndex(tab => tab.id === activeTab);
+    const tabIndex = tabs.findIndex((tab) => tab.id === activeTab);
     // Adjusted positions and widths based on actual button sizes
     const positions = [4, 65, 160, 270, 370]; // Left positions in pixels
     const widths = [62, 93, 105, 95, 93]; // Widths in pixels
@@ -288,7 +313,7 @@ export default function Experience(props) {
                   className={`absolute top-1 bottom-1 ${getActiveTabColor()} rounded-xl transition-all duration-300 ease-out shadow-sm`}
                   style={getTabStyles()}
                 />
-                {tabs.map(tab => (
+                {tabs.map((tab) => (
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
@@ -318,7 +343,7 @@ export default function Experience(props) {
                 className={`absolute top-1 bottom-1 ${getActiveTabColor()} rounded-xl transition-all duration-300 ease-out shadow-sm`}
                 style={getTabStyles()}
               />
-              {tabs.map(tab => (
+              {tabs.map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
