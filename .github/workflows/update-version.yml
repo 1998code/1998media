@@ -36,8 +36,8 @@ jobs:
 
           echo "Updating version to: $NEW_VERSION"
 
-          # Update package.json
-          npm version $NEW_VERSION --no-git-tag-version --allow-same-version
+          # Update package.json directly (npm version doesn't support non-semver)
+          sed -i "s/\"version\": \".*\"/\"version\": \"$NEW_VERSION\"/" package.json
 
           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
 
