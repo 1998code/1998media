@@ -4,6 +4,7 @@ import Script from 'next/script';
 import axios from 'axios';
 import dynamic from 'next/dynamic';
 import Cursor from '../../components/Cursor';
+import LocaleSwitcher from '../../components/LocaleSwitcher';
 import {
   RoomProvider,
   useOthers,
@@ -287,6 +288,7 @@ export default function Home() {
       />
       {/* <script>AOS.init();</script> */}
       <main className="darkmode-ignore overflow-hidden">
+        <LocaleSwitcher />
         <RoomProvider id="1998-MEDIA" initialPresence={{ cursor: null }}>
           <CursorPointer />
           {loading ? (

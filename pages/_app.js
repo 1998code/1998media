@@ -92,7 +92,7 @@ if (typeof window !== 'undefined') {
     import('darkmode-js').then((module) => {
       const Darkmode = module.default;
       const options = {
-        bottom: '93.5vh',
+        bottom: '91vh',
         right: '25px',
         time: '1.5s',
         mixColor: '#fff',
