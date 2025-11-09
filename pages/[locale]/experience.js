@@ -1,4 +1,8 @@
+import { useState } from 'react';
+
 export default function Experience(props) {
+  const [activeTab, setActiveTab] = useState('all');
+
   function i18n(key) {
     if (
       props.i18n &&
@@ -226,31 +230,118 @@ export default function Experience(props) {
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ');
   }
+
+  // Filter positions based on active tab
+  const filteredPositions = activeTab === 'all'
+    ? positions
+    : positions.filter(p => p.type.toLowerCase().replaceAll(' ', '-') === activeTab.toLowerCase());
+
+  // Tab configuration with colors matching position types
+  const tabs = [
+    { id: 'all', label: 'All', icon: 'fa-th', color: 'bg-orange-600' },
+    { id: 'full-time', label: 'Full-time', icon: 'fa-briefcase', color: 'bg-blue-600' },
+    { id: 'contributor', label: 'Contributor', icon: 'fa-code-branch', color: 'bg-teal-600' },
+    { id: 'freelance', label: 'Freelance', icon: 'fa-laptop-code', color: 'bg-amber-600' },
+    { id: 'part-time', label: 'Part-time', icon: 'fa-clock', color: 'bg-slate-800' },
+  ];
+
+  // Get active tab color
+  const getActiveTabColor = () => {
+    const activeTabData = tabs.find(tab => tab.id === activeTab);
+    return activeTabData?.color || 'bg-gray-600';
+  };
+
+  // Calculate tab position and width for sliding background
+  const getTabStyles = () => {
+    const tabIndex = tabs.findIndex(tab => tab.id === activeTab);
+    // Adjusted positions and widths based on actual button sizes
+    const positions = [4, 65, 160, 270, 370]; // Left positions in pixels
+    const widths = [62, 93, 105, 95, 93]; // Widths in pixels
+
+    return {
+      left: `${positions[tabIndex]}px`,
+      width: `${widths[tabIndex]}px`,
+    };
+  };
+
   return (
     <div
       id="experience"
       className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8"
     >
       <div className="relative max-w-7xl mx-auto">
-        <div className="text-left flex flex-wrap">
-          <a
-            className="text-3xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl grow"
-            href="#experience"
-          >
-            {i18n('Experience')}
-            <i className="far fa-flask ml-2"></i>
-          </a>
-          <p className="mt-2 max-w-2xl text-xl text-gray-500">
+        <div className="text-left">
+          <div className="flex items-center justify-between flex-wrap gap-4">
+            <a
+              className="text-3xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl"
+              href="#experience"
+            >
+              {i18n('Experience')}
+              <i className="far fa-flask ml-2"></i>
+            </a>
+
+            {/* Tab Switcher - Desktop only */}
+            <div className="hidden sm:block">
+              <div className="relative flex bg-white/50 dark:bg-black/50 backdrop-blur-md rounded-2xl p-1 border border-gray-200 dark:border-gray-700">
+                {/* Sliding Background */}
+                <div
+                  className={`absolute top-1 bottom-1 ${getActiveTabColor()} rounded-xl transition-all duration-300 ease-out shadow-sm`}
+                  style={getTabStyles()}
+                />
+                {tabs.map(tab => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`relative z-10 px-3 py-2 text-xs font-medium rounded-xl transition-all duration-300 ${
+                      activeTab === tab.id
+                        ? 'text-white'
+                        : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
+                    }`}
+                  >
+                    <i className={`far ${tab.icon} mr-1`}></i>
+                    {i18n(tab.label)}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <p className="mt-3 max-w-2xl text-xl text-gray-500">
             {i18n('Works and society contributions.')}
           </p>
+
+          {/* Tab Switcher - Mobile only */}
+          <div className="flex justify-center mt-6 sm:hidden">
+            <div className="relative flex bg-white/50 dark:bg-black/50 backdrop-blur-md rounded-2xl p-1 border border-gray-200 dark:border-gray-700">
+              {/* Sliding Background */}
+              <div
+                className={`absolute top-1 bottom-1 ${getActiveTabColor()} rounded-xl transition-all duration-300 ease-out shadow-sm`}
+                style={getTabStyles()}
+              />
+              {tabs.map(tab => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`relative z-10 px-3 py-2 text-xs font-medium rounded-xl transition-all duration-300 ${
+                    activeTab === tab.id
+                      ? 'text-white'
+                      : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
+                  }`}
+                >
+                  <i className={`far ${tab.icon} mr-1`}></i>
+                  {i18n(tab.label)}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
         <div className="bg-white dark:bg-black shadow overflow-hidden rounded-xl mt-8 backlight">
           <ul
             role="list"
             className="divide-y divide-gray-200 dark:divide-gray-800"
           >
-            {positions.map((position) => (
-              <li>
+            {filteredPositions.map((position, index) => (
+              <li key={index}>
                 <div
                   className={`${position.bgColor} opacity-90 hover:opacity-100`}
                 >
