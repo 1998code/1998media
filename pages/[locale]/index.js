@@ -26,7 +26,7 @@ const Experience = dynamic(() => import('./experience'), { ssr: false });
 const Projects = dynamic(() => import('./projects'), { ssr: false });
 const Blog = dynamic(() => import('./blog'), { ssr: false });
 const AI = dynamic(() => import('./ai'), { ssr: false });
-const OpenAPI = dynamic(() => import('./openAPI'), { ssr: false });
+// const OpenAPI = dynamic(() => import('./openAPI'), { ssr: false });
 const Faq = dynamic(() => import('./faq'), { ssr: false });
 const Contact = dynamic(() => import('./contact'), { ssr: false });
 const Credits = dynamic(() => import('./credits'), { ssr: false });
@@ -127,7 +127,7 @@ export default function Home() {
     'experience',
     'skills',
     'projects',
-    'openAPI',
+    // 'openAPI',
     'ai',
     'blog',
     'trip',
@@ -165,7 +165,10 @@ export default function Home() {
     window.addEventListener('click', handleInteracted, { once: true });
     window.addEventListener('keydown', handleInteracted, { once: true });
     window.addEventListener('touchstart', handleInteracted, { once: true });
-    window.addEventListener('wheel', handleScroll, { once: true, passive: true });
+    window.addEventListener('wheel', handleScroll, {
+      once: true,
+      passive: true,
+    });
 
     return () => {
       clearTimeout(scrollTimeout);
@@ -305,7 +308,7 @@ export default function Home() {
                 <Experience i18n={I18n} />
                 <Skills i18n={I18n} />
                 <Projects i18n={I18n} />
-                <OpenAPI i18n={I18n} />
+                {/* <OpenAPI i18n={I18n} /> */}
                 <AI i18n={I18n} />
                 <Blog i18n={I18n} />
                 <Faq i18n={I18n} />
