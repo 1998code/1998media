@@ -37,7 +37,9 @@ export default function Header(props) {
       id="header"
       className="h-[90vh] text-center flex flex-col justify-center bg-gradient-to-b dark:from-[var(--arc-palette-background)] dark:text-[var(--arc-palette-foregroundPrimary)]"
     >
-      <h1 className={`text-8xl font-bold mb-3 dark:text-white px-3 transition-all duration-300 ${bannerVisible ? 'pt-16' : ''}`}>
+      <h1
+        className={`text-8xl font-bold mb-3 dark:text-white px-3 transition-all duration-300 ${bannerVisible ? 'pt-16' : ''}`}
+      >
         {i18n('Hi')} <i className="fa-light fa-hand-wave text-orange-500"></i>{' '}
         {i18n("I'm")}{' '}
         <span className="text-orange-600 dark:text-orange-300 underline decoration-dotted decoration-2 underline-offset-8">
