@@ -89,9 +89,7 @@ export default function Footer(props) {
   const diffYearNDay = `${Math.floor(diffDay / 365)} ${i18n('Years')} ${i18n('and')} ${Math.floor(diffDay % 365)} ${i18n('Days')}`;
 
   return (
-    <div
-      className="right-0 max-w-7xl mx-auto pt-12 pb-20 px-4 overflow-hidden sm:px-6 lg:px-8"
-    >
+    <div className="right-0 max-w-7xl mx-auto pt-12 pb-20 px-4 overflow-hidden sm:px-6 lg:px-8">
       <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-end justify-between gap-3">
         <div>
           <span className="text-gray-600 dark:text-gray-400">

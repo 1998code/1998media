@@ -109,10 +109,7 @@ export default function openAPI(props) {
   }
 
   return (
-    <div
-      id="openAPI"
-      className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8"
-    >
+    <div id="openAPI" className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
       <div className="relative max-w-7xl mx-auto">
         <div className="text-left flex flex-wrap">
           <a

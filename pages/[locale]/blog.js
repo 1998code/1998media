@@ -98,9 +98,7 @@ export default function Blog(props) {
   }, []);
 
   return (
-    <div
-      className="relative px-4 sm:px-6 lg:px-8 space-y-16"
-    >
+    <div className="relative px-4 sm:px-6 lg:px-8 space-y-16">
       {/* Blog */}
       <div id="blog" className="relative max-w-7xl mx-auto space-y-8 pt-16">
         <div className="text-left flex flex-wrap">
@@ -258,7 +256,8 @@ export default function Blog(props) {
                     {!post.translateTitle && (
                       <span>
                         <i className="far fa-map-marker-alt ml-2 mr-1"></i>
-                        {post.title.split('「')[1] && post.title.split('「')[1].split('」')[0]}
+                        {post.title.split('「')[1] &&
+                          post.title.split('「')[1].split('」')[0]}
                       </span>
                     )}
                   </div>

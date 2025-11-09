@@ -12,9 +12,7 @@ export default function Header(props) {
       id="header"
       className="h-[90vh] text-center flex flex-col justify-center bg-gradient-to-b dark:from-[var(--arc-palette-background)] dark:text-[var(--arc-palette-foregroundPrimary)]"
     >
-      <h1
-        className="text-8xl font-bold mb-3 dark:text-white px-3"
-      >
+      <h1 className="text-8xl font-bold mb-3 dark:text-white px-3">
         {i18n('Hi')} <i className="fa-light fa-hand-wave text-orange-500"></i>{' '}
         {i18n("I'm")}{' '}
         <span className="text-orange-600 dark:text-orange-300 underline decoration-dotted decoration-2 underline-offset-8">
@@ -22,9 +20,7 @@ export default function Header(props) {
         </span>{' '}
         !
       </h1>
-      <h2
-        className="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-orange-500 to-orange-400 px-3"
-      >
+      <h2 className="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-orange-500 to-orange-400 px-3">
         {i18n('Glad to see you here')}{' '}
         <i className="far fa-face-laugh-wink"></i>
       </h2>

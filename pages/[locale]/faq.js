@@ -23,11 +23,12 @@ export default function Faq(props) {
     {
       question: 'How to support your projects? 💰',
       answer: () => (
-        <iframe 
-          src="https://github.com/sponsors/1998code/button" 
-          title="Sponsor 1998code" 
-          height="32" width="114" 
-       />
+        <iframe
+          src="https://github.com/sponsors/1998code/button"
+          title="Sponsor 1998code"
+          height="32"
+          width="114"
+        />
       ),
     },
     {

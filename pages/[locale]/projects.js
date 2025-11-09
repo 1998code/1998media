@@ -34,10 +34,7 @@ export default function Projects(props) {
       });
   }
   return (
-    <div
-      id="projects"
-      className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8"
-    >
+    <div id="projects" className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
       <div className="relative max-w-7xl mx-auto space-y-8">
         <div className="text-left flex flex-wrap">
           <a

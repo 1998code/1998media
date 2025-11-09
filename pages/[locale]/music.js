@@ -87,13 +87,16 @@ export default function Music(props) {
 
     // Autoplay when component mounts (user has already interacted)
     if (audioRef.current && !hasStarted) {
-      audioRef.current.play().then(() => {
-        setIsPlaying(true);
-        setHasStarted(true);
-      }).catch(() => {
-        // If autoplay fails, set to paused
-        setIsPlaying(false);
-      });
+      audioRef.current
+        .play()
+        .then(() => {
+          setIsPlaying(true);
+          setHasStarted(true);
+        })
+        .catch(() => {
+          // If autoplay fails, set to paused
+          setIsPlaying(false);
+        });
     } else if (audioRef.current && hasStarted && isPlaying) {
       // When song changes, continue playing if user hasn't manually paused
       audioRef.current.play();
@@ -115,9 +118,14 @@ export default function Music(props) {
   // Switch to next song per 30 sec (only if playing)
   useEffect(() => {
     const timeInSeconds = Math.floor(timer);
-    if (timeInSeconds > 0 && timeInSeconds % 30 === 0 && music.length > 0 && isPlaying) {
+    if (
+      timeInSeconds > 0 &&
+      timeInSeconds % 30 === 0 &&
+      music.length > 0 &&
+      isPlaying
+    ) {
       // Use a flag to prevent multiple triggers
-      const lastTrigger = Math.floor((timer - 0.05));
+      const lastTrigger = Math.floor(timer - 0.05);
       if (lastTrigger % 30 !== 0) {
         const currentIndex = music.findIndex(
           (item) => item.id === currentPlaying.id
@@ -144,7 +152,7 @@ export default function Music(props) {
     const lines = lyricsText.split('\n');
     const parsed = [];
 
-    lines.forEach(line => {
+    lines.forEach((line) => {
       // Match timestamp format [00:12.34] or [00:12]
       const match = line.match(/\[(\d{2}):(\d{2})(?:\.(\d{2}))?\](.*)/);
       if (match) {
@@ -175,7 +183,7 @@ export default function Music(props) {
       '此歌曲为没有填词',
       'No lyrics',
     ];
-    return instrumentalKeywords.some(keyword => lyricsText.includes(keyword));
+    return instrumentalKeywords.some((keyword) => lyricsText.includes(keyword));
   };
 
   // Get current lyric line based on timer
@@ -252,8 +260,15 @@ export default function Music(props) {
 
   // Auto-scroll to current lyric in live mode (only if user is not scrolling)
   useEffect(() => {
-    if (lyricsMode === 'live' && currentLyricIndex >= 0 && lyricsContainerRef.current && !isUserScrolling) {
-      const activeElement = lyricsContainerRef.current.querySelector(`[data-lyric-index="${currentLyricIndex}"]`);
+    if (
+      lyricsMode === 'live' &&
+      currentLyricIndex >= 0 &&
+      lyricsContainerRef.current &&
+      !isUserScrolling
+    ) {
+      const activeElement = lyricsContainerRef.current.querySelector(
+        `[data-lyric-index="${currentLyricIndex}"]`
+      );
       if (activeElement) {
         activeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
@@ -275,7 +290,8 @@ export default function Music(props) {
             style={{
               background: `conic-gradient(from 0deg, #ef4444 0%, #ef4444 ${progress}%, #000000 ${progress}%, #000000 100%)`,
               padding: '2px',
-              WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+              WebkitMask:
+                'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
               WebkitMaskComposite: 'xor',
               maskComposite: 'exclude',
             }}
@@ -286,7 +302,8 @@ export default function Music(props) {
             style={{
               background: `conic-gradient(from 0deg, #ef4444 0%, #ef4444 ${progress}%, #ffffff ${progress}%, #ffffff 100%)`,
               padding: '2px',
-              WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+              WebkitMask:
+                'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
               WebkitMaskComposite: 'xor',
               maskComposite: 'exclude',
             }}
@@ -301,83 +318,86 @@ export default function Music(props) {
                   </span>
                 </div>
                 <div className="overflow-auto">
-                {music.map((item, index) => (
-                  <a
-                    key={index}
-                    href={item.attributes.url}
-                    target="_blank"
-                    className={`p-3 flex items-center justify-between ${index === music.findIndex((music) => music.id === currentPlaying.id) ? 'bg-red-600 text-white animate-pulse' : 'hover:bg-black/10 dark:text-white dark:hover:bg-white/10'}`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <div
-                        className="relative group/playlistitem w-10 h-10 cursor-pointer"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          const isCurrentSong = item.id === currentPlaying.id;
-                          if (isCurrentSong) {
-                            // Toggle play/pause for current song
-                            if (isPlaying) {
-                              audioRef.current.pause();
-                              setIsPlaying(false);
-                            } else {
-                              audioRef.current.play();
-                              setIsPlaying(true);
-                            }
-                          } else {
-                            // Switch to new song
-                            setCurrentPlaying(item);
-                            setTimer(0);
-                            if (audioRef.current) {
-                              audioRef.current.play();
-                              setIsPlaying(true);
-                            }
-                          }
-                        }}
-                      >
-                        <img
-                          loading="lazy"
-                          src={item.attributes.artwork.url
-                            .replace('{w}', '50')
-                            .replace('{h}', '50')}
-                          className="w-10 h-10 rounded-xl shadow-lg"
-                        />
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-xl opacity-0 group-hover/playlistitem:opacity-100 transition-opacity">
-                          <i className={`fa ${item.id === currentPlaying.id && isPlaying ? 'fa-pause' : 'fa-play'} text-white text-sm`} />
-                        </div>
-                      </div>
-                      <div className="flex flex-col">
-                        <div className="text-xs font-bold whitespace-nowrap">
-                          {item.attributes.name}
-                        </div>
-                        <div
-                          className={`text-[10px]  ${index === music.findIndex((music) => music.id === currentPlaying.id) ? 'text-gray-100' : 'text-gray-500'} whitespace-nowrap`}
-                        >
-                          {item.attributes.artistName}
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      className={`text-[10px] ${index === music.findIndex((music) => music.id === currentPlaying.id) ? 'text-gray-100' : 'text-gray-500'} text-right`}
+                  {music.map((item, index) => (
+                    <a
+                      key={index}
+                      href={item.attributes.url}
+                      target="_blank"
+                      className={`p-3 flex items-center justify-between ${index === music.findIndex((music) => music.id === currentPlaying.id) ? 'bg-red-600 text-white animate-pulse' : 'hover:bg-black/10 dark:text-white dark:hover:bg-white/10'}`}
                     >
-                      <span>
-                        {index ===
-                          music.findIndex(
-                            (music) => music.id === currentPlaying.id
-                          ) && i18n('Now Playing')}
-                      </span>
-                      <br />
-                      <span>
-                        {Math.floor(item.attributes.durationInMillis / 60000)}:
-                        {(
-                          '0' +
-                          Math.floor(
-                            (item.attributes.durationInMillis % 60000) / 1000
-                          )
-                        ).slice(-2)}
-                      </span>
-                    </div>
-                  </a>
-                ))}
+                      <div className="flex items-center gap-3">
+                        <div
+                          className="relative group/playlistitem w-10 h-10 cursor-pointer"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            const isCurrentSong = item.id === currentPlaying.id;
+                            if (isCurrentSong) {
+                              // Toggle play/pause for current song
+                              if (isPlaying) {
+                                audioRef.current.pause();
+                                setIsPlaying(false);
+                              } else {
+                                audioRef.current.play();
+                                setIsPlaying(true);
+                              }
+                            } else {
+                              // Switch to new song
+                              setCurrentPlaying(item);
+                              setTimer(0);
+                              if (audioRef.current) {
+                                audioRef.current.play();
+                                setIsPlaying(true);
+                              }
+                            }
+                          }}
+                        >
+                          <img
+                            loading="lazy"
+                            src={item.attributes.artwork.url
+                              .replace('{w}', '50')
+                              .replace('{h}', '50')}
+                            className="w-10 h-10 rounded-xl shadow-lg"
+                          />
+                          <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-xl opacity-0 group-hover/playlistitem:opacity-100 transition-opacity">
+                            <i
+                              className={`fa ${item.id === currentPlaying.id && isPlaying ? 'fa-pause' : 'fa-play'} text-white text-sm`}
+                            />
+                          </div>
+                        </div>
+                        <div className="flex flex-col">
+                          <div className="text-xs font-bold whitespace-nowrap">
+                            {item.attributes.name}
+                          </div>
+                          <div
+                            className={`text-[10px]  ${index === music.findIndex((music) => music.id === currentPlaying.id) ? 'text-gray-100' : 'text-gray-500'} whitespace-nowrap`}
+                          >
+                            {item.attributes.artistName}
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        className={`text-[10px] ${index === music.findIndex((music) => music.id === currentPlaying.id) ? 'text-gray-100' : 'text-gray-500'} text-right`}
+                      >
+                        <span>
+                          {index ===
+                            music.findIndex(
+                              (music) => music.id === currentPlaying.id
+                            ) && i18n('Now Playing')}
+                        </span>
+                        <br />
+                        <span>
+                          {Math.floor(item.attributes.durationInMillis / 60000)}
+                          :
+                          {(
+                            '0' +
+                            Math.floor(
+                              (item.attributes.durationInMillis % 60000) / 1000
+                            )
+                          ).slice(-2)}
+                        </span>
+                      </div>
+                    </a>
+                  ))}
                 </div>
               </div>
             }
@@ -398,7 +418,9 @@ export default function Music(props) {
                 onClick={togglePlayPause}
                 className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-xl opacity-0 group-hover/album:opacity-100 transition-opacity"
               >
-                <i className={`fa ${isPlaying ? 'fa-pause' : 'fa-play'} text-white text-2xl`} />
+                <i
+                  className={`fa ${isPlaying ? 'fa-pause' : 'fa-play'} text-white text-2xl`}
+                />
               </button>
             </div>
           </Tooltip>
@@ -460,13 +482,14 @@ export default function Music(props) {
                                   isUserScrolling
                                     ? 'text-gray-300 dark:text-gray-400 text-base'
                                     : index === currentLyricIndex
-                                    ? 'font-bold text-lg'
-                                    : index < currentLyricIndex
-                                    ? 'text-gray-400 dark:text-gray-500 text-base blur-sm'
-                                    : 'text-gray-400 dark:text-gray-500 text-base'
+                                      ? 'font-bold text-lg'
+                                      : index < currentLyricIndex
+                                        ? 'text-gray-400 dark:text-gray-500 text-base blur-sm'
+                                        : 'text-gray-400 dark:text-gray-500 text-base'
                                 }`}
                               >
-                                {index === currentLyricIndex && !isUserScrolling ? (
+                                {index === currentLyricIndex &&
+                                !isUserScrolling ? (
                                   // Current line with progress bar text mask
                                   <>
                                     {/* Background text (gray) */}
@@ -502,11 +525,13 @@ export default function Music(props) {
                             .replace(/\[\d{2}:\d{2}\.\d{2}\]/g, '')
                             .replace(/\[(ti|ar|al|by|offset):[^\]]*\]/g, '')
                             .split('\n')
-                            .filter(line => {
-                              return line.trim() &&
-                                     !line.includes('Lyrics by') &&
-                                     !line.includes('Composed by') &&
-                                     !line.match(/^[^\-]+ - [^\(]+\(.+\)$/);
+                            .filter((line) => {
+                              return (
+                                line.trim() &&
+                                !line.includes('Lyrics by') &&
+                                !line.includes('Composed by') &&
+                                !line.match(/^[^\-]+ - [^\(]+\(.+\)$/)
+                              );
                             })
                             .map((line, index) => (
                               <div

@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 export default function Achievements(props) {
@@ -110,8 +109,6 @@ export default function Achievements(props) {
       color: 'text-teal-600',
     },
   ];
-
-
 
   return (
     <>
