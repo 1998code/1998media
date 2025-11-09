@@ -1,0 +1,54 @@
+name: Update Version
+
+on:
+  push:
+    branches:
+      - nextJS12
+      - html
+  schedule:
+    # Run at 00:00 UTC on the 1st of every month
+    - cron: '0 0 1 * *'
+  workflow_dispatch: {}
+
+jobs:
+  update-version:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Update version to YYYY.MM
+        run: |
+          # Get current year and month
+          YEAR=$(date +%Y)
+          MONTH=$(date +%-m)
+          NEW_VERSION="${YEAR}.${MONTH}"
+
+          echo "Updating version to: $NEW_VERSION"
+
+          # Update package.json
+          npm version $NEW_VERSION --no-git-tag-version --allow-same-version
+
+          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add package.json package-lock.json 2>/dev/null || git add package.json
+          git diff --staged --quiet || git commit -m "chore: bump version to ${{ env.NEW_VERSION }} 🚀
+
+          🤖 Generated with GitHub Actions
+
+          Co-Authored-By: GitHub Actions <github-actions[bot]@users.noreply.github.com>"
+          git push
