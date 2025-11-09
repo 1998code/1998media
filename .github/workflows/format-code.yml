@@ -26,7 +26,7 @@ jobs:
           node-version: '18'
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: Format code with Prettier
         run: |
@@ -42,4 +42,5 @@ jobs:
           🤖 Generated with GitHub Actions
 
           Co-Authored-By: GitHub Actions <github-actions[bot]@users.noreply.github.com>"
+          git pull --rebase origin ${{ github.ref_name }}
           git push
