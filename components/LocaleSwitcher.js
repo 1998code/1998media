@@ -13,7 +13,7 @@ export default function LocaleSwitcher() {
       name: 'English',
       path: '/en',
       message: 'We noticed you might prefer a different language or region.',
-      continueText: 'Continue'
+      continueText: 'Continue',
     },
     {
       code: 'zh-Hant',
@@ -21,7 +21,7 @@ export default function LocaleSwitcher() {
       path: '/zh-HK',
       aliases: ['zh-HK', 'zh-TW'],
       message: '我們注意到你可能偏好其他語言或地區。',
-      continueText: '繼續'
+      continueText: '繼續',
     },
     {
       code: 'zh-CN',
@@ -29,7 +29,7 @@ export default function LocaleSwitcher() {
       path: '/zh-CN',
       aliases: ['zh-CN'],
       message: '我们注意到你可能偏好其他语言或地区。',
-      continueText: '继续'
+      continueText: '继续',
     },
     {
       code: 'ja',
@@ -37,7 +37,7 @@ export default function LocaleSwitcher() {
       path: '/ja',
       aliases: ['ja'],
       message: '別の言語または地域を希望される可能性があることに気づきました。',
-      continueText: '続ける'
+      continueText: '続ける',
     },
     {
       code: 'ko',
@@ -45,7 +45,7 @@ export default function LocaleSwitcher() {
       path: '/ko',
       aliases: ['ko'],
       message: '다른 언어 또는 지역을 선호하실 수 있습니다.',
-      continueText: '계속'
+      continueText: '계속',
     },
   ];
 
@@ -59,22 +59,32 @@ export default function LocaleSwitcher() {
 
     // Get current website locale from path
     const currentPath = window.location.pathname.replace('/', '').split('/')[0];
-    const currentLocale = locales.find(l =>
-      l.aliases?.includes(currentPath) || l.code === currentPath || l.path === `/${currentPath}`
+    const currentLocale = locales.find(
+      (l) =>
+        l.aliases?.includes(currentPath) ||
+        l.code === currentPath ||
+        l.path === `/${currentPath}`
     );
 
     // Check for mismatch - find locale that matches browser language
-    const browserLocale = locales.find(l => {
-      if (!l.aliases) return browserLang.toLowerCase().startsWith(l.code.toLowerCase());
-      return l.aliases.some(alias => browserLang.toLowerCase().startsWith(alias.toLowerCase()));
+    const browserLocale = locales.find((l) => {
+      if (!l.aliases)
+        return browserLang.toLowerCase().startsWith(l.code.toLowerCase());
+      return l.aliases.some((alias) =>
+        browserLang.toLowerCase().startsWith(alias.toLowerCase())
+      );
     });
 
     // Don't show banner if browser locale matches current locale (including aliases)
     if (browserLocale && currentLocale) {
       // Check if they're the same locale group (e.g., both Traditional Chinese)
-      const isSameLocaleGroup = browserLocale.code === currentLocale.code ||
-        (browserLocale.aliases && currentLocale.aliases &&
-         browserLocale.aliases.some(a => currentLocale.aliases?.includes(a)));
+      const isSameLocaleGroup =
+        browserLocale.code === currentLocale.code ||
+        (browserLocale.aliases &&
+          currentLocale.aliases &&
+          browserLocale.aliases.some((a) =>
+            currentLocale.aliases?.includes(a)
+          ));
 
       if (!isSameLocaleGroup) {
         setSelectedLocale(browserLocale);
@@ -130,14 +140,25 @@ export default function LocaleSwitcher() {
             className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors shrink-0"
             aria-label="Close locale switcher"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </button>
 
           {/* Message */}
           <div className="text-sm text-gray-700 dark:text-gray-300 flex-1">
-            {selectedLocale?.message || 'We noticed you might prefer a different language or region.'}
+            {selectedLocale?.message ||
+              'We noticed you might prefer a different language or region.'}
           </div>
 
           {/* Actions */}
@@ -159,7 +180,12 @@ export default function LocaleSwitcher() {
                   stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
                 </svg>
               </button>
 
@@ -178,10 +204,20 @@ export default function LocaleSwitcher() {
                           }`}
                           role="menuitem"
                         >
-                          <span className="text-sm font-medium">{locale.name}</span>
+                          <span className="text-sm font-medium">
+                            {locale.name}
+                          </span>
                           {selectedLocale?.code === locale.code && (
-                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                            <svg
+                              className="w-4 h-4"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                            >
+                              <path
+                                fillRule="evenodd"
+                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                clipRule="evenodd"
+                              />
                             </svg>
                           )}
                         </button>
