@@ -22,77 +22,77 @@ export default function Achievements(props) {
       title: 'Developer Tools in Maldives',
       rank: '#1',
       flag: '🇲🇻',
-      color: 'text-cyan-600',
+      color: 'text-red-600', // Red and green flag
     },
     {
       year: '2024',
       title: 'Developer Tools in Taiwan',
       rank: '#1',
       flag: '🇹🇼',
-      color: 'text-cyan-600',
+      color: 'text-blue-600', // Blue and red flag
     },
     {
       year: '2024',
       title: 'Developer Tools in Hong Kong',
       rank: '#1',
       flag: '🇭🇰',
-      color: 'text-cyan-600',
+      color: 'text-red-600', // Red and white flag
     },
     {
       year: '2023',
       title: 'Developer Tools in the United Kingdom',
       rank: '#1',
       flag: '🇬🇧',
-      color: 'text-cyan-600',
+      color: 'text-blue-600', // Red, white, blue flag
     },
     {
       year: '2023',
       title: 'Developer Tools in the United States',
       rank: '#1',
       flag: '🇺🇸',
-      color: 'text-cyan-600',
+      color: 'text-blue-600', // Red, white, blue flag
     },
     {
       year: '2023',
       title: 'Developer Tools in Canada',
       rank: '#1',
       flag: '🇨🇦',
-      color: 'text-blue-600',
+      color: 'text-red-600', // Red and white flag
     },
     {
       year: '2022',
       title: 'Graphics & Design App in Uzbekistan',
       rank: '#1',
       flag: '🇺🇿',
-      color: 'text-sky-600',
+      color: 'text-sky-500', // Blue, white, green flag
     },
     {
       year: '2022',
       title: 'Developer Tools in Kuwait',
       rank: '#1',
       flag: '🇰🇼',
-      color: 'text-pink-600',
+      color: 'text-green-600', // Green, white, red flag
     },
     {
       year: '2022',
       title: 'Developer Tools in Taiwan',
       rank: '#1',
       flag: '🇹🇼',
-      color: 'text-green-600',
+      color: 'text-blue-600', // Blue and red flag
     },
     {
       year: '2022',
       title: 'Developer Tools in Canada',
       rank: '#1',
       flag: '🇨🇦',
-      color: 'text-blue-600',
+      color: 'text-red-600', // Red and white flag
     },
     {
       year: '2021',
       title: 'Developer Tools in the United States',
       rank: '#1',
       flag: '🇺🇸',
-      color: 'text-cyan-600',
+      color: 'text-blue-600', // Red, white, blue flag
     },
     {
       year: '2021',
