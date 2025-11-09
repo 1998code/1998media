@@ -281,7 +281,7 @@ export default function Experience(props) {
             </a>
 
             {/* Tab Switcher - Desktop only */}
-            <div className="hidden sm:block">
+            <div className="hidden lg:block">
               <div className="relative flex bg-white/50 dark:bg-black/50 backdrop-blur-md rounded-2xl p-1 border border-gray-200 dark:border-gray-700">
                 {/* Sliding Background */}
                 <div
@@ -310,8 +310,8 @@ export default function Experience(props) {
             {i18n('Works and society contributions.')}
           </p>
 
-          {/* Tab Switcher - Mobile only */}
-          <div className="flex justify-center mt-6 sm:hidden">
+          {/* Tab Switcher - Mobile & Tablet */}
+          <div className="flex justify-center mt-6 lg:hidden">
             <div className="relative flex bg-white/50 dark:bg-black/50 backdrop-blur-md rounded-2xl p-1 border border-gray-200 dark:border-gray-700">
               {/* Sliding Background */}
               <div
