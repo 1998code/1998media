@@ -83,13 +83,32 @@ export default function LocaleSwitcher() {
     }
   }, []);
 
-  // Adjust navigation position when banner is visible
+  // Adjust navigation and dark mode button position when banner is visible
   useEffect(() => {
     if (isVisible && bannerRef.current) {
       const bannerHeight = bannerRef.current.offsetHeight;
       const nav = document.getElementById('navigation');
       if (nav) {
         nav.style.top = `${bannerHeight}px`;
+      }
+
+      // Keep dark mode button at 91vh when banner is visible
+      // Retry finding the button since it loads with delay
+      const adjustDarkModeButton = () => {
+        const darkModeBtn = document.querySelector('.darkmode-toggle');
+        if (darkModeBtn) {
+          darkModeBtn.style.bottom = '91vh';
+        } else {
+          // Retry after a short delay if button not found
+          setTimeout(adjustDarkModeButton, 200);
+        }
+      };
+      adjustDarkModeButton();
+    } else {
+      // Reset dark mode button to original position when banner is hidden
+      const darkModeBtn = document.querySelector('.darkmode-toggle');
+      if (darkModeBtn) {
+        darkModeBtn.style.bottom = '93.5vh';
       }
     }
   }, [isVisible]);
@@ -100,6 +119,9 @@ export default function LocaleSwitcher() {
     // Remove padding from navigation
     const nav = document.getElementById('navigation');
     if (nav) nav.style.top = '0';
+    // Reset dark mode button position
+    const darkModeBtn = document.querySelector('.darkmode-toggle');
+    if (darkModeBtn) darkModeBtn.style.bottom = '93.5vh';
   };
 
   const handleContinue = () => {
