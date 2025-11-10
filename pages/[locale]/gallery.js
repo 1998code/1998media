@@ -23,8 +23,14 @@ export default function Gallery(props) {
   const [spatialPhotosReady, setSpatialPhotosReady] = useState(false);
 
   // Dynamic tab positioning
-  const [mainTabStyles, setMainTabStyles] = useState({ left: '4px', width: '98px' });
-  const [filterTabStyles, setFilterTabStyles] = useState({ left: '4px', width: '64px' });
+  const [mainTabStyles, setMainTabStyles] = useState({
+    left: '4px',
+    width: '98px',
+  });
+  const [filterTabStyles, setFilterTabStyles] = useState({
+    left: '4px',
+    width: '64px',
+  });
   const mainTabRefs = useRef({});
   const filterTabRefs = useRef({});
   const unsplashTabRef = useRef(null);
@@ -674,65 +680,65 @@ export default function Gallery(props) {
                   : 'absolute top-0 left-0 -translate-x-full opacity-0 pointer-events-none'
               }`}
             >
-                <dl className="bg-white/50 dark:bg-black/50 backdrop-blur-md grid grid-cols-1 overflow-hidden rounded-xl shadow md:grid-cols-3 divide-y divide-gray-200 dark:divide-gray-800 md:divide-y-0 md:divide-x backlight">
-                  {stats.map((item) => (
-                    <div key={item.name} className="px-4 py-5 sm:p-6">
-                      <dt className="flex items-baseline justify-between gap-1">
-                        <div className="text-base font-normal text-gray-900 dark:text-gray-100">
-                          {i18n(item.name)}
-                        </div>
-                        <div className="bg-green-800 text-green-100 inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium md:mt-2 lg:mt-0">
-                          <i className="flex-shrink-0 self-center fa fa-arrow-up-right" />
-                        </div>
-                      </dt>
-                      <dd className="mt-1 flex items-baseline justify-between md:block">
-                        <div className="flex items-baseline text-2xl font-semibold text-emerald-600">
-                          {item.stat}
-                        </div>
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
-                <div className="grid grid-cols-1 gap-4 my-5 sm:grid-cols-2 lg:grid-cols-3">
-                  {photos.map((photo) => (
-                    <div
-                      key={photo.id}
-                      className="group flex flex-col rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-[0.98] border border-transparent hover:border-black dark:hover:border-white"
+              <dl className="bg-white/50 dark:bg-black/50 backdrop-blur-md grid grid-cols-1 overflow-hidden rounded-xl shadow md:grid-cols-3 divide-y divide-gray-200 dark:divide-gray-800 md:divide-y-0 md:divide-x backlight">
+                {stats.map((item) => (
+                  <div key={item.name} className="px-4 py-5 sm:p-6">
+                    <dt className="flex items-baseline justify-between gap-1">
+                      <div className="text-base font-normal text-gray-900 dark:text-gray-100">
+                        {i18n(item.name)}
+                      </div>
+                      <div className="bg-green-800 text-green-100 inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium md:mt-2 lg:mt-0">
+                        <i className="flex-shrink-0 self-center fa fa-arrow-up-right" />
+                      </div>
+                    </dt>
+                    <dd className="mt-1 flex items-baseline justify-between md:block">
+                      <div className="flex items-baseline text-2xl font-semibold text-emerald-600">
+                        {item.stat}
+                      </div>
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+              <div className="grid grid-cols-1 gap-4 my-5 sm:grid-cols-2 lg:grid-cols-3">
+                {photos.map((photo) => (
+                  <div
+                    key={photo.id}
+                    className="group flex flex-col rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-[0.98] border border-transparent hover:border-black dark:hover:border-white"
+                  >
+                    <img
+                      loading="lazy"
+                      className="h-[25vh] w-full object-cover cursor-pointer"
+                      src={photo.urls.raw}
+                      alt={photo.alt_description}
+                      onClick={() => handleClick(photo)}
+                    />
+                    <Tooltip
+                      content={photo.color}
+                      placement="right"
+                      className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-2xl"
                     >
-                      <img
-                        loading="lazy"
-                        className="h-[25vh] w-full object-cover cursor-pointer"
-                        src={photo.urls.raw}
-                        alt={photo.alt_description}
-                        onClick={() => handleClick(photo)}
-                      />
-                      <Tooltip
-                        content={photo.color}
-                        placement="right"
-                        className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-2xl"
+                      <div
+                        className={`opacity-0 group-hover:opacity-100 absolute bottom-0 h-7 border-t border-r rounded-tr-md duration-500 transition-all`}
+                        style={{ backgroundColor: photo.color }}
                       >
-                        <div
-                          className={`opacity-0 group-hover:opacity-100 absolute bottom-0 h-7 border-t border-r rounded-tr-md duration-500 transition-all`}
-                          style={{ backgroundColor: photo.color }}
-                        >
-                          {Object.entries(photo.topic_submissions).map(
-                            ([topic, submission]) =>
-                              submission.status === 'approved' ? (
-                                <span className="p-1.5 text-white text-sm">
-                                  <i className="fa fa-crown"></i> Featured in{' '}
-                                  {topic.replaceAll('-', ' ')}
-                                </span>
-                              ) : (
-                                <span className="p-1.5 text-white text-sm">
-                                  <i className="fa fa-thumbs-up"></i>
-                                </span>
-                              )
-                          )}
-                        </div>
-                      </Tooltip>
-                    </div>
-                  ))}
-                </div>
+                        {Object.entries(photo.topic_submissions).map(
+                          ([topic, submission]) =>
+                            submission.status === 'approved' ? (
+                              <span className="p-1.5 text-white text-sm">
+                                <i className="fa fa-crown"></i> Featured in{' '}
+                                {topic.replaceAll('-', ' ')}
+                              </span>
+                            ) : (
+                              <span className="p-1.5 text-white text-sm">
+                                <i className="fa fa-thumbs-up"></i>
+                              </span>
+                            )
+                        )}
+                      </div>
+                    </Tooltip>
+                  </div>
+                ))}
+              </div>
             </div>
             {/* Spatial Tab - Only render for Safari to save traffic */}
             <div

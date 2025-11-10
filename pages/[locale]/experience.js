@@ -299,8 +299,11 @@ export default function Experience(props) {
       const mobileEl = mobileTabRefs.current[activeTab];
 
       const activeTabElement =
-        (desktopEl && desktopEl.offsetParent !== null) ? desktopEl :
-        (mobileEl && mobileEl.offsetParent !== null) ? mobileEl : null;
+        desktopEl && desktopEl.offsetParent !== null
+          ? desktopEl
+          : mobileEl && mobileEl.offsetParent !== null
+            ? mobileEl
+            : null;
 
       if (activeTabElement) {
         const parent = activeTabElement.parentElement;
@@ -409,45 +412,45 @@ export default function Experience(props) {
               className="divide-y divide-gray-200 dark:divide-gray-800"
             >
               {filteredPositions.map((position, index) => (
-              <li key={index}>
-                <div
-                  className={`${position.bgColor} opacity-90 hover:opacity-100`}
-                >
-                  <div className="group px-4 py-4 sm:px-6">
-                    <div className="flex items-center justify-between">
-                      <div
-                        className={classNames(
-                          position.textColor,
-                          'font-medium truncate'
-                        )}
-                      >
-                        <i className={`${position.icon} w-6`}></i>
-                        {i18n(position.title)}
-                      </div>
-                      <div className="ml-2 flex-shrink-0 flex items-center gap-1">
+                <li key={index}>
+                  <div
+                    className={`${position.bgColor} opacity-90 hover:opacity-100`}
+                  >
+                    <div className="group px-4 py-4 sm:px-6">
+                      <div className="flex items-center justify-between">
                         <div
-                          className={`border px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${position.textColor} ${position.bgColor} ${position.borderColor}`}
+                          className={classNames(
+                            position.textColor,
+                            'font-medium truncate'
+                          )}
                         >
-                          {i18n(position.type)}
+                          <i className={`${position.icon} w-6`}></i>
+                          {i18n(position.title)}
+                        </div>
+                        <div className="ml-2 flex-shrink-0 flex items-center gap-1">
+                          <div
+                            className={`border px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${position.textColor} ${position.bgColor} ${position.borderColor}`}
+                          >
+                            {i18n(position.type)}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="!hidden mt-2 group-hover:!flex flex-wrap justify-between text-xs">
+                        <div className="text-gray-600 dark:text-white opacity-95">
+                          {i18n(position.description)}
+                        </div>
+                        <div className="flex items-center gap-1 text-gray-600 dark:text-gray-400">
+                          {i18n(position.location)}
+                          <time dateTime={position.date}>
+                            {i18n(position.date)}
+                          </time>
                         </div>
                       </div>
                     </div>
-                    <div className="!hidden mt-2 group-hover:!flex flex-wrap justify-between text-xs">
-                      <div className="text-gray-600 dark:text-white opacity-95">
-                        {i18n(position.description)}
-                      </div>
-                      <div className="flex items-center gap-1 text-gray-600 dark:text-gray-400">
-                        {i18n(position.location)}
-                        <time dateTime={position.date}>
-                          {i18n(position.date)}
-                        </time>
-                      </div>
-                    </div>
                   </div>
-                </div>
-              </li>
-            ))}
-          </ul>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>
