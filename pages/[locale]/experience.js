@@ -1,7 +1,11 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 export default function Experience(props) {
   const [activeTab, setActiveTab] = useState('all');
+  const [tabStyles, setTabStyles] = useState({ left: '4px', width: '62px' });
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const desktopTabRefs = useRef({});
+  const mobileTabRefs = useRef({});
 
   function i18n(key) {
     if (
@@ -276,18 +280,48 @@ export default function Experience(props) {
     return activeTabData?.color || 'bg-gray-600';
   };
 
-  // Calculate tab position and width for sliding background
-  const getTabStyles = () => {
-    const tabIndex = tabs.findIndex((tab) => tab.id === activeTab);
-    // Adjusted positions and widths based on actual button sizes
-    const positions = [4, 65, 160, 270, 370]; // Left positions in pixels
-    const widths = [62, 93, 105, 95, 93]; // Widths in pixels
+  // Handle tab change with animation
+  const handleTabChange = (newTab) => {
+    if (newTab === activeTab) return;
 
-    return {
-      left: `${positions[tabIndex]}px`,
-      width: `${widths[tabIndex]}px`,
-    };
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setActiveTab(newTab);
+      setTimeout(() => setIsTransitioning(false), 50);
+    }, 250);
   };
+
+  // Update tab styles when active tab changes
+  useEffect(() => {
+    const updateTabStyles = () => {
+      // Try desktop first, then mobile - use whichever is visible
+      const desktopEl = desktopTabRefs.current[activeTab];
+      const mobileEl = mobileTabRefs.current[activeTab];
+
+      const activeTabElement =
+        (desktopEl && desktopEl.offsetParent !== null) ? desktopEl :
+        (mobileEl && mobileEl.offsetParent !== null) ? mobileEl : null;
+
+      if (activeTabElement) {
+        const parent = activeTabElement.parentElement;
+        const parentRect = parent.getBoundingClientRect();
+        const activeRect = activeTabElement.getBoundingClientRect();
+
+        setTabStyles({
+          left: `${activeRect.left - parentRect.left}px`,
+          width: `${activeRect.width}px`,
+        });
+      }
+    };
+
+    // Update immediately
+    updateTabStyles();
+
+    // Also update after a short delay to ensure i18n has rendered
+    const timeoutId = setTimeout(updateTabStyles, 50);
+
+    return () => clearTimeout(timeoutId);
+  }, [activeTab, props.i18n]);
 
   return (
     <div
@@ -310,13 +344,14 @@ export default function Experience(props) {
               <div className="relative flex bg-white/50 dark:bg-black/50 backdrop-blur-md rounded-2xl p-1 border border-gray-200 dark:border-gray-700">
                 {/* Sliding Background */}
                 <div
-                  className={`absolute top-1 bottom-1 ${getActiveTabColor()} rounded-xl transition-all duration-300 ease-out shadow-sm`}
-                  style={getTabStyles()}
+                  className={`absolute top-1 bottom-1 ${getActiveTabColor()} rounded-xl transition-all duration-300 ease-out shadow-sm pointer-events-none`}
+                  style={tabStyles}
                 />
                 {tabs.map((tab) => (
                   <button
                     key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
+                    ref={(el) => (desktopTabRefs.current[tab.id] = el)}
+                    onClick={() => handleTabChange(tab.id)}
                     className={`relative z-10 px-3 py-2 text-xs font-medium rounded-xl transition-all duration-300 ${
                       activeTab === tab.id
                         ? 'text-white'
@@ -340,13 +375,14 @@ export default function Experience(props) {
             <div className="relative flex bg-white/50 dark:bg-black/50 backdrop-blur-md rounded-2xl p-1 border border-gray-200 dark:border-gray-700">
               {/* Sliding Background */}
               <div
-                className={`absolute top-1 bottom-1 ${getActiveTabColor()} rounded-xl transition-all duration-300 ease-out shadow-sm`}
-                style={getTabStyles()}
+                className={`absolute top-1 bottom-1 ${getActiveTabColor()} rounded-xl transition-all duration-300 ease-out shadow-sm pointer-events-none`}
+                style={tabStyles}
               />
               {tabs.map((tab) => (
                 <button
                   key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
+                  ref={(el) => (mobileTabRefs.current[tab.id] = el)}
+                  onClick={() => handleTabChange(tab.id)}
                   className={`relative z-10 px-3 py-2 text-xs font-medium rounded-xl transition-all duration-300 ${
                     activeTab === tab.id
                       ? 'text-white'
@@ -361,11 +397,18 @@ export default function Experience(props) {
           </div>
         </div>
         <div className="bg-white dark:bg-black shadow overflow-hidden rounded-xl mt-8 backlight">
-          <ul
-            role="list"
-            className="divide-y divide-gray-200 dark:divide-gray-800"
+          <div
+            className="transition-all duration-500 ease-in-out"
+            style={{
+              transform: isTransitioning ? 'translateX(20px)' : 'translateX(0)',
+              opacity: isTransitioning ? 0 : 1,
+            }}
           >
-            {filteredPositions.map((position, index) => (
+            <ul
+              role="list"
+              className="divide-y divide-gray-200 dark:divide-gray-800"
+            >
+              {filteredPositions.map((position, index) => (
               <li key={index}>
                 <div
                   className={`${position.bgColor} opacity-90 hover:opacity-100`}
@@ -405,6 +448,7 @@ export default function Experience(props) {
               </li>
             ))}
           </ul>
+          </div>
         </div>
       </div>
     </div>

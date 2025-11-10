@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Tooltip } from '@nextui-org/tooltip';
 
 export default function Gallery(props) {
@@ -21,6 +21,14 @@ export default function Gallery(props) {
   const [isSafari, setIsSafari] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [spatialPhotosReady, setSpatialPhotosReady] = useState(false);
+
+  // Dynamic tab positioning
+  const [mainTabStyles, setMainTabStyles] = useState({ left: '4px', width: '98px' });
+  const [filterTabStyles, setFilterTabStyles] = useState({ left: '4px', width: '64px' });
+  const mainTabRefs = useRef({});
+  const filterTabRefs = useRef({});
+  const unsplashTabRef = useRef(null);
+  const spatialTabRef = useRef(null);
 
   // Initialize client-side state and Safari detection
   useEffect(() => {
@@ -219,6 +227,48 @@ export default function Gallery(props) {
     .toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
+  // Update main tab styles when active tab changes
+  useEffect(() => {
+    const updateMainTabStyles = () => {
+      const activeTabElement = mainTabRefs.current[activeTab];
+      if (activeTabElement && activeTabElement.offsetParent !== null) {
+        const parent = activeTabElement.parentElement;
+        const parentRect = parent.getBoundingClientRect();
+        const activeRect = activeTabElement.getBoundingClientRect();
+
+        setMainTabStyles({
+          left: `${activeRect.left - parentRect.left}px`,
+          width: `${activeRect.width}px`,
+        });
+      }
+    };
+
+    updateMainTabStyles();
+    const timeoutId = setTimeout(updateMainTabStyles, 50);
+    return () => clearTimeout(timeoutId);
+  }, [activeTab, props.i18n]);
+
+  // Update filter tab styles when spatial filter changes
+  useEffect(() => {
+    const updateFilterTabStyles = () => {
+      const activeFilterElement = filterTabRefs.current[spatialFilter];
+      if (activeFilterElement && activeFilterElement.offsetParent !== null) {
+        const parent = activeFilterElement.parentElement;
+        const parentRect = parent.getBoundingClientRect();
+        const activeRect = activeFilterElement.getBoundingClientRect();
+
+        setFilterTabStyles({
+          left: `${activeRect.left - parentRect.left}px`,
+          width: `${activeRect.width}px`,
+        });
+      }
+    };
+
+    updateFilterTabStyles();
+    const timeoutId = setTimeout(updateFilterTabStyles, 50);
+    return () => clearTimeout(timeoutId);
+  }, [spatialFilter, props.i18n]);
+
   // Handle spatial filter change with animation
   const handleSpatialFilterChange = (newFilter) => {
     if (newFilter === spatialFilter) return;
@@ -278,7 +328,7 @@ export default function Gallery(props) {
     if (!isClient || !isSafari) return null;
 
     return (
-      <div className="w-full shrink-0 overflow-hidden">
+      <div className="w-full px-1">
         <div className="relative overflow-hidden">
           <div
             className="transition-all duration-500 ease-in-out"
@@ -513,13 +563,11 @@ export default function Gallery(props) {
             <div className="relative flex bg-white/50 dark:bg-black/50 backdrop-blur-md rounded-2xl p-1 border border-gray-200 dark:border-gray-700">
               {/* Sliding Background for Main Tabs */}
               <div
-                className="absolute top-1 bottom-1 bg-emerald-600 rounded-xl transition-all duration-300 ease-out shadow-sm"
-                style={{
-                  left: activeTab === 'unsplash' ? '4px' : '106px',
-                  width: activeTab === 'unsplash' ? '98px' : '80px',
-                }}
+                className="absolute top-1 bottom-1 bg-emerald-600 rounded-xl transition-all duration-300 ease-out shadow-sm pointer-events-none"
+                style={mainTabStyles}
               />
               <button
+                ref={(el) => (mainTabRefs.current['unsplash'] = el)}
                 onClick={() => setActiveTab('unsplash')}
                 className={`relative z-10 p-2 text-sm font-medium rounded-xl transition-all duration-300 ${
                   activeTab === 'unsplash'
@@ -531,6 +579,7 @@ export default function Gallery(props) {
                 Unsplash
               </button>
               <button
+                ref={(el) => (mainTabRefs.current['spatial'] = el)}
                 onClick={(e) => {
                   if (!isClient || !isSafari) {
                     e.preventDefault();
@@ -559,27 +608,11 @@ export default function Gallery(props) {
               <div className="relative flex bg-white/30 dark:bg-black/30 backdrop-blur-md rounded-xl p-1 border border-gray-200/50 dark:border-gray-700/50">
                 {/* Sliding Background */}
                 <div
-                  className="absolute top-1 bottom-1 bg-emerald-500 rounded-xl transition-all duration-300 ease-out shadow-sm"
-                  style={{
-                    left:
-                      spatialFilter === 'all'
-                        ? '4px'
-                        : spatialFilter === 'photo'
-                          ? '68px'
-                          : spatialFilter === 'video'
-                            ? '190px'
-                            : '310px',
-                    width:
-                      spatialFilter === 'all'
-                        ? '64px'
-                        : spatialFilter === 'photo'
-                          ? '120px'
-                          : spatialFilter === 'video'
-                            ? '116px'
-                            : '95px',
-                  }}
+                  className="absolute top-1 bottom-1 bg-emerald-500 rounded-xl transition-all duration-300 ease-out shadow-sm pointer-events-none"
+                  style={filterTabStyles}
                 />
                 <button
+                  ref={(el) => (filterTabRefs.current['all'] = el)}
                   onClick={() => handleSpatialFilterChange('all')}
                   className={`relative z-10 px-3 py-1.5 text-xs font-medium rounded-xl transition-all duration-300 ${
                     spatialFilter === 'all'
@@ -591,6 +624,7 @@ export default function Gallery(props) {
                   ALL
                 </button>
                 <button
+                  ref={(el) => (filterTabRefs.current['photo'] = el)}
                   onClick={() => handleSpatialFilterChange('photo')}
                   className={`relative z-10 px-3 py-1.5 text-xs font-medium rounded-xl transition-all duration-300 ${
                     spatialFilter === 'photo'
@@ -602,6 +636,7 @@ export default function Gallery(props) {
                   Spatial Photo
                 </button>
                 <button
+                  ref={(el) => (filterTabRefs.current['video'] = el)}
                   onClick={() => handleSpatialFilterChange('video')}
                   className={`relative z-10 px-3 py-1.5 text-xs font-medium rounded-xl transition-all duration-300 ${
                     spatialFilter === 'video'
@@ -613,6 +648,7 @@ export default function Gallery(props) {
                   Spatial Video
                 </button>
                 <button
+                  ref={(el) => (filterTabRefs.current['panorama'] = el)}
                   onClick={() => handleSpatialFilterChange('panorama')}
                   className={`relative z-10 px-3 py-1.5 text-xs font-medium rounded-xl transition-all duration-300 ${
                     spatialFilter === 'panorama'
@@ -629,11 +665,15 @@ export default function Gallery(props) {
         </div>
         <div className="relative my-6 max-w-7xl mx-auto">
           <div className="relative overflow-hidden">
+            {/* Unsplash Tab */}
             <div
-              className={`flex w-full transition-transform duration-500 ${activeTab === 'unsplash' ? 'translate-x-0' : '-translate-x-full'}`}
+              ref={unsplashTabRef}
+              className={`w-full px-1 transition-all duration-500 ease-in-out ${
+                activeTab === 'unsplash'
+                  ? 'relative translate-x-0 opacity-100'
+                  : 'absolute top-0 left-0 -translate-x-full opacity-0 pointer-events-none'
+              }`}
             >
-              {/* Unsplash Tab */}
-              <div className="w-full shrink-0 px-1 overflow-hidden">
                 <dl className="bg-white/50 dark:bg-black/50 backdrop-blur-md grid grid-cols-1 overflow-hidden rounded-xl shadow md:grid-cols-3 divide-y divide-gray-200 dark:divide-gray-800 md:divide-y-0 md:divide-x backlight">
                   {stats.map((item) => (
                     <div key={item.name} className="px-4 py-5 sm:p-6">
@@ -693,8 +733,16 @@ export default function Gallery(props) {
                     </div>
                   ))}
                 </div>
-              </div>
-              {/* Spatial Tab - Only render for Safari to save traffic */}
+            </div>
+            {/* Spatial Tab - Only render for Safari to save traffic */}
+            <div
+              ref={spatialTabRef}
+              className={`w-full transition-all duration-500 ease-in-out ${
+                activeTab === 'spatial'
+                  ? 'relative translate-x-0 opacity-100'
+                  : 'absolute top-0 left-0 translate-x-full opacity-0 pointer-events-none'
+              }`}
+            >
               {renderSpatialTab()}
             </div>
           </div>
