@@ -46,10 +46,7 @@ export default function Blog(props) {
     publishTime: new Date(),
   };
 
-  const moment = [
-    tripPromo,
-    ...(props.blogData?.moments || []).slice(0, 5),
-  ];
+  const moment = [tripPromo, ...(props.blogData?.moments || []).slice(0, 5)];
 
   return (
     <div className="relative px-4 sm:px-6 lg:px-8 space-y-16">

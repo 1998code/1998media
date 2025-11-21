@@ -32,7 +32,8 @@ export default function WhatsAppChat({ i18n: i18nData }) {
     const handleScroll = () => {
       if (hasAutoOpened) return;
 
-      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
       const scrolled = window.scrollY;
       const scrollPercentage = (scrolled / scrollHeight) * 100;
 
@@ -49,7 +50,8 @@ export default function WhatsAppChat({ i18n: i18nData }) {
   const handleSend = () => {
     if (!message.trim()) return;
 
-    const currentUrl = typeof window !== 'undefined' ? window.location.href : '';
+    const currentUrl =
+      typeof window !== 'undefined' ? window.location.href : '';
     const whatsappUrl = `https://api.whatsapp.com/send/?phone=%2B12132161526&text=${encodeURIComponent(message + '\n\n' + currentUrl)}&type=phone_number&app_absent=0`;
 
     window.open(whatsappUrl, '_blank');
@@ -88,7 +90,8 @@ export default function WhatsAppChat({ i18n: i18nData }) {
               : 'opacity-0 translate-y-8 scale-50'
           }`}
           style={{
-            boxShadow: '0 12px 48px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
+            boxShadow:
+              '0 12px 48px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
             transformOrigin: 'bottom right',
           }}
         >
@@ -116,7 +119,9 @@ export default function WhatsAppChat({ i18n: i18nData }) {
               </div>
               <div>
                 <h3 className="text-white font-bold text-lg">{i18n('MING')}</h3>
-                <p className="text-white/90 text-sm font-medium">{i18n('Product UI Lead')}</p>
+                <p className="text-white/90 text-sm font-medium">
+                  {i18n('Product UI Lead')}
+                </p>
               </div>
             </div>
           </div>
@@ -141,8 +146,12 @@ export default function WhatsAppChat({ i18n: i18nData }) {
                     <i className="fas fa-file-invoice-dollar text-xl"></i>
                   </div>
                   <div className="text-left">
-                    <p className="font-bold text-[15px]">{i18n('View Pricing')}</p>
-                    <p className="text-white/80 text-xs">{i18n('See our rates & packages')}</p>
+                    <p className="font-bold text-[15px]">
+                      {i18n('View Pricing')}
+                    </p>
+                    <p className="text-white/80 text-xs">
+                      {i18n('See our rates & packages')}
+                    </p>
                   </div>
                 </div>
                 <i className="fas fa-arrow-right text-sm"></i>
@@ -194,7 +203,9 @@ export default function WhatsAppChat({ i18n: i18nData }) {
       >
         <div className="flex items-center gap-2 px-4 py-3">
           <i className="fab fa-whatsapp text-xl"></i>
-          <span className="font-semibold text-sm whitespace-nowrap">{i18n('Get Quote')}</span>
+          <span className="font-semibold text-sm whitespace-nowrap">
+            {i18n('Get Quote')}
+          </span>
         </div>
 
         {/* Notification dot */}
@@ -232,8 +243,12 @@ export default function WhatsAppChat({ i18n: i18nData }) {
                   <i className="fas fa-file-invoice-dollar text-white text-xl"></i>
                 </div>
                 <div>
-                  <h3 className="text-white font-bold text-lg">{i18n('Pricing & Packages')}</h3>
-                  <p className="text-white/80 text-sm">{i18n('View our rates and services')}</p>
+                  <h3 className="text-white font-bold text-lg">
+                    {i18n('Pricing & Packages')}
+                  </h3>
+                  <p className="text-white/80 text-sm">
+                    {i18n('View our rates and services')}
+                  </p>
                 </div>
               </div>
               <button
