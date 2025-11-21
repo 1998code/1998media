@@ -19,10 +19,7 @@ export default function Custom404() {
   return (
     <div>
       <Head>
-        <link
-          rel="stylesheet"
-          href="https://cdn.1998.media/css/fontawesome.css"
-        />
+        <title>404 - Page Not Found</title>
       </Head>
       <main className="max-w-7xl w-full h-screen grid content-center mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-xl mx-auto py-16 sm:py-24">

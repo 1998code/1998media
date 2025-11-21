@@ -16,8 +16,9 @@ export default function Gallery(props) {
   const [activeTab, setActiveTab] = useState('unsplash');
   const [spatialFilter, setSpatialFilter] = useState('all');
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [totalViews, setTotalViews] = useState(0);
-  const [photos, setPhotos] = useState([]);
+  const unsplashData = props.unsplashData || { stats: null, photos: [] };
+  const [totalViews, setTotalViews] = useState(unsplashData.stats?.totalViews || 0);
+  const [photos, setPhotos] = useState(unsplashData.photos || []);
   const [isSafari, setIsSafari] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [spatialPhotosReady, setSpatialPhotosReady] = useState(false);
@@ -83,31 +84,8 @@ export default function Gallery(props) {
     }
   }, []);
 
-  function getUnsplashStats() {
-    fetch(
-      `https://api.unsplash.com/users/1998media/statistics?client_id=${unsplashPublicKey}`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setTotalViews(data.views.total);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-  }
-
-  function getUnsplashPhotos() {
-    fetch(
-      `https://api.unsplash.com/users/1998media/photos?client_id=${unsplashPublicKey}`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setPhotos(data);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-  }
+  // Data is now fetched server-side via SSR
+  // Removed client-side fetching functions
 
   // Only initialize spatial photos data for Safari to save traffic - but ensure consistent SSR
   const spatialPhotos = spatialPhotosReady
@@ -490,10 +468,7 @@ export default function Gallery(props) {
     { name: 'Average Views', stat: `${i18n('Over')} ${avgViews}` },
   ];
 
-  useEffect(() => {
-    getUnsplashStats();
-    getUnsplashPhotos();
-  }, []);
+  // Data is now fetched server-side via SSR, no need for client-side fetching
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -549,10 +524,7 @@ export default function Gallery(props) {
   };
 
   // Fetch data on component mount
-  useEffect(() => {
-    getUnsplashStats();
-    getUnsplashPhotos();
-  }, []);
+  // Data is now fetched server-side via SSR, no need for client-side fetching
 
   return (
     <>

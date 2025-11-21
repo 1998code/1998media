@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Tooltip } from '@nextui-org/tooltip';
 
 export default function Footer(props) {
@@ -58,28 +56,17 @@ export default function Footer(props) {
     ],
   };
 
-  const [ip, setIP] = useState([]);
-  const [geo, setGeo] = useState([]);
-  const [latitude, setLatitude] = useState([]);
-  const [longitude, setLongitude] = useState([]);
-
-  useEffect(() => {
-    const lang = window.location.pathname.split('/')[1];
-    axios
-      .get(`/api/ip?l=${lang}`)
-      .then((res) => {
-        setIP(res.data.ip || null);
-        setGeo(
-          (res.data.geo && res.data.geo.city + ', ' + res.data.geo.state) ||
-            'Unknown'
-        );
-        setLatitude(res.data.latitude || 'Unknown');
-        setLongitude(res.data.longitude || 'Unknown');
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  // Data is now fetched server-side via SSR
+  const ipData = props.ipData || {
+    ip: null,
+    geo: 'Unknown',
+    latitude: 'Unknown',
+    longitude: 'Unknown',
+  };
+  const ip = ipData.ip;
+  const geo = ipData.geo;
+  const latitude = ipData.latitude;
+  const longitude = ipData.longitude;
 
   // Since
   const today = new Date();

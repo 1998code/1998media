@@ -39,7 +39,7 @@ const Footer = dynamic(() => import('./footer'));
 // Music player - keep client-side only (requires user interaction)
 const Music = dynamic(() => import('./music'), { ssr: false });
 
-export default function Home({ i18nData, blogData, projectsData, dalleData, locale }) {
+export default function Home({ i18nData, blogData, projectsData, dalleData, unsplashData, ipData, locale }) {
   const [loading, setLoading] = useState(true);
   const I18n = i18nData;
 
@@ -226,7 +226,7 @@ export default function Home({ i18nData, blogData, projectsData, dalleData, loca
                 <Header i18n={I18n} />
                 <About i18n={I18n} />
                 <Achievements i18n={I18n} />
-                <Gallery i18n={I18n} />
+                <Gallery i18n={I18n} unsplashData={unsplashData} />
                 <Experience i18n={I18n} />
                 <Skills i18n={I18n} />
                 <Projects i18n={I18n} projectsData={projectsData} />
@@ -236,7 +236,7 @@ export default function Home({ i18nData, blogData, projectsData, dalleData, loca
                 <Faq i18n={I18n} />
                 <Contact i18n={I18n} />
                 <Credits i18n={I18n} />
-                <Footer i18n={I18n} />
+                <Footer i18n={I18n} ipData={ipData} />
                 {interacted && <Music i18n={I18n} />}
               </div>
             </div>
@@ -250,10 +250,11 @@ export default function Home({ i18nData, blogData, projectsData, dalleData, loca
 
 export async function getServerSideProps(context) {
   const { locale } = context.params;
+  const { req } = context;
 
   try {
     // Fetch all data in parallel for better performance
-    const [i18nData, blogPosts, medals, moments, githubProjects, dalleData] =
+    const [i18nData, blogPosts, medals, moments, githubProjects, dalleData, unsplashData, ipData] =
       await Promise.all([
         fetchI18nData(locale),
         fetchBlogPosts(),
@@ -261,6 +262,8 @@ export async function getServerSideProps(context) {
         fetchTripMoments(locale),
         fetchGithubProjects(),
         fetchDalleData(),
+        fetchUnsplashData(),
+        fetchIPData(locale, req),
       ]);
 
     return {
@@ -273,6 +276,8 @@ export async function getServerSideProps(context) {
         },
         projectsData: githubProjects,
         dalleData,
+        unsplashData,
+        ipData,
         locale,
       },
     };
@@ -288,8 +293,91 @@ export async function getServerSideProps(context) {
         },
         projectsData: [],
         dalleData: [],
+        unsplashData: { stats: null, photos: [] },
+        ipData: { ip: null, geo: 'Unknown', latitude: 'Unknown', longitude: 'Unknown' },
         locale: 'en',
       },
+    };
+  }
+}
+
+async function fetchUnsplashData() {
+  try {
+    const unsplashPublicKey = 'hjm0tzh_dDQx2REubp1NiT1P4jxE5wmnCbKQLbD-BZ8';
+    const [statsResponse, photosResponse] = await Promise.all([
+      fetch(
+        `https://api.unsplash.com/users/1998media/statistics?client_id=${unsplashPublicKey}`
+      ),
+      fetch(
+        `https://api.unsplash.com/users/1998media/photos?client_id=${unsplashPublicKey}`
+      ),
+    ]);
+
+    const stats = statsResponse.ok ? await statsResponse.json() : null;
+    const photos = photosResponse.ok ? await photosResponse.json() : [];
+
+    return {
+      stats: stats ? { totalViews: stats.views?.total || 0 } : null,
+      photos,
+    };
+  } catch (error) {
+    console.error('Error fetching Unsplash data:', error);
+    return { stats: null, photos: [] };
+  }
+}
+
+async function fetchIPData(locale, req) {
+  try {
+    // Replicate IP API logic server-side using request headers
+    const NodeGeocoder = (await import('node-geocoder')).default;
+    
+    // Get IP from headers (same as API route)
+    const ip = req.headers['x-forwarded-for'] || req.socket?.remoteAddress || null;
+    
+    // Get latitude/longitude from Vercel headers
+    const latitude = req.headers['x-vercel-ip-latitude'] || null;
+    const longitude = req.headers['x-vercel-ip-longitude'] || null;
+
+    let geo;
+    try {
+      if (latitude && longitude) {
+        const options = {
+          provider: 'openstreetmap',
+          language: locale || 'en',
+        };
+        const geoCoder = NodeGeocoder(options);
+        const result = await geoCoder.reverse({ lat: parseFloat(latitude), lon: parseFloat(longitude) });
+        geo = {
+          city: result[0]?.city || '?',
+          state: result[0]?.state || '?',
+        };
+      } else {
+        geo = {
+          city: 'Local',
+          state: 'Local',
+        };
+      }
+    } catch (error) {
+      console.log('Geocoding error:', error);
+      geo = {
+        city: '?',
+        state: '?',
+      };
+    }
+
+    return {
+      ip,
+      geo: geo.city && geo.state ? `${geo.city}, ${geo.state}` : 'Unknown',
+      latitude: latitude || 'Unknown',
+      longitude: longitude || 'Unknown',
+    };
+  } catch (error) {
+    console.error('Error fetching IP data:', error);
+    return {
+      ip: null,
+      geo: 'Unknown',
+      latitude: 'Unknown',
+      longitude: 'Unknown',
     };
   }
 }

@@ -60,10 +60,6 @@ function MyApp({ Component, pageProps }) {
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1941913120815371"
         ></script> */}
-        <link
-          rel="stylesheet"
-          href="https://cdn.1998.media/css/fontawesome.css"
-        />
       </Head>
       {notHome && (
         <div className="relative max-w-7xl mx-auto mt-6 -mb-10 z-[99] px-6 xl:px-0">
