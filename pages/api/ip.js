@@ -1,6 +1,14 @@
 import NodeGeocoder from 'node-geocoder';
+import { checkBotId } from 'botid/server';
 
 export default async function (req, res) {
+  // Verify the request with BotID
+  const isHuman = await checkBotId(req);
+
+  if (!isHuman) {
+    return res.status(403).json({ error: 'Bot detected' });
+  }
+
   const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
   const latitude = req.query.la || req.headers['x-vercel-ip-latitude'];
