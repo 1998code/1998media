@@ -18,7 +18,12 @@ export default function WhatsAppChat({ i18n: i18nData }) {
 
   useEffect(() => {
     if (isOpen) {
-      setIsAnimating(true);
+      // Small delay to ensure DOM is ready before animation
+      setTimeout(() => {
+        setIsAnimating(true);
+      }, 10);
+    } else {
+      setIsAnimating(false);
     }
   }, [isOpen]);
 
@@ -61,7 +66,15 @@ export default function WhatsAppChat({ i18n: i18nData }) {
 
   const handleClose = () => {
     setIsAnimating(false);
-    setTimeout(() => setIsOpen(false), 200);
+    setTimeout(() => setIsOpen(false), 300);
+  };
+
+  const handleToggle = () => {
+    if (isOpen) {
+      handleClose();
+    } else {
+      setIsOpen(true);
+    }
   };
 
   return (
@@ -69,7 +82,7 @@ export default function WhatsAppChat({ i18n: i18nData }) {
       {/* Chat Popup with Intercom-style design */}
       {isOpen && (
         <div
-          className={`absolute bottom-16 right-0 w-[380px] bg-white dark:bg-gray-900 rounded-3xl shadow-2xl overflow-hidden mb-2 transition-all duration-500 ease-out ${
+          className={`absolute bottom-16 right-0 w-[380px] bg-white dark:bg-gray-900 rounded-3xl shadow-2xl overflow-hidden mb-2 transition-all duration-300 ease-out ${
             isAnimating
               ? 'opacity-100 translate-y-0 scale-100'
               : 'opacity-0 translate-y-8 scale-50'
@@ -173,7 +186,7 @@ export default function WhatsAppChat({ i18n: i18nData }) {
 
       {/* Floating Action Button - Intercom style */}
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={handleToggle}
         className="relative bg-emerald-500 hover:bg-emerald-600 text-white rounded-tl-full rounded-bl-full rounded-br-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
         style={{
           boxShadow: '0 4px 16px rgba(16, 185, 129, 0.3)',
@@ -185,14 +198,14 @@ export default function WhatsAppChat({ i18n: i18nData }) {
         </div>
 
         {/* Notification dot */}
-        <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full border-2 border-white shadow-md flex items-center justify-center">
+        <div className="absolute -top-1 -right-1 w-4 h-4 bg-orange-500 rounded-full border-2 border-white shadow-md flex items-center justify-center">
           <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
         </div>
       </button>
 
       {/* Pricing Modal */}
       <div
-        className={`fixed z-[101] inset-0 overflow-y-auto transition-all ease-out duration-500 ${
+        className={`fixed z-[101] inset-0 overflow-y-auto transition-all ease-out duration-300 ${
           isPricingOpen
             ? 'opacity-100 bg-gray-900/80 backdrop-blur-lg'
             : 'opacity-0 pointer-events-none'
@@ -208,7 +221,7 @@ export default function WhatsAppChat({ i18n: i18nData }) {
 
           {/* Modal Content */}
           <div
-            className={`relative bg-white dark:bg-gray-900 rounded-3xl shadow-2xl w-full max-w-6xl h-[85vh] overflow-hidden transition-all duration-500 ${
+            className={`relative bg-white dark:bg-gray-900 rounded-3xl shadow-2xl w-full max-w-6xl h-[85vh] overflow-hidden transition-all duration-300 ${
               isPricingOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
             }`}
           >
