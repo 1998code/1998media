@@ -80,7 +80,7 @@ export default function WhatsAppChat({ i18n: i18nData }) {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed bottom-6 right-6 z-[102]">
       {/* Chat Popup with Intercom-style design */}
       {isOpen && (
         <div
@@ -216,7 +216,7 @@ export default function WhatsAppChat({ i18n: i18nData }) {
 
       {/* Pricing Modal */}
       <div
-        className={`fixed z-[101] inset-0 overflow-y-auto transition-all ease-out duration-300 ${
+        className={`fixed z-[103] inset-0 overflow-y-auto transition-all ease-out duration-300 ${
           isPricingOpen
             ? 'opacity-100 bg-gray-900/80 backdrop-blur-lg'
             : 'opacity-0 pointer-events-none'
