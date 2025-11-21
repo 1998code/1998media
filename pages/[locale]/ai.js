@@ -1,6 +1,3 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-
 export default function AI(props) {
   function i18n(key) {
     if (props.i18n && props.i18n['ai'] && !props.i18n['ai'][key]) {
@@ -11,24 +8,7 @@ export default function AI(props) {
       : key;
   }
 
-  useEffect(() => {
-    getDalleData();
-  }, []);
-
-  const [dalle, setDalle] = useState([]);
-  function getDalleData() {
-    axios
-      .get(
-        `https://edge-config.vercel.com/ecfg_hmcfjwi2h70gpx7dhcynqeromm3s?token=8bc3ba74-f695-40ea-b637-a78860e530e8`
-      )
-      .then((res) => {
-        console.log(res);
-        setDalle(res.data.items['results']);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
+  const dalle = props.dalle || [];
 
   return (
     <div id="ai" className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
@@ -55,6 +35,7 @@ export default function AI(props) {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="min-w-[300px] flex flex-col gap-3 pb-3 rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight"
+                  key={index}
                 >
                   <div>
                     <img
@@ -93,6 +74,7 @@ export default function AI(props) {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="min-w-[250px] flex flex-col gap-3 pb-3 rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight"
+                  key={index}
                 >
                   <div>
                     <img
@@ -125,3 +107,4 @@ export default function AI(props) {
     </div>
   );
 }
+

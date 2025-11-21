@@ -39,7 +39,7 @@ const Footer = dynamic(() => import('./footer'));
 // Music player - keep client-side only (requires user interaction)
 const Music = dynamic(() => import('./music'), { ssr: false });
 
-export default function Home({ i18nData, blogData, projectsData, locale }) {
+export default function Home({ i18nData, blogData, projectsData, dalleData, locale }) {
   const [loading, setLoading] = useState(true);
   const I18n = i18nData;
 
@@ -231,7 +231,7 @@ export default function Home({ i18nData, blogData, projectsData, locale }) {
                 <Skills i18n={I18n} />
                 <Projects i18n={I18n} projectsData={projectsData} />
                 {/* <OpenAPI i18n={I18n} /> */}
-                <AI i18n={I18n} />
+                <AI i18n={I18n} dalle={dalleData} />
                 <Blog i18n={I18n} blogData={blogData} locale={locale} />
                 <Faq i18n={I18n} />
                 <Contact i18n={I18n} />
@@ -253,13 +253,14 @@ export async function getServerSideProps(context) {
 
   try {
     // Fetch all data in parallel for better performance
-    const [i18nData, blogPosts, medals, moments, githubProjects] =
+    const [i18nData, blogPosts, medals, moments, githubProjects, dalleData] =
       await Promise.all([
         fetchI18nData(locale),
         fetchBlogPosts(),
         fetchTripMedals(locale),
         fetchTripMoments(locale),
         fetchGithubProjects(),
+        fetchDalleData(),
       ]);
 
     return {
@@ -271,6 +272,7 @@ export async function getServerSideProps(context) {
           moments,
         },
         projectsData: githubProjects,
+        dalleData,
         locale,
       },
     };
@@ -285,8 +287,26 @@ export async function getServerSideProps(context) {
           moments: [],
         },
         projectsData: [],
+        dalleData: [],
         locale: 'en',
       },
     };
+  }
+}
+
+async function fetchDalleData() {
+  try {
+    const edgeConfigUrl = process.env.EDGE_CONFIG_URL;
+    if (!edgeConfigUrl) {
+      console.error('EDGE_CONFIG_URL is not set');
+      return [];
+    }
+
+    const response = await fetch(edgeConfigUrl);
+    const data = await response.json();
+    return data.items?.results || [];
+  } catch (error) {
+    console.error('Error fetching edge config data:', error);
+    return [];
   }
 }
