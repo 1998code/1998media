@@ -404,7 +404,7 @@ export default function Music(props) {
             placement="top-center"
             className="min-w-[50px] mb-2 md:mb-3 p-0 border text-xs dark:text-white bg-white/50 dark:bg-black backdrop-blur-lg rounded-xl md:rounded-2xl"
           >
-            <div className="relative group/album md:absolute md:-left-7 top-2 min-w-[65px] h-[65px] z-[2]">
+            <div className="relative group/album md:absolute md:-left-7 md:top-2 min-w-[65px] h-[65px] z-[2]">
               <a href={currentPlaying.attributes?.url} target="_blank">
                 <img
                   loading="lazy"
