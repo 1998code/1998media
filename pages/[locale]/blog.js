@@ -1,5 +1,4 @@
 import { useState, useEffect, use } from 'react';
-import axios from 'axios';
 import { franc } from 'franc-min';
 import { Tooltip } from '@nextui-org/tooltip';
 
@@ -14,24 +13,10 @@ export default function Blog(props) {
   }
 
   const [payWallURL, setPayWallURL] = useState(false);
-  const [blogs, setBlogs] = useState([]);
+  const blogs = props.blogData?.posts || [];
   useEffect(() => {
-    getBlog();
     setPayWallURL(`https://post.1998.media`);
   }, []);
-  function getBlog() {
-    axios
-      .get('/api/post')
-      .then((res) => {
-        setBlogs([
-          // topPromo,
-          ...res.data.items,
-        ]);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
 
   function languageCheck(text) {
     const lang = franc(text);
@@ -49,26 +34,7 @@ export default function Blog(props) {
     }
   }
 
-  const [medals, setMedals] = useState([]);
-
-  function getMedals() {
-    axios
-      .post(
-        `/api/trip?type=medal&cid=09031029418990699836&locale=${window.location.pathname.split('#')[0].replace('/', '')}`
-      )
-      .then((res) => {
-        setMedals(res.data.medalList);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  useEffect(() => {
-    getMedals();
-  }, []);
-
-  const [moment, setMoment] = useState([]);
+  const medals = props.blogData?.medals || [];
 
   const tripPromo = {
     title: i18n('「Global」Get $10 OFF on Trip.com'),
@@ -80,22 +46,10 @@ export default function Blog(props) {
     publishTime: new Date(),
   };
 
-  function getMoment() {
-    axios
-      .post(
-        `/api/trip?type=moment&cid=09031029418990699836&locale=${window.location.pathname.split('#')[0].replace('/', '')}`
-      )
-      .then((res) => {
-        setMoment([tripPromo, ...res.data.resourceBlockList.slice(0, 5)]);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  useEffect(() => {
-    getMoment();
-  }, []);
+  const moment = [
+    tripPromo,
+    ...(props.blogData?.moments || []).slice(0, 5),
+  ];
 
   return (
     <div className="relative px-4 sm:px-6 lg:px-8 space-y-16">
@@ -116,7 +70,7 @@ export default function Blog(props) {
         <div className="mx-auto grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {blogs
             .filter((post) => {
-              const userLanguage = window.location.pathname.replace('/', '');
+              const userLanguage = props.locale || 'en';
               const postLanguage = languageCheck(post.title);
               if (userLanguage.includes('zh')) {
                 return postLanguage === 'zh';

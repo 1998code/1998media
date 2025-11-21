@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Grid } from '@githubocto/flat-ui';
 
 export default function Projects(props) {
@@ -11,28 +9,7 @@ export default function Projects(props) {
       ? props.i18n['projects'][key]
       : key;
   }
-  const [githubRaw, setGithubRaw] = useState([]);
-  useEffect(() => {
-    getGithubData();
-    window.addEventListener('resize', () => {
-      getGithubData();
-    });
-  }, []);
-  function getGithubData() {
-    axios
-      .get('https://api.github.com/search/repositories?q=1998code/&sort=stars')
-      .then((res) => {
-        if (
-          res.data.documentation_url !=
-          'https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting'
-        ) {
-          setGithubRaw(res.data.items);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
+  const githubRaw = props.projectsData || [];
   return (
     <div id="projects" className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
       <div className="relative max-w-7xl mx-auto space-y-8">

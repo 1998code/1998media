@@ -1,124 +1,52 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Head from 'next/head';
 import Script from 'next/script';
-import axios from 'axios';
 import dynamic from 'next/dynamic';
-import Cursor from '../../components/Cursor';
 import LocaleSwitcher from '../../components/LocaleSwitcher';
+import CursorPointer from '../../components/CursorPointer';
+import WhatsAppChat from '../../components/WhatsAppChat';
+import { RoomProvider } from '../../liveblocks.config';
 import {
-  RoomProvider,
-  useOthers,
-  useMyPresence,
-} from '../../liveblocks.config';
+  fetchI18nData,
+  fetchBlogPosts,
+  fetchTripMedals,
+  fetchTripMoments,
+  fetchGithubProjects,
+} from '../../lib/fetchData';
 
 // Critical components - load with SSR
 const Loading = dynamic(() => import('./loading'));
 const Navigation = dynamic(() => import('./navigation'));
 const Header = dynamic(() => import('./header'));
 
-// Above-the-fold content
-const About = dynamic(() => import('./about'), { ssr: false });
+// Above-the-fold content - SSR enabled for better SEO and performance
+const About = dynamic(() => import('./about'));
+const Achievements = dynamic(() => import('./achievements'));
 
-// Below-the-fold components - lazy load without SSR
-const Achievements = dynamic(() => import('./achievements'), { ssr: false });
-const Gallery = dynamic(() => import('./gallery'), { ssr: false });
-const Skills = dynamic(() => import('./skills'), { ssr: false });
-const Experience = dynamic(() => import('./experience'), { ssr: false });
-const Projects = dynamic(() => import('./projects'), { ssr: false });
-const Blog = dynamic(() => import('./blog'), { ssr: false });
-const AI = dynamic(() => import('./ai'), { ssr: false });
-// const OpenAPI = dynamic(() => import('./openAPI'), { ssr: false });
-const Faq = dynamic(() => import('./faq'), { ssr: false });
-const Contact = dynamic(() => import('./contact'), { ssr: false });
-const Credits = dynamic(() => import('./credits'), { ssr: false });
-const Footer = dynamic(() => import('./footer'), { ssr: false });
+// Below-the-fold components - SSR enabled, lazy load for code splitting
+const Gallery = dynamic(() => import('./gallery'));
+const Skills = dynamic(() => import('./skills'));
+const Experience = dynamic(() => import('./experience'));
+const Projects = dynamic(() => import('./projects'));
+const Blog = dynamic(() => import('./blog'));
+const AI = dynamic(() => import('./ai'));
+// const OpenAPI = dynamic(() => import('./openAPI'));
+const Faq = dynamic(() => import('./faq'));
+const Contact = dynamic(() => import('./contact'));
+const Credits = dynamic(() => import('./credits'));
+const Footer = dynamic(() => import('./footer'));
+
+// Music player - keep client-side only (requires user interaction)
 const Music = dynamic(() => import('./music'), { ssr: false });
 
-const COLORS = ['#0EA293', '#576CBC', '#19A7CE'];
-function CursorPointer() {
-  const [{ cursor }, updateMyPresence] = useMyPresence();
-
-  const users = useOthers();
-
-  const [privateId, setPrivateId] = useState(0);
-
-  useEffect(() => {
-    setPrivateId(Math.floor(Math.random() * 100000));
-  }, []);
-
-  return (
-    <a
-      href="#about"
-      className="absolute w-screen h-[95vh] z-[1] cursor-pointer"
-      onPointerMove={(event) => {
-        event.preventDefault();
-        updateMyPresence({
-          cursor: {
-            x: Math.round(event.clientX),
-            y: Math.round(event.clientY),
-          },
-        });
-      }}
-      onPointerLeave={() => updateMyPresence({ cursor: null })}
-    >
-      {users.map(({ connectionId, presence }) => {
-        if (presence.cursor === null) {
-          return null;
-        }
-        return (
-          <Cursor
-            key={`cursor-${connectionId}`}
-            id={connectionId * privateId}
-            color={COLORS[connectionId % COLORS.length]}
-            x={presence.cursor.x}
-            y={presence.cursor.y}
-          />
-        );
-      })}
-    </a>
-  );
-}
-
-export default function Home() {
-  useEffect(() => {
-    const path = window.location.pathname.replace('/', '');
-    getI18nData(path);
-  }, []);
-
+export default function Home({ i18nData, blogData, projectsData, locale }) {
   const [loading, setLoading] = useState(true);
-  const [I18n, setI18n] = useState({});
-  function getI18nData(path) {
-    // Check if data is cached in sessionStorage
-    const cacheKey = `i18n_${path}`;
-    const cached = sessionStorage.getItem(cacheKey);
+  const I18n = i18nData;
 
-    if (cached) {
-      try {
-        setI18n(JSON.parse(cached));
-        setLoading(false);
-        return;
-      } catch (e) {
-        // If parsing fails, proceed with API call
-      }
-    }
-
-    axios
-      .get(`/api/i18n?lang=${path}`)
-      .then((res) => {
-        setI18n(res.data);
-        setLoading(false);
-        // Cache the response
-        try {
-          sessionStorage.setItem(cacheKey, JSON.stringify(res.data));
-        } catch (e) {
-          // Ignore storage errors
-        }
-      })
-      .catch((err) => {
-        alert('Error Occured: ' + err);
-        window.location.reload();
-      });
-  }
+  // Hide loading screen after mount
+  useEffect(() => {
+    setLoading(false);
+  }, []);
 
   const sections = [
     'header',
@@ -271,19 +199,11 @@ export default function Home() {
           )}
         />
         <link rel="icon" href="https://cdn.1998.media/favicon24.jpg" />
-        {/* Preload critical assets */}
-        <link rel="preconnect" href="https://static.elfsight.com" />
       </Head>
       {/* Load heavy 3D viewer after page is interactive */}
       <Script
         type="module"
         src="https://cdn.jsdelivr.net/npm/@splinetool/viewer@1.9.79/build/spline-viewer.min.js"
-        strategy="lazyOnload"
-      />
-      {/* Load Elfsight widget after page is interactive */}
-      <Script
-        src="https://static.elfsight.com/platform/platform.js"
-        data-use-service-core
         strategy="lazyOnload"
       />
       {/* <script>AOS.init();</script> */}
@@ -309,24 +229,64 @@ export default function Home() {
                 <Gallery i18n={I18n} />
                 <Experience i18n={I18n} />
                 <Skills i18n={I18n} />
-                <Projects i18n={I18n} />
+                <Projects i18n={I18n} projectsData={projectsData} />
                 {/* <OpenAPI i18n={I18n} /> */}
                 <AI i18n={I18n} />
-                <Blog i18n={I18n} />
+                <Blog i18n={I18n} blogData={blogData} locale={locale} />
                 <Faq i18n={I18n} />
                 <Contact i18n={I18n} />
                 <Credits i18n={I18n} />
                 <Footer i18n={I18n} />
                 {interacted && <Music i18n={I18n} />}
-                <div
-                  className="elfsight-app-d9c75342-d244-4ae0-91fd-78feae7b7d90"
-                  data-elfsight-app-lazy
-                ></div>
               </div>
             </div>
           )}
         </RoomProvider>
+        <WhatsAppChat i18n={I18n} />
       </main>
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  const { locale } = context.params;
+
+  try {
+    // Fetch all data in parallel for better performance
+    const [i18nData, blogPosts, medals, moments, githubProjects] =
+      await Promise.all([
+        fetchI18nData(locale),
+        fetchBlogPosts(),
+        fetchTripMedals(locale),
+        fetchTripMoments(locale),
+        fetchGithubProjects(),
+      ]);
+
+    return {
+      props: {
+        i18nData,
+        blogData: {
+          posts: blogPosts,
+          medals,
+          moments,
+        },
+        projectsData: githubProjects,
+        locale,
+      },
+    };
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return {
+      props: {
+        i18nData: {},
+        blogData: {
+          posts: [],
+          medals: [],
+          moments: [],
+        },
+        projectsData: [],
+        locale: 'en',
+      },
+    };
+  }
 }
