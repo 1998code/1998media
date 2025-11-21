@@ -17,7 +17,9 @@ export default function Gallery(props) {
   const [spatialFilter, setSpatialFilter] = useState('all');
   const [isTransitioning, setIsTransitioning] = useState(false);
   const unsplashData = props.unsplashData || { stats: null, photos: [] };
-  const [totalViews, setTotalViews] = useState(unsplashData.stats?.totalViews || 0);
+  const [totalViews, setTotalViews] = useState(
+    unsplashData.stats?.totalViews || 0
+  );
   const [photos, setPhotos] = useState(unsplashData.photos || []);
   const [isSafari, setIsSafari] = useState(false);
   const [isClient, setIsClient] = useState(false);
