@@ -39,7 +39,15 @@ const Footer = dynamic(() => import('./footer'));
 // Music player - keep client-side only (requires user interaction)
 const Music = dynamic(() => import('./music'), { ssr: false });
 
-export default function Home({ i18nData, blogData, projectsData, dalleData, unsplashData, ipData, locale }) {
+export default function Home({
+  i18nData,
+  blogData,
+  projectsData,
+  dalleData,
+  unsplashData,
+  ipData,
+  locale,
+}) {
   const [loading, setLoading] = useState(true);
   const I18n = i18nData;
 
@@ -254,17 +262,25 @@ export async function getServerSideProps(context) {
 
   try {
     // Fetch all data in parallel for better performance
-    const [i18nData, blogPosts, medals, moments, githubProjects, dalleData, unsplashData, ipData] =
-      await Promise.all([
-        fetchI18nData(locale),
-        fetchBlogPosts(),
-        fetchTripMedals(locale),
-        fetchTripMoments(locale),
-        fetchGithubProjects(),
-        fetchDalleData(),
-        fetchUnsplashData(),
-        fetchIPData(locale, req),
-      ]);
+    const [
+      i18nData,
+      blogPosts,
+      medals,
+      moments,
+      githubProjects,
+      dalleData,
+      unsplashData,
+      ipData,
+    ] = await Promise.all([
+      fetchI18nData(locale),
+      fetchBlogPosts(),
+      fetchTripMedals(locale),
+      fetchTripMoments(locale),
+      fetchGithubProjects(),
+      fetchDalleData(),
+      fetchUnsplashData(),
+      fetchIPData(locale, req),
+    ]);
 
     return {
       props: {
@@ -294,7 +310,12 @@ export async function getServerSideProps(context) {
         projectsData: [],
         dalleData: [],
         unsplashData: { stats: null, photos: [] },
-        ipData: { ip: null, geo: 'Unknown', latitude: 'Unknown', longitude: 'Unknown' },
+        ipData: {
+          ip: null,
+          geo: 'Unknown',
+          latitude: 'Unknown',
+          longitude: 'Unknown',
+        },
         locale: 'en',
       },
     };
@@ -330,10 +351,11 @@ async function fetchIPData(locale, req) {
   try {
     // Replicate IP API logic server-side using request headers
     const NodeGeocoder = (await import('node-geocoder')).default;
-    
+
     // Get IP from headers (same as API route)
-    const ip = req.headers['x-forwarded-for'] || req.socket?.remoteAddress || null;
-    
+    const ip =
+      req.headers['x-forwarded-for'] || req.socket?.remoteAddress || null;
+
     // Get latitude/longitude from Vercel headers
     const latitude = req.headers['x-vercel-ip-latitude'] || null;
     const longitude = req.headers['x-vercel-ip-longitude'] || null;
@@ -346,7 +368,10 @@ async function fetchIPData(locale, req) {
           language: locale || 'en',
         };
         const geoCoder = NodeGeocoder(options);
-        const result = await geoCoder.reverse({ lat: parseFloat(latitude), lon: parseFloat(longitude) });
+        const result = await geoCoder.reverse({
+          lat: parseFloat(latitude),
+          lon: parseFloat(longitude),
+        });
         geo = {
           city: result[0]?.city || '?',
           state: result[0]?.state || '?',
