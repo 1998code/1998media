@@ -197,13 +197,13 @@ export default function Gallery(props) {
       {
         id: 'juzizhou',
         title: 'Juzizhou',
-        url: 'https://cdn.1998.media/spatial/photo/JuzizhouByMing.HEIC',
+        url: 'https://cdn.1998.media/spatial/photo/Juzizhou.HEIC',
         type: 'photo',
       },
       {
         id: 'changsha-south-station',
         title: 'Changsha South Station',
-        url: 'https://cdn.1998.media/spatial/photo/ChangshaSouthStationByMing.HEIC',
+        url: 'https://cdn.1998.media/spatial/photo/ChangshaSouthStation.HEIC',
         type: 'photo',
       },
       // Tokyo
@@ -216,14 +216,14 @@ export default function Gallery(props) {
       {
         id: 'akasaka-palace',
         title: 'Akasaka Palace',
-        url: 'https://cdn.1998.media/spatial/photo/AkasakaPalaceByMing.HEIC',
+        url: 'https://cdn.1998.media/spatial/photo/AkasakaPalace.HEIC',
         type: 'photo',
       },
       // San Francisco
       {
         id: 'golden-gate-bridge',
         title: 'Golden Gate Bridge',
-        url: 'https://cdn.1998.media/spatial/photo/GoldenGateBridgeByMing.HEIC',
+        url: 'https://cdn.1998.media/spatial/photo/GoldenGateBridge.HEIC',
         type: 'photo',
       },
       {
@@ -266,19 +266,19 @@ export default function Gallery(props) {
       {
         id: 'nagoya-station-day1',
         title: 'Nagoya Station Day',
-        url: 'https://cdn.1998.media/spatial/photo/NagoyaStationDay1ByMing.HEIC',
+        url: 'https://cdn.1998.media/spatial/photo/NagoyaStationDay1.HEIC',
         type: 'photo',
       },
       {
         id: 'nagoya-station-night1',
         title: 'Nagoya Station Night',
-        url: 'https://cdn.1998.media/spatial/photo/NagoyaStationNight1ByMing.HEIC',
+        url: 'https://cdn.1998.media/spatial/photo/NagoyaStationNight1.HEIC',
         type: 'photo',
       },
       {
         id: 'nagoya-station-day2',
         title: 'Nagoya Station Day',
-        url: 'https://cdn.1998.media/spatial/photo/NagoyaStationDay2ByMing.HEIC',
+        url: 'https://cdn.1998.media/spatial/photo/NagoyaStationDay2.HEIC',
         type: 'photo',
       },
     ]
