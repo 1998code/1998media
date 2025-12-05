@@ -45,7 +45,10 @@ export default function Gallery(props) {
     setIsClient(true);
 
     // Mobile detection - check user agent and screen width
-    const mobileUserAgent = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const mobileUserAgent =
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      );
     const mobileScreenWidth = window.innerWidth <= 768;
     const isMobileDevice = mobileUserAgent || mobileScreenWidth;
     setIsMobile(isMobileDevice);
@@ -84,9 +87,15 @@ export default function Gallery(props) {
         console.log('Setting activeTab to spatial');
         setActiveTab('spatial');
       } else {
-        console.log('Not Safari or Mobile - showing alert and staying on Unsplash');
+        console.log(
+          'Not Safari or Mobile - showing alert and staying on Unsplash'
+        );
         // Not Safari or Mobile - show alert and stay on Unsplash (don't set spatial tab)
-        alert(i18n('Only Safari on Vision Pro/Desktop is supported for Spatial content.'));
+        alert(
+          i18n(
+            'Only Safari on Vision Pro/Desktop is supported for Spatial content.'
+          )
+        );
         // Ensure we're on Unsplash tab
         setActiveTab('unsplash');
       }
@@ -99,10 +108,13 @@ export default function Gallery(props) {
   useEffect(() => {
     const handleResize = () => {
       const mobileScreenWidth = window.innerWidth <= 768;
-      const mobileUserAgent = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      const mobileUserAgent =
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent
+        );
       const isMobileDevice = mobileUserAgent || mobileScreenWidth;
       setIsMobile(isMobileDevice);
-      
+
       // If user resizes to mobile while on spatial tab, switch to unsplash
       if (isMobileDevice && activeTab === 'spatial') {
         setActiveTab('unsplash');
@@ -590,7 +602,9 @@ export default function Gallery(props) {
                 onClick={(e) => {
                   if (!isClient || !isSafari || isMobile) {
                     e.preventDefault();
-                    alert(i18n('Only Safari on Vision Pro/Desktop is supported.'));
+                    alert(
+                      i18n('Only Safari on Vision Pro/Desktop is supported.')
+                    );
                     return;
                   }
                   setActiveTab('spatial');
