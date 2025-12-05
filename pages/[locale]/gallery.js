@@ -197,13 +197,13 @@ export default function Gallery(props) {
       {
         id: 'juzizhou',
         title: 'Juzizhou',
-        url: 'https://cdn.1998.media/spatial/photo/Juzizhou.HEIC',
+        url: 'https://cdn.1998.media/spatial/photo/JuzizhouByMing.HEIC',
         type: 'photo',
       },
       {
         id: 'changsha-south-station',
         title: 'Changsha South Station',
-        url: 'https://cdn.1998.media/spatial/photo/ChangshaSouthStation.HEIC',
+        url: 'https://cdn.1998.media/spatial/photo/ChangshaSouthStationByMing.HEIC',
         type: 'photo',
       },
       // Tokyo
@@ -216,14 +216,14 @@ export default function Gallery(props) {
       {
         id: 'akasaka-palace',
         title: 'Akasaka Palace',
-        url: 'https://cdn.1998.media/spatial/photo/AkasakaPalace.HEIC',
+        url: 'https://cdn.1998.media/spatial/photo/AkasakaPalaceByMing.HEIC',
         type: 'photo',
       },
       // San Francisco
       {
         id: 'golden-gate-bridge',
         title: 'Golden Gate Bridge',
-        url: 'https://cdn.1998.media/spatial/photo/GoldenGateBridge.HEIC',
+        url: 'https://cdn.1998.media/spatial/photo/GoldenGateBridgeByMing.HEIC',
         type: 'photo',
       },
       {
@@ -266,19 +266,19 @@ export default function Gallery(props) {
       {
         id: 'nagoya-station-day1',
         title: 'Nagoya Station Day',
-        url: 'https://cdn.1998.media/spatial/photo/NagoyaStationDay1.HEIC',
+        url: 'https://cdn.1998.media/spatial/photo/NagoyaStationDay1ByMing.HEIC',
         type: 'photo',
       },
       {
         id: 'nagoya-station-night1',
         title: 'Nagoya Station Night',
-        url: 'https://cdn.1998.media/spatial/photo/NagoyaStationNight1.HEIC',
+        url: 'https://cdn.1998.media/spatial/photo/NagoyaStationNight1ByMing.HEIC',
         type: 'photo',
       },
       {
         id: 'nagoya-station-day2',
         title: 'Nagoya Station Day',
-        url: 'https://cdn.1998.media/spatial/photo/NagoyaStationDay2.HEIC',
+        url: 'https://cdn.1998.media/spatial/photo/NagoyaStationDay2ByMing.HEIC',
         type: 'photo',
       },
     ]
@@ -522,7 +522,9 @@ export default function Gallery(props) {
                           )}
                         </span>
                       </span>
-                      <span className="flex-1 text-right">{i18n(photo.title)}</span>
+                      <span className="flex-1 text-right">
+                        {i18n(photo.title)}
+                      </span>
                     </h3>
                   </div>
                 </div>
