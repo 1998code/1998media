@@ -34,7 +34,7 @@ export default function AI(props) {
                   href={item.sourceURL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="min-w-[300px] flex flex-col gap-3 pb-3 rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight"
+                  className="min-w-[300px] flex flex-col gap-3 pb-3 rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight transition-all"
                   key={index}
                 >
                   <div>
