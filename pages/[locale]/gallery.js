@@ -23,6 +23,7 @@ export default function Gallery(props) {
   const [photos, setPhotos] = useState(unsplashData.photos || []);
   const [isSafari, setIsSafari] = useState(false);
   const [isClient, setIsClient] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const [spatialPhotosReady, setSpatialPhotosReady] = useState(false);
 
   // Dynamic tab positioning
@@ -43,6 +44,12 @@ export default function Gallery(props) {
   useEffect(() => {
     setIsClient(true);
 
+    // Mobile detection - check user agent and screen width
+    const mobileUserAgent = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const mobileScreenWidth = window.innerWidth <= 768;
+    const isMobileDevice = mobileUserAgent || mobileScreenWidth;
+    setIsMobile(isMobileDevice);
+
     // Safari detection - only run on client side
     const safariDetection =
       /^((?!chrome|android).)*safari/i.test(navigator.userAgent) &&
@@ -53,7 +60,8 @@ export default function Gallery(props) {
     setIsSafari(safariDetection);
 
     // Set spatial photos ready after Safari detection with a small delay for DOM readiness
-    if (safariDetection) {
+    // Only if Safari AND not mobile
+    if (safariDetection && !isMobileDevice) {
       setTimeout(() => {
         console.log('Setting spatial photos ready');
         setSpatialPhotosReady(true);
@@ -69,15 +77,16 @@ export default function Gallery(props) {
       console.log('URL parameter detected: type=spatial (case-insensitive)');
 
       console.log('Is Safari:', safariDetection);
+      console.log('Is Mobile:', isMobileDevice);
       console.log('User Agent:', navigator.userAgent);
 
-      if (safariDetection) {
+      if (safariDetection && !isMobileDevice) {
         console.log('Setting activeTab to spatial');
         setActiveTab('spatial');
       } else {
-        console.log('Not Safari - showing alert and staying on Unsplash');
-        // Not Safari - show alert and stay on Unsplash (don't set spatial tab)
-        alert(i18n('Only Safari is supported for Spatial content.'));
+        console.log('Not Safari or Mobile - showing alert and staying on Unsplash');
+        // Not Safari or Mobile - show alert and stay on Unsplash (don't set spatial tab)
+        alert(i18n('Only Safari on Vision Pro/Desktop is supported for Spatial content.'));
         // Ensure we're on Unsplash tab
         setActiveTab('unsplash');
       }
@@ -85,6 +94,24 @@ export default function Gallery(props) {
       console.log('No spatial type parameter found');
     }
   }, []);
+
+  // Handle window resize to detect mobile/desktop changes
+  useEffect(() => {
+    const handleResize = () => {
+      const mobileScreenWidth = window.innerWidth <= 768;
+      const mobileUserAgent = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      const isMobileDevice = mobileUserAgent || mobileScreenWidth;
+      setIsMobile(isMobileDevice);
+      
+      // If user resizes to mobile while on spatial tab, switch to unsplash
+      if (isMobileDevice && activeTab === 'spatial') {
+        setActiveTab('unsplash');
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [activeTab]);
 
   // Data is now fetched server-side via SSR
   // Removed client-side fetching functions
@@ -309,9 +336,9 @@ export default function Gallery(props) {
     return filtered;
   };
 
-  // Render spatial tab content only for Safari
+  // Render spatial tab content only for Safari on desktop
   const renderSpatialTab = () => {
-    if (!isClient || !isSafari) return null;
+    if (!isClient || !isSafari || isMobile) return null;
 
     return (
       <div className="w-full px-1">
@@ -561,15 +588,15 @@ export default function Gallery(props) {
               <button
                 ref={(el) => (mainTabRefs.current['spatial'] = el)}
                 onClick={(e) => {
-                  if (!isClient || !isSafari) {
+                  if (!isClient || !isSafari || isMobile) {
                     e.preventDefault();
-                    alert(i18n('Only Safari is supported.'));
+                    alert(i18n('Only Safari on Vision Pro/Desktop is supported.'));
                     return;
                   }
                   setActiveTab('spatial');
                 }}
                 className={`relative z-10 p-2 text-sm font-medium rounded-xl transition-all duration-300 ${
-                  !isClient || !isSafari
+                  !isClient || !isSafari || isMobile
                     ? 'bg-transparent text-gray-400 opacity-60 cursor-not-allowed'
                     : activeTab === 'spatial'
                       ? 'text-white'
@@ -582,8 +609,8 @@ export default function Gallery(props) {
               </button>
             </div>
           </div>
-          {/* Spatial Filter Tabs - Only show when Spatial tab is active and Safari is detected */}
-          {activeTab === 'spatial' && isClient && isSafari && (
+          {/* Spatial Filter Tabs - Only show when Spatial tab is active, Safari is detected, and not mobile */}
+          {activeTab === 'spatial' && isClient && isSafari && !isMobile && (
             <div className="flex justify-center mt-4">
               <div className="relative flex bg-white/30 dark:bg-black/30 backdrop-blur-md rounded-xl p-1 border border-gray-200/50 dark:border-gray-700/50">
                 {/* Sliding Background */}
