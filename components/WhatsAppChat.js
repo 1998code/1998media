@@ -27,6 +27,43 @@ export default function WhatsAppChat({ i18n: i18nData }) {
     }
   }, [isOpen]);
 
+  // Prevent body scroll when pricing modal is open
+  useEffect(() => {
+    if (isPricingOpen) {
+      // Store current scroll position
+      const scrollY = window.scrollY;
+      // Prevent body scroll - simpler approach
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+    } else {
+      // Restore scroll position
+      const scrollY = document.body.style.top;
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      }
+    }
+    return () => {
+      // Cleanup on unmount
+      const scrollY = document.body.style.top;
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      }
+    };
+  }, [isPricingOpen]);
+
   // Auto-expand when scrolled 50% of the page
   useEffect(() => {
     const handleScroll = () => {
@@ -80,7 +117,7 @@ export default function WhatsAppChat({ i18n: i18nData }) {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-[102]">
+    <div className="fixed bottom-6 right-6 z-[102]" style={{ pointerEvents: 'none' }}>
       {/* Chat Popup with Intercom-style design */}
       {isOpen && (
         <div
@@ -93,6 +130,7 @@ export default function WhatsAppChat({ i18n: i18nData }) {
             boxShadow:
               '0 12px 48px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
             transformOrigin: 'bottom right',
+            pointerEvents: 'auto',
           }}
         >
           {/* Header with Gradient */}
@@ -196,14 +234,15 @@ export default function WhatsAppChat({ i18n: i18nData }) {
       {/* Floating Action Button - Intercom style */}
       <button
         onClick={handleToggle}
-        className="relative bg-emerald-500 hover:bg-emerald-600 text-white rounded-tl-full rounded-bl-full rounded-br-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+        className="relative bg-emerald-500 hover:bg-emerald-600 text-white rounded-full md:rounded-tl-full md:rounded-bl-full md:rounded-br-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 w-14 h-14 md:w-auto md:h-auto flex items-center justify-center"
         style={{
           boxShadow: '0 4px 16px rgba(16, 185, 129, 0.3)',
+          pointerEvents: 'auto',
         }}
       >
-        <div className="flex items-center gap-2 px-4 py-3">
+        <div className="flex items-center gap-2 px-0 md:px-4 py-0 md:py-3">
           <i className="fab fa-whatsapp text-xl"></i>
-          <span className="font-semibold text-sm whitespace-nowrap">
+          <span className="hidden md:inline font-semibold text-sm whitespace-nowrap">
             {i18n('Get Quote')}
           </span>
         </div>
@@ -215,27 +254,22 @@ export default function WhatsAppChat({ i18n: i18nData }) {
       </button>
 
       {/* Pricing Modal */}
-      <div
-        className={`fixed z-[103] inset-0 overflow-y-auto transition-all ease-out duration-300 ${
-          isPricingOpen
-            ? 'opacity-100 bg-gray-900/80 backdrop-blur-lg'
-            : 'opacity-0 pointer-events-none'
-        }`}
-      >
-        <div className="flex items-center justify-center min-h-screen p-4">
-          {/* Close on backdrop click */}
-          <div
-            className="fixed inset-0 transition-all cursor-pointer"
-            aria-hidden="true"
-            onClick={() => setIsPricingOpen(false)}
-          />
-
-          {/* Modal Content */}
-          <div
-            className={`relative bg-white dark:bg-gray-900 rounded-3xl shadow-2xl w-full max-w-6xl h-[85vh] overflow-hidden transition-all duration-300 ${
-              isPricingOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
-            }`}
+      {isPricingOpen && (
+        <div
+          className="fixed z-[103] inset-0 transition-all ease-out duration-300 opacity-100 bg-gray-900/80 backdrop-blur-lg"
+          onClick={() => setIsPricingOpen(false)}
+          style={{ touchAction: 'pan-y', pointerEvents: 'auto' }}
+        >
+          {/* Modal Content Container */}
+          <div 
+            className="absolute inset-0 flex items-center justify-center p-4 overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+            style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-y' }}
           >
+            <div
+              className="relative bg-white dark:bg-gray-900 rounded-3xl shadow-2xl w-full max-w-6xl h-[85vh] overflow-hidden transition-all duration-300 scale-100 opacity-100 my-auto"
+              style={{ touchAction: 'pan-y' }}
+            >
             {/* Header */}
             <div className="sticky top-0 z-10 bg-gradient-to-r from-blue-500 to-indigo-600 px-6 py-4 flex items-center justify-between border-b border-white/10">
               <div className="flex items-center gap-3">
@@ -268,8 +302,9 @@ export default function WhatsAppChat({ i18n: i18nData }) {
               />
             </div>
           </div>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
