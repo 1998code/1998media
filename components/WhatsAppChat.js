@@ -117,7 +117,10 @@ export default function WhatsAppChat({ i18n: i18nData }) {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-[102]" style={{ pointerEvents: 'none' }}>
+    <div
+      className="fixed bottom-6 right-6 z-[102]"
+      style={{ pointerEvents: 'none' }}
+    >
       {/* Chat Popup with Intercom-style design */}
       {isOpen && (
         <div
@@ -261,7 +264,7 @@ export default function WhatsAppChat({ i18n: i18nData }) {
           style={{ touchAction: 'pan-y', pointerEvents: 'auto' }}
         >
           {/* Modal Content Container */}
-          <div 
+          <div
             className="absolute inset-0 flex items-center justify-center p-4 overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
             style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-y' }}
@@ -270,38 +273,38 @@ export default function WhatsAppChat({ i18n: i18nData }) {
               className="relative bg-white dark:bg-gray-900 rounded-3xl shadow-2xl w-full max-w-6xl h-[85vh] overflow-hidden transition-all duration-300 scale-100 opacity-100 my-auto"
               style={{ touchAction: 'pan-y' }}
             >
-            {/* Header */}
-            <div className="sticky top-0 z-10 bg-gradient-to-r from-blue-500 to-indigo-600 px-6 py-4 flex items-center justify-between border-b border-white/10">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
-                  <i className="fas fa-file-invoice-dollar text-white text-xl"></i>
+              {/* Header */}
+              <div className="sticky top-0 z-10 bg-gradient-to-r from-blue-500 to-indigo-600 px-6 py-4 flex items-center justify-between border-b border-white/10">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
+                    <i className="fas fa-file-invoice-dollar text-white text-xl"></i>
+                  </div>
+                  <div>
+                    <h3 className="text-white font-bold text-lg">
+                      {i18n('Pricing & Packages')}
+                    </h3>
+                    <p className="text-white/80 text-sm">
+                      {i18n('View our rates and services')}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-white font-bold text-lg">
-                    {i18n('Pricing & Packages')}
-                  </h3>
-                  <p className="text-white/80 text-sm">
-                    {i18n('View our rates and services')}
-                  </p>
-                </div>
+                <button
+                  onClick={() => setIsPricingOpen(false)}
+                  className="text-white/80 hover:text-white hover:bg-white/20 rounded-full p-2 transition-all duration-200"
+                >
+                  <i className="fas fa-times text-xl"></i>
+                </button>
               </div>
-              <button
-                onClick={() => setIsPricingOpen(false)}
-                className="text-white/80 hover:text-white hover:bg-white/20 rounded-full p-2 transition-all duration-200"
-              >
-                <i className="fas fa-times text-xl"></i>
-              </button>
-            </div>
 
-            {/* Embedded Excel */}
-            <div className="w-full h-[calc(100%-73px)]">
-              <iframe
-                src="https://view.officeapps.live.com/op/embed.aspx?src=https://cdn.1998.media/quote/Q2_Pricing.xlsx"
-                className="w-full h-full border-0"
-                title="Pricing Table"
-              />
+              {/* Embedded Excel */}
+              <div className="w-full h-[calc(100%-73px)]">
+                <iframe
+                  src="https://view.officeapps.live.com/op/embed.aspx?src=https://cdn.1998.media/quote/Q2_Pricing.xlsx"
+                  className="w-full h-full border-0"
+                  title="Pricing Table"
+                />
+              </div>
             </div>
-          </div>
           </div>
         </div>
       )}
