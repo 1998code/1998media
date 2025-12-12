@@ -122,3 +122,22 @@ div.eapps-widget {
 .animate-pan-slow:hover {
   animation-play-state: paused;
 }
+
+/* Horizontal scroll animation for Xiaohongshu gallery */
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll-left {
+  animation: scroll-left 25s linear infinite;
+  will-change: transform;
+}
+
+.animate-scroll-left:hover {
+  animation-play-state: paused;
+}

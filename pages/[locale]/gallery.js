@@ -12,12 +12,50 @@ export default function Gallery(props) {
       : key;
   }
 
+  const locale = props.locale || 'en';
+  const isZhCN = locale === 'zh-CN';
+
   const unsplashPublicKey = 'hjm0tzh_dDQx2REubp1NiT1P4jxE5wmnCbKQLbD-BZ8';
-  // Always start with 'unsplash' for SSR compatibility
-  const [activeTab, setActiveTab] = useState('unsplash');
+  // Always start with 'xiaohongshu' for zh-CN, 'unsplash' for others
+  const [activeTab, setActiveTab] = useState(isZhCN ? 'xiaohongshu' : 'unsplash');
   const [spatialFilter, setSpatialFilter] = useState('all');
   const [isTransitioning, setIsTransitioning] = useState(false);
   const unsplashData = props.unsplashData || { stats: null, photos: [] };
+
+  // Xiaohongshu (小紅書) data - static stats
+  const xiaohongshuData = {
+    profileUrl: 'https://www.xiaohongshu.com/user/profile/6662438f00000000030300c4',
+    totalExposure: 2653624,
+    totalWorks: 161,
+    totalWatchDuration: 2463 * 396288, // seconds
+    featuredPhotos: [
+      {
+        id: 'xhs-1',
+        url: 'https://sns-webpic-qc.xhscdn.com/202512121806/0f2c62853f286b5810f9205414dd689e/1040g00831liunjbr5m005pj28e7gu064f1affi8!nc_n_webp_mw_1',
+        title: 'Featured 1',
+      },
+      {
+        id: 'xhs-2',
+        url: 'https://sns-webpic-qc.xhscdn.com/202512121805/c11126afc7e0d4e9a0dac43b4acb6a0e/1040g00831pnljfon4u005pj28e7gu0641ockp28!nc_n_webp_mw_1',
+        title: 'Featured 2',
+      },
+      {
+        id: 'xhs-3',
+        url: 'https://sns-webpic-qc.xhscdn.com/202512121805/baf15bb3033246a67af84bb481a78492/1040g2sg31pos5vbu5a705pj28e7gu064o98g2ro!nc_n_webp_mw_1',
+        title: 'Featured 3',
+      },
+      {
+        id: 'xhs-4',
+        url: 'https://sns-webpic-qc.xhscdn.com/202512121829/f86033bbfb40d871167810c1284eb869/1040g2sg31ln7tv71le705pj28e7gu0644pgbnlo!nc_n_webp_mw_1',
+        title: 'Featured 4',
+      },
+      {
+        id: 'xhs-5',
+        url: 'https://sns-webpic-qc.xhscdn.com/202512121829/8db152969a8f8b65b4f49d2c001c3369/1040g2sg31lkci85cle705pj28e7gu064g68nimo!nc_n_webp_mw_1',
+        title: 'Featured 5',
+      },
+    ],
+  };
   const [totalViews, setTotalViews] = useState(
     unsplashData.stats?.totalViews || 0
   );
@@ -621,9 +659,26 @@ export default function Gallery(props) {
             <div className="relative flex bg-white/50 dark:bg-black/50 backdrop-blur-md rounded-2xl p-1 border border-gray-200 dark:border-gray-700 xl:rounded-[20px]">
               {/* Sliding Background for Main Tabs */}
               <div
-                className="absolute top-1 bottom-1 bg-emerald-600 rounded-xl transition-all duration-300 ease-out shadow-sm pointer-events-none"
+                className={`absolute top-1 bottom-1 rounded-xl transition-all duration-300 ease-out shadow-sm pointer-events-none ${
+                  activeTab === 'xiaohongshu' ? 'bg-red-500' : 'bg-emerald-600'
+                }`}
                 style={mainTabStyles}
               />
+              {/* Xiaohongshu Tab - Only show for zh-CN locale */}
+              {isZhCN && (
+                <button
+                  ref={(el) => (mainTabRefs.current['xiaohongshu'] = el)}
+                  onClick={() => setActiveTab('xiaohongshu')}
+                  className={`relative z-10 p-2 text-sm font-medium rounded-xl transition-all duration-300 ${
+                    activeTab === 'xiaohongshu'
+                      ? 'text-white'
+                      : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
+                  }`}
+                >
+                  <i className="fab fa-redhat mr-1"></i>
+                  小红书
+                </button>
+              )}
               <button
                 ref={(el) => (mainTabRefs.current['unsplash'] = el)}
                 onClick={() => setActiveTab('unsplash')}
@@ -725,6 +780,87 @@ export default function Gallery(props) {
         </div>
         <div className="relative my-6 max-w-7xl mx-auto">
           <div className="relative overflow-hidden">
+            {/* Xiaohongshu Tab - Only show for zh-CN locale */}
+            {isZhCN && (
+              <div
+                className={`w-full px-1 transition-all duration-500 ease-in-out ${
+                  activeTab === 'xiaohongshu'
+                    ? 'relative translate-x-0 opacity-100'
+                    : 'absolute top-0 left-0 -translate-x-full opacity-0 pointer-events-none'
+                }`}
+              >
+                <dl className="bg-white/50 dark:bg-black/50 backdrop-blur-md grid grid-cols-1 overflow-hidden rounded-xl shadow md:grid-cols-3 divide-y divide-gray-200 dark:divide-gray-800 md:divide-y-0 md:divide-x backlight xl:rounded-[25px]">
+                  <div className="px-4 py-5 sm:p-6">
+                    <dt className="flex items-baseline justify-between gap-1">
+                      <div className="text-base font-normal text-gray-900 dark:text-gray-100">
+                        總曝光量
+                      </div>
+                      <div className="bg-red-600 text-red-100 inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium md:mt-2 lg:mt-0">
+                        <i className="flex-shrink-0 self-center fa fa-arrow-up-right" />
+                      </div>
+                    </dt>
+                    <dd className="mt-1 flex items-baseline justify-between md:block">
+                      <div className="flex items-baseline text-2xl font-semibold text-red-500">
+                        {i18n('Over')} {xiaohongshuData.totalExposure.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                      </div>
+                    </dd>
+                  </div>
+                  <div className="px-4 py-5 sm:p-6">
+                    <dt className="flex items-baseline justify-between gap-1">
+                      <div className="text-base font-normal text-gray-900 dark:text-gray-100">
+                        作品
+                      </div>
+                      <div className="bg-red-600 text-red-100 inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium md:mt-2 lg:mt-0">
+                        <i className="flex-shrink-0 self-center fa fa-arrow-up-right" />
+                      </div>
+                    </dt>
+                    <dd className="mt-1 flex items-baseline justify-between md:block">
+                      <div className="flex items-baseline text-2xl font-semibold text-red-500">
+                        {i18n('Over')} {xiaohongshuData.totalWorks}
+                      </div>
+                    </dd>
+                  </div>
+                  <div className="px-4 py-5 sm:p-6">
+                    <dt className="flex items-baseline justify-between gap-1">
+                      <div className="text-base font-normal text-gray-900 dark:text-gray-100">
+                        观看總时长
+                      </div>
+                      <div className="bg-red-600 text-red-100 inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium md:mt-2 lg:mt-0">
+                        <i className="flex-shrink-0 self-center fa fa-arrow-up-right" />
+                      </div>
+                    </dt>
+                    <dd className="mt-1 flex items-baseline justify-between md:block">
+                      <div className="flex items-baseline text-2xl font-semibold text-red-500">
+                        {i18n('Over')} {Math.floor(xiaohongshuData.totalWatchDuration / 3600).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} {i18n('hours')}
+                      </div>
+                    </dd>
+                  </div>
+                </dl>
+                <div className="overflow-hidden my-5">
+                  <div className="flex gap-3 animate-scroll-left hover:pause-animation">
+                    {/* Duplicate photos for seamless infinite scroll */}
+                    {[...xiaohongshuData.featuredPhotos, ...xiaohongshuData.featuredPhotos].map((photo, index) => (
+                      <a
+                        key={`${photo.id}-${index}`}
+                        href={xiaohongshuData.profileUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group flex-shrink-0 w-[180px] rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-[0.98] border border-transparent hover:border-red-500 dark:hover:border-red-400 xl:rounded-[20px]"
+                      >
+                        <div className="aspect-video w-full">
+                          <img
+                            loading="lazy"
+                            className="w-full h-full object-cover cursor-pointer"
+                            src={photo.url}
+                            alt={photo.title}
+                          />
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
             {/* Unsplash Tab */}
             <div
               ref={unsplashTabRef}
@@ -868,6 +1004,7 @@ export async function getServerSideProps(context) {
       props: {
         i18n: i18nData,
         unsplashData,
+        locale,
       },
     };
   } catch (error) {
@@ -876,6 +1013,7 @@ export async function getServerSideProps(context) {
       props: {
         i18n: {},
         unsplashData: { stats: null, photos: [] },
+        locale,
       },
     };
   }
