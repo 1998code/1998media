@@ -831,7 +831,7 @@ export default function Gallery(props) {
                     </dt>
                     <dd className="mt-1 flex items-baseline justify-between md:block">
                       <div className="flex items-baseline text-2xl font-semibold text-red-500">
-                        {i18n('Over')} {Math.floor(xiaohongshuData.totalWatchDuration / 3600).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} {i18n('hours')}
+                        {i18n('Over')} {Math.floor(xiaohongshuData.totalWatchDuration / 3600).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 小时
                       </div>
                     </dd>
                   </div>
