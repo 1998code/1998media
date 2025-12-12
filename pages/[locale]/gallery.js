@@ -17,14 +17,17 @@ export default function Gallery(props) {
 
   const unsplashPublicKey = 'hjm0tzh_dDQx2REubp1NiT1P4jxE5wmnCbKQLbD-BZ8';
   // Always start with 'xiaohongshu' for zh-CN, 'unsplash' for others
-  const [activeTab, setActiveTab] = useState(isZhCN ? 'xiaohongshu' : 'unsplash');
+  const [activeTab, setActiveTab] = useState(
+    isZhCN ? 'xiaohongshu' : 'unsplash'
+  );
   const [spatialFilter, setSpatialFilter] = useState('all');
   const [isTransitioning, setIsTransitioning] = useState(false);
   const unsplashData = props.unsplashData || { stats: null, photos: [] };
 
   // Xiaohongshu (小紅書) data - static stats
   const xiaohongshuData = {
-    profileUrl: 'https://www.xiaohongshu.com/user/profile/6662438f00000000030300c4',
+    profileUrl:
+      'https://www.xiaohongshu.com/user/profile/6662438f00000000030300c4',
     totalExposure: 2653624,
     totalWorks: 161,
     totalWatchDuration: 2463 * 396288, // seconds
@@ -801,7 +804,10 @@ export default function Gallery(props) {
                     </dt>
                     <dd className="mt-1 flex items-baseline justify-between md:block">
                       <div className="flex items-baseline text-2xl font-semibold text-red-500">
-                        {i18n('Over')} {xiaohongshuData.totalExposure.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                        {i18n('Over')}{' '}
+                        {xiaohongshuData.totalExposure
+                          .toString()
+                          .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                       </div>
                     </dd>
                   </div>
@@ -831,7 +837,11 @@ export default function Gallery(props) {
                     </dt>
                     <dd className="mt-1 flex items-baseline justify-between md:block">
                       <div className="flex items-baseline text-2xl font-semibold text-red-500">
-                        {i18n('Over')} {Math.floor(xiaohongshuData.totalWatchDuration / 3600).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} {i18n('hours')}
+                        {i18n('Over')}{' '}
+                        {Math.floor(xiaohongshuData.totalWatchDuration / 3600)
+                          .toString()
+                          .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
+                        {i18n('hours')}
                       </div>
                     </dd>
                   </div>
@@ -839,7 +849,10 @@ export default function Gallery(props) {
                 <div className="overflow-hidden my-5">
                   <div className="flex gap-3 animate-scroll-left hover:pause-animation">
                     {/* Duplicate photos for seamless infinite scroll */}
-                    {[...xiaohongshuData.featuredPhotos, ...xiaohongshuData.featuredPhotos].map((photo, index) => (
+                    {[
+                      ...xiaohongshuData.featuredPhotos,
+                      ...xiaohongshuData.featuredPhotos,
+                    ].map((photo, index) => (
                       <a
                         key={`${photo.id}-${index}`}
                         href={xiaohongshuData.profileUrl}

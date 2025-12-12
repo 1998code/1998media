@@ -234,7 +234,11 @@ export default function Home({
                 <Header i18n={I18n} />
                 <About i18n={I18n} />
                 <Achievements i18n={I18n} />
-                <Gallery i18n={I18n} unsplashData={unsplashData} locale={locale} />
+                <Gallery
+                  i18n={I18n}
+                  unsplashData={unsplashData}
+                  locale={locale}
+                />
                 <Experience i18n={I18n} />
                 <Skills i18n={I18n} />
                 <Projects i18n={I18n} projectsData={projectsData} />
