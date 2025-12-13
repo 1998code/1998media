@@ -6,6 +6,7 @@
     "dev": "next dev",
     "dev-turbo": "next dev --turbopack",
     "build": "next build",
+    "pages:build": "npx @cloudflare/next-on-pages",
     "start": "next start",
     "lint": "next lint"
   },
@@ -32,6 +33,7 @@
     "react-dom": "^19.0.0-rc-935180c7e0-20240524"
   },
   "devDependencies": {
+    "@cloudflare/next-on-pages": "^1.13.16",
     "autoprefixer": "^10.4.7",
     "eslint": "8.18.0",
     "eslint-config-next": "^15.0.0-rc.0",
