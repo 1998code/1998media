@@ -12,11 +12,7 @@ export default function Blog(props) {
       : key;
   }
 
-  const [payWallURL, setPayWallURL] = useState(false);
   const blogs = props.blogData?.posts || [];
-  useEffect(() => {
-    setPayWallURL(`https://post.1998.media`);
-  }, []);
 
   function languageCheck(text) {
     const lang = franc(text);

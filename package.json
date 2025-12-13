@@ -1,6 +1,6 @@
 {
   "name": "1998media",
-  "version": "2025.12",
+  "version": "2026.01",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -16,9 +16,6 @@
     "@liveblocks/react": "^1.0.0",
     "@nextui-org/tooltip": "^2.0.13",
     "@tailwindcss/aspect-ratio": "^0.4.0",
-    "@vercel/analytics": "^0.1.11",
-    "@vercel/postgres": "^0.4.1",
-    "@vercel/speed-insights": "^1.0.3",
     "ai": "^5.0.98",
     "axios": "^0.27.2",
     "cheerio": "^1.0.0-rc.12",

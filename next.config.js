@@ -35,6 +35,15 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ['@liveblocks/react', 'framer-motion', 'axios'],
   },
+
+  async rewrites() {
+    return [
+      {
+        source: '/blog/:path*',
+        destination: 'https://blog.1998.media/:path*',
+      },
+    ];
+  },
 };
 
 export default nextConfig;

@@ -1,4 +1,5 @@
-import { sql } from '@vercel/postgres';
+import fs from 'fs';
+import path from 'path';
 
 export default async function (req, res) {
   if (!req.query.lang) {
@@ -8,17 +9,6 @@ export default async function (req, res) {
 
   const lang = req.query.lang;
 
-  const { rows } = await sql`SELECT * from i18n`;
-  const availableLangs = ['en', 'zh', 'zh-HK', 'ko', 'ja'];
-  const i18nRaw = availableLangs.reduce((acc, lang) => {
-    acc[lang] = {};
-    rows.forEach((row) => {
-      if (!acc[lang][row.position]) acc[lang][row.position] = {};
-      acc[lang][row.position][row.key] = row[lang];
-    });
-    return acc;
-  }, {});
-
   const selectedLang = (lang) => {
     if (lang.includes('en')) return 'en';
     else if (lang.includes('ja') || lang.includes('jp')) return 'ja';
@@ -27,5 +17,28 @@ export default async function (req, res) {
     else if (lang.includes('zh-CN')) return 'zh';
     else return lang;
   };
-  res.status(200).json(i18nRaw[selectedLang(lang)]);
+
+  const normalizedLocale = selectedLang(lang);
+  const filePath = path.join(process.cwd(), 'data', 'i18n', `${normalizedLocale}.json`);
+
+  try {
+    if (fs.existsSync(filePath)) {
+      const fileContent = fs.readFileSync(filePath, 'utf8');
+      const data = JSON.parse(fileContent);
+      res.status(200).json(data);
+    } else {
+      // Fallback to English if file doesn't exist
+      const enFilePath = path.join(process.cwd(), 'data', 'i18n', 'en.json');
+      if (fs.existsSync(enFilePath)) {
+        const fileContent = fs.readFileSync(enFilePath, 'utf8');
+        const data = JSON.parse(fileContent);
+        res.status(200).json(data);
+      } else {
+        res.status(404).json({ error: 'Language data not found' });
+      }
+    }
+  } catch (error) {
+    console.error(`Error reading i18n file for ${normalizedLocale}:`, error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 }

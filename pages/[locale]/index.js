@@ -413,17 +413,26 @@ async function fetchIPData(locale, req) {
 
 async function fetchDalleData() {
   try {
-    const edgeConfigUrl = process.env.EDGE_CONFIG_URL;
-    if (!edgeConfigUrl) {
-      console.error('EDGE_CONFIG_URL is not set');
-      return [];
+    // Determine the environment - in production, we can't easily read local files in getStaticProps/getServerSideProps 
+    // depending on deployment (e.g. Vercel vs self-hosted). 
+    // For self-hosted Node.js, we can use fs.
+    
+    // However, since we are in getServerSideProps (which runs on server), we can try to read the file.
+    // Note: importing 'fs' inside a function is tricky if the bundler doesn't handle it, 
+    // but in Next.js getServerSideProps, it's fine if we use process.cwd()
+    
+    const fs = (await import('fs')).default;
+    const path = (await import('path')).default;
+    
+    const filePath = path.join(process.cwd(), 'data', 'ai.json');
+    if (fs.existsSync(filePath)) {
+       const fileContent = fs.readFileSync(filePath, 'utf8');
+       return JSON.parse(fileContent);
     }
-
-    const response = await fetch(edgeConfigUrl);
-    const data = await response.json();
-    return data.items?.results || [];
+    
+    return [];
   } catch (error) {
-    console.error('Error fetching edge config data:', error);
+    console.error('Error fetching AI data:', error);
     return [];
   }
 }
