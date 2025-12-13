@@ -142,7 +142,7 @@ export default function Music(props) {
   // Get Lyrics
   // Need to search /api/music?provider=qq&path=search/quick&key={songName} to get songmid
   // Then get lyrics via /api/music?provider=qq&path=lyric&songmid=001IhSxX225n1g
-  const [lyrics, setLyrics] = useState('');
+  const [lyrics, setLyrics] = useState(null); // null = loading, '' = no lyrics, string = lyrics
   const [parsedLyrics, setParsedLyrics] = useState([]);
 
   // Parse lyrics with timestamps
@@ -219,28 +219,50 @@ export default function Music(props) {
   const lyricProgress = lyricsMode === 'live' ? getCurrentLyricProgress() : 0;
   function searchSongMID(songName, singerName) {
     fetch(
-      `/api/music?provider=qq&path=search&pageSize=3&key=${songName} ${singerName}`
+      `/api/music?provider=qq&path=search&pageSize=3&key=${encodeURIComponent(songName + ' ' + singerName)}`
     )
       .then((response) => response.json())
       .then((data) => {
-        if (data.list.length === 0) {
+        // QQ Music API returns data nested under data.song.list
+        const songList = data?.data?.song?.list || [];
+        if (songList.length === 0) {
           setLyrics('');
           return;
         }
-        fetchLyrics(data.list[0].songmid);
+        fetchLyrics(songList[0].songmid);
+      })
+      .catch((err) => {
+        console.error('Search error:', err);
+        setLyrics('');
       });
   }
   function fetchLyrics(songmid) {
     fetch(`/api/music?provider=qq&path=lyric&songmid=${songmid}`)
       .then((response) => response.json())
       .then((data) => {
-        setLyrics(data.lyric);
-        setParsedLyrics(parseLyricsWithTimestamps(data.lyric));
+        // QQ Music returns base64 encoded lyrics
+        if (data.lyric) {
+          try {
+            const decodedLyrics = atob(data.lyric);
+            setLyrics(decodedLyrics);
+            setParsedLyrics(parseLyricsWithTimestamps(decodedLyrics));
+          } catch (e) {
+            // If not base64, use as-is
+            setLyrics(data.lyric);
+            setParsedLyrics(parseLyricsWithTimestamps(data.lyric));
+          }
+        } else {
+          setLyrics('');
+        }
+      })
+      .catch((err) => {
+        console.error('Lyrics error:', err);
+        setLyrics('');
       });
   }
   useEffect(() => {
     if (currentPlaying.id) {
-      setLyrics('');
+      setLyrics(null); // Set to null to show loading state
       setParsedLyrics([]);
       searchSongMID(
         currentPlaying.attributes.name,
@@ -462,90 +484,95 @@ export default function Music(props) {
                     onWheel={handleLyricsScroll}
                     onTouchMove={handleLyricsScroll}
                   >
-                    {lyrics ? (
-                      isInstrumental(lyrics) ? (
-                        // Show instrumental message
-                        <div className="text-gray-400 dark:text-gray-500 text-center py-8 flex flex-col items-center gap-2">
-                          <i className="fa fa-music text-3xl" />
-                          <div className="text-base">Pure Music</div>
-                          <div className="text-sm">No lyrics</div>
+                    {lyrics === null ? (
+                      // Loading state
+                      <div className="text-center">
+                        <i className="fa fa-circle-notch fa-spin" />
+                      </div>
+                    ) : lyrics === '' ? (
+                      // No lyrics found
+                      <div className="text-gray-400 dark:text-gray-500 text-center py-8 flex flex-col items-center gap-2">
+                        <i className="fa fa-music-slash text-3xl" />
+                        <div className="text-base">No lyrics available</div>
+                      </div>
+                    ) : isInstrumental(lyrics) ? (
+                      // Show instrumental message
+                      <div className="text-gray-400 dark:text-gray-500 text-center py-8 flex flex-col items-center gap-2">
+                        <i className="fa fa-music text-3xl" />
+                        <div className="text-base">Pure Music</div>
+                        <div className="text-sm">No lyrics</div>
+                      </div>
+                    ) : lyricsMode === 'live' ? (
+                      // Live mode with timestamps
+                      parsedLyrics.length > 0 ? (
+                        <div className="flex flex-col gap-3 py-4">
+                          {parsedLyrics.map((line, index) => (
+                            <div
+                              key={index}
+                              data-lyric-index={index}
+                              className={`transition-all duration-300 text-left px-4 relative ${
+                                isUserScrolling
+                                  ? 'text-gray-300 dark:text-gray-400 text-base'
+                                  : index === currentLyricIndex
+                                    ? 'font-bold text-lg'
+                                    : index < currentLyricIndex
+                                      ? 'text-gray-400 dark:text-gray-500 text-base blur-sm'
+                                      : 'text-gray-400 dark:text-gray-500 text-base'
+                              }`}
+                            >
+                              {index === currentLyricIndex &&
+                              !isUserScrolling ? (
+                                // Current line with progress bar text mask
+                                <>
+                                  {/* Background text (gray) */}
+                                  <div className="text-gray-400 dark:text-gray-500">
+                                    {line.text}
+                                  </div>
+                                  {/* Foreground text (white) with progress mask */}
+                                  <div
+                                    className="absolute top-0 left-0 px-4 text-white dark:text-white overflow-hidden whitespace-nowrap"
+                                    style={{
+                                      width: `${lyricProgress}%`,
+                                      transition: 'width 0.05s linear',
+                                    }}
+                                  >
+                                    {line.text}
+                                  </div>
+                                </>
+                              ) : (
+                                line.text
+                              )}
+                            </div>
+                          ))}
                         </div>
-                      ) : lyricsMode === 'live' ? (
-                        // Live mode with timestamps
-                        parsedLyrics.length > 0 ? (
-                          <div className="flex flex-col gap-3 py-4">
-                            {parsedLyrics.map((line, index) => (
-                              <div
-                                key={index}
-                                data-lyric-index={index}
-                                className={`transition-all duration-300 text-left px-4 relative ${
-                                  isUserScrolling
-                                    ? 'text-gray-300 dark:text-gray-400 text-base'
-                                    : index === currentLyricIndex
-                                      ? 'font-bold text-lg'
-                                      : index < currentLyricIndex
-                                        ? 'text-gray-400 dark:text-gray-500 text-base blur-sm'
-                                        : 'text-gray-400 dark:text-gray-500 text-base'
-                                }`}
-                              >
-                                {index === currentLyricIndex &&
-                                !isUserScrolling ? (
-                                  // Current line with progress bar text mask
-                                  <>
-                                    {/* Background text (gray) */}
-                                    <div className="text-gray-400 dark:text-gray-500">
-                                      {line.text}
-                                    </div>
-                                    {/* Foreground text (white) with progress mask */}
-                                    <div
-                                      className="absolute top-0 left-0 px-4 text-white dark:text-white overflow-hidden whitespace-nowrap"
-                                      style={{
-                                        width: `${lyricProgress}%`,
-                                        transition: 'width 0.05s linear',
-                                      }}
-                                    >
-                                      {line.text}
-                                    </div>
-                                  </>
-                                ) : (
-                                  line.text
-                                )}
-                              </div>
-                            ))}
-                          </div>
-                        ) : (
-                          <div className="text-gray-400 dark:text-gray-500 text-center">
-                            No synced lyrics available
-                          </div>
-                        )
                       ) : (
-                        // Full mode - all lyrics without timestamps
-                        <div className="leading-relaxed text-gray-700 dark:text-gray-200">
-                          {lyrics
-                            .replace(/\[\d{2}:\d{2}\.\d{2}\]/g, '')
-                            .replace(/\[(ti|ar|al|by|offset):[^\]]*\]/g, '')
-                            .split('\n')
-                            .filter((line) => {
-                              return (
-                                line.trim() &&
-                                !line.includes('Lyrics by') &&
-                                !line.includes('Composed by') &&
-                                !line.match(/^[^\-]+ - [^\(]+\(.+\)$/)
-                              );
-                            })
-                            .map((line, index) => (
-                              <div
-                                key={index}
-                                className="mb-3 text-base hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
-                              >
-                                {line}
-                              </div>
-                            ))}
+                        <div className="text-gray-400 dark:text-gray-500 text-center">
+                          No synced lyrics available
                         </div>
                       )
                     ) : (
-                      <div className="text-center">
-                        <i className="fa fa-circle-notch fa-spin" />
+                      // Full mode - all lyrics without timestamps
+                      <div className="leading-relaxed text-gray-700 dark:text-gray-200">
+                        {lyrics
+                          .replace(/\[\d{2}:\d{2}\.\d{2}\]/g, '')
+                          .replace(/\[(ti|ar|al|by|offset):[^\]]*\]/g, '')
+                          .split('\n')
+                          .filter((line) => {
+                            return (
+                              line.trim() &&
+                              !line.includes('Lyrics by') &&
+                              !line.includes('Composed by') &&
+                              !line.match(/^[^\-]+ - [^\(]+\(.+\)$/)
+                            );
+                          })
+                          .map((line, index) => (
+                            <div
+                              key={index}
+                              className="mb-3 text-base hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
+                            >
+                              {line}
+                            </div>
+                          ))}
                       </div>
                     )}
                   </div>

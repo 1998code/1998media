@@ -146,15 +146,52 @@ async function handleQQMusic(url) {
         break;
 
       case 'lyric':
-        // Lyrics
+        // Lyrics - use alternative endpoint that's more reliable
         if (!songmid) {
           return new Response(JSON.stringify({ result: 500, errMsg: 'songmid is required' }), {
             status: 400,
             headers: { 'Content-Type': 'application/json' },
           });
         }
-        apiUrl = `https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric_new.fcg?songmid=${songmid}&g_tk=5381&format=json`;
-        break;
+        // Try the newer API endpoint which is more reliable
+        try {
+          const lyricResponse = await fetch(`https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric_new.fcg?songmid=${songmid}&g_tk=5381&format=json&nobase64=1`, {
+            headers: {
+              'Referer': 'https://y.qq.com/portal/player.html',
+              'Host': 'c.y.qq.com',
+              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            },
+          });
+          let lyricResult = await lyricResponse.text();
+          // Remove JSONP callback
+          lyricResult = lyricResult.replace(/^(MusicJsonCallback\(|\)$)/g, '');
+          
+          try {
+            const lyricData = JSON.parse(lyricResult);
+            // If the API returns an error, try a fallback
+            if (lyricData.retcode !== 0 && lyricData.code !== 0) {
+              // Try fallback - use NetEase or return empty
+              return new Response(JSON.stringify({ lyric: '', trans: '', retcode: lyricData.retcode || lyricData.code }), {
+                status: 200,
+                headers: { 'Content-Type': 'application/json' },
+              });
+            }
+            return new Response(JSON.stringify(lyricData), {
+              status: 200,
+              headers: { 'Content-Type': 'application/json' },
+            });
+          } catch {
+            return new Response(JSON.stringify({ lyric: '', trans: '' }), {
+              status: 200,
+              headers: { 'Content-Type': 'application/json' },
+            });
+          }
+        } catch (error) {
+          return new Response(JSON.stringify({ lyric: '', trans: '', error: error.message }), {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' },
+          });
+        }
 
       case 'recommend':
         // Recommendations
