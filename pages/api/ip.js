@@ -13,6 +13,8 @@ export default async function handler(req) {
   const longitude = url.searchParams.get('lo') || 
                     req.headers.get('cf-iplongitude') || 
                     req.headers.get('x-vercel-ip-longitude');
+  const countryCode = req.headers.get('cf-ipcountry') || 
+                      req.headers.get('x-vercel-ip-country');
   const lang = url.searchParams.get('l') || 'en';
 
   let geo;
@@ -26,12 +28,15 @@ export default async function handler(req) {
       
       if (response.ok) {
         const data = await response.json();
+        const country = data.address?.country || countryCode || '?';
+        const city = data.address?.city || data.address?.town || data.address?.village || data.address?.suburb || data.address?.district || data.address?.county;
         geo = {
-          city: data.address?.city || data.address?.town || data.address?.village || '?',
-          state: data.address?.state || data.address?.country || '?',
+          city: city || country,
+          state: data.address?.state || country,
         };
       } else {
-        geo = { city: '?', state: '?' };
+        const fallback = countryCode || '?';
+        geo = { city: fallback, state: fallback };
       }
     } else {
       geo = {
@@ -41,9 +46,10 @@ export default async function handler(req) {
     }
   } catch (error) {
     console.log(error);
+    const fallback = countryCode || '?';
     geo = {
-      city: '?',
-      state: '?',
+      city: fallback,
+      state: fallback,
     };
   }
 
