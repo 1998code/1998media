@@ -15,7 +15,8 @@ export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl
   
   // Check if we already have a locale in the pathname
-  const hasLocale = /^\/(en|zh|zh-HK|zh-CN|ko|ja)(\/|$)/.test(pathname)
+  // Match: en, en-US, en-GB, zh, zh-HK, zh-CN, zh-TW, ko, ko-KR, ja, ja-JP, etc.
+  const hasLocale = /^\/(en|en-US|en-GB|zh|zh-HK|zh-CN|zh-TW|ko|ko-KR|ja|ja-JP)(\/|$)/.test(pathname)
   if (hasLocale) return
 
   // Get locale from header
