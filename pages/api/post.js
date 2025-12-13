@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 export default async function (req, res) {
   try {
     const response = await fetch(

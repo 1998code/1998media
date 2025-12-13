@@ -4,6 +4,7 @@ import opencc from 'node-opencc';
 
 export const config = {
   maxDuration: 60,
+  runtime: 'nodejs', // Explicitly set to nodejs if edge causes issues with libraries
 };
 
 export default async function (req, res) {

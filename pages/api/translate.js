@@ -5,6 +5,8 @@
  * Uses translate.googleapis.com/translate_a/single endpoint
  * This is the same endpoint used by translate.google.com web interface
  */
+export const runtime = 'edge';
+
 export default async function (req, res) {
   const { text, from = 'auto', to = 'en' } = req.query;
 

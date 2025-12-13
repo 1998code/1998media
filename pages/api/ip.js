@@ -1,5 +1,8 @@
 import NodeGeocoder from 'node-geocoder';
 
+// NodeGeocoder uses fs/http, might not be edge compatible if not pure JS
+// export const runtime = 'edge';
+
 export default async function (req, res) {
   const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 

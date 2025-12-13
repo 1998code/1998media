@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 export default function (req, res) {
   const locale = req.query.locale || 'en-US';
 

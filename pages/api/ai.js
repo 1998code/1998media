@@ -2,6 +2,8 @@
 
 import { streamText } from 'ai';
 
+export const runtime = 'edge';
+
 export default async function (req, res) {
   const maxRetries = 3;
   let attempts = 0;

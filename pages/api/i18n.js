@@ -1,6 +1,9 @@
 import fs from 'fs';
 import path from 'path';
 
+// NOT Edge Runtime because it uses fs
+// export const runtime = 'edge';
+
 export default async function (req, res) {
   if (!req.query.lang) {
     res.status(400).json({ error: 'Language is required' });
