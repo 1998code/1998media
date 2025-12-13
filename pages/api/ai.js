@@ -4,13 +4,14 @@ import { streamText } from 'ai';
 
 export const runtime = 'edge';
 
-export default async function (req, res) {
+export default async function handler(req) {
+  const url = new URL(req.url);
   const maxRetries = 3;
   let attempts = 0;
 
   while (attempts < maxRetries) {
     try {
-      const input = decodeURIComponent(req.query.text);
+      const input = decodeURIComponent(url.searchParams.get('text') || '');
 
       const result = streamText({
         model: 'meituan/longcat-flash-chat',
@@ -23,7 +24,7 @@ export default async function (req, res) {
         fullText += chunk;
       }
 
-      const debug = req.query.debug === 'true' || req.query.debug === '1';
+      const debug = url.searchParams.get('debug') === 'true' || url.searchParams.get('debug') === '1';
       const response = {
         input,
         text: fullText,
@@ -33,18 +34,19 @@ export default async function (req, res) {
         response.result = await result;
       }
 
-      res.status(200).json(response);
-
-      // If the code reaches this point, it means it was successful, so we break the loop
-      break;
+      return new Response(JSON.stringify(response), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      });
     } catch (err) {
       console.error(err);
       attempts++;
 
       // If we've reached the maximum number of retries, send a response with an error
       if (attempts === maxRetries) {
-        res.status(500).json({
-          error: 'An error occurred',
+        return new Response(JSON.stringify({ error: 'An error occurred' }), {
+          status: 500,
+          headers: { 'Content-Type': 'application/json' },
         });
       }
     }

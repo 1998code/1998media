@@ -1,27 +1,38 @@
-import NodeGeocoder from 'node-geocoder';
+export const runtime = 'edge';
 
-// NodeGeocoder uses fs/http, might not be edge compatible if not pure JS
-// export const runtime = 'edge';
+export default async function handler(req) {
+  const url = new URL(req.url);
+  
+  const ip = req.headers.get('x-forwarded-for') || 
+             req.headers.get('cf-connecting-ip') || 
+             'unknown';
 
-export default async function (req, res) {
-  const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-
-  const latitude = req.query.la || req.headers['x-vercel-ip-latitude'];
-  const longitude = req.query.lo || req.headers['x-vercel-ip-longitude'];
+  const latitude = url.searchParams.get('la') || 
+                   req.headers.get('cf-iplatitude') || 
+                   req.headers.get('x-vercel-ip-latitude');
+  const longitude = url.searchParams.get('lo') || 
+                    req.headers.get('cf-iplongitude') || 
+                    req.headers.get('x-vercel-ip-longitude');
+  const lang = url.searchParams.get('l') || 'en';
 
   let geo;
   try {
     if (latitude && longitude) {
-      const options = {
-        provider: 'openstreetmap',
-        language: req.query.l || 'en',
-      };
-      const geoCoder = NodeGeocoder(options);
-      const res = await geoCoder.reverse({ lat: latitude, lon: longitude });
-      geo = {
-        city: res[0].city,
-        state: res[0].state,
-      };
+      // Use OpenStreetMap Nominatim API for edge-compatible reverse geocoding
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&accept-language=${lang}`,
+        { headers: { 'User-Agent': '1998media/1.0' } }
+      );
+      
+      if (response.ok) {
+        const data = await response.json();
+        geo = {
+          city: data.address?.city || data.address?.town || data.address?.village || '?',
+          state: data.address?.state || data.address?.country || '?',
+        };
+      } else {
+        geo = { city: '?', state: '?' };
+      }
     } else {
       geo = {
         city: 'Local',
@@ -36,5 +47,8 @@ export default async function (req, res) {
     };
   }
 
-  res.status(200).json({ ip, geo, latitude, longitude });
+  return new Response(JSON.stringify({ ip, geo, latitude, longitude }), {
+    status: 200,
+    headers: { 'Content-Type': 'application/json' },
+  });
 }

@@ -39,7 +39,7 @@ export default function Blog(props) {
     coverURL: i18n(
       'https://ak-d.tripcdn.com/images/0a14l12000aqs8zq3AC37.jpg_.webp'
     ),
-    publishTime: new Date(),
+    publishTime: '2025-01-01T00:00:00.000Z', // Static date to avoid hydration mismatch
   };
 
   const moment = [tripPromo, ...(props.blogData?.moments || []).slice(0, 5)];

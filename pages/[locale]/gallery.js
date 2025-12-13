@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import { Tooltip } from '@nextui-org/tooltip';
 import { fetchI18nData } from '../../lib/fetchData';
 
+export const runtime = 'experimental-edge';
+
 export default function Gallery(props) {
   function i18n(key) {
     if (props.i18n && props.i18n['gallery'] && !props.i18n['gallery'][key]) {

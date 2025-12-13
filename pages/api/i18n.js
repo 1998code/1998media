@@ -1,16 +1,21 @@
-import fs from 'fs';
-import path from 'path';
+import en from '../../data/i18n/en.json';
+import zh from '../../data/i18n/zh.json';
+import zhHK from '../../data/i18n/zh-HK.json';
+import ko from '../../data/i18n/ko.json';
+import ja from '../../data/i18n/ja.json';
 
-// NOT Edge Runtime because it uses fs
-// export const runtime = 'edge';
+export const runtime = 'edge';
 
-export default async function (req, res) {
-  if (!req.query.lang) {
-    res.status(400).json({ error: 'Language is required' });
-    return;
+export default async function handler(req) {
+  const url = new URL(req.url);
+  const lang = url.searchParams.get('lang');
+
+  if (!lang) {
+    return new Response(JSON.stringify({ error: 'Language is required' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
-
-  const lang = req.query.lang;
 
   const selectedLang = (lang) => {
     if (lang.includes('en')) return 'en';
@@ -22,26 +27,19 @@ export default async function (req, res) {
   };
 
   const normalizedLocale = selectedLang(lang);
-  const filePath = path.join(process.cwd(), 'data', 'i18n', `${normalizedLocale}.json`);
-
-  try {
-    if (fs.existsSync(filePath)) {
-      const fileContent = fs.readFileSync(filePath, 'utf8');
-      const data = JSON.parse(fileContent);
-      res.status(200).json(data);
-    } else {
-      // Fallback to English if file doesn't exist
-      const enFilePath = path.join(process.cwd(), 'data', 'i18n', 'en.json');
-      if (fs.existsSync(enFilePath)) {
-        const fileContent = fs.readFileSync(enFilePath, 'utf8');
-        const data = JSON.parse(fileContent);
-        res.status(200).json(data);
-      } else {
-        res.status(404).json({ error: 'Language data not found' });
-      }
-    }
-  } catch (error) {
-    console.error(`Error reading i18n file for ${normalizedLocale}:`, error);
-    res.status(500).json({ error: 'Internal server error' });
+  
+  let data;
+  switch (normalizedLocale) {
+    case 'en': data = en; break;
+    case 'zh': data = zh; break;
+    case 'zh-HK': data = zhHK; break;
+    case 'ko': data = ko; break;
+    case 'ja': data = ja; break;
+    default: data = en;
   }
+
+  return new Response(JSON.stringify(data), {
+    status: 200,
+    headers: { 'Content-Type': 'application/json' },
+  });
 }

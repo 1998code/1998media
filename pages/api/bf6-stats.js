@@ -1,15 +1,17 @@
 export const runtime = 'edge';
 
-export default async function handler(req, res) {
+export default async function handler(req) {
   if (req.method !== 'GET') {
-    return res.status(405).json({ message: 'Method not allowed' });
+    return new Response(JSON.stringify({ message: 'Method not allowed' }), {
+      status: 405,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 
-  const {
-    locale = 'en',
-    user = 'chakmingea',
-    week = 'OpenBetaWeekend2',
-  } = req.query;
+  const url = new URL(req.url);
+  const locale = url.searchParams.get('locale') || 'en';
+  const user = url.searchParams.get('user') || 'chakmingea';
+  const week = url.searchParams.get('week') || 'OpenBetaWeekend2';
 
   // Map locale codes to EA API locale format
   const localeMap = {
@@ -41,12 +43,18 @@ export default async function handler(req, res) {
     }
 
     const data = await response.json();
-    res.status(200).json(data);
+    return new Response(JSON.stringify(data), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
   } catch (error) {
     console.error('Error fetching BF6 data:', error);
-    res.status(500).json({
+    return new Response(JSON.stringify({
       message: 'Failed to fetch Battlefield 6 data',
       error: error.message,
+    }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
     });
   }
 }

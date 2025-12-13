@@ -51,6 +51,7 @@ export default function LocaleSwitcher() {
 
   useEffect(() => {
     // Check if banner was dismissed in this session
+    if (typeof window === 'undefined') return;
     const dismissed = sessionStorage.getItem('locale-switcher-dismissed');
     if (dismissed) return;
 

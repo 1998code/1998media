@@ -1,16 +1,38 @@
-export default function (req, res) {
-  const domain = req.query.domain;
+export const runtime = 'edge';
+
+export default async function handler(req) {
+  const url = new URL(req.url);
+  const domain = url.searchParams.get('domain');
+  
   if (!domain) {
-    res.status(400).json({ error: 'Domain is required' });
-    return;
+    return new Response(JSON.stringify({ error: 'Domain is required' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
-  const dns = require('dns');
-  const rrtype = 'A';
-  dns.resolve(domain, rrtype, (err, addresses) => {
-    if (err) {
-      res.status(200).json({ error: err });
-    } else {
-      res.status(200).json({ addresses });
-    }
-  });
+
+  try {
+    // Use DNS-over-HTTPS (Cloudflare) for edge-compatible DNS resolution
+    const response = await fetch(
+      `https://cloudflare-dns.com/dns-query?name=${encodeURIComponent(domain)}&type=A`,
+      {
+        headers: {
+          'Accept': 'application/dns-json',
+        },
+      }
+    );
+
+    const data = await response.json();
+    const addresses = data.Answer?.map(record => record.data) || [];
+
+    return new Response(JSON.stringify({ addresses }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  } catch (err) {
+    return new Response(JSON.stringify({ error: err.message }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
 }

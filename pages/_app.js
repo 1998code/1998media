@@ -32,6 +32,26 @@ function MyApp({ Component, pageProps }) {
     if (pages.some((page) => window.location.pathname.includes(page))) {
       setNotHome(true);
     }
+
+    // Initialize darkmode after component mounts (moved from module scope)
+    import('darkmode-js').then((module) => {
+      const Darkmode = module.default;
+      const options = {
+        bottom: '93.5vh',
+        right: '25px',
+        time: '1.5s',
+        mixColor: '#fff',
+        backgroundColor: '#fff6eb',
+        buttonColorDark: '#000',
+        buttonColorLight: '#fff6eb',
+        saveInCookies: true,
+        label:
+          '<i class="fa fa-moon-over-sun text-orange-300 dark:text-orange-500" />',
+        autoMatchOsTheme: true,
+      };
+      const darkmode = new Darkmode(options);
+      darkmode.showWidget();
+    });
   }, []);
 
   return (
@@ -74,28 +94,3 @@ function MyApp({ Component, pageProps }) {
 }
 
 export default MyApp;
-
-// Initialize darkmode after component mounts to avoid blocking initial render
-if (typeof window !== 'undefined') {
-  // Defer darkmode initialization to not block page load
-  setTimeout(() => {
-    import('darkmode-js').then((module) => {
-      const Darkmode = module.default;
-      const options = {
-        bottom: '93.5vh',
-        right: '25px',
-        time: '1.5s',
-        mixColor: '#fff',
-        backgroundColor: '#fff6eb',
-        buttonColorDark: '#000',
-        buttonColorLight: '#fff6eb',
-        saveInCookies: true,
-        label:
-          '<i class="fa fa-moon-over-sun text-orange-300 dark:text-orange-500" />',
-        autoMatchOsTheme: true,
-      };
-      const darkmode = new Darkmode(options);
-      darkmode.showWidget();
-    });
-  }, 100);
-}

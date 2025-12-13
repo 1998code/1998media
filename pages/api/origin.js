@@ -1,7 +1,10 @@
 export const runtime = 'edge';
 
-export default async function (req, res) {
-  const origin = req.headers;
+export default async function handler(req) {
+  const origin = Object.fromEntries(req.headers.entries());
 
-  return res.status(200).json({ origin });
+  return new Response(JSON.stringify({ origin }), {
+    status: 200,
+    headers: { 'Content-Type': 'application/json' },
+  });
 }

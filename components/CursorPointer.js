@@ -9,9 +9,14 @@ export default function CursorPointer() {
   const users = useOthers();
   const [privateId, setPrivateId] = useState(0);
 
+  const [isMounted, setIsMounted] = useState(false);
+
   useEffect(() => {
+    setIsMounted(true);
     setPrivateId(Math.floor(Math.random() * 100000));
   }, []);
+
+  if (!isMounted) return null;
 
   return (
     <a

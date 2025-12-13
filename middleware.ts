@@ -1,15 +1,36 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 export const config = {
-  matcher: '/',
+  matcher: [
+    // Match all request paths except for the ones starting with:
+    // - api (API routes)
+    // - _next/static (static files)
+    // - _next/image (image optimization files)
+    // - favicon.ico (favicon file)
+    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+  ],
 }
 
 export async function middleware(req: NextRequest) {
-  const locale = req.headers.get('accept-language')?.split(',')?.[0]
+  const { pathname } = req.nextUrl
+  
+  // Check if we already have a locale in the pathname
+  const hasLocale = /^\/(en|zh|zh-HK|zh-CN|ko|ja)(\/|$)/.test(pathname)
+  if (hasLocale) return
 
-  switch (locale) {
-    default:
-      req.nextUrl.pathname = '/' + locale
-      return NextResponse.redirect(req.nextUrl)
+  // Get locale from header
+  const acceptLanguage = req.headers.get('accept-language')
+  const locale = acceptLanguage?.split(',')?.[0]?.toLowerCase()
+
+  let targetLocale = 'en' // Default
+  if (locale) {
+    if (locale.startsWith('zh-hk') || locale.startsWith('zh-tw')) targetLocale = 'zh-HK'
+    else if (locale.startsWith('zh')) targetLocale = 'zh'
+    else if (locale.startsWith('ko')) targetLocale = 'ko'
+    else if (locale.startsWith('ja')) targetLocale = 'ja'
   }
+
+  // Redirect to localized path
+  req.nextUrl.pathname = `/${targetLocale}${pathname}`
+  return NextResponse.redirect(req.nextUrl)
 }

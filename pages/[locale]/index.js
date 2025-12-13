@@ -3,6 +3,8 @@ import Head from 'next/head';
 import Script from 'next/script';
 import dynamic from 'next/dynamic';
 import LocaleSwitcher from '../../components/LocaleSwitcher';
+
+export const runtime = 'experimental-edge';
 import CursorPointer from '../../components/CursorPointer';
 import WhatsAppChat from '../../components/WhatsAppChat';
 import { RoomProvider } from '../../liveblocks.config';
@@ -353,44 +355,48 @@ async function fetchUnsplashData() {
 
 async function fetchIPData(locale, req) {
   try {
-    // Replicate IP API logic server-side using request headers
-    const NodeGeocoder = (await import('node-geocoder')).default;
-
-    // Get IP from headers (same as API route)
+    // Get IP from headers
     const ip =
-      req.headers['x-forwarded-for'] || req.socket?.remoteAddress || null;
+      req.headers['x-forwarded-for'] || 
+      req.headers['cf-connecting-ip'] || // Cloudflare
+      req.socket?.remoteAddress || 
+      null;
 
-    // Get latitude/longitude from Vercel headers
-    const latitude = req.headers['x-vercel-ip-latitude'] || null;
-    const longitude = req.headers['x-vercel-ip-longitude'] || null;
+    // Get location from Cloudflare headers (available on Cloudflare Pages)
+    const cfCity = req.headers['cf-ipcity'] || null;
+    const cfCountry = req.headers['cf-ipcountry'] || null;
+    const latitude = req.headers['cf-iplatitude'] || req.headers['x-vercel-ip-latitude'] || null;
+    const longitude = req.headers['cf-iplongitude'] || req.headers['x-vercel-ip-longitude'] || null;
 
     let geo;
-    try {
-      if (latitude && longitude) {
-        const options = {
-          provider: 'openstreetmap',
-          language: locale || 'en',
-        };
-        const geoCoder = NodeGeocoder(options);
-        const result = await geoCoder.reverse({
-          lat: parseFloat(latitude),
-          lon: parseFloat(longitude),
-        });
-        geo = {
-          city: result[0]?.city || '?',
-          state: result[0]?.state || '?',
-        };
-      } else {
-        geo = {
-          city: 'Local',
-          state: 'Local',
-        };
-      }
-    } catch (error) {
-      console.log('Geocoding error:', error);
+    if (cfCity || cfCountry) {
       geo = {
-        city: '?',
-        state: '?',
+        city: cfCity || '?',
+        state: cfCountry || '?',
+      };
+    } else if (latitude && longitude) {
+      // Fallback: use a simple reverse geocoding API that works on edge
+      try {
+        const response = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&accept-language=${locale || 'en'}`,
+          { headers: { 'User-Agent': '1998media/1.0' } }
+        );
+        if (response.ok) {
+          const data = await response.json();
+          geo = {
+            city: data.address?.city || data.address?.town || data.address?.village || '?',
+            state: data.address?.state || data.address?.country || '?',
+          };
+        } else {
+          geo = { city: '?', state: '?' };
+        }
+      } catch {
+        geo = { city: '?', state: '?' };
+      }
+    } else {
+      geo = {
+        city: 'Local',
+        state: 'Local',
       };
     }
 
@@ -413,24 +419,9 @@ async function fetchIPData(locale, req) {
 
 async function fetchDalleData() {
   try {
-    // Determine the environment - in production, we can't easily read local files in getStaticProps/getServerSideProps 
-    // depending on deployment (e.g. Vercel vs self-hosted). 
-    // For self-hosted Node.js, we can use fs.
-    
-    // However, since we are in getServerSideProps (which runs on server), we can try to read the file.
-    // Note: importing 'fs' inside a function is tricky if the bundler doesn't handle it, 
-    // but in Next.js getServerSideProps, it's fine if we use process.cwd()
-    
-    const fs = (await import('fs')).default;
-    const path = (await import('path')).default;
-    
-    const filePath = path.join(process.cwd(), 'data', 'ai.json');
-    if (fs.existsSync(filePath)) {
-       const fileContent = fs.readFileSync(filePath, 'utf8');
-       return JSON.parse(fileContent);
-    }
-    
-    return [];
+    // Import JSON directly - Next.js will bundle this
+    const aiData = (await import('../../data/ai.json')).default;
+    return aiData;
   } catch (error) {
     console.error('Error fetching AI data:', error);
     return [];

@@ -7,11 +7,17 @@
  */
 export const runtime = 'edge';
 
-export default async function (req, res) {
-  const { text, from = 'auto', to = 'en' } = req.query;
+export default async function handler(req) {
+  const url = new URL(req.url);
+  const text = url.searchParams.get('text');
+  const from = url.searchParams.get('from') || 'auto';
+  const to = url.searchParams.get('to') || 'en';
 
   if (!text) {
-    return res.status(400).json({ error: 'Text parameter is required' });
+    return new Response(JSON.stringify({ error: 'Text parameter is required' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 
   try {
@@ -23,15 +29,13 @@ export default async function (req, res) {
       'zh-CN': 'zh-CN',
     };
 
-    const sourceLang = langMap[from] || from === 'auto' ? 'auto' : from;
+    const sourceLang = langMap[from] || (from === 'auto' ? 'auto' : from);
     const targetLang = langMap[to] || to;
 
     // Call Google Translate API directly
-    // Endpoint: translate.googleapis.com/translate_a/single
-    // This is the public endpoint used by Google Translate web interface
-    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLang}&tl=${targetLang}&hl=${targetLang}&dt=t&dt=bd&dj=1&source=icon&q=${encodeURIComponent(text)}`;
+    const translateUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLang}&tl=${targetLang}&hl=${targetLang}&dt=t&dt=bd&dj=1&source=icon&q=${encodeURIComponent(text)}`;
 
-    const response = await fetch(url, {
+    const response = await fetch(translateUrl, {
       headers: {
         'User-Agent':
           'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
@@ -52,17 +56,23 @@ export default async function (req, res) {
       translatedText = data[0].map((item) => item[0]).join('');
     }
 
-    res.status(200).json({
+    return new Response(JSON.stringify({
       input: text,
       output: translatedText || text,
       from: data.src || from,
       to,
+    }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
     });
   } catch (error) {
     console.error('Translation error:', error);
-    res.status(500).json({
+    return new Response(JSON.stringify({
       error: 'Translation failed',
       message: error.message,
+    }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
     });
   }
 }
