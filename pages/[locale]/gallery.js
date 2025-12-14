@@ -7,7 +7,7 @@ export const runtime = 'experimental-edge';
 export default function Gallery(props) {
   function i18n(key) {
     if (props.i18n && props.i18n['gallery'] && !props.i18n['gallery'][key]) {
-      console.log('Gallery Missing Translation: ' + key);
+      // Translation missing - silently use key
     }
     return props.i18n && props.i18n['gallery'] && props.i18n['gallery'][key]
       ? props.i18n['gallery'][key]
@@ -125,30 +125,17 @@ export default function Gallery(props) {
     // Only if Safari AND not mobile
     if (safariDetection && !isMobileDevice) {
       setTimeout(() => {
-        console.log('Setting spatial photos ready');
         setSpatialPhotosReady(true);
       }, 100);
     }
 
-    console.log('useEffect running, checking URL parameters...');
     const urlParams = new URLSearchParams(window.location.search);
     const typeParam = urlParams.get('type');
-    console.log('URL type parameter:', typeParam);
 
     if (typeParam?.toLowerCase() === 'spatial') {
-      console.log('URL parameter detected: type=spatial (case-insensitive)');
-
-      console.log('Is Safari:', safariDetection);
-      console.log('Is Mobile:', isMobileDevice);
-      console.log('User Agent:', navigator.userAgent);
-
       if (safariDetection && !isMobileDevice) {
-        console.log('Setting activeTab to spatial');
         setActiveTab('spatial');
       } else {
-        console.log(
-          'Not Safari or Mobile - showing alert and staying on Unsplash'
-        );
         // Not Safari or Mobile - show alert and stay on Unsplash (don't set spatial tab)
         alert(
           i18n(
@@ -158,8 +145,6 @@ export default function Gallery(props) {
         // Ensure we're on Unsplash tab
         setActiveTab('unsplash');
       }
-    } else {
-      console.log('No spatial type parameter found');
     }
   }, []);
 
@@ -423,20 +408,9 @@ export default function Gallery(props) {
       }
     })();
 
-    console.log(
-      'Filtered spatial photos:',
-      filtered.length,
-      'Filter:',
-      spatialFilter
-    );
     if (spatialFilter === 'panorama' || spatialFilter === 'all') {
       const panos = filtered.filter(
         (photo) => photo.id && photo.id.includes('pano')
-      );
-      console.log(
-        'Panorama photos found:',
-        panos.length,
-        panos.map((p) => p.id)
       );
     }
 
@@ -512,12 +486,7 @@ export default function Gallery(props) {
                           ) && {
                             onClick: () => handleClick(photo),
                           })}
-                          onAnimationStart={() =>
-                            console.log(
-                              'Panorama animation started for:',
-                              photo.id
-                            )
-                          }
+                          onAnimationStart={() => {}}
                         >
                           <img
                             loading="lazy"
@@ -944,12 +913,12 @@ export default function Gallery(props) {
                         {Object.entries(photo.topic_submissions).map(
                           ([topic, submission]) =>
                             submission.status === 'approved' ? (
-                              <span className="p-1.5 text-white text-sm">
+                              <span key={topic} className="p-1.5 text-white text-sm">
                                 <i className="fa fa-crown"></i> Featured in{' '}
                                 {topic.replaceAll('-', ' ')}
                               </span>
                             ) : (
-                              <span className="p-1.5 text-white text-sm">
+                              <span key={topic} className="p-1.5 text-white text-sm">
                                 <i className="fa fa-thumbs-up"></i>
                               </span>
                             )

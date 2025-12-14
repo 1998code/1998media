@@ -150,6 +150,7 @@ export default function Blog(props) {
           <div className="flex">
             {medals.map((medal) => (
               <Tooltip
+                key={medal.medalStageId || medal.medalStageName}
                 content={medal.medalStageName}
                 placement="bottom"
                 className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-xl"

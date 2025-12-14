@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { Tooltip } from '@nextui-org/tooltip';
 
 export default function Credits(props) {
   function i18n(key) {
@@ -30,53 +31,61 @@ export default function Credits(props) {
             height={40}
           />
         </a> */}
-        <a href="https://betteruptime.com/?ref=i41" target="_blank" className="relative group">
-          <Image
-            className="h-10 rounded-xl p-2 border border-black dark:border-white dark:bg-white"
-            src="https://cdn.1998.media/logos/BetterUptime.png"
-            alt="BetterUptime"
-            width={40}
-            height={40}
-          />
-          <span className="absolute left-1/2 -translate-x-1/2 top-full mt-2 px-2 py-1 text-xs text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-            Better Uptime
-          </span>
-        </a>
-        <a href="https://docsearch.algolia.com/?ref=1998.media" target="_blank" className="relative group">
-          <Image
-            className="h-10 rounded-xl bg-white p-2 dark:hidden border border-black"
-            src="https://docsearch.algolia.com/img/docsearch-logo.svg"
-            alt="Algolia"
-            width={150}
-            height={40}
-          />
-          <Image
-            className="h-10 rounded-xl hidden p-2 dark:bg-black dark:block border border-white"
-            src="https://docsearch.algolia.com/img/docsearch-logo-white.svg"
-            alt="Docsearch"
-            width={150}
-            height={40}
-          />
-          <span className="absolute left-1/2 -translate-x-1/2 top-full mt-2 px-2 py-1 text-xs text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-            Algolia DocSearch
-          </span>
-        </a>
-        <a
-          href="https://www.digitalocean.com/?refcode=ce873177d9ab&utm_medium=opensource"
-          target="_blank"
-          className="relative group"
+        <Tooltip
+          content="Better Uptime"
+          placement="bottom"
+          className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-xl"
         >
-          <Image
-            className="h-10 rounded-xl bg-white p-2 border border-black"
-            src="https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/SVG/DO_Logo_icon_blue.svg"
-            alt="DigitalOcean"
-            width={40}
-            height={40}
-          />
-          <span className="absolute left-1/2 -translate-x-1/2 top-full mt-2 px-2 py-1 text-xs text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-            DigitalOcean
-          </span>
-        </a>
+          <a href="https://betteruptime.com/?ref=i41" target="_blank">
+            <Image
+              className="h-10 rounded-xl p-2 border border-black dark:border-white dark:bg-white"
+              src="https://cdn.1998.media/logos/BetterUptime.png"
+              alt="BetterUptime"
+              width={40}
+              height={40}
+            />
+          </a>
+        </Tooltip>
+        <Tooltip
+          content="Algolia DocSearch"
+          placement="bottom"
+          className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-xl"
+        >
+          <a href="https://docsearch.algolia.com/?ref=1998.media" target="_blank">
+            <Image
+              className="h-10 rounded-xl bg-white p-2 dark:hidden border border-black"
+              src="https://docsearch.algolia.com/img/docsearch-logo.svg"
+              alt="Algolia"
+              width={150}
+              height={40}
+            />
+            <Image
+              className="h-10 rounded-xl hidden p-2 dark:bg-black dark:block border border-white"
+              src="https://docsearch.algolia.com/img/docsearch-logo-white.svg"
+              alt="Docsearch"
+              width={150}
+              height={40}
+            />
+          </a>
+        </Tooltip>
+        <Tooltip
+          content="DigitalOcean"
+          placement="bottom"
+          className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-xl"
+        >
+          <a
+            href="https://www.digitalocean.com/?refcode=ce873177d9ab&utm_medium=opensource"
+            target="_blank"
+          >
+            <Image
+              className="h-10 rounded-xl bg-white p-2 border border-black"
+              src="https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/SVG/DO_Logo_icon_blue.svg"
+              alt="DigitalOcean"
+              width={40}
+              height={40}
+            />
+          </a>
+        </Tooltip>
       </div>
     </div>
   );

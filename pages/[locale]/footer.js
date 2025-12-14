@@ -110,12 +110,12 @@ export default function Footer(props) {
         <div className="flex justify-center gap-3">
           {navigation.social.map((item) => (
             <Tooltip
+              key={item.name}
               content={item.name}
               placement="top"
               className="p-1 mb-1 border text-xs dark:text-white bg-white dark:bg-black rounded-xl"
             >
               <a
-                key={item.name}
                 href={item.href}
                 target="_blank"
                 className="text-gray-600 dark:text-gray-400 hover:text-gray-500"
@@ -172,6 +172,7 @@ export default function Footer(props) {
         <div className="flex items-center gap-3">
           {navigation.main.map((item) => (
             <a
+              key={item.name}
               href={item.href}
               target={item.href.includes('http') ? '_blank' : '_self'}
               alt={i18n(item.name)}

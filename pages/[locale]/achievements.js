@@ -144,7 +144,7 @@ export default function Achievements(props) {
               </h3>
               <dl className="rounded-xl overflow-hidden bg-white/50 dark:bg-black/50 backdrop-blur-md shadow-lg grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 backlight xl:rounded-[30px]">
                 {achievements.map((achievement) => (
-                  <div className="flex flex-col p-6 text-center lg:text-left hover:scale-105 transition-all">
+                  <div key={achievement.title} className="flex flex-col p-6 text-center lg:text-left hover:scale-105 transition-all">
                     {/* <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">
                       {achievement.year}
                     </dt> */}
