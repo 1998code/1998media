@@ -34,24 +34,32 @@ function MyApp({ Component, pageProps }) {
     }
 
     // Initialize darkmode after component mounts (moved from module scope)
-    import('darkmode-js').then((module) => {
-      const Darkmode = module.default;
-      const options = {
-        bottom: '93.5vh',
-        right: '25px',
-        time: '1.5s',
-        mixColor: '#fff',
-        backgroundColor: '#fff6eb',
-        buttonColorDark: '#000',
-        buttonColorLight: '#fff6eb',
-        saveInCookies: true,
-        label:
-          '<i class="fa fa-moon-over-sun text-orange-300 dark:text-orange-500" />',
-        autoMatchOsTheme: true,
-      };
-      const darkmode = new Darkmode(options);
-      darkmode.showWidget();
-    });
+    import('darkmode-js')
+      .then((module) => {
+        try {
+          const Darkmode = module.default;
+          const options = {
+            bottom: '93.5vh',
+            right: '25px',
+            time: '1.5s',
+            mixColor: '#fff',
+            backgroundColor: '#fff6eb',
+            buttonColorDark: '#000',
+            buttonColorLight: '#fff6eb',
+            saveInCookies: true,
+            label:
+              '<i class="fa fa-moon-over-sun text-orange-300 dark:text-orange-500" />',
+            autoMatchOsTheme: true,
+          };
+          const darkmode = new Darkmode(options);
+          darkmode.showWidget();
+        } catch (error) {
+          console.error('Error initializing darkmode:', error);
+        }
+      })
+      .catch((error) => {
+        console.error('Error loading darkmode-js:', error);
+      });
   }, []);
 
   return (

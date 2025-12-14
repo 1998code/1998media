@@ -56,84 +56,108 @@ export default function LocaleSwitcher() {
     const dismissed = sessionStorage.getItem('locale-switcher-dismissed');
     if (dismissed) return;
 
-    // Get browser language
-    const browserLang = navigator.language || navigator.userLanguage;
+    try {
+      // Get browser language
+      const browserLang = navigator.language || navigator.userLanguage;
 
-    // Get current website locale from path
-    const currentPath = window.location.pathname.replace('/', '').split('/')[0];
-    const currentLocale = locales.find(
-      (l) =>
-        l.aliases?.includes(currentPath) ||
-        l.code === currentPath ||
-        l.path === `/${currentPath}`
-    );
-
-    // Check for mismatch - find locale that matches browser language
-    const browserLocale = locales.find((l) => {
-      if (!l.aliases)
-        return browserLang.toLowerCase().startsWith(l.code.toLowerCase());
-      return l.aliases.some((alias) =>
-        browserLang.toLowerCase().startsWith(alias.toLowerCase())
+      // Get current website locale from path - handle edge cases
+      const pathname = window.location.pathname || '';
+      const pathParts = pathname.replace(/^\/+/, '').split('/');
+      const currentPath = pathParts[0] || '';
+      
+      const currentLocale = locales.find(
+        (l) =>
+          (currentPath && l.aliases?.includes(currentPath)) ||
+          (currentPath && l.code === currentPath) ||
+          (currentPath && l.path === `/${currentPath}`)
       );
-    });
 
-    // Don't show banner if browser locale matches current locale (including aliases)
-    if (browserLocale && currentLocale) {
-      // Check if they're the same locale group (e.g., both Traditional Chinese)
-      const isSameLocaleGroup =
-        browserLocale.code === currentLocale.code ||
-        (browserLocale.aliases &&
-          currentLocale.aliases &&
-          browserLocale.aliases.some((a) =>
-            currentLocale.aliases?.includes(a)
-          ));
+      // Check for mismatch - find locale that matches browser language
+      const browserLocale = locales.find((l) => {
+        if (!browserLang) return false;
+        if (!l.aliases)
+          return browserLang.toLowerCase().startsWith(l.code.toLowerCase());
+        return l.aliases.some((alias) =>
+          browserLang.toLowerCase().startsWith(alias.toLowerCase())
+        );
+      });
 
-      if (!isSameLocaleGroup) {
-        setSelectedLocale(browserLocale);
-        setIsVisible(true);
+      // Don't show banner if browser locale matches current locale (including aliases)
+      if (browserLocale && currentLocale) {
+        // Check if they're the same locale group (e.g., both Traditional Chinese)
+        const isSameLocaleGroup =
+          browserLocale.code === currentLocale.code ||
+          (browserLocale.aliases &&
+            currentLocale.aliases &&
+            browserLocale.aliases.some((a) =>
+              currentLocale.aliases?.includes(a)
+            ));
+
+        if (!isSameLocaleGroup) {
+          setSelectedLocale(browserLocale);
+          setIsVisible(true);
+        }
       }
+    } catch (error) {
+      console.error('Error in LocaleSwitcher:', error);
     }
   }, []);
 
   // Adjust navigation and dark mode button position when banner is visible
   useEffect(() => {
-    if (isVisible && bannerRef.current) {
-      const bannerHeight = bannerRef.current.offsetHeight;
-      const nav = document.getElementById('navigation');
-      if (nav) {
-        nav.style.top = `${bannerHeight}px`;
-      }
-
-      // Keep dark mode button at 91vh when banner is visible
-      // Retry finding the button since it loads with delay
-      const adjustDarkModeButton = () => {
-        const darkModeBtn = document.querySelector('.darkmode-toggle');
-        if (darkModeBtn) {
-          darkModeBtn.style.bottom = '91vh';
-        } else {
-          // Retry after a short delay if button not found
-          setTimeout(adjustDarkModeButton, 200);
+    try {
+      if (isVisible && bannerRef.current) {
+        const bannerHeight = bannerRef.current.offsetHeight;
+        const nav = document.getElementById('navigation');
+        if (nav) {
+          nav.style.top = `${bannerHeight}px`;
         }
-      };
-      adjustDarkModeButton();
-    } else {
-      // Reset dark mode button to original position when banner is hidden
-      const darkModeBtn = document.querySelector('.darkmode-toggle');
-      if (darkModeBtn) {
-        darkModeBtn.style.bottom = '93.5vh';
+
+        // Keep dark mode button at 91vh when banner is visible
+        // Retry finding the button since it loads with delay
+        const adjustDarkModeButton = () => {
+          try {
+            const darkModeBtn = document.querySelector('.darkmode-toggle');
+            if (darkModeBtn) {
+              darkModeBtn.style.bottom = '91vh';
+            } else {
+              // Retry after a short delay if button not found
+              setTimeout(adjustDarkModeButton, 200);
+            }
+          } catch (error) {
+            console.error('Error adjusting dark mode button:', error);
+          }
+        };
+        adjustDarkModeButton();
+      } else {
+        // Reset dark mode button to original position when banner is hidden
+        try {
+          const darkModeBtn = document.querySelector('.darkmode-toggle');
+          if (darkModeBtn) {
+            darkModeBtn.style.bottom = '93.5vh';
+          }
+        } catch (error) {
+          console.error('Error resetting dark mode button:', error);
+        }
       }
+    } catch (error) {
+      console.error('Error in banner visibility effect:', error);
     }
   }, [isVisible]);
 
   const handleClose = () => {
-    setIsVisible(false);
-    sessionStorage.setItem('locale-switcher-dismissed', 'true');
-    // Remove padding from navigation
-    const nav = document.getElementById('navigation');
-    if (nav) nav.style.top = '0';
-    // Reset dark mode button position
-    const darkModeBtn = document.querySelector('.darkmode-toggle');
-    if (darkModeBtn) darkModeBtn.style.bottom = '93.5vh';
+    try {
+      setIsVisible(false);
+      sessionStorage.setItem('locale-switcher-dismissed', 'true');
+      // Remove padding from navigation
+      const nav = document.getElementById('navigation');
+      if (nav) nav.style.top = '0';
+      // Reset dark mode button position
+      const darkModeBtn = document.querySelector('.darkmode-toggle');
+      if (darkModeBtn) darkModeBtn.style.bottom = '93.5vh';
+    } catch (error) {
+      console.error('Error closing locale switcher:', error);
+    }
   };
 
   const handleContinue = () => {
