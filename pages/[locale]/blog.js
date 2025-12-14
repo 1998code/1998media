@@ -1,8 +1,11 @@
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { franc } from 'franc-min';
 import { Tooltip } from '@nextui-org/tooltip';
 
 export default function Blog(props) {
+  const blogScrollRef = useRef(null);
+  const tripScrollRef = useRef(null);
+
   function i18n(key) {
     if (props.i18n && props.i18n['blog'] && !props.i18n['blog'][key]) {
       console.log('Blog Missing Translation: ' + key);
@@ -15,14 +18,19 @@ export default function Blog(props) {
   const blogs = props.blogData?.posts || [];
 
   function languageCheck(text) {
+    // First check if text contains Chinese characters
+    const hasChineseChars = /[\u4e00-\u9fff]/.test(text);
+    if (hasChineseChars) {
+      return 'zh';
+    }
+    
+    // Fall back to franc for other languages
     const lang = franc(text);
     if (
       lang === 'cmn' ||
       lang === 'yue' ||
       lang === 'wuu' ||
-      lang === 'nan' ||
-      lang === 'zul' ||
-      lang === 'und'
+      lang === 'nan'
     ) {
       return 'zh';
     } else {
@@ -42,7 +50,120 @@ export default function Blog(props) {
     publishTime: '2025-01-01T00:00:00.000Z', // Static date to avoid hydration mismatch
   };
 
-  const moment = [tripPromo, ...(props.blogData?.moments || []).slice(0, 5)];
+  const moments = (props.blogData?.moments || []).slice(0, 5);
+  const moment = [tripPromo, ...moments];
+
+  // Filtered blogs for display
+  const filteredBlogs = blogs
+    .filter((post) => {
+      const userLanguage = props.locale || 'en';
+      const postLanguage = languageCheck(post.title);
+      if (userLanguage.includes('zh')) {
+        return postLanguage === 'zh';
+      } else {
+        return postLanguage === 'en';
+      }
+    })
+    .slice(0, 6);
+
+  // Auto-scroll for Blog posts
+  useEffect(() => {
+    const blogContainer = blogScrollRef.current;
+    if (!blogContainer || filteredBlogs.length === 0) return;
+
+    let isUserScrolling = false;
+    let scrollTimeout;
+    let animationFrame;
+
+    const handleInteraction = () => {
+      isUserScrolling = true;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        isUserScrolling = false;
+      }, 3000);
+    };
+
+    const autoScroll = () => {
+      if (!isUserScrolling && blogContainer) {
+        blogContainer.scrollLeft += 0.5;
+        
+        // Reset when we've scrolled past the first set (one third of total scroll width since we have 3 sets)
+        const scrollWidth = blogContainer.scrollWidth;
+        const firstSetWidth = scrollWidth / 3;
+        
+        if (blogContainer.scrollLeft >= firstSetWidth) {
+          blogContainer.scrollLeft = blogContainer.scrollLeft - firstSetWidth;
+        }
+      }
+      animationFrame = requestAnimationFrame(autoScroll);
+    };
+
+    blogContainer.addEventListener('wheel', handleInteraction, { passive: true });
+    blogContainer.addEventListener('touchstart', handleInteraction);
+    blogContainer.addEventListener('touchmove', handleInteraction);
+    blogContainer.addEventListener('mousedown', handleInteraction);
+
+    animationFrame = requestAnimationFrame(autoScroll);
+
+    return () => {
+      blogContainer.removeEventListener('wheel', handleInteraction);
+      blogContainer.removeEventListener('touchstart', handleInteraction);
+      blogContainer.removeEventListener('touchmove', handleInteraction);
+      blogContainer.removeEventListener('mousedown', handleInteraction);
+      cancelAnimationFrame(animationFrame);
+      clearTimeout(scrollTimeout);
+    };
+  }, [filteredBlogs]);
+
+  // Auto-scroll for Trip moments (reverse direction)
+  useEffect(() => {
+    const tripContainer = tripScrollRef.current;
+    if (!tripContainer || moment.length === 0) return;
+
+    setTimeout(() => {
+      if (tripContainer) {
+        tripContainer.scrollLeft = tripContainer.scrollWidth / 2;
+      }
+    }, 100);
+
+    let isUserScrolling = false;
+    let scrollTimeout;
+    let animationFrame;
+
+    const handleInteraction = () => {
+      isUserScrolling = true;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        isUserScrolling = false;
+      }, 3000);
+    };
+
+    const autoScroll = () => {
+      if (!isUserScrolling && tripContainer) {
+        tripContainer.scrollLeft -= 0.5;
+        if (tripContainer.scrollLeft <= 0) {
+          tripContainer.scrollLeft = tripContainer.scrollWidth / 2;
+        }
+      }
+      animationFrame = requestAnimationFrame(autoScroll);
+    };
+
+    tripContainer.addEventListener('wheel', handleInteraction, { passive: true });
+    tripContainer.addEventListener('touchstart', handleInteraction);
+    tripContainer.addEventListener('touchmove', handleInteraction);
+    tripContainer.addEventListener('mousedown', handleInteraction);
+
+    animationFrame = requestAnimationFrame(autoScroll);
+
+    return () => {
+      tripContainer.removeEventListener('wheel', handleInteraction);
+      tripContainer.removeEventListener('touchstart', handleInteraction);
+      tripContainer.removeEventListener('touchmove', handleInteraction);
+      tripContainer.removeEventListener('mousedown', handleInteraction);
+      cancelAnimationFrame(animationFrame);
+      clearTimeout(scrollTimeout);
+    };
+  }, [moment]);
 
   return (
     <div className="relative px-4 sm:px-6 lg:px-8 space-y-16">
@@ -60,29 +181,23 @@ export default function Blog(props) {
             {i18n('Find out the latest posts and tutorials.')}
           </p>
         </div>
-        <div className="mx-auto grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {blogs
-            .filter((post) => {
-              const userLanguage = props.locale || 'en';
-              const postLanguage = languageCheck(post.title);
-              if (userLanguage.includes('zh')) {
-                return postLanguage === 'zh';
-              } else {
-                return postLanguage === 'en';
-              }
-            })
-            .slice(0, 6)
-            .map((post) => (
+        <div className="overflow-x-auto my-5 scrollbar-hide" ref={blogScrollRef} style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+          <div className="flex gap-5">
+            {[
+              ...filteredBlogs,
+              ...filteredBlogs,
+              ...filteredBlogs,
+            ].map((post, index) => (
               <a
-                key={post.title}
+                key={`${post.title}-${index}`}
                 href={post.link}
                 target="_blank"
-                className="flex flex-col rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight"
+                className="flex-shrink-0 w-[350px] flex flex-col rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white xl:rounded-[25px]"
               >
                 <div className="flex-shrink-0">
                   <img
                     loading="lazy"
-                    className="h-64 w-full object-cover"
+                    className="h-64 w-[350px] object-cover"
                     src={post.enclosure.link}
                     alt={post.title}
                   />
@@ -129,6 +244,7 @@ export default function Blog(props) {
                 </div>
               </a>
             ))}
+          </div>
         </div>
       </div>
 
@@ -173,19 +289,24 @@ export default function Blog(props) {
             {i18n('View all on Trip.com')}
           </a>
         </div>
-        <div className="mx-auto grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {moment &&
-            moment.map((post) => (
+        <div className="overflow-x-auto my-5 scrollbar-hide" ref={tripScrollRef} style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+          <div className="flex gap-5">
+            {[
+              tripPromo,
+              ...moments,
+              ...moments,
+              ...moments,
+            ].map((post, index) => (
               <a
                 href={post.shareURL}
                 target="_blank"
-                key={post.translateTitle || post.title}
-                className="flex flex-col rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white backlight"
+                key={`${post.translateTitle || post.title}-${index}`}
+                className="flex-shrink-0 w-[350px] flex flex-col rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white xl:rounded-[25px]"
               >
                 <div className="flex-shrink-0">
                   <img
                     loading="lazy"
-                    className="h-64 w-full object-cover"
+                    className="h-64 w-[350px] object-cover"
                     src={post.coverURL}
                     alt={post.translateTitle || post.title}
                   />
@@ -217,6 +338,7 @@ export default function Blog(props) {
                 </div>
               </a>
             ))}
+          </div>
         </div>
       </div>
     </div>

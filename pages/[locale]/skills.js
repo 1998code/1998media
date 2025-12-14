@@ -1,4 +1,12 @@
+import { useState, useRef, useEffect } from 'react';
+
 export default function Skills(props) {
+  const [activeTab, setActiveTab] = useState('all');
+  const [tabStyles, setTabStyles] = useState({ left: '4px', width: '62px' });
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const desktopTabRefs = useRef({});
+  const mobileTabRefs = useRef({});
+
   function i18n(key) {
     if (props.i18n && props.i18n['skills'] && !props.i18n['skills'][key]) {
       console.log('Skills Missing Translation: ' + key);
@@ -31,7 +39,7 @@ export default function Skills(props) {
     {
       name: 'Framer',
       icons: 'fa-sketch',
-      href: 'https://sketch.com',
+      href: 'https://www.framer.com/',
       bgColor: 'bg-sky-500',
     },
     {
@@ -44,57 +52,57 @@ export default function Skills(props) {
     {
       name: 'Apple Xcode',
       icons: 'fa-apple',
-      href: '#',
+      href: 'https://developer.apple.com/xcode/',
       bgColor: 'bg-black dark:bg-white dark:text-black',
     },
     {
       name: 'Apple iWork',
       icons: 'fa-apple',
-      href: '#',
+      href: 'https://www.apple.com/iwork/',
       bgColor: 'bg-black dark:bg-white dark:text-black',
     },
     {
       name: 'Microsoft Office',
       icons: 'fa-microsoft',
-      href: '#',
+      href: 'https://www.microsoft.com/microsoft-365',
       bgColor: 'bg-teal-500',
     },
     {
       name: 'Google Worksuite',
       icons: 'fa-google',
-      href: '#',
+      href: 'https://workspace.google.com/',
       bgColor: 'bg-blue-500',
     },
 
     {
       name: 'Apple Final Cut Pro',
       icons: 'fa-apple',
-      href: '#',
+      href: 'https://www.apple.com/final-cut-pro/',
       bgColor: 'bg-black dark:bg-white dark:text-black',
     },
-    { name: 'Unity', icons: 'fa-unity', href: '#', bgColor: 'bg-blue-500' },
-    { name: 'Cinema 4D', icons: 'C4D', href: '#', bgColor: 'bg-purple-500' },
-    { name: 'Shapr3D', icons: 'S3D', href: '#', bgColor: 'bg-orange-500' },
+    { name: 'Unity', icons: 'fa-unity', href: 'https://unity.com/', bgColor: 'bg-blue-500' },
+    { name: 'Cinema 4D', icons: 'C4D', href: 'https://www.maxon.net/en/cinema-4d', bgColor: 'bg-purple-500' },
+    { name: 'Shapr3D', icons: 'S3D', href: 'https://www.shapr3d.com/', bgColor: 'bg-orange-500' },
 
     {
       name: 'Microsoft PowerBI',
       icons: 'fa-microsoft',
-      href: '#',
+      href: 'https://powerbi.microsoft.com/',
       bgColor: 'bg-teal-500',
     },
     {
       name: 'MS SQL Server',
       icons: 'fa-microsoft',
-      href: '#',
+      href: 'https://www.microsoft.com/sql-server',
       bgColor: 'bg-teal-500',
     },
     {
       name: 'MySQLWorkbench',
       icons: 'MSW',
-      href: '#',
+      href: 'https://www.mysql.com/products/workbench/',
       bgColor: 'bg-green-500',
     },
-    { name: 'Table Plus', icons: 'TP', href: '#', bgColor: 'bg-purple-500' },
+    { name: 'Table Plus', icons: 'TP', href: 'https://tableplus.com/', bgColor: 'bg-purple-500' },
   ];
   const languages = [
     {
@@ -187,169 +195,291 @@ export default function Skills(props) {
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ');
   }
+
+  // Tab configuration
+  const tabs = [
+    { id: 'all', label: 'All', icon: 'fa-th', color: 'bg-orange-600' },
+    { id: 'certified', label: 'Certified', icon: 'fa-certificate', color: 'bg-blue-600' },
+    { id: 'softwares', label: 'Softwares', icon: 'fa-desktop', color: 'bg-purple-600' },
+    { id: 'languages', label: 'Languages & Technologies', icon: 'fa-code', color: 'bg-indigo-600' },
+    { id: 'speak-write', label: 'Speak & Write', icon: 'fa-language', color: 'bg-green-600' },
+  ];
+
+  // Get active tab color
+  const getActiveTabColor = () => {
+    const activeTabData = tabs.find((tab) => tab.id === activeTab);
+    return activeTabData?.color || 'bg-gray-600';
+  };
+
+  // Handle tab change with animation
+  const handleTabChange = (newTab) => {
+    if (newTab === activeTab) return;
+
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setActiveTab(newTab);
+      setTimeout(() => setIsTransitioning(false), 50);
+    }, 250);
+  };
+
+  // Update tab styles when active tab changes
+  useEffect(() => {
+    const updateTabStyles = () => {
+      const desktopEl = desktopTabRefs.current[activeTab];
+      const mobileEl = mobileTabRefs.current[activeTab];
+
+      const activeTabElement =
+        desktopEl && desktopEl.offsetParent !== null
+          ? desktopEl
+          : mobileEl && mobileEl.offsetParent !== null
+            ? mobileEl
+            : null;
+
+      if (activeTabElement) {
+        const parent = activeTabElement.parentElement;
+        const parentRect = parent.getBoundingClientRect();
+        const activeRect = activeTabElement.getBoundingClientRect();
+
+        setTabStyles({
+          left: `${activeRect.left - parentRect.left}px`,
+          width: `${activeRect.width}px`,
+        });
+      }
+    };
+
+    updateTabStyles();
+    const timeoutId = setTimeout(updateTabStyles, 50);
+    return () => clearTimeout(timeoutId);
+  }, [activeTab, props.i18n]);
+
   return (
     <div id="skills" className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
       <div className="relative max-w-7xl mx-auto">
-        <div className="text-left flex">
-          <a
-            className="text-3xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl"
-            href="#skills"
-          >
-            {i18n('Skills & Languages')}
-            <i className="far fa-language ml-2"></i>
-          </a>
-        </div>
-        <div className="mt-10">
-          <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
-            {i18n('Certified')}
-          </h2>
-          <ul
-            role="list"
-            className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4"
-          >
-            {certs.map((cert) => (
-              <li
-                key={cert.name}
-                className="col-span-1 flex shadow-sm rounded-xl overflow-hidden border border-transparent dark:hover:border-white hover:scale-95 backlight transition-all"
-              >
+        <div className="text-left">
+          <div className="flex items-center justify-between flex-wrap gap-4">
+            <a
+              className="text-3xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl"
+              href="#skills"
+            >
+              {i18n('Skills & Languages')}
+              <i className="far fa-language ml-2"></i>
+            </a>
+
+            {/* Tab Switcher - Desktop only */}
+            <div className="hidden lg:block">
+              <div className="relative flex bg-white/50 dark:bg-black/50 backdrop-blur-md rounded-2xl p-1 border border-gray-200 dark:border-gray-700 xl:rounded-[20px]">
+                {/* Sliding Background */}
                 <div
-                  className={classNames(
-                    cert.bgColor,
-                    'flex-shrink-0 flex items-center justify-center w-20 text-white text-sm font-medium rounded-l-md'
-                  )}
+                  className={`absolute top-1 bottom-1 ${getActiveTabColor()} rounded-xl transition-all duration-300 ease-out shadow-sm pointer-events-none`}
+                  style={tabStyles}
+                />
+                {tabs.map((tab) => (
+                  <button
+                    key={tab.id}
+                    ref={(el) => (desktopTabRefs.current[tab.id] = el)}
+                    onClick={() => handleTabChange(tab.id)}
+                    className={`relative z-10 px-3 py-2 text-xs font-medium rounded-xl transition-all duration-300 ${
+                      activeTab === tab.id
+                        ? 'text-white'
+                        : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
+                    }`}
+                  >
+                    <i className={`far ${tab.icon} mr-1`}></i>
+                    {i18n(tab.label)}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Tab Switcher - Mobile & Tablet */}
+          <div className="flex justify-center mt-6 lg:hidden">
+            <div className="relative flex bg-white/50 dark:bg-black/50 backdrop-blur-md rounded-2xl p-1 border border-gray-200 dark:border-gray-700 xl:rounded-[20px]">
+              {/* Sliding Background */}
+              <div
+                className={`absolute top-1 bottom-1 ${getActiveTabColor()} rounded-xl transition-all duration-300 ease-out shadow-sm pointer-events-none`}
+                style={tabStyles}
+              />
+              {tabs.map((tab) => (
+                <button
+                  key={tab.id}
+                  ref={(el) => (mobileTabRefs.current[tab.id] = el)}
+                  onClick={() => handleTabChange(tab.id)}
+                  className={`relative z-10 px-3 py-2 text-xs font-medium rounded-xl transition-all duration-300 ${
+                    activeTab === tab.id
+                      ? 'text-white'
+                      : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
+                  }`}
                 >
-                  <i className={classNames('fab', cert.icons)}>
-                    {cert.icons.includes('fa') ? '' : cert.icons}
-                  </i>
-                </div>
-                <div className="flex-1 flex items-center justify-between border-gray-200 bg-white dark:bg-black dark:border-black truncate">
-                  <div className="flex-1 px-4 py-2 text-sm truncate">
-                    <a
-                      href={cert.href}
-                      target="_blank"
-                      className="text-gray-900 dark:text-gray-100 font-medium hover:text-gray-600"
-                    >
+                  <i className={`far ${tab.icon} mr-1`}></i>
+                  {i18n(tab.label)}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div
+          className="transition-all duration-500 ease-in-out mt-8"
+          style={{
+            transform: isTransitioning ? 'translateX(20px)' : 'translateX(0)',
+            opacity: isTransitioning ? 0 : 1,
+          }}
+        >
+          {/* Certified */}
+          {(activeTab === 'all' || activeTab === 'certified') && (
+            <div className="mt-10">
+                <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
+                  {i18n('Certified')}
+                </h2>
+                <ul
+                  role="list"
+                  className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4"
+                >
+                  {certs.map((cert) => (
+              <li key={cert.name} className="col-span-1">
+                <a
+                  href={cert.href}
+                  target="_blank"
+                  className="flex shadow-sm rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 hover:animate-pulse transition-all"
+                >
+                  <div
+                    className={classNames(
+                      cert.bgColor,
+                      'flex-shrink-0 flex items-center justify-center w-20 text-white text-sm font-medium rounded-l-md'
+                    )}
+                  >
+                    <i className={classNames('fab', cert.icons)}>
+                      {cert.icons.includes('fa') ? '' : cert.icons}
+                    </i>
+                  </div>
+                  <div className="flex-1 flex items-center justify-between border-gray-200 bg-white dark:bg-black dark:border-black truncate">
+                    <div className="flex-1 px-4 py-2 text-sm truncate text-gray-900 dark:text-gray-100 font-medium hover:text-gray-600">
                       {i18n(cert.name)}
-                    </a>
+                    </div>
                   </div>
-                </div>
+                </a>
               </li>
-            ))}
-          </ul>
-        </div>
-        <div className="mt-10">
-          <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
-            {i18n('Softwares')}*
-          </h2>
-          <ul
-            role="list"
-            className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5"
-          >
-            {softwares.map((software) => (
-              <li
-                key={software.name}
-                className="col-span-1 flex shadow-sm rounded-xl overflow-hidden border border-transparent dark:hover:border-white hover:scale-95 backlight transition-all"
-              >
-                <div
-                  className={classNames(
-                    software.bgColor,
-                    'flex-shrink-0 flex items-center justify-center w-20 text-white text-sm font-medium rounded-l-md'
-                  )}
+                  ))}
+                </ul>
+            </div>
+          )}
+
+          {/* Softwares */}
+          {(activeTab === 'all' || activeTab === 'softwares') && (
+            <div className="mt-10">
+                <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
+                  {i18n('Softwares')}*
+                </h2>
+                <ul
+                  role="list"
+                  className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5"
                 >
-                  <i className={classNames('fab', software.icons)}>
-                    {software.icons.includes('fa') ? '' : software.icons}
-                  </i>
-                </div>
-                <div className="flex-1 flex items-center justify-between border-gray-200 bg-white dark:bg-black dark:border-black truncate">
-                  <div className="flex-1 px-4 py-2 text-sm truncate">
-                    <a
-                      href={software.href}
-                      target="_blank"
-                      className="text-gray-900 dark:text-gray-100 font-medium hover:text-gray-600"
-                    >
+                  {softwares.map((software) => (
+              <li key={software.name} className="col-span-1">
+                <a
+                  href={software.href}
+                  target="_blank"
+                  className="flex shadow-sm rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 hover:animate-pulse transition-all"
+                >
+                  <div
+                    className={classNames(
+                      software.bgColor,
+                      'flex-shrink-0 flex items-center justify-center w-20 text-white text-sm font-medium rounded-l-md'
+                    )}
+                  >
+                    <i className={classNames('fab', software.icons)}>
+                      {software.icons.includes('fa') ? '' : software.icons}
+                    </i>
+                  </div>
+                  <div className="flex-1 flex items-center justify-between border-gray-200 bg-white dark:bg-black dark:border-black truncate">
+                    <div className="flex-1 px-4 py-2 text-sm truncate text-gray-900 dark:text-gray-100 font-medium hover:text-gray-600">
                       {i18n(software.name)}
-                    </a>
+                    </div>
                   </div>
-                </div>
+                </a>
               </li>
-            ))}
-          </ul>
-        </div>
-        <div className="mt-10">
-          <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
-            {i18n('Languages & Technologies')}
-          </h2>
-          <ul
-            role="list"
-            className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5"
-          >
-            {languages.map((language) => (
-              <li
-                key={language.name}
-                className="col-span-1 flex shadow-sm rounded-xl overflow-hidden border border-transparent dark:hover:border-white hover:scale-95 backlight transition-all"
-              >
-                <div
-                  className={classNames(
-                    language.bgColor,
-                    'flex-shrink-0 flex items-center justify-center w-20 text-white text-sm font-medium rounded-l-md'
-                  )}
+                  ))}
+                </ul>
+            </div>
+          )}
+
+          {/* Languages & Technologies */}
+          {(activeTab === 'all' || activeTab === 'languages') && (
+            <div className="mt-10">
+                <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
+                  {i18n('Languages & Technologies')}
+                </h2>
+                <ul
+                  role="list"
+                  className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5"
                 >
-                  <i className={classNames('fab', language.icons)}>
-                    {language.icons.includes('fa') ? '' : language.icons}
-                  </i>
-                </div>
-                <div className="flex-1 flex items-center justify-between border-gray-200 bg-white dark:bg-black dark:border-black truncate">
-                  <div className="flex-1 px-4 py-2 text-sm truncate">
-                    <a
-                      href={language.href}
-                      target="_blank"
-                      className="text-gray-900 dark:text-gray-100 font-medium hover:text-gray-600"
-                    >
+                  {languages.map((language) => (
+              <li key={language.name} className="col-span-1">
+                <a
+                  href={language.href}
+                  target="_blank"
+                  className="flex shadow-sm rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 hover:animate-pulse transition-all"
+                >
+                  <div
+                    className={classNames(
+                      language.bgColor,
+                      'flex-shrink-0 flex items-center justify-center w-20 text-white text-sm font-medium rounded-l-md'
+                    )}
+                  >
+                    <i className={classNames('fab', language.icons)}>
+                      {language.icons.includes('fa') ? '' : language.icons}
+                    </i>
+                  </div>
+                  <div className="flex-1 flex items-center justify-between border-gray-200 bg-white dark:bg-black dark:border-black truncate">
+                    <div className="flex-1 px-4 py-2 text-sm truncate text-gray-900 dark:text-gray-100 font-medium hover:text-gray-600">
                       {i18n(language.name)}
-                    </a>
+                    </div>
                   </div>
-                </div>
+                </a>
               </li>
-            ))}
-          </ul>
-        </div>
-        <div className="mt-10">
-          <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
-            {i18n('Speak & Write')}
-          </h2>
-          <ul
-            role="list"
-            className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2 2xl:grid-cols-4"
-          >
-            {speakWrites.map((speakWrite) => (
-              <li
-                key={speakWrite.name}
-                className="col-span-1 flex shadow-sm rounded-xl overflow-hidden border border-transparent dark:hover:border-white hover:scale-95 backlight transition-all"
-              >
-                <div
-                  className={classNames(
-                    speakWrite.bgColor,
-                    'flex-shrink-0 flex items-center justify-center w-20 text-white text-xs font-medium rounded-l-md'
-                  )}
+                  ))}
+                </ul>
+            </div>
+          )}
+
+          {/* Speak & Write */}
+          {(activeTab === 'all' || activeTab === 'speak-write') && (
+            <div className="mt-10">
+                <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
+                  {i18n('Speak & Write')}
+                </h2>
+                <ul
+                  role="list"
+                  className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2 2xl:grid-cols-4"
                 >
-                  {i18n(speakWrite.icons)}
-                </div>
-                <div className="flex-1 flex items-center justify-between border-gray-200 bg-white dark:bg-black dark:border-black truncate">
-                  <div className="flex-1 px-4 py-2 text-sm truncate">
-                    <a
-                      href={speakWrite.href}
-                      target="_blank"
-                      className="text-gray-900 dark:text-gray-100 font-medium hover:text-gray-600"
-                    >
-                      {i18n(speakWrite.name)}
-                    </a>
+                  {speakWrites.map((speakWrite) => (
+              <li key={speakWrite.name} className="col-span-1">
+                <a
+                  href={speakWrite.href}
+                  target="_blank"
+                  className="flex shadow-sm rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 hover:animate-pulse transition-all"
+                >
+                  <div
+                    className={classNames(
+                      speakWrite.bgColor,
+                      'flex-shrink-0 flex items-center justify-center w-20 text-white text-xs font-medium rounded-l-md'
+                    )}
+                  >
+                    {i18n(speakWrite.icons)}
                   </div>
-                </div>
+                  <div className="flex-1 flex items-center justify-between border-gray-200 bg-white dark:bg-black dark:border-black truncate">
+                    <div className="flex-1 px-4 py-2 text-sm truncate text-gray-900 dark:text-gray-100 font-medium hover:text-gray-600">
+                      {i18n(speakWrite.name)}
+                    </div>
+                  </div>
+                </a>
               </li>
-            ))}
-          </ul>
+                  ))}
+                </ul>
+            </div>
+          )}
         </div>
-        <p className="mt-10 text-sm text-gray-500">
+        <p className="mt-6 text-sm text-gray-500">
           {i18n('*Random sort - does not mean the order of proficient level')}
         </p>
       </div>
