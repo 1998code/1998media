@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export default function Achievements(props) {
+  const [hoveredAchievement, setHoveredAchievement] = useState(null);
+
   function i18n(key) {
     if (
       props.i18n &&
@@ -15,6 +17,50 @@ export default function Achievements(props) {
       ? props.i18n['achievements'][key]
       : key;
   }
+
+  // Map achievements to their map coordinates and colors
+  const achievementMapData = {
+    'Developer Tools in Hong Kong': {
+      coords: [113.9745954, 22.3526409],
+      color: 'b8172a',
+      isLarge: true,
+    },
+    'Developer Tools in Maldives': {
+      coords: [73.5089, 4.1755],
+      color: 'dc143c',
+      isLarge: false,
+    },
+    'Developer Tools in Taiwan': {
+      coords: [121.1945767, 25.0169013],
+      color: '1f89e3',
+      isLarge: false,
+    },
+    'Developer Tools in the United Kingdom': {
+      coords: [-9.7459993, 54.4364324],
+      color: '0b236f',
+      isLarge: false,
+    },
+    'Developer Tools in the United States': {
+      coords: [-95.7129, 37.0902],
+      color: '0033a0',
+      isLarge: false,
+    },
+    'Developer Tools in Canada': {
+      coords: [-106.3468, 56.1304],
+      color: 'ff0000',
+      isLarge: false,
+    },
+    'Graphics & Design App in Uzbekistan': {
+      coords: [64.5853, 41.3775],
+      color: '0099b5',
+      isLarge: false,
+    },
+    'Developer Tools in Kuwait': {
+      coords: [47.4818, 29.3117],
+      color: '007a3d',
+      isLarge: false,
+    },
+  };
 
   const achievements = [
     {
@@ -110,6 +156,58 @@ export default function Achievements(props) {
     },
   ];
 
+  // Original static map URLs
+  const originalMapUrlLight =
+    'https://api.mapbox.com/styles/v1/mapbox/streets-v12/static/pin-l+b8172a(113.9745954,22.3526409),pin-s+dc143c(73.5089,4.1755),pin-s+1f89e3(121.1945767,25.0169013),pin-s+0b236f(-9.7459993,54.4364324),pin-s+0033a0(-95.7129,37.0902),pin-s+ff0000(-106.3468,56.1304),pin-s+0099b5(64.5853,41.3775),pin-s+007a3d(47.4818,29.3117)/11.7314,14.9358,1.32,0,35/1280x720@2x?access_token=pk.eyJ1IjoiMTk5OG1lZGlhIiwiYSI6ImNsdHRuaGg4ZzE1NDUya3N5MTd2dTgwbTYifQ.nTFoFutOK1E7O6KBSFPLVQ&logo=false&attribution=false';
+  const originalMapUrlDark =
+    'https://api.mapbox.com/styles/v1/1998media/clttnmr3900k501qw52w30alb/static/pin-l+b8172a(113.9745954,22.3526409),pin-s+dc143c(73.5089,4.1755),pin-s+1f89e3(121.1945767,25.0169013),pin-s+0b236f(-9.7459993,54.4364324),pin-s+0033a0(-95.7129,37.0902),pin-s+ff0000(-106.3468,56.1304),pin-s+0099b5(64.5853,41.3775),pin-s+007a3d(47.4818,29.3117)/11.7314,14.9358,1.32,0,35/1280x720@2x?access_token=pk.eyJ1IjoiMTk5OG1lZGlhIiwiYSI6ImNsdHRuaGg4ZzE1NDUya3N5MTd2dTgwbTYifQ.nTFoFutOK1E7O6KBSFPLVQ&logo=false&attribution=false';
+
+  // Generate map URL based on hover state
+  const generateMapUrl = (isDark = false) => {
+    if (!hoveredAchievement) {
+      return isDark ? originalMapUrlDark : originalMapUrlLight;
+    }
+
+    const style = isDark
+      ? '1998media/clttnmr3900k501qw52w30alb'
+      : 'mapbox/streets-v12';
+    const pins = [];
+
+    // Get all achievements that have map data
+    const achievementsWithMap = achievements.filter(
+      (a) => achievementMapData[a.title]
+    );
+
+    // Separate hovered and non-hovered pins to ensure hovered pin renders last (on top)
+    const nonHoveredPins = [];
+    let hoveredPin = null;
+
+    achievementsWithMap.forEach((achievement) => {
+      const mapData = achievementMapData[achievement.title];
+      const isHovered = hoveredAchievement === achievement.title;
+
+      if (isHovered) {
+        // Highlight hovered pin with large size (pin-l is the largest available) and original color
+        hoveredPin = `pin-l+${mapData.color}(${mapData.coords[0]},${mapData.coords[1]})`;
+      } else {
+        // Gray out other pins when something is hovered - use smallest size (pin-s) for maximum contrast
+        nonHoveredPins.push(
+          `pin-s+808080(${mapData.coords[0]},${mapData.coords[1]})`
+        );
+      }
+    });
+
+    // Add hovered pin last so it renders on top
+    if (hoveredPin) {
+      pins.push(...nonHoveredPins, hoveredPin);
+    } else {
+      pins.push(...nonHoveredPins);
+    }
+
+    const pinsString = pins.join(',');
+    return `https://api.mapbox.com/styles/v1/${style}/static/${pinsString}/11.7314,14.9358,1.32,0,35/1280x720@2x?access_token=pk.eyJ1IjoiMTk5OG1lZGlhIiwiYSI6ImNsdHRuaGg4ZzE1NDUya3N5MTd2dTgwbTYifQ.nTFoFutOK1E7O6KBSFPLVQ&logo=false&attribution=false`;
+  };
+
   return (
     <>
       <div className="relative px-4 sm:px-6 lg:px-8">
@@ -143,32 +241,74 @@ export default function Achievements(props) {
                 <i className="fab fa-app-store ml-2"></i>
               </h3>
               <dl className="rounded-xl overflow-hidden bg-white/50 dark:bg-black/50 backdrop-blur-md shadow-lg grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 backlight xl:rounded-[30px]">
-                {achievements.map((achievement) => (
-                  <div key={achievement.title} className="flex flex-col p-6 text-center lg:text-left hover:scale-105 transition-all">
-                    {/* <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">
-                      {achievement.year}
-                    </dt> */}
-                    <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
-                      {i18n(achievement.title)} {achievement.flag}
-                    </dt>
-                    <dd
-                      className={`order-1 text-5xl font-extrabold ${achievement.color}`}
+                {achievements.map((achievement) => {
+                  const hasMapData = achievementMapData[achievement.title];
+                  const isHovered = hoveredAchievement === achievement.title;
+                  const isGrayedOut = hoveredAchievement && !isHovered;
+                  return (
+                    <div
+                      key={achievement.title}
+                      className={`flex flex-col p-6 text-center lg:text-left transition-all ${
+                        isHovered
+                          ? 'scale-105'
+                          : isGrayedOut
+                          ? 'opacity-40 grayscale'
+                          : 'hover:scale-105'
+                      }`}
+                      onMouseEnter={() => {
+                        setHoveredAchievement(achievement.title);
+                      }}
+                      onMouseLeave={() => {
+                        setHoveredAchievement(null);
+                      }}
                     >
-                      {i18n(achievement.rank)}
-                    </dd>
-                  </div>
-                ))}
+                      {/* <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">
+                        {achievement.year}
+                      </dt> */}
+                      <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
+                        {i18n(achievement.title)} {achievement.flag}
+                      </dt>
+                      <dd
+                        className={`order-1 text-5xl font-extrabold ${achievement.color}`}
+                      >
+                        {i18n(achievement.rank)}
+                      </dd>
+                    </div>
+                  );
+                })}
               </dl>
-              <img
-                loading="lazy"
-                className="dark:hidden my-6 rounded-xl hover:scale-95 transition-all"
-                src="https://api.mapbox.com/styles/v1/mapbox/streets-v12/static/pin-l+b8172a(113.9745954,22.3526409),pin-s+dc143c(73.5089,4.1755),pin-s+1f89e3(121.1945767,25.0169013),pin-s+0b236f(-9.7459993,54.4364324),pin-s+0033a0(-95.7129,37.0902),pin-s+ff0000(-106.3468,56.1304),pin-s+0099b5(64.5853,41.3775),pin-s+007a3d(47.4818,29.3117)/11.7314,14.9358,1.32,0,35/1280x720@2x?access_token=pk.eyJ1IjoiMTk5OG1lZGlhIiwiYSI6ImNsdHRuaGg4ZzE1NDUya3N5MTd2dTgwbTYifQ.nTFoFutOK1E7O6KBSFPLVQ&logo=false&attribution=false"
-              />
-              <img
-                loading="lazy"
-                className="hidden dark:block my-6 rounded-xl hover:scale-95 transition-all"
-                src="https://api.mapbox.com/styles/v1/1998media/clttnmr3900k501qw52w30alb/static/pin-l+b8172a(113.9745954,22.3526409),pin-s+dc143c(73.5089,4.1755),pin-s+1f89e3(121.1945767,25.0169013),pin-s+0b236f(-9.7459993,54.4364324),pin-s+0033a0(-95.7129,37.0902),pin-s+ff0000(-106.3468,56.1304),pin-s+0099b5(64.5853,41.3775),pin-s+007a3d(47.4818,29.3117)/11.7314,14.9358,1.32,0,35/1280x720@2x?access_token=pk.eyJ1IjoiMTk5OG1lZGlhIiwiYSI6ImNsdHRuaGg4ZzE1NDUya3N5MTd2dTgwbTYifQ.nTFoFutOK1E7O6KBSFPLVQ&logo=false&attribution=false"
-              />
+              <div className="relative my-6">
+                {/* Original static map - always visible at bottom */}
+                <img
+                  loading="lazy"
+                  className="dark:hidden rounded-xl hover:scale-95 transition-all"
+                  src={originalMapUrlLight}
+                  alt="World map"
+                />
+                <img
+                  loading="lazy"
+                  className="hidden dark:block rounded-xl hover:scale-95 transition-all"
+                  src={originalMapUrlDark}
+                  alt="World map"
+                />
+                {/* Dynamic map overlay - only visible when hovering */}
+                {hoveredAchievement && (
+                  <>
+                    <img
+                      loading="lazy"
+                      className="dark:hidden absolute top-0 left-0 rounded-xl hover:scale-95 transition-all"
+                      src={generateMapUrl(false)}
+                      alt="World map highlighted"
+                    />
+                    <img
+                      loading="lazy"
+                      className="hidden dark:block absolute top-0 left-0 rounded-xl hover:scale-95 transition-all"
+                      src={generateMapUrl(true)}
+                      alt="World map highlighted"
+                    />
+                  </>
+                )}
+              </div>
             </div>
             <img
               loading="lazy"

@@ -98,6 +98,8 @@ export default function Gallery(props) {
   const filterTabRefs = useRef({});
   const unsplashTabRef = useRef(null);
   const spatialTabRef = useRef(null);
+  const unsplashScrollRef = useRef(null);
+  const [isPausedUnsplash, setIsPausedUnsplash] = useState(false);
 
   // Initialize client-side state and Safari detection
   useEffect(() => {
@@ -168,6 +170,53 @@ export default function Gallery(props) {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, [activeTab]);
+
+  // Auto-scroll for Unsplash photos
+  useEffect(() => {
+    const unsplashContainer = unsplashScrollRef.current;
+    if (!unsplashContainer || activeTab !== 'unsplash') return;
+
+    let isUserScrolling = false;
+    let scrollTimeout;
+    let animationFrame;
+
+    const handleInteraction = () => {
+      isUserScrolling = true;
+      setIsPausedUnsplash(true);
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        isUserScrolling = false;
+        setIsPausedUnsplash(false);
+      }, 3000);
+    };
+
+    const autoScroll = () => {
+      if (!isUserScrolling && unsplashContainer) {
+        unsplashContainer.scrollLeft += 0.5;
+        // Reset to start when reaching the end (seamless loop)
+        if (unsplashContainer.scrollLeft >= unsplashContainer.scrollWidth / 2) {
+          unsplashContainer.scrollLeft = 0;
+        }
+      }
+      animationFrame = requestAnimationFrame(autoScroll);
+    };
+
+    unsplashContainer.addEventListener('wheel', handleInteraction, { passive: true });
+    unsplashContainer.addEventListener('touchstart', handleInteraction);
+    unsplashContainer.addEventListener('touchmove', handleInteraction);
+    unsplashContainer.addEventListener('mousedown', handleInteraction);
+
+    animationFrame = requestAnimationFrame(autoScroll);
+
+    return () => {
+      unsplashContainer.removeEventListener('wheel', handleInteraction);
+      unsplashContainer.removeEventListener('touchstart', handleInteraction);
+      unsplashContainer.removeEventListener('touchmove', handleInteraction);
+      unsplashContainer.removeEventListener('mousedown', handleInteraction);
+      cancelAnimationFrame(animationFrame);
+      clearTimeout(scrollTimeout);
+    };
+  }, [activeTab, photos]);
 
   // Data is now fetched server-side via SSR
   // Removed client-side fetching functions
@@ -888,45 +937,51 @@ export default function Gallery(props) {
                   </div>
                 ))}
               </dl>
-              <div className="grid grid-cols-1 gap-4 my-5 sm:grid-cols-2 lg:grid-cols-3">
-                {photos.map((photo) => (
-                  <div
-                    key={photo.id}
-                    className="group flex flex-col rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-[0.98] border border-transparent hover:border-black dark:hover:border-white xl:rounded-[25px]"
-                  >
-                    <img
-                      loading="lazy"
-                      className="h-[25vh] w-full object-cover cursor-pointer"
-                      src={photo.urls.raw}
-                      alt={photo.alt_description}
-                      onClick={() => handleClick(photo)}
-                    />
-                    <Tooltip
-                      content={photo.color}
-                      placement="right"
-                      className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-2xl"
+              <div
+                ref={unsplashScrollRef}
+                className="overflow-x-auto my-5 scrollbar-hide"
+              >
+                <div className="flex gap-5">
+                  {/* Duplicate photos for seamless infinite scroll */}
+                  {[...photos, ...photos].map((photo, index) => (
+                    <div
+                      key={`${photo.id}-${index}`}
+                      className="group flex-shrink-0 relative rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-[0.98] border border-transparent hover:border-black dark:hover:border-white xl:rounded-[25px]"
                     >
-                      <div
-                        className={`opacity-0 group-hover:opacity-100 absolute bottom-0 h-7 border-t border-r rounded-tr-md duration-500 transition-all`}
-                        style={{ backgroundColor: photo.color }}
+                      <img
+                        loading="lazy"
+                        className="w-[350px] h-[25vh] object-cover cursor-pointer"
+                        src={photo.urls.raw}
+                        alt={photo.alt_description}
+                        onClick={() => handleClick(photo)}
+                      />
+                      <Tooltip
+                        content={photo.color}
+                        placement="right"
+                        className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-2xl"
                       >
-                        {Object.entries(photo.topic_submissions).map(
-                          ([topic, submission]) =>
-                            submission.status === 'approved' ? (
-                              <span key={topic} className="p-1.5 text-white text-sm">
-                                <i className="fa fa-crown"></i> Featured in{' '}
-                                {topic.replaceAll('-', ' ')}
-                              </span>
-                            ) : (
-                              <span key={topic} className="p-1.5 text-white text-sm">
-                                <i className="fa fa-thumbs-up"></i>
-                              </span>
-                            )
-                        )}
-                      </div>
-                    </Tooltip>
-                  </div>
-                ))}
+                        <div
+                          className={`opacity-0 group-hover:opacity-100 absolute bottom-0 h-7 border-t border-r rounded-tr-md duration-500 transition-all`}
+                          style={{ backgroundColor: photo.color }}
+                        >
+                          {Object.entries(photo.topic_submissions).map(
+                            ([topic, submission]) =>
+                              submission.status === 'approved' ? (
+                                <span key={topic} className="p-1.5 text-white text-sm">
+                                  <i className="fa fa-crown"></i> Featured in{' '}
+                                  {topic.replaceAll('-', ' ')}
+                                </span>
+                              ) : (
+                                <span key={topic} className="p-1.5 text-white text-sm">
+                                  <i className="fa fa-thumbs-up"></i>
+                                </span>
+                              )
+                          )}
+                        </div>
+                      </Tooltip>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
             {/* Spatial Tab - Only render for Safari to save traffic */}
