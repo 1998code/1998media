@@ -1,4 +1,44 @@
+import { useState, useEffect } from 'react';
+import { Tooltip } from '@nextui-org/tooltip';
+
 export default function About(props) {
+  const currentSection = 'about';
+  
+  const sections = [
+    'header',
+    'about',
+    'achievements',
+    'gallery',
+    'experience',
+    'skills',
+    'projects',
+    'ai',
+    'blog',
+    'trip',
+    'faq',
+    'contact',
+  ];
+
+  const handleNavigate = (direction) => {
+    const currentIndex = sections.indexOf(currentSection);
+    let targetSection = null;
+    
+    if (direction === 'up' && currentIndex > 0) {
+      targetSection = sections[currentIndex - 1];
+    } else if (direction === 'down' && currentIndex < sections.length - 1) {
+      targetSection = sections[currentIndex + 1];
+    }
+    
+    if (targetSection) {
+      const element = document.getElementById(targetSection);
+      if (element) {
+        // Update hash and scroll
+        window.location.hash = targetSection;
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  };
+
   function i18n(key) {
     if (props.i18n && props.i18n['about'] && !props.i18n['about'][key]) {
       console.log('About Missing Translation: ' + key);
@@ -9,7 +49,38 @@ export default function About(props) {
   }
   return (
     <div id="about" className="max-w-7xl mx-auto pt-16 pb-32">
-      <div className="px-4 py-16 sm:px-6 lg:px-8 bg-gradient-to-r from-orange-200 to-clear dark:from-orange-800 dark:to-clear xl:rounded-[60px]">
+      <div className="px-4 py-16 sm:px-6 lg:px-8 bg-gradient-to-r from-orange-200 to-clear dark:from-orange-800 dark:to-clear xl:rounded-[60px] relative">
+        {/* Keyboard navigation keycaps - desktop only */}
+        <div className="hidden lg:flex absolute bottom-6 left-6 flex-col items-center gap-2">
+          <Tooltip
+            content="Up - Use ↑ key to navigate"
+            placement="right"
+            className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-xl"
+          >
+            <button
+              onClick={() => handleNavigate('up')}
+              disabled={sections.indexOf(currentSection) === 0}
+              className="flex items-center justify-center w-12 h-12 rounded-xl xl:rounded-[25px] bg-gradient-to-b from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 border-2 border-gray-400 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:from-gray-200 hover:to-gray-300 dark:hover:from-gray-700 dark:hover:to-gray-800 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-lg hover:shadow-xl font-semibold"
+              aria-label="Navigate up"
+            >
+              <i className="far fa-arrow-up"></i>
+            </button>
+          </Tooltip>
+          <Tooltip
+            content="Down - Use ↓ key to navigate"
+            placement="right"
+            className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-xl"
+          >
+            <button
+              onClick={() => handleNavigate('down')}
+              disabled={sections.indexOf(currentSection) === sections.length - 1}
+              className="flex items-center justify-center w-12 h-12 rounded-xl xl:rounded-[25px] bg-gradient-to-b from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 border-2 border-gray-400 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:from-gray-200 hover:to-gray-300 dark:hover:from-gray-700 dark:hover:to-gray-800 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-lg hover:shadow-xl font-semibold"
+              aria-label="Navigate down"
+            >
+              <i className="far fa-arrow-down"></i>
+            </button>
+          </Tooltip>
+        </div>
         <div className="lg:flex flex-col lg:flex-row gap-3 lg:gap-8 items-center min-h-[75vh]">
           <h2 className="-mt-0 lg:-mt-32 min-w-[36%] mx-auto text-3xl font-extrabold text-orange-900 dark:text-orange-100 text-center lg:text-left lg:min-w-[50%]">
             <img
