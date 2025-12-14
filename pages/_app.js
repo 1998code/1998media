@@ -33,33 +33,54 @@ function MyApp({ Component, pageProps }) {
       setNotHome(true);
     }
 
-    // Initialize darkmode after component mounts (moved from module scope)
-    import('darkmode-js')
-      .then((module) => {
-        try {
-          const Darkmode = module.default;
-          const options = {
-            bottom: '93.5vh',
-            right: '25px',
-            time: '1.5s',
-            mixColor: '#fff',
-            backgroundColor: '#fff6eb',
-            buttonColorDark: '#000',
-            buttonColorLight: '#fff6eb',
-            saveInCookies: true,
-            label:
-              '<i class="fa fa-moon-over-sun text-orange-300 dark:text-orange-500" />',
-            autoMatchOsTheme: true,
-          };
-          const darkmode = new Darkmode(options);
-          darkmode.showWidget();
-        } catch (error) {
-          console.error('Error initializing darkmode:', error);
-        }
-      })
-      .catch((error) => {
-        console.error('Error loading darkmode-js:', error);
-      });
+    // Initialize darkmode after component mounts and DOM is ready
+    const initDarkmode = () => {
+      // Ensure DOM is ready
+      if (typeof window === 'undefined' || !document.body) {
+        setTimeout(initDarkmode, 100);
+        return;
+      }
+
+      import('darkmode-js')
+        .then((module) => {
+          try {
+            const Darkmode = module.default;
+            const options = {
+              bottom: '93.5vh',
+              right: '25px',
+              time: '1.5s',
+              mixColor: '#fff',
+              backgroundColor: '#fff6eb',
+              buttonColorDark: '#000',
+              buttonColorLight: '#fff6eb',
+              saveInCookies: true,
+              label:
+                '<i class="fa fa-moon-over-sun text-orange-300 dark:text-orange-500" />',
+              autoMatchOsTheme: true,
+            };
+            const darkmode = new Darkmode(options);
+            // Add error handling for showWidget
+            try {
+              darkmode.showWidget();
+            } catch (widgetError) {
+              console.error('Error showing darkmode widget:', widgetError);
+            }
+          } catch (error) {
+            console.error('Error initializing darkmode:', error);
+          }
+        })
+        .catch((error) => {
+          console.error('Error loading darkmode-js:', error);
+        });
+    };
+
+    // Wait for DOM to be fully ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initDarkmode);
+    } else {
+      // DOM is already ready, but wait a bit for React to hydrate
+      setTimeout(initDarkmode, 100);
+    }
   }, []);
 
   return (

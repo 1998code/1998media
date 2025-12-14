@@ -14,12 +14,33 @@ export const config = {
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl
   
-  // Check if we already have a locale in the pathname
-  // Match: en, en-US, en-GB, zh, zh-HK, zh-CN, zh-TW, ko, ko-KR, ja, ja-JP, etc.
-  const hasLocale = /^\/(en|en-US|en-GB|zh|zh-HK|zh-CN|zh-TW|ko|ko-KR|ja|ja-JP)(\/|$)/.test(pathname)
-  if (hasLocale) return
+  // Supported locales
+  const supportedLocales = ['en', 'en-US', 'en-GB', 'zh', 'zh-HK', 'zh-CN', 'zh-TW', 'ko', 'ko-KR', 'ja', 'ja-JP']
+  
+  // Extract locale from pathname if present
+  const pathParts = pathname.split('/').filter(Boolean)
+  const firstPart = pathParts[0] || ''
+  
+  // Check if first part is a locale
+  const isLocale = supportedLocales.includes(firstPart)
+  
+  if (isLocale) {
+    // Valid locale, let it through
+    return
+  }
+  
+  // Check if it looks like a locale but isn't supported (e.g., /fr, /de, etc.)
+  // If pathname starts with / and has a 2-5 character code, it might be an unsupported locale
+  const looksLikeLocale = /^\/[a-z]{2}(-[A-Z]{2})?(\/|$)/i.test(pathname)
+  
+  if (looksLikeLocale && firstPart.length >= 2 && firstPart.length <= 5) {
+    // Unsupported locale detected, redirect to English
+    const restOfPath = pathname.replace(`/${firstPart}`, '') || '/'
+    req.nextUrl.pathname = `/en${restOfPath}`
+    return NextResponse.redirect(req.nextUrl)
+  }
 
-  // Get locale from header
+  // No locale in path, detect from header and redirect
   const acceptLanguage = req.headers.get('accept-language')
   const locale = acceptLanguage?.split(',')?.[0]?.toLowerCase()
 

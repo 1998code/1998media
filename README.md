@@ -28,7 +28,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to view th
 
 This application uses SSR with `getServerSideProps` to fetch data on the server before rendering. API calls are hidden from the client:
 
-- **i18n Data** - Loaded from Vercel Postgres database
+- **i18n Data** - Loaded from local JSON files with translation API fallback
 - **Blog Posts** - Fetched from RSS feed
 - **Trip.com Data** - Medals and moments from Trip.com API
 - **GitHub Projects** - Repository data from GitHub API
@@ -37,7 +37,7 @@ All data is pre-rendered on the server, providing better performance and SEO whi
 
 ## Structure
 
-![Diagram](https://raw.githubusercontent.com/1998code/1998media/nextJS12/diagram.svg)
+![Diagram](https://raw.githubusercontent.com/1998code/1998media/nextJS15/diagram.svg)
 
 ## License
 

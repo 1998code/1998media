@@ -263,8 +263,23 @@ export default function Home({
 }
 
 export async function getServerSideProps(context) {
-  const { locale } = context.params;
+  let { locale } = context.params;
   const { req } = context;
+  
+  // Fallback to English if locale is not supported
+  const supportedLocales = ['en', 'zh', 'zh-HK', 'ko', 'ja'];
+  const normalizedLocale = locale?.includes('en') ? 'en' :
+                          locale?.includes('ja') || locale?.includes('jp') ? 'ja' :
+                          locale?.includes('ko') || locale?.includes('kr') ? 'ko' :
+                          locale?.includes('zh-TW') || locale?.includes('zh-MO') ? 'zh-HK' :
+                          locale?.includes('zh-CN') ? 'zh' :
+                          locale;
+  
+  if (!supportedLocales.includes(normalizedLocale)) {
+    locale = 'en'; // Fallback to English
+  } else {
+    locale = normalizedLocale;
+  }
 
   try {
     // Fetch all data in parallel for better performance

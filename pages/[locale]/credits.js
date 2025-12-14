@@ -19,18 +19,6 @@ export default function Credits(props) {
         {i18n('Special Thanks')}
       </h2>
       <div className="flex flex-wrap gap-3">
-        {/* <a
-          href="https://vercel.com/?utm_source=1998code&utm_campaign=oss"
-          target="_blank"
-        >
-          <Image
-            className="h-10 rounded-xl border border-black dark:border-white"
-            src="https://cdn.1998.media/logos/Vercel.svg"
-            alt="Vercel"
-            width={200}
-            height={40}
-          />
-        </a> */}
         <Tooltip
           content="Better Uptime"
           placement="bottom"

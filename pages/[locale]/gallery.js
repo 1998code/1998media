@@ -1046,7 +1046,22 @@ export default function Gallery(props) {
 }
 
 export async function getServerSideProps(context) {
-  const { locale } = context.params;
+  let { locale } = context.params;
+  
+  // Fallback to English if locale is not supported
+  const supportedLocales = ['en', 'zh', 'zh-HK', 'ko', 'ja'];
+  const normalizedLocale = locale?.includes('en') ? 'en' :
+                          locale?.includes('ja') || locale?.includes('jp') ? 'ja' :
+                          locale?.includes('ko') || locale?.includes('kr') ? 'ko' :
+                          locale?.includes('zh-TW') || locale?.includes('zh-MO') ? 'zh-HK' :
+                          locale?.includes('zh-CN') ? 'zh' :
+                          locale;
+  
+  if (!supportedLocales.includes(normalizedLocale)) {
+    locale = 'en'; // Fallback to English
+  } else {
+    locale = normalizedLocale;
+  }
 
   try {
     const [i18nData, unsplashData] = await Promise.all([
@@ -1067,7 +1082,7 @@ export async function getServerSideProps(context) {
       props: {
         i18n: {},
         unsplashData: { stats: null, photos: [] },
-        locale,
+        locale: 'en',
       },
     };
   }
