@@ -36,28 +36,43 @@ export default function Gallery(props) {
     featuredPhotos: [
       {
         id: 'xhs-1',
-        url: 'https://sns-webpic-qc.xhscdn.com/202512121806/0f2c62853f286b5810f9205414dd689e/1040g00831liunjbr5m005pj28e7gu064f1affi8!nc_n_webp_mw_1',
+        url: 'https://cdn.1998.media/xhs/1.jpeg',
         title: 'Featured 1',
       },
       {
         id: 'xhs-2',
-        url: 'https://sns-webpic-qc.xhscdn.com/202512121805/c11126afc7e0d4e9a0dac43b4acb6a0e/1040g00831pnljfon4u005pj28e7gu0641ockp28!nc_n_webp_mw_1',
+        url: 'https://cdn.1998.media/xhs/2.jpeg',
         title: 'Featured 2',
       },
       {
         id: 'xhs-3',
-        url: 'https://sns-webpic-qc.xhscdn.com/202512121805/baf15bb3033246a67af84bb481a78492/1040g2sg31pos5vbu5a705pj28e7gu064o98g2ro!nc_n_webp_mw_1',
+        url: 'https://cdn.1998.media/xhs/3.jpeg',
         title: 'Featured 3',
       },
       {
         id: 'xhs-4',
-        url: 'https://sns-webpic-qc.xhscdn.com/202512121829/f86033bbfb40d871167810c1284eb869/1040g2sg31ln7tv71le705pj28e7gu0644pgbnlo!nc_n_webp_mw_1',
+        url: 'https://cdn.1998.media/xhs/4.jpeg',
         title: 'Featured 4',
       },
       {
         id: 'xhs-5',
-        url: 'https://sns-webpic-qc.xhscdn.com/202512121829/8db152969a8f8b65b4f49d2c001c3369/1040g2sg31lkci85cle705pj28e7gu064g68nimo!nc_n_webp_mw_1',
+        url: 'https://cdn.1998.media/xhs/5.jpeg',
         title: 'Featured 5',
+      },
+      {
+        id: 'xhs-6',
+        url: 'https://cdn.1998.media/xhs/6.jpeg',
+        title: 'Featured 6',
+      },
+      {
+        id: 'xhs-7',
+        url: 'https://cdn.1998.media/xhs/7.jpeg',
+        title: 'Featured 7',
+      },
+      {
+        id: 'xhs-8',
+        url: 'https://cdn.1998.media/xhs/8.jpeg',
+        title: 'Featured 8',
       },
     ],
   };
