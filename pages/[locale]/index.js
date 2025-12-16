@@ -386,8 +386,8 @@ async function fetchIPData(locale, req) {
     let geo;
     if (cfCity || cfCountry) {
       geo = {
-        city: cfCity || '?',
-        state: cfCountry || '?',
+        city: cfCity || null,
+        state: cfCountry || null,
       };
     } else if (latitude && longitude) {
       // Fallback: use a simple reverse geocoding API that works on edge
@@ -417,7 +417,7 @@ async function fetchIPData(locale, req) {
 
     return {
       ip,
-      geo: geo.city && geo.state ? `${geo.city}, ${geo.state}` : 'Unknown',
+      geo: geo.city && geo.state ? `${geo.city}, ${geo.state}` : (geo.city || geo.state || 'Unknown'),
       latitude: latitude || 'Unknown',
       longitude: longitude || 'Unknown',
     };
