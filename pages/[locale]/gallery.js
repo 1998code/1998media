@@ -15,7 +15,7 @@ export default function Gallery(props) {
   }
 
   const locale = props.locale || 'en';
-  const isZhCN = locale === 'zh-CN';
+  const isZhCN = locale === 'zh-CN' || locale === 'zh';
 
   const unsplashPublicKey = 'hjm0tzh_dDQx2REubp1NiT1P4jxE5wmnCbKQLbD-BZ8';
   // Always start with 'xiaohongshu' for zh-CN, 'unsplash' for others
@@ -30,9 +30,9 @@ export default function Gallery(props) {
   const xiaohongshuData = {
     profileUrl:
       'https://www.xiaohongshu.com/user/profile/6662438f00000000030300c4',
-    totalExposure: 2653624,
-    totalWorks: 161,
-    totalWatchDuration: 2463 * 396288, // seconds
+    totalExposure: 3025938,
+    totalWorks: 165,
+    totalWatchDuration: 2693 * 546798 / 60 / 60,
     featuredPhotos: [
       {
         id: 'xhs-1',
