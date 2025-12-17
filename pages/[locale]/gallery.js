@@ -32,7 +32,7 @@ export default function Gallery(props) {
       'https://www.xiaohongshu.com/user/profile/6662438f00000000030300c4',
     totalExposure: 3025938,
     totalWorks: 165,
-    totalWatchDuration: 2693 * 546798 / 60 / 60,
+    totalWatchDuration: 2693 * 546798 / 60,
     featuredPhotos: [
       {
         id: 'xhs-1',
