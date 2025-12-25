@@ -48,6 +48,10 @@ const nextConfig = {
         source: '/blog/:path*',
         destination: 'https://blog.1998.media/:path*',
       },
+      {
+        source: '/sitemap.xml',
+        destination: '/api/sitemap.xml',
+      },
     ];
   },
 };
