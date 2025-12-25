@@ -58,6 +58,7 @@ export default function Home({
     setLoading(false);
   }, []);
 
+
   const sections = [
     'header',
     'about',

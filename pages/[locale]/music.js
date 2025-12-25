@@ -236,6 +236,13 @@ export default function Music(props) {
         setLyrics('');
       });
   }
+  // Decode HTML entities in lyrics
+  function decodeHtmlEntities(text) {
+    const textarea = document.createElement('textarea');
+    textarea.innerHTML = text;
+    return textarea.value;
+  }
+
   function fetchLyrics(songmid) {
     fetch(`/api/music?provider=qq&path=lyric&songmid=${songmid}`)
       .then((response) => response.json())
@@ -243,13 +250,16 @@ export default function Music(props) {
         // QQ Music returns base64 encoded lyrics
         if (data.lyric) {
           try {
-            const decodedLyrics = atob(data.lyric);
+            let decodedLyrics = atob(data.lyric);
+            // Decode HTML entities like &apos; to '
+            decodedLyrics = decodeHtmlEntities(decodedLyrics);
             setLyrics(decodedLyrics);
             setParsedLyrics(parseLyricsWithTimestamps(decodedLyrics));
           } catch (e) {
-            // If not base64, use as-is
-            setLyrics(data.lyric);
-            setParsedLyrics(parseLyricsWithTimestamps(data.lyric));
+            // If not base64, decode HTML entities and use as-is
+            const decodedLyrics = decodeHtmlEntities(data.lyric);
+            setLyrics(decodedLyrics);
+            setParsedLyrics(parseLyricsWithTimestamps(decodedLyrics));
           }
         } else {
           setLyrics('');
@@ -301,11 +311,11 @@ export default function Music(props) {
   const progress = ((timer % 30) / 30) * 100;
 
   return (
-    <div className="fixed w-screen flex items-center justify-center bottom-0 md:bottom-5 z-[10]">
+    <div className="fixed w-screen flex items-center justify-center bottom-0 md:bottom-5 z-[10] pointer-events-none">
       {music && music.length > 0 && currentPlaying ? (
         // <div
         //   className="group flex items-center w-full md:w-fit h-[90px] md:h-[80px] p-1 shadow md:border border-white bg-white/50 dark:bg-black/50 hover:bg-gradient-to-r from-white/50 via-white to-white dark:from-black/50 dark:via-[#808080] dark:to-white dark:shadow-black backdrop-blur-lg md:rounded-xl">
-        <div className="group relative flex items-center w-full md:w-fit h-[90px] md:h-[80px] p-1 shadow bg-white/50 dark:bg-black/50 dark:hover:bg-black dark:shadow-black backdrop-blur-lg md:rounded-xl transition-all">
+        <div className="group relative flex items-center w-full md:w-fit h-[90px] md:h-[80px] p-1 shadow bg-white/50 dark:bg-black/50 dark:hover:bg-black dark:shadow-black backdrop-blur-lg md:rounded-xl transition-all pointer-events-auto">
           {/* Progress bar border - Light mode */}
           <div
             className="dark:hidden absolute inset-0 rounded-xl pointer-events-none z-[1]"

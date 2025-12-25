@@ -5,9 +5,10 @@ export default function Footer(props) {
     if (props.i18n && props.i18n['footer'] && !props.i18n['footer'][key]) {
       console.log('Footer Missing Translation: ' + key);
     }
-    return props.i18n && props.i18n['footer'] && props.i18n['footer'][key]
+    const translation = props.i18n && props.i18n['footer'] && props.i18n['footer'][key]
       ? props.i18n['footer'][key]
       : key;
+    return translation || String(key); // Ensure it always returns a string
   }
 
   const navigation = {
@@ -97,7 +98,7 @@ export default function Footer(props) {
             </a>{' '}
             | {i18n(geo)} (
             <a
-              href={`https://www.google.com/maps/@${latitude},${longitude},11z`}
+              href={`https://maps.apple.com/search?center=${latitude}%2C${longitude}&span=0.1%2C0.1`}
               target="_blank"
             >
               {i18n(latitude)}
@@ -111,7 +112,7 @@ export default function Footer(props) {
           {navigation.social.map((item) => (
             <Tooltip
               key={item.name}
-              content={item.name}
+              content={item.name || ''}
               placement="top"
               className="p-1 mb-1 border text-xs dark:text-white bg-white dark:bg-black rounded-xl"
             >
@@ -175,7 +176,7 @@ export default function Footer(props) {
               key={item.name}
               href={item.href}
               target={item.href.includes('http') ? '_blank' : '_self'}
-              alt={i18n(item.name)}
+              title={item.name ? i18n(item.name) : undefined}
               className="text-gray-500 hover:text-gray-600"
             >
               {i18n(item.name)}

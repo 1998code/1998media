@@ -956,7 +956,7 @@ export default function Gallery(props) {
                         onClick={() => handleClick(photo)}
                       />
                       <Tooltip
-                        content={photo.color}
+                        content={photo.color || ''}
                         placement="right"
                         className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-2xl"
                       >
