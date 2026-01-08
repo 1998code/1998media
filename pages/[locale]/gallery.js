@@ -30,9 +30,9 @@ export default function Gallery(props) {
   const xiaohongshuData = {
     profileUrl:
       'https://www.xiaohongshu.com/user/profile/6662438f00000000030300c4',
-    totalExposure: 3025938,
-    totalWorks: 165,
-    totalWatchDuration: 2693 * 546798 / 60,
+    totalExposure: 5094666,
+    totalWorks: 168,
+    totalWatchDuration: 2789 * 1480078 / 60,
     featuredPhotos: [
       {
         id: 'xhs-1',
@@ -383,10 +383,13 @@ export default function Gallery(props) {
 
   // Update main tab styles when active tab changes
   useEffect(() => {
+    if (!isClient) return;
+    
     const updateMainTabStyles = () => {
       const activeTabElement = mainTabRefs.current[activeTab];
       if (activeTabElement && activeTabElement.offsetParent !== null) {
         const parent = activeTabElement.parentElement;
+        if (!parent) return;
         const parentRect = parent.getBoundingClientRect();
         const activeRect = activeTabElement.getBoundingClientRect();
 
@@ -400,14 +403,17 @@ export default function Gallery(props) {
     updateMainTabStyles();
     const timeoutId = setTimeout(updateMainTabStyles, 50);
     return () => clearTimeout(timeoutId);
-  }, [activeTab, props.i18n]);
+  }, [activeTab, props.i18n, isClient]);
 
   // Update filter tab styles when spatial filter changes
   useEffect(() => {
+    if (!isClient) return;
+    
     const updateFilterTabStyles = () => {
       const activeFilterElement = filterTabRefs.current[spatialFilter];
       if (activeFilterElement && activeFilterElement.offsetParent !== null) {
         const parent = activeFilterElement.parentElement;
+        if (!parent) return;
         const parentRect = parent.getBoundingClientRect();
         const activeRect = activeFilterElement.getBoundingClientRect();
 
@@ -421,7 +427,7 @@ export default function Gallery(props) {
     updateFilterTabStyles();
     const timeoutId = setTimeout(updateFilterTabStyles, 50);
     return () => clearTimeout(timeoutId);
-  }, [spatialFilter, props.i18n]);
+  }, [spatialFilter, props.i18n, isClient]);
 
   // Handle spatial filter change with animation
   const handleSpatialFilterChange = (newFilter) => {
