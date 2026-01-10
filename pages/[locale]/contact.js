@@ -22,7 +22,7 @@ export default function Contact(props) {
             <div className="mx-auto px-4 pt-8 sm:px-6 md:p-0">
               <div className="aspect-w-1 aspect-h-1">
                 <Tooltip
-                  content={i18n('Powered by Apple Map') || ''}
+                  content={i18n('Powered by Apple Maps') || ''}
                   placement="bottom"
                   className="p-1 mt-2 border text-xs dark:text-white bg-white dark:bg-black rounded-xl"
                 >
