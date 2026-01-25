@@ -52,6 +52,7 @@ export default function Navigation(props) {
     openAPI: 'code',
     ai: 'robot',
     blog: 'rss',
+    stocks: 'chart-line',
     trip: 'map-marked-alt',
     faq: 'question-circle',
     contact: 'envelope',

@@ -27,6 +27,7 @@ function MyApp({ Component, pageProps }) {
       '/openAPI',
       '/projects',
       '/skills',
+      '/stocks',
     ];
 
     if (pages.some((page) => window.location.pathname.includes(page))) {

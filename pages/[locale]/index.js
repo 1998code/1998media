@@ -14,6 +14,7 @@ import {
   fetchTripMedals,
   fetchTripMoments,
   fetchGithubProjects,
+  fetchStocks,
 } from '../../lib/fetchData';
 
 // Critical components - load with SSR
@@ -31,6 +32,7 @@ const Skills = dynamic(() => import('./skills'));
 const Experience = dynamic(() => import('./experience'));
 const Projects = dynamic(() => import('./projects'));
 const Blog = dynamic(() => import('./blog'));
+const Stocks = dynamic(() => import('./stocks'));
 const AI = dynamic(() => import('./ai'));
 // const OpenAPI = dynamic(() => import('./openAPI'));
 const Faq = dynamic(() => import('./faq'));
@@ -44,6 +46,7 @@ const Music = dynamic(() => import('./music'), { ssr: false });
 export default function Home({
   i18nData,
   blogData,
+  stocksData,
   projectsData,
   dalleData,
   unsplashData,
@@ -71,6 +74,7 @@ export default function Home({
     'ai',
     'blog',
     'trip',
+    'stocks',
     'faq',
     'contact',
   ];
@@ -248,6 +252,7 @@ export default function Home({
                 {/* <OpenAPI i18n={I18n} /> */}
                 <AI i18n={I18n} dalle={dalleData} />
                 <Blog i18n={I18n} blogData={blogData} locale={locale} />
+                <Stocks i18n={I18n} stocksData={stocksData} />
                 <Faq i18n={I18n} />
                 <Contact i18n={I18n} />
                 <Credits i18n={I18n} />
@@ -290,6 +295,7 @@ export async function getServerSideProps(context) {
       medals,
       moments,
       githubProjects,
+      stocksData,
       dalleData,
       unsplashData,
       ipData,
@@ -299,6 +305,7 @@ export async function getServerSideProps(context) {
       fetchTripMedals(locale),
       fetchTripMoments(locale),
       fetchGithubProjects(),
+      fetchStocks('NVDA,MC.PA,3033.HK'), // Add your stock symbols here
       fetchDalleData(),
       fetchUnsplashData(),
       fetchIPData(locale, req),
@@ -312,6 +319,7 @@ export async function getServerSideProps(context) {
           medals,
           moments,
         },
+        stocksData,
         projectsData: githubProjects,
         dalleData,
         unsplashData,
@@ -329,6 +337,7 @@ export async function getServerSideProps(context) {
           medals: [],
           moments: [],
         },
+        stocksData: [],
         projectsData: [],
         dalleData: [],
         unsplashData: { stats: null, photos: [] },
