@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { fetchI18nData, fetchStocks } from '../../lib/fetchData';
 
+export const runtime = 'experimental-edge';
+
 // Interactive Stock Card Component
 function StockCard({ stock, i18n, locale }) {
   const [hoveredIndex, setHoveredIndex] = useState(null);
