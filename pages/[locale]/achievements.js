@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import maplibregl from 'maplibre-gl';
+import 'maplibre-gl/dist/maplibre-gl.css';
 
 export default function Achievements(props) {
   const [hoveredAchievement, setHoveredAchievement] = useState(null);
@@ -22,43 +24,35 @@ export default function Achievements(props) {
   const achievementMapData = {
     'Developer Tools in Hong Kong': {
       coords: [113.9745954, 22.3526409],
-      color: 'b8172a',
-      isLarge: true,
+      color: 'b8172a'
     },
     'Developer Tools in Maldives': {
       coords: [73.5089, 4.1755],
-      color: 'dc143c',
-      isLarge: false,
+      color: 'dc143c'
     },
     'Developer Tools in Taiwan': {
       coords: [121.1945767, 25.0169013],
-      color: '1f89e3',
-      isLarge: false,
+      color: '1f89e3'
     },
     'Developer Tools in the United Kingdom': {
       coords: [-9.7459993, 54.4364324],
-      color: '0b236f',
-      isLarge: false,
+      color: '0b236f'
     },
     'Developer Tools in the United States': {
       coords: [-95.7129, 37.0902],
-      color: '0033a0',
-      isLarge: false,
+      color: '0033a0'
     },
     'Developer Tools in Canada': {
       coords: [-106.3468, 56.1304],
-      color: 'ff0000',
-      isLarge: false,
+      color: 'ff0000'
     },
     'Graphics & Design App in Uzbekistan': {
       coords: [64.5853, 41.3775],
-      color: '0099b5',
-      isLarge: false,
+      color: '0099b5'
     },
     'Developer Tools in Kuwait': {
       coords: [47.4818, 29.3117],
-      color: '007a3d',
-      isLarge: false,
+      color: '007a3d'
     },
   };
 
@@ -70,13 +64,13 @@ export default function Achievements(props) {
       flag: '🇲🇻',
       color: 'text-red-600', // Red and green flag
     },
-    // {
-    //   year: '2024',
-    //   title: 'Developer Tools in Taiwan',
-    //   rank: '#1',
-    //   flag: '🇹🇼',
-    //   color: 'text-blue-600', // Blue and red flag
-    // },
+    {
+      year: '2024',
+      title: 'Developer Tools in Taiwan',
+      rank: '#1',
+      flag: '🇹🇼',
+      color: 'text-blue-600', // Blue and red flag
+    },
     {
       year: '2024',
       title: 'Developer Tools in Hong Kong',
@@ -91,20 +85,20 @@ export default function Achievements(props) {
       flag: '🇬🇧',
       color: 'text-blue-600', // Red, white, blue flag
     },
-    // {
-    //   year: '2023',
-    //   title: 'Developer Tools in the United States',
-    //   rank: '#1',
-    //   flag: '🇺🇸',
-    //   color: 'text-blue-600', // Red, white, blue flag
-    // },
-    // {
-    //   year: '2023',
-    //   title: 'Developer Tools in Canada',
-    //   rank: '#1',
-    //   flag: '🇨🇦',
-    //   color: 'text-red-600', // Red and white flag
-    // },
+    {
+      year: '2023',
+      title: 'Developer Tools in the United States',
+      rank: '#1',
+      flag: '🇺🇸',
+      color: 'text-blue-600', // Red, white, blue flag
+    },
+    {
+      year: '2023',
+      title: 'Developer Tools in Canada',
+      rank: '#1',
+      flag: '🇨🇦',
+      color: 'text-red-600', // Red and white flag
+    },
     {
       year: '2022',
       title: 'Graphics & Design App in Uzbekistan',
@@ -156,57 +150,415 @@ export default function Achievements(props) {
     },
   ];
 
-  // Original static map URLs
-  const originalMapUrlLight =
-    'https://api.mapbox.com/styles/v1/mapbox/streets-v12/static/pin-l+b8172a(113.9745954,22.3526409),pin-s+dc143c(73.5089,4.1755),pin-s+1f89e3(121.1945767,25.0169013),pin-s+0b236f(-9.7459993,54.4364324),pin-s+0033a0(-95.7129,37.0902),pin-s+ff0000(-106.3468,56.1304),pin-s+0099b5(64.5853,41.3775),pin-s+007a3d(47.4818,29.3117)/11.7314,14.9358,1.32,0,35/1280x720@2x?access_token=pk.eyJ1IjoiMTk5OG1lZGlhIiwiYSI6ImNsdHRuaGg4ZzE1NDUya3N5MTd2dTgwbTYifQ.nTFoFutOK1E7O6KBSFPLVQ&logo=false&attribution=false';
-  const originalMapUrlDark =
-    'https://api.mapbox.com/styles/v1/1998media/clttnmr3900k501qw52w30alb/static/pin-l+b8172a(113.9745954,22.3526409),pin-s+dc143c(73.5089,4.1755),pin-s+1f89e3(121.1945767,25.0169013),pin-s+0b236f(-9.7459993,54.4364324),pin-s+0033a0(-95.7129,37.0902),pin-s+ff0000(-106.3468,56.1304),pin-s+0099b5(64.5853,41.3775),pin-s+007a3d(47.4818,29.3117)/11.7314,14.9358,1.32,0,35/1280x720@2x?access_token=pk.eyJ1IjoiMTk5OG1lZGlhIiwiYSI6ImNsdHRuaGg4ZzE1NDUya3N5MTd2dTgwbTYifQ.nTFoFutOK1E7O6KBSFPLVQ&logo=false&attribution=false';
+  // Map container ref
+  const mapContainer = useRef(null);
+  const map = useRef(null);
+  const markersRef = useRef([]);
 
-  // Generate map URL based on hover state
-  const generateMapUrl = (isDark = false) => {
-    if (!hoveredAchievement) {
-      return isDark ? originalMapUrlDark : originalMapUrlLight;
+  // Detect dark mode
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const currentMapStyleRef = useRef(null);
+
+  // Update map style when dark mode changes
+  const updateMapStyle = useCallback((isDark) => {
+    if (!map.current || !map.current.loaded()) {
+      return;
     }
 
-    const style = isDark
-      ? '1998media/clttnmr3900k501qw52w30alb'
-      : 'mapbox/streets-v12';
-    const pins = [];
+    const newStyle = isDark ? 'dark_all' : 'light_all';
+    
+    // Prevent unnecessary updates if style hasn't changed
+    if (currentMapStyleRef.current === newStyle) {
+      return;
+    }
+    
+    currentMapStyleRef.current = newStyle;
+    
+    // Remove existing source and layer
+    if (map.current.getLayer('carto-basemap-layer')) {
+      map.current.removeLayer('carto-basemap-layer');
+    }
+    if (map.current.getSource('carto-basemap')) {
+      map.current.removeSource('carto-basemap');
+    }
+
+    // Add new source with updated style
+    map.current.addSource('carto-basemap', {
+      type: 'raster',
+      tiles: [
+        `https://a.basemaps.cartocdn.com/${newStyle}/{z}/{x}/{y}.png`,
+        `https://b.basemaps.cartocdn.com/${newStyle}/{z}/{x}/{y}.png`,
+        `https://c.basemaps.cartocdn.com/${newStyle}/{z}/{x}/{y}.png`,
+      ],
+      tileSize: 256,
+      attribution: '',
+    });
+
+    // Add layer back
+    map.current.addLayer({
+      id: 'carto-basemap-layer',
+      type: 'raster',
+      source: 'carto-basemap',
+    });
+  }, []);
+
+  useEffect(() => {
+    // Check for dark mode - darkmode-js adds 'darkmode--activated' class to body
+    // Priority: explicit toggle (darkmode-js) > Tailwind dark class > system preference
+    const checkDarkMode = () => {
+      if (typeof window !== 'undefined') {
+        const hasDarkmodeClass = document.body.classList.contains('darkmode--activated');
+        const hasDarkClass = document.documentElement.classList.contains('dark');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        // Check if darkmode-js widget exists (means user can toggle)
+        const darkmodeWidget = document.querySelector('.darkmode-toggle');
+        const hasDarkmodeWidget = !!darkmodeWidget;
+        
+        // If darkmode-js widget exists, prioritize its class over system preference
+        // When user toggles, the class presence/absence is the source of truth
+        let isDark;
+        if (hasDarkmodeWidget) {
+          // User has the toggle widget, so respect the explicit toggle
+          isDark = hasDarkmodeClass;
+        } else {
+          // No widget yet, use Tailwind class or system preference
+          isDark = hasDarkClass || prefersDark;
+        }
+        
+        setIsDarkMode(isDark);
+        return isDark;
+      }
+      return false;
+    };
+
+    const initialDark = checkDarkMode();
+
+    // Watch for dark mode changes on both body and html
+    const observer = new MutationObserver((mutations) => {
+      // Check if class actually changed
+      const hasClassChange = mutations.some(mutation => 
+        mutation.type === 'attributes' && mutation.attributeName === 'class'
+      );
+      
+      if (hasClassChange) {
+        // Small delay to ensure class change is complete
+        setTimeout(() => {
+          const isDark = checkDarkMode();
+          if (map.current && map.current.loaded()) {
+            updateMapStyle(isDark);
+          }
+        }, 100);
+      }
+    });
+
+    if (typeof window !== 'undefined') {
+      // Observe body for darkmode--activated class (darkmode-js)
+      observer.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class'],
+        subtree: false,
+      });
+      
+      // Also observe html for dark class (Tailwind)
+      observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class'],
+        subtree: false,
+      });
+
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      mediaQuery.addEventListener('change', () => {
+        setTimeout(() => {
+          const isDark = checkDarkMode();
+          if (map.current && map.current.loaded()) {
+            updateMapStyle(isDark);
+          }
+        }, 50);
+      });
+      
+      // Also add a periodic check as backup (every 500ms)
+      // This ensures we catch dark mode changes even if MutationObserver misses them
+      const intervalId = setInterval(() => {
+        const isDark = checkDarkMode();
+        if (map.current && map.current.loaded()) {
+          const expectedStyle = isDark ? 'dark_all' : 'light_all';
+          if (currentMapStyleRef.current !== expectedStyle) {
+            updateMapStyle(isDark);
+          }
+        }
+      }, 500);
+      
+      return () => {
+        observer.disconnect();
+        clearInterval(intervalId);
+      };
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [updateMapStyle]);
+
+  // Initialize map
+  useEffect(() => {
+    if (!mapContainer.current || map.current) return;
+
+    // Get locale from props or detect from browser/system
+    const getLocale = () => {
+      // Try to get from props first
+      if (props.locale) {
+        return props.locale;
+      }
+      // Fall back to browser language
+      if (typeof window !== 'undefined') {
+        const browserLang = navigator.language || navigator.userLanguage || 'en';
+        // Extract language code (e.g., 'zh-HK' -> 'zh-HK', 'en-US' -> 'en')
+        if (browserLang.startsWith('zh')) {
+          return browserLang.includes('HK') || browserLang.includes('TW') || browserLang.includes('MO') 
+            ? 'zh-HK' 
+            : 'zh';
+        }
+        if (browserLang.startsWith('ja')) return 'ja';
+        if (browserLang.startsWith('ko')) return 'ko';
+        return 'en';
+      }
+      return 'en';
+    };
+
+    const locale = getLocale();
+    
+    // Calculate center from all achievement coordinates
+    const allCoords = Object.values(achievementMapData).map((data) => data.coords);
+    const allLats = allCoords.map((c) => c[1]);
+    const allLons = allCoords.map((c) => c[0]);
+    const centerLat = (Math.min(...allLats) + Math.max(...allLats)) / 2;
+    const centerLon = (Math.min(...allLons) + Math.max(...allLons)) / 2;
+
+    // Determine initial style based on dark mode (check directly)
+    // Priority: explicit toggle (darkmode-js) > Tailwind dark class > system preference
+    const checkDarkMode = () => {
+      if (typeof window !== 'undefined') {
+        const hasDarkmodeClass = document.body.classList.contains('darkmode--activated');
+        const hasDarkClass = document.documentElement.classList.contains('dark');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        // Check if darkmode-js widget exists (means user can toggle)
+        const darkmodeWidget = document.querySelector('.darkmode-toggle');
+        const hasDarkmodeWidget = !!darkmodeWidget;
+        
+        // If darkmode-js widget exists, prioritize its class over system preference
+        let isDark;
+        if (hasDarkmodeWidget) {
+          // User has the toggle widget, so respect the explicit toggle
+          isDark = hasDarkmodeClass;
+        } else {
+          // No widget yet, use Tailwind class or system preference
+          isDark = hasDarkClass || prefersDark;
+        }
+        
+        return isDark;
+      }
+      return false;
+    };
+    const isDarkInitially = checkDarkMode();
+    const initialStyle = isDarkInitially ? 'dark_all' : 'light_all';
+    currentMapStyleRef.current = initialStyle;
+
+    // Initialize MapLibre with Carto basemap (OpenStreetMap-based)
+    map.current = new maplibregl.Map({
+      container: mapContainer.current,
+      style: {
+        version: 8,
+        sources: {
+          'carto-basemap': {
+            type: 'raster',
+            tiles: [
+              `https://a.basemaps.cartocdn.com/${initialStyle}/{z}/{x}/{y}.png`,
+              `https://b.basemaps.cartocdn.com/${initialStyle}/{z}/{x}/{y}.png`,
+              `https://c.basemaps.cartocdn.com/${initialStyle}/{z}/{x}/{y}.png`,
+            ],
+            tileSize: 256,
+            attribution: '', // Remove attribution
+          },
+        },
+        layers: [
+          {
+            id: 'carto-basemap-layer',
+            type: 'raster',
+            source: 'carto-basemap',
+          },
+        ],
+      },
+      center: [centerLon, centerLat],
+      zoom: 1, // Zoom out most by default
+      minZoom: 1,
+      maxZoom: 10,
+      scrollZoom: true, // Enable scroll zoom
+      boxZoom: true, // Enable box zoom
+      dragRotate: false, // Disable drag rotation
+      dragPan: true, // Enable panning
+      keyboard: true, // Enable keyboard navigation
+      doubleClickZoom: true, // Enable double-click zoom
+      touchZoomRotate: true, // Enable touch zoom/rotate
+      locale: locale, // Set map locale to match system/browser language
+    });
+
+    // Navigation controls removed
+
+    // Add markers after map loads
+    map.current.on('load', () => {
+      updateMarkers();
+      // Hide attribution
+      const attribution = mapContainer.current?.querySelector('.maplibregl-ctrl-attrib');
+      if (attribution) {
+        attribution.style.display = 'none';
+      }
+      
+      // Check dark mode again after map loads and update if needed
+      // Priority: explicit toggle (darkmode-js) > Tailwind dark class > system preference
+      const checkDarkMode = () => {
+        if (typeof window !== 'undefined') {
+          const hasDarkmodeClass = document.body.classList.contains('darkmode--activated');
+          const hasDarkClass = document.documentElement.classList.contains('dark');
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          
+          // Check if darkmode-js widget exists (means user can toggle)
+          const darkmodeWidget = document.querySelector('.darkmode-toggle');
+          const hasDarkmodeWidget = !!darkmodeWidget;
+          
+          // If darkmode-js widget exists, prioritize its class over system preference
+          if (hasDarkmodeWidget) {
+            // User has the toggle widget, so respect the explicit toggle
+            return hasDarkmodeClass;
+          } else {
+            // No widget yet, use Tailwind class or system preference
+            return hasDarkClass || prefersDark;
+          }
+        }
+        return false;
+      };
+      const isDark = checkDarkMode();
+      const expectedStyle = isDark ? 'dark_all' : 'light_all';
+      if (currentMapStyleRef.current !== expectedStyle) {
+        updateMapStyle(isDark);
+      }
+    });
+
+    // Also hide attribution immediately if it exists
+    const hideAttribution = () => {
+      const attribution = mapContainer.current?.querySelector('.maplibregl-ctrl-attrib');
+      if (attribution) {
+        attribution.style.display = 'none';
+      }
+    };
+    
+    // Check periodically for attribution element
+    const attributionInterval = setInterval(hideAttribution, 100);
+    
+    // Clear interval after 5 seconds
+    const timeoutId = setTimeout(() => clearInterval(attributionInterval), 5000);
+
+    return () => {
+      clearInterval(attributionInterval);
+      clearTimeout(timeoutId);
+      if (map.current) {
+        map.current.remove();
+        map.current = null;
+      }
+    };
+  }, []);
+
+  // Update markers based on hover state
+  const updateMarkers = useCallback(() => {
+    if (!map.current) return;
+
+    // Remove existing markers
+    markersRef.current.forEach((marker) => marker.remove());
+    markersRef.current = [];
 
     // Get all achievements that have map data
     const achievementsWithMap = achievements.filter(
       (a) => achievementMapData[a.title]
     );
 
-    // Separate hovered and non-hovered pins to ensure hovered pin renders last (on top)
-    const nonHoveredPins = [];
-    let hoveredPin = null;
-
+    // Group achievements by coordinates to count duplicates
+    const locationMap = new Map();
     achievementsWithMap.forEach((achievement) => {
       const mapData = achievementMapData[achievement.title];
-      const isHovered = hoveredAchievement === achievement.title;
-
-      if (isHovered) {
-        // Highlight hovered pin with large size (pin-l is the largest available) and original color
-        hoveredPin = `pin-l+${mapData.color}(${mapData.coords[0]},${mapData.coords[1]})`;
-      } else {
-        // Gray out other pins when something is hovered - use smallest size (pin-s) for maximum contrast
-        nonHoveredPins.push(
-          `pin-s+808080(${mapData.coords[0]},${mapData.coords[1]})`
-        );
+      const [lon, lat] = mapData.coords;
+      const key = `${lon},${lat}`;
+      
+      if (!locationMap.has(key)) {
+        locationMap.set(key, {
+          coords: [lon, lat],
+          mapData,
+          achievements: [],
+        });
       }
+      locationMap.get(key).achievements.push(achievement);
     });
 
-    // Add hovered pin last so it renders on top
-    if (hoveredPin) {
-      pins.push(...nonHoveredPins, hoveredPin);
-    } else {
-      pins.push(...nonHoveredPins);
-    }
+    // Create markers for each unique location
+    locationMap.forEach((location) => {
+      const { coords, mapData, achievements: locationAchievements } = location;
+      const [lon, lat] = coords;
+      const count = locationAchievements.length;
+      
+      // Check if any achievement at this location is hovered
+      const isHovered = locationAchievements.some(
+        (a) => hoveredAchievement === a.title
+      );
 
-    const pinsString = pins.join(',');
-    return `https://api.mapbox.com/styles/v1/${style}/static/${pinsString}/11.7314,14.9358,1.32,0,35/1280x720@2x?access_token=pk.eyJ1IjoiMTk5OG1lZGlhIiwiYSI6ImNsdHRuaGg4ZzE1NDUya3N5MTd2dTgwbTYifQ.nTFoFutOK1E7O6KBSFPLVQ&logo=false&attribution=false`;
-  };
+      // Determine marker color and size
+      // If nothing is hovered, show all markers in their original colors and large size
+      // If something is hovered, highlight the hovered one (large) and gray out others (small)
+      const color = hoveredAchievement 
+        ? (isHovered ? `#${mapData.color}` : '#808080')
+        : `#${mapData.color}`;
+      // All markers are large by default, only smaller when something else is hovered
+      const size = hoveredAchievement ? (isHovered ? 20 : 12) : 20;
+
+      // Create marker element
+      const el = document.createElement('div');
+      el.className = 'marker';
+      el.style.width = `${size}px`;
+      el.style.height = `${size}px`;
+      el.style.borderRadius = '50%';
+      el.style.backgroundColor = color;
+      el.style.border = '1px solid #ffffff';
+      el.style.boxShadow = '0 2px 4px rgba(0,0,0,0.3)';
+      el.style.cursor = 'pointer';
+      el.style.transition = 'all 0.3s ease';
+      el.style.display = 'flex';
+      el.style.alignItems = 'center';
+      el.style.justifyContent = 'center';
+      el.style.fontSize = count > 1 ? `${Math.max(8, size * 0.4)}px` : '0';
+      el.style.fontWeight = 'bold';
+      el.style.color = '#ffffff';
+      el.style.textShadow = '0 1px 2px rgba(0,0,0,0.5)';
+      
+      // Add count number inside marker if count > 1
+      if (count > 1) {
+        el.textContent = count.toString();
+      }
+
+      // Add marker to map
+      const marker = new maplibregl.Marker({ element: el })
+        .setLngLat([lon, lat])
+        .addTo(map.current);
+
+      markersRef.current.push(marker);
+    });
+  }, [hoveredAchievement]);
+
+
+  // Update markers when hover state changes
+  useEffect(() => {
+    if (map.current && map.current.loaded()) {
+      updateMarkers();
+    }
+  }, [hoveredAchievement, updateMarkers]);
 
   return (
     <>
@@ -262,14 +614,14 @@ export default function Achievements(props) {
                         setHoveredAchievement(null);
                       }}
                     >
-                      {/* <dt className="order-3 mt-1 text-lg leading-6 font-medium text-gray-400">
+                      <dt className="order-3 mt-1 text-md leading-6 font-medium text-gray-400">
                         {achievement.year}
-                      </dt> */}
+                      </dt>
                       <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
                         {i18n(achievement.title)} {achievement.flag}
                       </dt>
                       <dd
-                        className={`order-1 text-5xl font-extrabold ${achievement.color}`}
+                        className={`order-1 text-4xl font-extrabold ${achievement.color}`}
                       >
                         {i18n(achievement.rank)}
                       </dd>
@@ -277,37 +629,15 @@ export default function Achievements(props) {
                   );
                 })}
               </dl>
+              <p className="mt-3 text-xs text-gray-400 dark:text-gray-500 text-right">
+                {i18n('Rank updates until the end of 2024.')}
+              </p>
               <div className="relative my-6">
-                {/* Original static map - always visible at bottom */}
-                <img
-                  loading="lazy"
-                  className="dark:hidden rounded-xl hover:scale-95 transition-all"
-                  src={originalMapUrlLight}
-                  alt="World map"
+                {/* Interactive MapLibre map with Carto basemaps (OpenStreetMap-based) */}
+                <div
+                  ref={mapContainer}
+                  className="w-full h-[450px] rounded-3xl overflow-hidden shadow-lg [&_.maplibregl-ctrl-attrib]:hidden"
                 />
-                <img
-                  loading="lazy"
-                  className="hidden dark:block rounded-xl hover:scale-95 transition-all"
-                  src={originalMapUrlDark}
-                  alt="World map"
-                />
-                {/* Dynamic map overlay - only visible when hovering */}
-                {hoveredAchievement && (
-                  <>
-                    <img
-                      loading="lazy"
-                      className="dark:hidden absolute top-0 left-0 rounded-xl hover:scale-95 transition-all"
-                      src={generateMapUrl(false)}
-                      alt="World map highlighted"
-                    />
-                    <img
-                      loading="lazy"
-                      className="hidden dark:block absolute top-0 left-0 rounded-xl hover:scale-95 transition-all"
-                      src={generateMapUrl(true)}
-                      alt="World map highlighted"
-                    />
-                  </>
-                )}
               </div>
             </div>
             <img
