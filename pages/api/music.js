@@ -5,6 +5,11 @@ export default async function handler(req) {
   const provider = url.searchParams.get('provider');
   const path = url.searchParams.get('path');
 
+  // Spotify API - direct calls to Spotify endpoints
+  if (provider === 'spotify') {
+    return handleSpotify(url);
+  }
+
   // QQ Music API - direct calls to QQ Music endpoints
   if (provider === 'qq') {
     return handleQQMusic(url);
@@ -56,6 +61,100 @@ export default async function handler(req) {
   } catch (error) {
     console.error('Error:', error);
     return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+}
+
+// Spotify API handler - direct HTTP calls (edge-compatible)
+async function handleSpotify(url) {
+  const path = url.searchParams.get('path');
+  const spotifyToken = process.env.SPOTIFY_TOKEN;
+
+  if (!spotifyToken) {
+    return new Response(JSON.stringify({ error: 'Spotify token not configured' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
+  try {
+    let apiUrl;
+    
+    switch (path) {
+      case 'me/top/tracks':
+        // User's top tracks (requires user-top-read scope)
+        const timeRange = url.searchParams.get('time_range') || 'medium_term';
+        apiUrl = `https://api.spotify.com/v1/me/top/tracks?time_range=${timeRange}&limit=20`;
+        break;
+      
+      case 'top/us':
+        // Top 50 USA playlist (public, no user scope needed)
+        apiUrl = 'https://api.spotify.com/v1/playlists/37i9dQZEVXbLRQDuF5jeBp/tracks?limit=20';
+        break;
+      
+      default:
+        return new Response(JSON.stringify({ error: `Unknown path: ${path}` }), {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' },
+        });
+    }
+
+    const response = await fetch(apiUrl, {
+      headers: {
+        'Authorization': `Bearer ${spotifyToken}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      return new Response(JSON.stringify({ 
+        error: errorData.error?.message || 'Spotify API error',
+        data: []
+      }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    const data = await response.json();
+    
+    // Transform Spotify response to match Apple Music format
+    if (data.items && data.items.length > 0) {
+      const transformedData = {
+        data: data.items.map((item) => {
+          const track = item.track || item;
+          return {
+            id: track.id,
+            type: 'songs',
+            attributes: {
+              name: track.name,
+              artistName: track.artists?.map(a => a.name).join(', ') || 'Unknown Artist',
+              artwork: {
+                url: track.album?.images?.[0]?.url || track.images?.[0]?.url || '',
+              },
+              durationInMillis: track.duration_ms || 0,
+              url: track.external_urls?.spotify || '',
+              previews: [], // Empty - will search Apple Music for previews
+            },
+          };
+        }),
+      };
+      return new Response(JSON.stringify(transformedData), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    return new Response(JSON.stringify({ data: [] }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  } catch (error) {
+    console.error('Spotify API error:', error);
+    return new Response(JSON.stringify({ error: error.message, data: [] }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
     });

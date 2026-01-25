@@ -4,6 +4,8 @@ import { Tooltip } from '@nextui-org/tooltip';
 export default function Music(props) {
   // Track if fallback is used
   const [usingCharts, setUsingCharts] = useState(false);
+  // Track music source
+  const [musicSource, setMusicSource] = useState('apple'); // 'apple', 'spotify', or 'charts'
   function i18n(key) {
     if (props.i18n && props.i18n['music'] && !props.i18n['music'][key]) {
       console.log('music Missing Translation: ' + key);
@@ -35,30 +37,77 @@ export default function Music(props) {
           setMusic(data.data);
           setCurrentPlaying(data.data[0]);
           setUsingCharts(false);
+          setMusicSource('apple');
         } else {
           throw new Error('No recent tracks');
         }
       })
       .catch(() => {
-        // fallback to charts
-        fetch(`/api/music?path=catalog/us/charts?types=songs`)
+        // Try Spotify as fallback before charts
+        fetch(`/api/music?provider=spotify&path=me/top/tracks&time_range=medium_term`)
           .then((response) => response.json())
           .then((data) => {
-            if (
-              data.results &&
-              data.results.songs &&
-              data.results.songs.length > 0 &&
-              data.results.songs[0].data &&
-              data.results.songs[0].data.length > 0
-            ) {
-              setMusic(data.results.songs[0].data);
-              setCurrentPlaying(data.results.songs[0].data[0]);
-              setUsingCharts(true);
+            if (data.data && data.data.length > 0) {
+              // Search Apple Music for each track to get preview URLs
+              Promise.all(
+                data.data.map((spotifyTrack) => {
+                  const searchQuery = `${spotifyTrack.attributes.name} ${spotifyTrack.attributes.artistName}`;
+                  return fetch(`/api/music?path=catalog/us/search?term=${encodeURIComponent(searchQuery)}&types=songs&limit=1`)
+                    .then((res) => res.json())
+                    .then((searchData) => {
+                      if (searchData.results?.songs?.data?.[0]) {
+                        const appleTrack = searchData.results.songs.data[0];
+                        // Merge Spotify track info with Apple Music preview
+                        return {
+                          ...spotifyTrack,
+                          attributes: {
+                            ...spotifyTrack.attributes,
+                            previews: appleTrack.attributes.previews || [],
+                            // Keep Spotify artwork if Apple Music doesn't have one
+                            artwork: appleTrack.attributes.artwork?.url 
+                              ? appleTrack.attributes.artwork 
+                              : spotifyTrack.attributes.artwork,
+                          },
+                        };
+                      }
+                      return spotifyTrack; // Return original if no match found
+                    })
+                    .catch(() => spotifyTrack); // Return original on error
+                })
+              ).then((tracksWithPreviews) => {
+                setMusic(tracksWithPreviews);
+                setCurrentPlaying(tracksWithPreviews[0]);
+                setUsingCharts(false);
+                setMusicSource('spotify');
+              });
             } else {
-              setMusic([]);
-              setCurrentPlaying({});
-              setUsingCharts(true);
+              // Spotify also failed, fallback to charts
+              throw new Error('Spotify failed');
             }
+          })
+          .catch(() => {
+            // Final fallback to charts
+            fetch(`/api/music?path=catalog/us/charts?types=songs`)
+              .then((response) => response.json())
+              .then((data) => {
+                if (
+                  data.results &&
+                  data.results.songs &&
+                  data.results.songs.length > 0 &&
+                  data.results.songs[0].data &&
+                  data.results.songs[0].data.length > 0
+                ) {
+                  setMusic(data.results.songs[0].data);
+                  setCurrentPlaying(data.results.songs[0].data[0]);
+                  setUsingCharts(true);
+                  setMusicSource('charts');
+                } else {
+                  setMusic([]);
+                  setCurrentPlaying({});
+                  setUsingCharts(true);
+                  setMusicSource('charts');
+                }
+              });
           });
       });
   }
@@ -320,7 +369,7 @@ export default function Music(props) {
           <div
             className="dark:hidden absolute inset-0 rounded-xl pointer-events-none z-[1]"
             style={{
-              background: `conic-gradient(from 0deg, #ef4444 0%, #ef4444 ${progress}%, #000000 ${progress}%, #000000 100%)`,
+              background: `conic-gradient(from 0deg, ${musicSource === 'spotify' ? '#22c55e' : '#ef4444'} 0%, ${musicSource === 'spotify' ? '#22c55e' : '#ef4444'} ${progress}%, #000000 ${progress}%, #000000 100%)`,
               padding: '2px',
               WebkitMask:
                 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
@@ -332,7 +381,7 @@ export default function Music(props) {
           <div
             className="hidden dark:block absolute inset-0 rounded-xl pointer-events-none z-[1]"
             style={{
-              background: `conic-gradient(from 0deg, #ef4444 0%, #ef4444 ${progress}%, #ffffff ${progress}%, #ffffff 100%)`,
+              background: `conic-gradient(from 0deg, ${musicSource === 'spotify' ? '#22c55e' : '#ef4444'} 0%, ${musicSource === 'spotify' ? '#22c55e' : '#ef4444'} ${progress}%, #ffffff ${progress}%, #ffffff 100%)`,
               padding: '2px',
               WebkitMask:
                 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
@@ -344,9 +393,13 @@ export default function Music(props) {
             content={
               <div className="flex flex-col max-h-[50vh]">
                 <div className="sticky top-0 z-10 flex items-start justify-between text-sm md:text-2xl font-bold dark:text-white p-2 bg-white/95 dark:bg-black/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 rounded-t-xl md:rounded-t-2xl">
-                  {i18n('My Recent Playlist')}{' '}
-                  <span className="text-red-600 text-sm">
-                    {i18n(' Music')}
+                  {i18n('My Recent Playlist')}
+                  <span className={`text-sm ml-3 ${musicSource === 'spotify' ? 'text-green-600' : 'text-red-600'}`}>
+                    {musicSource === 'spotify' ? (
+                      <>
+                        <i className="fab fa-spotify mr-1"></i>Spotify
+                      </>
+                    ) : i18n(' Music')}
                   </span>
                 </div>
                 <div className="overflow-auto">
@@ -355,7 +408,7 @@ export default function Music(props) {
                       key={index}
                       href={item.attributes.url}
                       target="_blank"
-                      className={`p-3 flex items-center justify-between ${index === music.findIndex((music) => music.id === currentPlaying.id) ? 'bg-red-600 text-white animate-pulse' : 'hover:bg-black/10 dark:text-white dark:hover:bg-white/10'}`}
+                      className={`p-3 flex items-center justify-between gap-4 ${index === music.findIndex((music) => music.id === currentPlaying.id) ? (musicSource === 'spotify' ? 'bg-green-600 text-white animate-pulse' : 'bg-red-600 text-white animate-pulse') : 'hover:bg-black/10 dark:text-white dark:hover:bg-white/10'}`}
                     >
                       <div className="flex items-center gap-3">
                         <div
