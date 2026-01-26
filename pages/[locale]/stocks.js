@@ -232,7 +232,7 @@ export default function Stocks(props) {
             {i18n('Stocks')}
             <i className="far fa-chart-line ml-2"></i>
           </a>
-          <div className="flex flex-col items-end">
+          <div className="flex flex-col sm:items-end">
             <p className="text-xl text-gray-500">
               {i18n('My Stock Portfolio - Real-time Market Data.')}
             </p>
