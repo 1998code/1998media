@@ -599,7 +599,7 @@ export default function Achievements(props) {
                   const isGrayedOut = hoveredAchievement && !isHovered;
                   return (
                     <div
-                      key={achievement.title}
+                      key={achievement.title + achievement.year}
                       className={`flex flex-col p-6 text-center lg:text-left transition-all ${
                         isHovered
                           ? 'scale-105'
