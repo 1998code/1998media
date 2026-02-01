@@ -22,6 +22,12 @@ export default function Skills(props) {
       href: 'https://coursera.org/verify/KDTDPH6RCXZD',
       bgColor: 'bg-blue-500',
     },
+    {
+      name: 'AI Fluency for nonprofits',
+      icons: 'Claude',
+      href: 'http://verify.skilljar.com/c/i9sa4ijatjzj',
+      bgColor: 'bg-orange-500',
+    },
   ];
   const softwares = [
     {
@@ -38,13 +44,13 @@ export default function Skills(props) {
     },
     {
       name: 'Framer',
-      icons: 'fa-sketch',
+      icons: 'F',
       href: 'https://www.framer.com/',
       bgColor: 'bg-sky-500',
     },
     {
       name: 'Sketch',
-      icons: 'Sk',
+      icons: 'fa-sketch',
       href: 'https://www.sketch.com/',
       bgColor: 'bg-orange-400',
     },
