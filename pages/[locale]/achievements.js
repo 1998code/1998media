@@ -674,17 +674,17 @@ export default function Achievements(props) {
                                 setHoveredAchievement(null);
                               }}
                             >
-                              <dt className="order-3 mt-1 text-md leading-6 font-medium text-gray-400">
+                              <div className="order-3 mt-1 text-md leading-6 font-medium text-gray-400">
                                 {achievement.year}
-                              </dt>
-                              <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500 line-clamp-2 min-h-[3.5rem]">
+                              </div>
+                              <div className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500 line-clamp-2 min-h-[3.5rem]">
                                 {i18n(achievement.title)} {achievement.flag}
-                              </dt>
-                              <dd
+                              </div>
+                              <div
                                 className={`order-1 text-4xl font-extrabold ${achievement.color}`}
                               >
                                 {i18n(achievement.rank)}
-                              </dd>
+                              </div>
                             </div>
                           );
                         }
