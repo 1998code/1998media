@@ -33,7 +33,7 @@ const nextConfig = {
 
   // Enable experimental features for better performance
   experimental: {
-    optimizePackageImports: ['@liveblocks/react', 'framer-motion', 'axios'],
+    optimizePackageImports: ['framer-motion', 'axios'],
   },
 
   // Cloudflare Pages requires specific image optimization settings or unoptimized images

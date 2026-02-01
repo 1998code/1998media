@@ -14,8 +14,6 @@
   "dependencies": {
     "@docsearch/react": "^3.3.3",
     "@githubocto/flat-ui": "^0.14.1",
-    "@liveblocks/client": "^1.0.0",
-    "@liveblocks/react": "^1.0.0",
     "@nextui-org/theme": "^2.4.5",
     "@nextui-org/tooltip": "^2.0.13",
     "@tailwindcss/aspect-ratio": "^0.4.0",

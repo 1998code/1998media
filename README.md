@@ -8,7 +8,6 @@ Current Version: 15
 
 - **Server-Side Rendering (SSR)** - All data is fetched server-side for better SEO and performance
 - **Internationalization (i18n)** - Multi-language support with dynamic locale routing
-- **Real-time Collaboration** - Multiplayer cursor tracking using Liveblocks
 - **Dynamic Content** - Blog posts, Trip.com moments, and GitHub projects
 - **Responsive Design** - Optimized for all devices
 

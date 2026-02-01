@@ -5,9 +5,7 @@ import dynamic from 'next/dynamic';
 import LocaleSwitcher from '../../components/LocaleSwitcher';
 
 export const runtime = 'experimental-edge';
-import CursorPointer from '../../components/CursorPointer';
 import WhatsAppChat from '../../components/WhatsAppChat';
-import { RoomProvider } from '../../liveblocks.config';
 import {
   fetchI18nData,
   fetchBlogPosts,
@@ -224,44 +222,41 @@ export default function Home({
       {/* <script>AOS.init();</script> */}
       <main className="darkmode-ignore overflow-hidden">
         <LocaleSwitcher />
-        <RoomProvider id="1998-MEDIA" initialPresence={{ cursor: null }}>
-          <CursorPointer />
-          {loading ? (
-            <Loading />
-          ) : (
-            <div>
-              <Navigation
+        {loading ? (
+          <Loading />
+        ) : (
+          <div>
+            <Navigation
+              i18n={I18n}
+              sections={sections}
+              activeSection={activeSection}
+              sidebarOpen={sidebarOpen}
+              toggleSidebar={toggleSidebar}
+            />
+            <div className={`${sidebarOpen && 'pl-6 lg:pl-0'}`}>
+              <Header i18n={I18n} />
+              <About i18n={I18n} />
+              <Achievements i18n={I18n} />
+              <Gallery
                 i18n={I18n}
-                sections={sections}
-                activeSection={activeSection}
-                sidebarOpen={sidebarOpen}
-                toggleSidebar={toggleSidebar}
+                unsplashData={unsplashData}
+                locale={locale}
               />
-              <div className={`${sidebarOpen && 'pl-6 lg:pl-0'}`}>
-                <Header i18n={I18n} />
-                <About i18n={I18n} />
-                <Achievements i18n={I18n} />
-                <Gallery
-                  i18n={I18n}
-                  unsplashData={unsplashData}
-                  locale={locale}
-                />
-                <Experience i18n={I18n} />
-                <Skills i18n={I18n} />
-                <Projects i18n={I18n} projectsData={projectsData} />
-                {/* <OpenAPI i18n={I18n} /> */}
-                <AI i18n={I18n} dalle={dalleData} />
-                <Blog i18n={I18n} blogData={blogData} locale={locale} />
-                <Stocks i18n={I18n} stocksData={stocksData} />
-                <Faq i18n={I18n} />
-                <Contact i18n={I18n} />
-                <Credits i18n={I18n} />
-                <Footer i18n={I18n} ipData={ipData} />
-                {interacted && <Music i18n={I18n} />}
-              </div>
+              <Experience i18n={I18n} />
+              <Skills i18n={I18n} />
+              <Projects i18n={I18n} projectsData={projectsData} />
+              {/* <OpenAPI i18n={I18n} /> */}
+              <AI i18n={I18n} dalle={dalleData} />
+              <Blog i18n={I18n} blogData={blogData} locale={locale} />
+              <Stocks i18n={I18n} stocksData={stocksData} />
+              <Faq i18n={I18n} />
+              <Contact i18n={I18n} />
+              <Credits i18n={I18n} />
+              <Footer i18n={I18n} ipData={ipData} />
+              {interacted && <Music i18n={I18n} />}
             </div>
-          )}
-        </RoomProvider>
+          </div>
+        )}
         <WhatsAppChat i18n={I18n} />
       </main>
     </div>
