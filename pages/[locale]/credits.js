@@ -13,7 +13,7 @@ export default function Credits(props) {
   return (
     <div
       id="credits"
-      className="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8 flex flex-wrap items-center justify-between gap-3"
+      className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 flex flex-wrap items-center justify-between gap-3"
     >
       <h2 className="text-3xl font-extrabold text-orange-600 dark:text-orange-100">
         {i18n('Special Thanks')}

@@ -394,13 +394,13 @@ export default function Achievements(props) {
       zoom: 1, // Zoom out most by default
       minZoom: 1,
       maxZoom: 10,
-      scrollZoom: true, // Enable scroll zoom
-      boxZoom: true, // Enable box zoom
+      scrollZoom: false, // Disable scroll zoom
+      boxZoom: false, // Disable box zoom
       dragRotate: false, // Disable drag rotation
-      dragPan: true, // Enable panning
-      keyboard: true, // Enable keyboard navigation
-      doubleClickZoom: true, // Enable double-click zoom
-      touchZoomRotate: true, // Enable touch zoom/rotate
+      dragPan: false, // Disable panning
+      keyboard: false, // Disable keyboard navigation
+      doubleClickZoom: false, // Disable double-click zoom
+      touchZoomRotate: false, // Disable touch zoom/rotate
       locale: locale, // Set map locale to match system/browser language
     });
 
@@ -560,91 +560,155 @@ export default function Achievements(props) {
     }
   }, [hoveredAchievement, updateMarkers]);
 
+  // Achievements scroll ref
+  const achievementScrollRef = useRef(null);
+
+  // Auto-scroll for achievements
+  useEffect(() => {
+    const scrollContainer = achievementScrollRef.current;
+    if (!scrollContainer || achievements.length === 0) return;
+
+    let isUserScrolling = false;
+    let scrollTimeout;
+    let animationFrame;
+
+    const handleInteraction = () => {
+      isUserScrolling = true;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        isUserScrolling = false;
+      }, 3000);
+    };
+
+    const autoScroll = () => {
+      if (!isUserScrolling && scrollContainer) {
+        scrollContainer.scrollLeft += 0.5;
+        if (scrollContainer.scrollLeft >= scrollContainer.scrollWidth / 2) {
+          scrollContainer.scrollLeft = 0;
+        }
+      }
+      animationFrame = requestAnimationFrame(autoScroll);
+    };
+
+    scrollContainer.addEventListener('wheel', handleInteraction, { passive: true });
+    scrollContainer.addEventListener('touchstart', handleInteraction);
+    scrollContainer.addEventListener('touchmove', handleInteraction);
+    scrollContainer.addEventListener('mousedown', handleInteraction);
+
+    animationFrame = requestAnimationFrame(autoScroll);
+
+    return () => {
+      scrollContainer.removeEventListener('wheel', handleInteraction);
+      scrollContainer.removeEventListener('touchstart', handleInteraction);
+      scrollContainer.removeEventListener('touchmove', handleInteraction);
+      scrollContainer.removeEventListener('mousedown', handleInteraction);
+      cancelAnimationFrame(animationFrame);
+      clearTimeout(scrollTimeout);
+    };
+  }, []);
+
   return (
     <>
-      <div className="relative px-4 sm:px-6 lg:px-8">
+      <div className="relative h-full w-full flex flex-col justify-center py-4">
         <img
           loading="lazy"
           src="https://cdn.1998.media/bgs/App.png"
           className="absolute -z-[1] w-[25vw] top-14 -right-16"
         />
-        <div id="achievements" className="pt-16 max-w-7xl mx-auto">
-          <div className="mx-auto text-left">
-            <a
-              className="text-3xl font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl"
-              href="#achievements"
-            >
-              {i18n('Trusted by customers from over 175 countries and regions')}
-              <i className="far fa-earth-americas ml-2"></i>
-            </a>
-            <p className="mt-3 text-xl text-gray-500 sm:mt-4">
-              {i18n("People love my apps, and I'd believe you will, too.")}{' '}
-              <i className="far fa-hand-holding-heart"></i>
-            </p>
-          </div>
-        </div>
-        <div className="mt-10 pb-12 sm:pb-16">
-          <div className="relative max-w-7xl mx-auto">
-            <div className="cursor-default">
-              <h3 className="mb-6 text-lg font-medium leading-6 text-gray-900 dark:text-gray-100">
-                {i18n(
-                  'Apple App Store (iOS, iPadOS, watchOS, App Clips, macOS, visionOS)'
-                )}
-                <i className="fab fa-app-store ml-2"></i>
-              </h3>
-              <dl className="rounded-xl overflow-hidden bg-white/50 dark:bg-black/50 backdrop-blur-md shadow-lg grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 backlight xl:rounded-[30px]">
-                {achievements.map((achievement) => {
-                  const hasMapData = achievementMapData[achievement.title];
-                  const isHovered = hoveredAchievement === achievement.title;
-                  const isGrayedOut = hoveredAchievement && !isHovered;
-                  return (
-                    <div
-                      key={achievement.title + achievement.year}
-                      className={`flex flex-col p-6 text-center lg:text-left transition-all ${
-                        isHovered
-                          ? 'scale-105'
-                          : isGrayedOut
-                          ? 'opacity-40 grayscale'
-                          : 'hover:scale-105'
-                      }`}
-                      onMouseEnter={() => {
-                        setHoveredAchievement(achievement.title);
-                      }}
-                      onMouseLeave={() => {
-                        setHoveredAchievement(null);
-                      }}
-                    >
-                      <dt className="order-3 mt-1 text-md leading-6 font-medium text-gray-400">
-                        {achievement.year}
-                      </dt>
-                      <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
-                        {i18n(achievement.title)} {achievement.flag}
-                      </dt>
-                      <dd
-                        className={`order-1 text-4xl font-extrabold ${achievement.color}`}
-                      >
-                        {i18n(achievement.rank)}
-                      </dd>
-                    </div>
-                  );
-                })}
-              </dl>
-              <p className="mt-3 text-xs text-gray-400 dark:text-gray-500 text-right">
-                {i18n('Rank updates until the end of 2024.')}
+        <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
+          <div id="achievements" className="w-full">
+            <div className="mx-auto text-left">
+              <a
+                className="text-3xl font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl"
+                href="#achievements"
+              >
+                {i18n('Trusted by customers from over 175 countries and regions')}
+                <i className="far fa-earth-americas ml-2"></i>
+              </a>
+              <p className="mt-3 text-xl text-gray-500 sm:mt-4">
+                {i18n("People love my apps, and I'd believe you will, too.")}{' '}
+                <i className="far fa-hand-holding-heart"></i>
               </p>
-              <div className="relative my-6">
-                {/* Interactive MapLibre map with Carto basemaps (OpenStreetMap-based) */}
-                <div
-                  ref={mapContainer}
-                  className="w-full h-[450px] rounded-3xl overflow-hidden shadow-lg [&_.maplibregl-ctrl-attrib]:hidden"
+            </div>
+            <div className="mt-10 pb-12 sm:pb-16">
+              <div className="relative max-w-7xl mx-auto">
+                <div className="cursor-default">
+                  <h3 className="mb-6 text-lg font-medium leading-6 text-gray-900 dark:text-gray-100">
+                    {i18n(
+                      'Apple App Store (iOS, iPadOS, watchOS, App Clips, macOS, visionOS)'
+                    )}
+                    <i className="fab fa-app-store ml-2"></i>
+                  </h3>
+                  <div
+                    ref={achievementScrollRef}
+                    className="overflow-x-auto my-5 py-8 scrollbar-hide"
+                    style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                  >
+                    <div className="flex gap-5">
+                  {[...achievements, ...achievements].map((achievement, index) => {
+                    const isHovered = hoveredAchievement === achievement.title;
+                    const isGrayedOut = hoveredAchievement && !isHovered;
+                    
+                    // Extract color class for border - simplified mapping
+                    let borderColorClass = 'border-orange-500';
+                    if (achievement.color.includes('blue')) borderColorClass = 'border-blue-500';
+                    if (achievement.color.includes('teal')) borderColorClass = 'border-teal-500';
+                    if (achievement.color.includes('sky')) borderColorClass = 'border-sky-500';
+                    if (achievement.color.includes('green')) borderColorClass = 'border-green-500';
+                    if (achievement.color.includes('red')) borderColorClass = 'border-red-500';
+
+                    return (
+                      <div
+                        key={achievement.title + achievement.year + index}
+                        className={`flex-shrink-0 min-w-[200px] max-w-[300px] flex flex-col p-6 rounded-xl bg-white/50 dark:bg-black/50 backdrop-blur-md shadow-lg xl:rounded-[30px] transition-all border-2 ${
+                          isHovered
+                            ? `${borderColorClass} opacity-100`
+                            : isGrayedOut
+                            ? 'opacity-40 grayscale border-transparent'
+                            : 'border-transparent hover:border-black dark:hover:border-white'
+                        }`}
+                              onMouseEnter={() => {
+                                setHoveredAchievement(achievement.title);
+                              }}
+                              onMouseLeave={() => {
+                                setHoveredAchievement(null);
+                              }}
+                            >
+                              <dt className="order-3 mt-1 text-md leading-6 font-medium text-gray-400">
+                                {achievement.year}
+                              </dt>
+                              <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500 line-clamp-2 min-h-[3.5rem]">
+                                {i18n(achievement.title)} {achievement.flag}
+                              </dt>
+                              <dd
+                                className={`order-1 text-4xl font-extrabold ${achievement.color}`}
+                              >
+                                {i18n(achievement.rank)}
+                              </dd>
+                            </div>
+                          );
+                        }
+                      )}
+                    </div>
+                  </div>
+                  <div className="relative my-6">
+                    {/* Interactive MapLibre map with Carto basemaps (OpenStreetMap-based) */}
+                    <div
+                      ref={mapContainer}
+                      className="w-full h-[450px] rounded-3xl overflow-hidden shadow-lg [&_.maplibregl-ctrl-attrib]:hidden"
+                    />
+                    <p className="mt-3 text-xs text-gray-400 dark:text-gray-500 text-right">
+                      {i18n('Rank updates until the end of 2024.')}
+                    </p>
+                  </div>
+                </div>
+                <img
+                  loading="lazy"
+                  src="https://cdn.1998.media/bgs/Camera.png"
+                  className="absolute -z-[1] w-[25vw] top-25 -right-72"
                 />
               </div>
             </div>
-            <img
-              loading="lazy"
-              src="https://cdn.1998.media/bgs/Camera.png"
-              className="absolute -z-[1] w-[25vw] top-25 -right-72"
-            />
           </div>
         </div>
       </div>

@@ -166,9 +166,9 @@ export default function Blog(props) {
   }, [moment]);
 
   return (
-    <div className="relative px-4 sm:px-6 lg:px-8 space-y-16">
+    <div className="relative h-full w-full max-w-7xl mx-auto flex flex-col items-start px-4 sm:px-6 lg:px-8 pt-24 overflow-y-auto scrollbar-hide space-y-16">
       {/* Blog */}
-      <div id="blog" className="relative max-w-7xl mx-auto space-y-8 pt-16">
+      <div id="blog" className="relative w-full space-y-8">
         <div className="text-left flex flex-wrap">
           <a
             className="text-3xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl grow"
@@ -249,7 +249,7 @@ export default function Blog(props) {
       </div>
 
       {/* Moments */}
-      <div id="trip" className="relative max-w-7xl mx-auto space-y-8 pt-16">
+      <div id="trip" className="relative w-full space-y-8 pt-4">
         <div className="text-left flex flex-wrap">
           <a
             className="text-3xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl grow"

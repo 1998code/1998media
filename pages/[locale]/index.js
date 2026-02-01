@@ -196,71 +196,257 @@ export default function Home({
     }, 3000);
   }, []);
 
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  function toggleSidebar() {
-    setSidebarOpen(!sidebarOpen);
-  }
+        const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  return (
-    <div>
-      <Head>
-        <title>{i18n('1998 MEDIA (Official Website)')}</title>
-        <meta
-          name="description"
-          content={i18n(
-            'Experience the Art of Design - Your Vision, My Craftsmanship.'
-          )}
-        />
-        <link rel="icon" href="https://cdn.1998.media/favicon24.jpg" />
-      </Head>
-      {/* Load heavy 3D viewer after page is interactive */}
-      <Script
-        type="module"
-        src="https://cdn.jsdelivr.net/npm/@splinetool/viewer@1.9.79/build/spline-viewer.min.js"
-        strategy="lazyOnload"
-      />
-      {/* <script>AOS.init();</script> */}
-      <main className="darkmode-ignore overflow-hidden">
-        <LocaleSwitcher />
-        {loading ? (
-          <Loading />
-        ) : (
-          <div>
-            <Navigation
-              i18n={I18n}
-              sections={sections}
-              activeSection={activeSection}
-              sidebarOpen={sidebarOpen}
-              toggleSidebar={toggleSidebar}
+        const [headerCompleted, setHeaderCompleted] = useState(false);
+
+        const [isReady, setIsReady] = useState(false);
+
+        const containerRef = useRef(null);
+
+      
+
+        useEffect(() => {
+
+          if (isReady) {
+
+            document.body.classList.remove('hide-darkmode-widget-global');
+
+          } else {
+
+            document.body.classList.add('hide-darkmode-widget-global');
+
+          }
+
+          return () => {
+
+            document.body.classList.remove('hide-darkmode-widget-global');
+
+          };
+
+        }, [isReady]);
+
+      
+
+        function toggleSidebar() {
+
+        setSidebarOpen(!sidebarOpen);
+
+      }
+
+    
+
+      const scrollToNext = () => {
+
+        setIsReady(true);
+
+        setHeaderCompleted(true);
+
+        const element = document.getElementById('about');
+
+        if (element) {
+
+          element.scrollIntoView({ behavior: 'smooth' });
+
+        }
+
+      };
+
+    
+
+      const handleScroll = (e) => {
+
+        if (!headerCompleted && e.target.scrollTop > 10) {
+
+          setHeaderCompleted(true);
+
+        }
+
+      };
+
+    
+
+      return (
+
+        <div>
+
+          <Head>
+
+            <title>{i18n('1998 MEDIA (Official Website)')}</title>
+
+            <meta
+
+              name="description"
+
+              content={i18n(
+
+                'Experience the Art of Design - Your Vision, My Craftsmanship.'
+
+              )}
+
             />
-            <div className={`${sidebarOpen && 'pl-6 lg:pl-0'}`}>
-              <Header i18n={I18n} />
-              <About i18n={I18n} />
-              <Achievements i18n={I18n} />
-              <Gallery
-                i18n={I18n}
-                unsplashData={unsplashData}
-                locale={locale}
-              />
-              <Experience i18n={I18n} />
-              <Skills i18n={I18n} />
-              <Projects i18n={I18n} projectsData={projectsData} />
-              {/* <OpenAPI i18n={I18n} /> */}
-              <AI i18n={I18n} dalle={dalleData} />
-              <Blog i18n={I18n} blogData={blogData} locale={locale} />
-              <Stocks i18n={I18n} stocksData={stocksData} />
-              <Faq i18n={I18n} />
-              <Contact i18n={I18n} />
-              <Credits i18n={I18n} />
-              <Footer i18n={I18n} ipData={ipData} />
-              {interacted && <Music i18n={I18n} />}
-            </div>
-          </div>
-        )}
-        <WhatsAppChat i18n={I18n} />
-      </main>
-    </div>
-  );
+
+            <link rel="icon" href="https://cdn.1998.media/favicon24.jpg" />
+
+          </Head>
+
+          {/* <script>AOS.init();</script> */}
+
+                <main className={`darkmode-ignore h-screen w-screen overflow-hidden ${!isReady ? 'hide-darkmode-widget' : ''}`}>
+
+                  <LocaleSwitcher />
+
+                          {loading ? (
+
+                            <Loading />
+
+                          ) : (
+
+                                      <div className="h-full w-full relative">
+
+                                        {headerCompleted && (
+
+                                          <Navigation
+
+                                            i18n={I18n}
+
+                                            sections={sections}
+
+                                            activeSection={activeSection}
+
+                                            sidebarOpen={sidebarOpen}
+
+                                            toggleSidebar={toggleSidebar}
+
+                                          />
+
+                                        )}
+
+                      <div 
+
+                        ref={containerRef}
+
+                        onScroll={handleScroll}
+
+                        className={`${sidebarOpen && 'pl-6 lg:pl-0'} h-full w-full ${(isReady || headerCompleted) ? 'overflow-y-auto' : 'overflow-hidden'} snap-y snap-mandatory scroll-smooth`}
+
+                      >
+
+                        <section id="header" className="snap-start h-screen w-full flex-shrink-0">
+
+                          <Header 
+
+                            i18n={I18n} 
+
+                            onComplete={scrollToNext} 
+
+                            onReady={() => setIsReady(true)}
+
+                          />
+
+                        </section>
+
+                        <section id="about" className="snap-start h-screen w-full flex-shrink-0">
+
+                          <About i18n={I18n} />
+
+                        </section>
+
+                        <section id="achievements" className="snap-start h-screen w-full flex-shrink-0">
+
+                          <Achievements i18n={I18n} />
+
+                        </section>
+
+                        <section id="gallery" className="snap-start h-screen w-full flex-shrink-0">
+
+                          <Gallery
+
+                            i18n={I18n}
+
+                            unsplashData={unsplashData}
+
+                            locale={locale}
+
+                          />
+
+                        </section>
+
+                        <section id="experience" className="snap-start h-screen w-full flex-shrink-0">
+
+                          <Experience i18n={I18n} />
+
+                        </section>
+
+                        <section id="skills" className="snap-start h-screen w-full flex-shrink-0">
+
+                          <Skills i18n={I18n} />
+
+                        </section>
+
+                        <section id="projects" className="snap-start h-screen w-full flex-shrink-0">
+
+                          <Projects i18n={I18n} projectsData={projectsData} />
+
+                        </section>
+
+                        <section id="ai" className="snap-start h-screen w-full flex-shrink-0">
+
+                          <AI i18n={I18n} dalle={dalleData} />
+
+                        </section>
+
+                        <section id="blog" className="snap-start h-screen w-full flex-shrink-0">
+
+                          <Blog i18n={I18n} blogData={blogData} locale={locale} />
+
+                        </section>
+
+                        <section id="stocks" className="snap-start h-screen w-full flex-shrink-0">
+
+                          <Stocks i18n={I18n} stocksData={stocksData} />
+
+                        </section>
+
+                        <section id="faq" className="snap-start h-screen w-full flex-shrink-0">
+
+                          <Faq i18n={I18n} />
+
+                        </section>
+
+                                      <section id="contact" className="snap-start h-screen w-full flex-shrink-0 flex flex-col justify-between overflow-y-auto scrollbar-hide pt-24">
+
+                                        <div className="flex-1 flex flex-col justify-center">
+
+                                          <Contact i18n={I18n} />
+
+                                        </div>
+
+                                        <div className="w-full">
+
+                                          <Credits i18n={I18n} />
+
+                                          <Footer i18n={I18n} ipData={ipData} />
+
+                                        </div>
+
+                                      </section>
+
+                        {headerCompleted && interacted && <Music i18n={I18n} />}
+
+                      </div>
+
+                                        </div>
+
+                                      )}
+
+                                      {isReady && <WhatsAppChat i18n={I18n} />}
+
+                                    </main>
+
+      </div>
+
+    );
 }
 
 export async function getServerSideProps(context) {
@@ -290,7 +476,8 @@ export async function getServerSideProps(context) {
       medals,
       moments,
       githubProjects,
-      stocksData,
+      currentStocks,
+      previousStocks,
       dalleData,
       unsplashData,
       ipData,
@@ -300,7 +487,8 @@ export async function getServerSideProps(context) {
       fetchTripMedals(locale),
       fetchTripMoments(locale),
       fetchGithubProjects(),
-      fetchStocks('NVDA,MC.PA,3033.HK'), // Add your stock symbols here
+      fetchStocks('AAPL,NVDA,MC.PA,3033.HK'),
+      fetchStocks('MSFT,AMZN'),
       fetchDalleData(),
       fetchUnsplashData(),
       fetchIPData(locale, req),
@@ -314,7 +502,10 @@ export async function getServerSideProps(context) {
           medals,
           moments,
         },
-        stocksData,
+        stocksData: {
+          current: currentStocks,
+          previous: previousStocks
+        },
         projectsData: githubProjects,
         dalleData,
         unsplashData,

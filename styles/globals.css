@@ -4,12 +4,14 @@
 
 html {
   scroll-behavior: smooth;
+  background-color: #fff6eb;
 }
 
 body {
   padding: 0;
   margin: 0;
-  font-family: system-ui, 'SF Pro Display', BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  background-color: #fff6eb;
+  font-family: 'Google Sans Flex', 'Roboto Flex', system-ui, 'SF Pro Display', BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
@@ -28,6 +30,11 @@ a {
 
 .darkmode-toggle {
   z-index: 10;
+}
+
+.hide-darkmode-widget .darkmode-toggle,
+.hide-darkmode-widget-global .darkmode-toggle {
+  display: none !important;
 }
 
 .github-octo-flat-ui {

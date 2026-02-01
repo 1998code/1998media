@@ -329,9 +329,9 @@ export default function Experience(props) {
   return (
     <div
       id="experience"
-      className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8"
+      className="relative h-full w-full max-w-7xl mx-auto flex flex-col items-start px-4 sm:px-6 lg:px-8 pt-24"
     >
-      <div className="relative max-w-7xl mx-auto">
+      <div className="relative w-full">
         <div className="text-left">
           <div className="flex items-center justify-between flex-wrap gap-4">
             <a
@@ -399,7 +399,7 @@ export default function Experience(props) {
             </div>
           </div>
         </div>
-        <div className="bg-white dark:bg-black shadow overflow-hidden rounded-xl mt-8 backlight">
+        <div className="bg-white dark:bg-black shadow rounded-xl mt-8 backlight max-h-[70vh] overflow-y-auto scrollbar-hide">
           <div
             className="transition-all duration-500 ease-in-out"
             style={{

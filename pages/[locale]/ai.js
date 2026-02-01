@@ -121,8 +121,8 @@ export default function AI(props) {
   }, []);
 
   return (
-    <div id="ai" className="relative pt-16 md:py-20 px-4 sm:px-6 lg:px-8">
-      <div className="relative max-w-7xl mx-auto">
+    <div id="ai" className="relative h-full w-full max-w-7xl mx-auto flex flex-col items-start px-4 sm:px-6 lg:px-8 pt-24 overflow-y-auto scrollbar-hide">
+      <div className="relative w-full">
         <div className="text-left flex flex-wrap">
           <a
             className="text-3xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl grow"

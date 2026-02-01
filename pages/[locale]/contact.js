@@ -11,7 +11,7 @@ export default function Contact(props) {
       : key;
   }
   return (
-    <div id="contact" className="relative py-16">
+    <div id="contact" className="relative py-4">
       <div
         className="hidden absolute top-0 inset-x-0 h-1/2 md:block"
         aria-hidden="true"

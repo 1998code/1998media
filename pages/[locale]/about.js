@@ -48,8 +48,8 @@ export default function About(props) {
       : key;
   }
   return (
-    <div id="about" className="max-w-7xl mx-auto pt-16 pb-32">
-      <div className="px-4 py-16 sm:px-6 lg:px-8 bg-gradient-to-r from-orange-200 to-clear dark:from-orange-800 dark:to-clear xl:rounded-[60px] relative">
+    <div className="h-full w-full max-w-7xl mx-auto flex items-center justify-center">
+      <div className="w-full px-4 py-8 sm:px-6 lg:px-8 bg-gradient-to-r from-orange-200 to-clear dark:from-orange-800 dark:to-clear xl:rounded-[60px] relative">
         {/* Keyboard navigation keycaps - desktop only */}
         <div className="hidden lg:flex absolute bottom-6 left-6 flex-col items-center gap-2">
           <Tooltip

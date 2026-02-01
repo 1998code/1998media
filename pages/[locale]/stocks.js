@@ -210,6 +210,9 @@ function StockCard({ stock, i18n, locale }) {
 }
 
 export default function Stocks(props) {
+  const [selectedStock, setSelectedStock] = useState(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
   function i18n(key) {
     if (props.i18n && props.i18n['stocks'] && !props.i18n['stocks'][key]) {
       console.log('Stocks Missing Translation: ' + key);
@@ -219,11 +222,22 @@ export default function Stocks(props) {
       : key;
   }
 
-  const stocks = props.stocksData || [];
+  const handleStockClick = (stock) => {
+    setSelectedStock(stock);
+    setIsDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false);
+    setSelectedStock(null);
+  };
+
+  const currentStocks = props.stocksData?.current || [];
+  const previousStocks = props.stocksData?.previous || [];
 
   return (
-    <div className="relative px-4 sm:px-6 lg:px-8">
-      <div id="stocks" className="relative max-w-7xl mx-auto space-y-8 pt-16">
+    <div className="relative h-full w-full max-w-7xl mx-auto flex flex-col items-start px-4 sm:px-6 lg:px-8 pt-24 overflow-y-auto scrollbar-hide">
+      <div id="stocks" className="relative w-full space-y-8">
         <div className="text-left flex flex-wrap items-center justify-between">
           <a
             className="text-3xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl"
@@ -241,13 +255,157 @@ export default function Stocks(props) {
             </p>
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-5">
-          {stocks.map((stock, index) => (
-            <StockCard key={stock.symbol || index} stock={stock} i18n={i18n} locale={props.locale} />
-          ))}
-          {stocks.length === 0 && (
-            <div className="col-span-full text-center text-gray-500 dark:text-gray-400 py-8">
-              {i18n('No stock data available.')}
+
+        {/* Current Portfolio */}
+        <div className="space-y-4 w-full">
+          <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+            {i18n('Current')}
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {currentStocks.map((stock, index) => (
+              <div key={stock.symbol || index} onClick={() => handleStockClick(stock)} className="cursor-pointer">
+                <StockCard stock={stock} i18n={i18n} locale={props.locale} />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Previous Portfolio */}
+        <div className="space-y-4 pb-12 w-full">
+          <h3 className="text-xl font-bold text-gray-500 dark:text-gray-400">
+            {i18n('Previous')}
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 opacity-80">
+            {previousStocks.map((stock, index) => (
+              <div key={stock.symbol || index} onClick={() => handleStockClick(stock)} className="cursor-pointer">
+                <StockCard stock={stock} i18n={i18n} locale={props.locale} />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {currentStocks.length === 0 && previousStocks.length === 0 && (
+          <div className="col-span-full text-center text-gray-500 dark:text-gray-400 py-8">
+            {i18n('No stock data available.')}
+          </div>
+        )}
+      </div>
+
+      {/* Stock Detail Dialog */}
+      <div
+        className={`fixed z-[101] inset-0 overflow-y-auto transition-all ease-out duration-500 ${isDialogOpen ? 'opacity-100 bg-gray-300/80 dark:bg-gray-800/80 backdrop-blur-lg' : 'opacity-0 pointer-events-none'}`}
+      >
+        <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+          <div
+            className="fixed inset-0 transition-all"
+            aria-hidden="true"
+            onClick={handleCloseDialog}
+          >
+            <div className="absolute inset-0 cursor-alias transition-all"></div>
+          </div>
+          <span
+            className="hidden sm:inline-block sm:align-middle sm:h-screen"
+            aria-hidden="true"
+          >
+            &#8203;
+          </span>
+          
+          {selectedStock && (
+            <div className="inline-block align-bottom bg-white dark:bg-gray-900 rounded-3xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
+              <div className="p-8">
+                <div className="flex justify-between items-start mb-6">
+                  <div>
+                    <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+                      {selectedStock.name}
+                    </h2>
+                    <p className="text-xl text-gray-500 dark:text-gray-400">
+                      {selectedStock.symbol} • {selectedStock.exchange}
+                    </p>
+                  </div>
+                  <button
+                    onClick={handleCloseDialog}
+                    className="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 transition-colors"
+                  >
+                    <i className="fas fa-times text-2xl"></i>
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                  <div>
+                    <p className="text-5xl font-bold text-gray-900 dark:text-white mb-2">
+                      {selectedStock.currency} {selectedStock.price?.toFixed(2)}
+                    </p>
+                    <div className={`text-xl font-semibold ${selectedStock.change >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
+                      {selectedStock.change >= 0 ? '+' : ''}{selectedStock.change?.toFixed(2)} ({selectedStock.changePercent >= 0 ? '+' : ''}{selectedStock.changePercent?.toFixed(2)}%)
+                    </div>
+                  </div>
+                  
+                  <div className="flex flex-col justify-end space-y-2">
+                    <div className="flex justify-between border-b border-gray-100 dark:border-gray-800 pb-2">
+                      <span className="text-gray-500">Market State</span>
+                      <span className={`font-semibold ${selectedStock.marketState === 'REGULAR' ? 'text-green-500' : 'text-gray-500'}`}>
+                        {selectedStock.marketState === 'REGULAR' ? 'Open' : 'Closed'}
+                      </span>
+                    </div>
+                    <div className="flex justify-between border-b border-gray-100 dark:border-gray-800 pb-2">
+                      <span className="text-gray-500">Currency</span>
+                      <span className="text-gray-900 dark:text-white font-semibold">{selectedStock.currency}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="h-[300px] w-full bg-gray-50 dark:bg-black/20 rounded-2xl p-4">
+                  <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none" className="overflow-visible">
+                    <defs>
+                      <linearGradient id="dialog-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style={{ stopColor: selectedStock.change >= 0 ? '#10b981' : '#ef4444', stopOpacity: 0.4 }} />
+                        <stop offset="100%" style={{ stopColor: selectedStock.change >= 0 ? '#10b981' : '#ef4444', stopOpacity: 0.1 }} />
+                      </linearGradient>
+                    </defs>
+                    {/* Simplified path for the large chart */}
+                    {selectedStock.chartData && selectedStock.chartData.length > 0 && (
+                      <>
+                        <path 
+                          d={`M 0,100 L ${selectedStock.chartData.map((price, i) => {
+                            const x = (i / (selectedStock.chartData.length - 1)) * 100;
+                            const min = Math.min(...selectedStock.chartData);
+                            const max = Math.max(...selectedStock.chartData);
+                            const range = max - min || 1;
+                            const y = 100 - ((price - min) / range) * 100;
+                            return `${x},${y}`;
+                          }).join(' L ')} L 100,100 Z`}
+                          fill="url(#dialog-gradient)"
+                        />
+                        <path 
+                          d={`M ${selectedStock.chartData.map((price, i) => {
+                            const x = (i / (selectedStock.chartData.length - 1)) * 100;
+                            const min = Math.min(...selectedStock.chartData);
+                            const max = Math.max(...selectedStock.chartData);
+                            const range = max - min || 1;
+                            const y = 100 - ((price - min) / range) * 100;
+                            return `${x},${y}`;
+                          }).join(' L ')}`}
+                          fill="none"
+                          stroke={selectedStock.change >= 0 ? '#10b981' : '#ef4444'}
+                          strokeWidth="1"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </>
+                    )}
+                  </svg>
+                </div>
+                
+                <div className="mt-8 flex justify-end">
+                  <a 
+                    href={`https://finance.yahoo.com/quote/${selectedStock.symbol}`}
+                    target="_blank"
+                    className="px-6 py-2 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl transition-colors flex items-center gap-2"
+                  >
+                    View on Yahoo Finance <i className="fas fa-external-link-alt text-sm"></i>
+                  </a>
+                </div>
+              </div>
             </div>
           )}
         </div>
@@ -276,15 +434,19 @@ export async function getServerSideProps(context) {
   }
 
   try {
-    const [i18nData, stocksData] = await Promise.all([
+    const [i18nData, currentStocks, previousStocks] = await Promise.all([
       fetchI18nData(locale),
-      fetchStocks('NVDA,MC.PA,3033.HK'),
+      fetchStocks('AAPL,NVDA,MC.PA,3033.HK'),
+      fetchStocks('MSFT,AMZN'),
     ]);
 
     return {
       props: {
         i18nData,
-        stocksData,
+        stocksData: {
+          current: currentStocks,
+          previous: previousStocks
+        },
         locale,
       },
     };
@@ -293,7 +455,7 @@ export async function getServerSideProps(context) {
     return {
       props: {
         i18nData: {},
-        stocksData: [],
+        stocksData: { current: [], previous: [] },
         locale: 'en',
       },
     };

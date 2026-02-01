@@ -77,7 +77,7 @@ export default function Footer(props) {
   const diffYearNDay = `${Math.floor(diffDay / 365)} ${i18n('Years')} ${i18n('and')} ${Math.floor(diffDay % 365)} ${i18n('Days')}`;
 
   return (
-    <div className="right-0 max-w-7xl mx-auto pt-12 pb-20 px-4 overflow-hidden sm:px-6 lg:px-8">
+    <div className="right-0 max-w-7xl mx-auto pt-4 pb-24 px-4 overflow-hidden sm:px-6 lg:px-8">
       <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-end justify-between gap-3">
         <div>
           <span className="text-gray-600 dark:text-gray-400">
@@ -176,7 +176,7 @@ export default function Footer(props) {
               key={item.name}
               href={item.href}
               target={item.href.includes('http') ? '_blank' : '_self'}
-              title={item.name ? i18n(item.name) : undefined}
+              title={item.name ? String(i18n(item.name)) : undefined}
               className="text-gray-500 hover:text-gray-600"
             >
               {i18n(item.name)}

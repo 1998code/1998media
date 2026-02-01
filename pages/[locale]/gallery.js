@@ -688,10 +688,62 @@ export default function Gallery(props) {
   // Fetch data on component mount
   // Data is now fetched server-side via SSR, no need for client-side fetching
 
+  const unsplashScrollRef2 = useRef(null);
+
+  // Auto-scroll for Unsplash photos - Row 2 (Right to Left)
+  useEffect(() => {
+    const unsplashContainer = unsplashScrollRef2.current;
+    if (!unsplashContainer || activeTab !== 'unsplash') return;
+
+    let isUserScrolling = false;
+    let scrollTimeout;
+    let animationFrame;
+
+    const handleInteraction = () => {
+      isUserScrolling = true;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        isUserScrolling = false;
+      }, 3000);
+    };
+
+    const autoScroll = () => {
+      if (!isUserScrolling && unsplashContainer) {
+        unsplashContainer.scrollLeft -= 0.5;
+        // Reset to end when reaching the start (seamless loop)
+        if (unsplashContainer.scrollLeft <= 0) {
+          unsplashContainer.scrollLeft = unsplashContainer.scrollWidth / 2;
+        }
+      }
+      animationFrame = requestAnimationFrame(autoScroll);
+    };
+
+    // Initialize position to half for smooth reverse loop
+    if (unsplashContainer.scrollLeft === 0) {
+      unsplashContainer.scrollLeft = unsplashContainer.scrollWidth / 2;
+    }
+
+    unsplashContainer.addEventListener('wheel', handleInteraction, { passive: true });
+    unsplashContainer.addEventListener('touchstart', handleInteraction);
+    unsplashContainer.addEventListener('touchmove', handleInteraction);
+    unsplashContainer.addEventListener('mousedown', handleInteraction);
+
+    animationFrame = requestAnimationFrame(autoScroll);
+
+    return () => {
+      unsplashContainer.removeEventListener('wheel', handleInteraction);
+      unsplashContainer.removeEventListener('touchstart', handleInteraction);
+      unsplashContainer.removeEventListener('touchmove', handleInteraction);
+      unsplashContainer.removeEventListener('mousedown', handleInteraction);
+      cancelAnimationFrame(animationFrame);
+      clearTimeout(scrollTimeout);
+    };
+  }, [activeTab, photos]);
+
   return (
     <>
-      <div className="relative px-4 sm:px-6 lg:px-8">
-        <div id="gallery" className="pt-16 max-w-7xl mx-auto">
+      <div className="relative h-full w-full max-w-7xl mx-auto flex flex-col items-start px-4 sm:px-6 lg:px-8 pt-24 overflow-hidden">
+        <div id="gallery" className="w-full">
           <div className="flex items-center justify-between">
             <a
               className="text-3xl font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl"
@@ -822,7 +874,7 @@ export default function Gallery(props) {
             </div>
           )}
         </div>
-        <div className="relative my-6 max-w-7xl mx-auto">
+        <div className="relative my-2 w-full">
           <div className="relative overflow-hidden">
             {/* Xiaohongshu Tab - Only show for zh-CN locale */}
             {isZhCN && (
@@ -943,15 +995,17 @@ export default function Gallery(props) {
                   </div>
                 ))}
               </dl>
+              
+              {/* Unsplash Row 1 (Left to Right) */}
               <div
                 ref={unsplashScrollRef}
-                className="overflow-x-auto my-5 scrollbar-hide"
+                className="overflow-x-auto my-4 scrollbar-hide"
               >
                 <div className="flex gap-5">
                   {/* Duplicate photos for seamless infinite scroll */}
                   {[...photos, ...photos].map((photo, index) => (
                     <div
-                      key={`${photo.id}-${index}`}
+                      key={`${photo.id}-row1-${index}`}
                       className="group flex-shrink-0 relative rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-[0.98] border border-transparent hover:border-black dark:hover:border-white xl:rounded-[25px]"
                     >
                       <img
@@ -961,30 +1015,30 @@ export default function Gallery(props) {
                         alt={photo.alt_description}
                         onClick={() => handleClick(photo)}
                       />
-                      <Tooltip
-                        content={photo.color || ''}
-                        placement="right"
-                        className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-2xl"
-                      >
-                        <div
-                          className={`opacity-0 group-hover:opacity-100 absolute bottom-0 h-7 border-t border-r rounded-tr-md duration-500 transition-all`}
-                          style={{ backgroundColor: photo.color }}
-                        >
-                          {Object.entries(photo.topic_submissions).map(
-                            ([topic, submission]) =>
-                              submission.status === 'approved' ? (
-                                <span key={topic} className="p-1.5 text-white text-sm">
-                                  <i className="fa fa-crown"></i> Featured in{' '}
-                                  {topic.replaceAll('-', ' ')}
-                                </span>
-                              ) : (
-                                <span key={topic} className="p-1.5 text-white text-sm">
-                                  <i className="fa fa-thumbs-up"></i>
-                                </span>
-                              )
-                          )}
-                        </div>
-                      </Tooltip>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Unsplash Row 2 (Right to Left) */}
+              <div
+                ref={unsplashScrollRef2}
+                className="overflow-x-auto my-4 scrollbar-hide"
+              >
+                <div className="flex gap-5">
+                  {/* Duplicate and reverse for variation */}
+                  {[...photos, ...photos].reverse().map((photo, index) => (
+                    <div
+                      key={`${photo.id}-row2-${index}`}
+                      className="group flex-shrink-0 relative rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-[0.98] border border-transparent hover:border-black dark:hover:border-white xl:rounded-[25px]"
+                    >
+                      <img
+                        loading="lazy"
+                        className="w-[350px] h-[25vh] object-cover cursor-pointer"
+                        src={photo.urls.raw}
+                        alt={photo.alt_description}
+                        onClick={() => handleClick(photo)}
+                      />
                     </div>
                   ))}
                 </div>

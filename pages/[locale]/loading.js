@@ -5,7 +5,7 @@ export default function Loading(props) {
     // </div>
     <div
       id="header"
-      className="h-[95vh] text-center flex flex-col justify-center bg-gradient-to-b dark:from-[var(--arc-palette-background)] dark:text-[var(--arc-palette-foregroundPrimary)]"
+      className="h-screen w-screen text-center flex flex-col justify-center bg-[#fff6eb] dark:bg-[#000914]"
     ></div>
   );
 }
