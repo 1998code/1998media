@@ -63,6 +63,8 @@ function MyApp({ Component, pageProps }) {
             // Add error handling for showWidget
             try {
               darkmode.showWidget();
+              // Dispatch event to notify that darkmode is ready
+              window.dispatchEvent(new Event('darkmode-init'));
             } catch (widgetError) {
               console.error('Error showing darkmode widget:', widgetError);
             }

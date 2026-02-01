@@ -197,34 +197,43 @@ export default function Home({
   }, []);
 
         const [sidebarOpen, setSidebarOpen] = useState(false);
-
         const [headerCompleted, setHeaderCompleted] = useState(false);
-
         const [isReady, setIsReady] = useState(false);
-
+        const [darkmodeReady, setDarkmodeReady] = useState(false);
         const containerRef = useRef(null);
 
-      
-
         useEffect(() => {
+          const handleDarkmodeInit = () => {
+            setDarkmodeReady(true);
+          };
+          window.addEventListener('darkmode-init', handleDarkmodeInit);
+          
+          // Fallback timeout in case darkmode-js fails or takes too long
+          const timer = setTimeout(() => {
+            setDarkmodeReady(true);
+          }, 1000);
 
-          if (isReady) {
-
-            document.body.classList.remove('hide-darkmode-widget-global');
-
-          } else {
-
-            document.body.classList.add('hide-darkmode-widget-global');
-
+          // Check if it's already initialized (for direct navigation/refresh)
+          if (document.querySelector('.darkmode-toggle')) {
+            setDarkmodeReady(true);
           }
 
           return () => {
-
-            document.body.classList.remove('hide-darkmode-widget-global');
-
+            window.removeEventListener('darkmode-init', handleDarkmodeInit);
+            clearTimeout(timer);
           };
+        }, []);
 
-        }, [isReady]);
+        useEffect(() => {
+          if (darkmodeReady || isReady) {
+            document.body.classList.remove('hide-darkmode-widget-global');
+          } else {
+            document.body.classList.add('hide-darkmode-widget-global');
+          }
+          return () => {
+            document.body.classList.remove('hide-darkmode-widget-global');
+          };
+        }, [darkmodeReady, isReady]);
 
       
 
@@ -292,7 +301,7 @@ export default function Home({
 
           {/* <script>AOS.init();</script> */}
 
-                <main className={`darkmode-ignore h-screen w-screen overflow-hidden ${!isReady ? 'hide-darkmode-widget' : ''}`}>
+                <main className={`darkmode-ignore h-screen w-screen overflow-hidden ${(!isReady && !darkmodeReady) ? 'hide-darkmode-widget' : ''}`}>
 
                   <LocaleSwitcher />
 
@@ -341,6 +350,8 @@ export default function Home({
                             onComplete={scrollToNext} 
 
                             onReady={() => setIsReady(true)}
+
+                            darkmodeReady={darkmodeReady}
 
                           />
 

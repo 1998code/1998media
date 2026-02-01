@@ -69,7 +69,7 @@ export default function Header(props) {
       <motion.h1
         variants={container}
         initial="hidden"
-        animate="visible"
+        animate={props.darkmodeReady ? "visible" : "hidden"}
         onAnimationComplete={() => {
           setTimeout(() => {
             setShowContinue(true);
