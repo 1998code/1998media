@@ -4,16 +4,21 @@ import { Grid } from '@githubocto/flat-ui';
 export default function Projects(props) {
   const projectScrollRef = useRef(null);
 
+  const loggedMissingKeys = useRef(new Set());
+
   function i18n(key) {
     if (props.i18n && props.i18n['projects'] && !props.i18n['projects'][key]) {
-      console.log('Projects Missing Translation: ' + key);
+      if (!loggedMissingKeys.current.has(key)) {
+        console.log('Projects Missing Translation: ' + key);
+        loggedMissingKeys.current.add(key);
+      }
     }
     return props.i18n && props.i18n['projects'] && props.i18n['projects'][key]
       ? props.i18n['projects'][key]
       : key;
   }
   const githubRaw = props.projectsData || [];
-  
+
   // Filter and limit to 8 non-fork repositories
   const filteredProjects = githubRaw
     .filter((repo) => !repo.fork)

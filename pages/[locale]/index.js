@@ -52,6 +52,17 @@ export default function Home({
   locale,
 }) {
   const [loading, setLoading] = useState(true);
+  const [activeSection, setActiveSection] = useState('header');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [headerCompleted, setHeaderCompleted] = useState(false);
+  const [isReady, setIsReady] = useState(false);
+  const [darkmodeReady, setDarkmodeReady] = useState(false);
+  const [interacted, setInteracted] = useState(false);
+  const [isScrollingToTop, setIsScrollingToTop] = useState(false);
+
+  const containerRef = useRef(null);
+  const loggedMissingKeys = useRef(new Set());
+
   const I18n = i18nData;
 
   // Hide loading screen after mount
@@ -76,11 +87,14 @@ export default function Home({
     'faq',
     'contact',
   ];
-  const [activeSection, setActiveSection] = useState('header');
+
 
   function i18n(key) {
     if (I18n && I18n['index'] && !I18n['index'][key]) {
-      console.log('Index Missing Translation: ' + key);
+      if (!loggedMissingKeys.current.has(key)) {
+        console.log('Index Missing Translation: ' + key);
+        loggedMissingKeys.current.add(key);
+      }
     }
     return I18n && I18n['index'] && I18n['index'][key]
       ? I18n['index'][key]
@@ -88,7 +102,7 @@ export default function Home({
   }
 
   // useEffect to watch if the user interacts with the page, then show music player
-  const [interacted, setInteracted] = useState(false);
+
   useEffect(() => {
     let scrollTimeout;
     const handleInteracted = () => {
@@ -158,8 +172,10 @@ export default function Home({
 
   // IntersectionObserver to watch the section, set the active section
   useEffect(() => {
-    setTimeout(() => {
-      const observer = new IntersectionObserver(
+    let observer;
+
+    const setupObserver = () => {
+      observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
@@ -184,295 +200,326 @@ export default function Home({
           observer.observe(element);
         }
       });
+    };
 
-      return () => {
-        sections.forEach((section) => {
-          const element = document.getElementById(section);
-          if (element) {
-            observer.unobserve(element);
-          }
-        });
-      };
-    }, 3000);
+    const timer = setTimeout(() => {
+      setupObserver();
+    }, headerCompleted ? 100 : 3000);
+
+    return () => {
+      clearTimeout(timer);
+      if (observer) {
+        observer.disconnect();
+      }
+    };
+  }, [headerCompleted]);
+
+
+
+  useEffect(() => {
+    const handleDarkmodeInit = () => {
+      setDarkmodeReady(true);
+    };
+    window.addEventListener('darkmode-init', handleDarkmodeInit);
+
+    // Fallback timeout in case darkmode-js fails or takes too long
+    const timer = setTimeout(() => {
+      setDarkmodeReady(true);
+    }, 1000);
+
+    // Check if it's already initialized (for direct navigation/refresh)
+    if (document.querySelector('.darkmode-toggle')) {
+      setDarkmodeReady(true);
+    }
+
+    return () => {
+      window.removeEventListener('darkmode-init', handleDarkmodeInit);
+      clearTimeout(timer);
+    };
   }, []);
 
-        const [sidebarOpen, setSidebarOpen] = useState(false);
-        const [headerCompleted, setHeaderCompleted] = useState(false);
-        const [isReady, setIsReady] = useState(false);
-        const [darkmodeReady, setDarkmodeReady] = useState(false);
-        const containerRef = useRef(null);
 
-        useEffect(() => {
-          const handleDarkmodeInit = () => {
-            setDarkmodeReady(true);
-          };
-          window.addEventListener('darkmode-init', handleDarkmodeInit);
-          
-          // Fallback timeout in case darkmode-js fails or takes too long
-          const timer = setTimeout(() => {
-            setDarkmodeReady(true);
-          }, 1000);
 
-          // Check if it's already initialized (for direct navigation/refresh)
-          if (document.querySelector('.darkmode-toggle')) {
-            setDarkmodeReady(true);
-          }
+  function toggleSidebar() {
 
-          return () => {
-            window.removeEventListener('darkmode-init', handleDarkmodeInit);
-            clearTimeout(timer);
-          };
-        }, []);
+    setSidebarOpen(!sidebarOpen);
 
-        useEffect(() => {
-          if (darkmodeReady || isReady) {
-            document.body.classList.remove('hide-darkmode-widget-global');
-          } else {
-            document.body.classList.add('hide-darkmode-widget-global');
-          }
-          return () => {
-            document.body.classList.remove('hide-darkmode-widget-global');
-          };
-        }, [darkmodeReady, isReady]);
+  }
 
-      
 
-        function toggleSidebar() {
 
-        setSidebarOpen(!sidebarOpen);
-
+  const scrollToNext = () => {
+    setIsReady(true);
+    setHeaderCompleted(true);
+    // Use a short delay to allow components to mount before scrolling
+    setTimeout(() => {
+      const element = document.getElementById('about');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
       }
+    }, 100);
+  };
 
-    
 
-      const scrollToNext = () => {
 
-        setIsReady(true);
+  const handleScroll = (e) => {
 
-        setHeaderCompleted(true);
+    if (!headerCompleted && e.target.scrollTop > 10) {
 
-        const element = document.getElementById('about');
+      setHeaderCompleted(true);
 
-        if (element) {
+    }
 
-          element.scrollIntoView({ behavior: 'smooth' });
+    // Infinite scroll: seamlessly loop from footer back to header
+    if (!isScrollingToTop && containerRef.current) {
+      const container = containerRef.current;
+      const headerLoopElement = document.getElementById('header-loop');
 
+      if (headerLoopElement) {
+        const rect = headerLoopElement.getBoundingClientRect();
+        const containerRect = container.getBoundingClientRect();
+
+        // Check if the duplicate header is in view (scrolled to it)
+        if (rect.top <= containerRect.top + 100 && rect.bottom >= containerRect.top) {
+          setIsScrollingToTop(true);
+
+          // Instantly jump back to the real header
+          const headerElement = document.getElementById('header');
+          if (headerElement && container) {
+            // Disable smooth scrolling for instant jump
+            container.style.scrollBehavior = 'auto';
+            headerElement.scrollIntoView({ behavior: 'auto', block: 'start' });
+
+            // Re-enable smooth scrolling
+            setTimeout(() => {
+              container.style.scrollBehavior = 'smooth';
+              setIsScrollingToTop(false);
+            }, 50);
+          }
         }
+      }
+    }
 
-      };
+  };
 
-    
 
-      const handleScroll = (e) => {
 
-        if (!headerCompleted && e.target.scrollTop > 10) {
+  return (
 
-          setHeaderCompleted(true);
+    <div>
 
-        }
+      <Head>
 
-      };
+        <title>{i18n('1998 MEDIA (Official Website)')}</title>
 
-    
+        <meta
 
-      return (
+          name="description"
 
-        <div>
+          content={i18n(
 
-          <Head>
+            'Experience the Art of Design - Your Vision, My Craftsmanship.'
 
-            <title>{i18n('1998 MEDIA (Official Website)')}</title>
+          )}
 
-            <meta
+        />
 
-              name="description"
+        <link rel="icon" href="https://cdn.1998.media/favicon24.jpg" />
 
-              content={i18n(
+      </Head>
 
-                'Experience the Art of Design - Your Vision, My Craftsmanship.'
+      {/* <script>AOS.init();</script> */}
+
+      <main className="darkmode-ignore h-dvh w-screen overflow-hidden">
+
+        <LocaleSwitcher />
+
+        {loading ? (
+
+          <Loading />
+
+        ) : (
+
+          <div className="h-full w-full relative">
+
+            {(headerCompleted || isReady) && (
+
+              <Navigation
+
+                i18n={I18n}
+
+                sections={sections}
+
+                activeSection={activeSection}
+
+                sidebarOpen={sidebarOpen}
+
+                toggleSidebar={toggleSidebar}
+
+              />
+
+            )}
+
+            <div
+
+              ref={containerRef}
+
+              onScroll={handleScroll}
+
+              className={`${sidebarOpen && 'pl-6 lg:pl-0'} h-full w-full ${(isReady || headerCompleted) ? 'overflow-y-auto' : 'overflow-hidden'} snap-y snap-mandatory scroll-smooth`}
+
+            >
+
+              <section id="header" className="snap-start h-dvh w-full flex-shrink-0">
+
+                <Header
+
+                  i18n={I18n}
+
+                  onComplete={scrollToNext}
+
+                  onReady={() => setIsReady(true)}
+
+                  darkmodeReady={darkmodeReady}
+
+                />
+
+              </section>
+
+              {(headerCompleted || isReady) && (
+
+                <>
+
+                  <section id="about" className="snap-start h-dvh w-full flex-shrink-0">
+
+                    <About i18n={I18n} />
+
+                  </section>
+
+                  <section id="achievements" className="snap-start h-dvh w-full flex-shrink-0">
+
+                    <Achievements i18n={I18n} />
+
+                  </section>
+
+                  <section id="gallery" className="snap-start h-dvh w-full flex-shrink-0">
+
+                    <Gallery
+
+                      i18n={I18n}
+
+                      unsplashData={unsplashData}
+
+                      locale={locale}
+
+                    />
+
+                  </section>
+
+                  <section id="experience" className="snap-start h-dvh w-full flex-shrink-0">
+
+                    <Experience i18n={I18n} />
+
+                  </section>
+
+                  <section id="skills" className="snap-start h-dvh w-full flex-shrink-0">
+
+                    <Skills i18n={I18n} />
+
+                  </section>
+
+                  <section id="projects" className="snap-start h-dvh w-full flex-shrink-0">
+
+                    <Projects i18n={I18n} projectsData={projectsData} />
+
+                  </section>
+
+                  <section id="ai" className="snap-start h-dvh w-full flex-shrink-0">
+
+                    <AI i18n={I18n} dalle={dalleData} />
+
+                  </section>
+
+                  <section id="blog" className="snap-start h-dvh w-full flex-shrink-0">
+
+                    <Blog i18n={I18n} blogData={blogData} locale={locale} />
+
+                  </section>
+
+                  <section id="stocks" className="snap-start h-dvh w-full flex-shrink-0">
+
+                    <Stocks i18n={I18n} stocksData={stocksData} />
+
+                  </section>
+
+                  <section id="faq" className="snap-start h-dvh w-full flex-shrink-0">
+
+                    <Faq i18n={I18n} />
+
+                  </section>
+
+                  <section id="contact" className="snap-start h-dvh w-full flex-shrink-0 flex flex-col justify-between overflow-y-auto scrollbar-hide pt-24">
+
+                    <div className="flex-1 flex flex-col justify-center">
+
+                      <Contact i18n={I18n} />
+
+                    </div>
+
+                    <div className="w-full">
+
+                      <Credits i18n={I18n} />
+
+                      <Footer i18n={I18n} ipData={ipData} />
+
+                    </div>
+
+                  </section>
+
+                  {/* Duplicate header for infinite scroll effect */}
+                  <section id="header-loop" className="snap-start h-dvh w-full flex-shrink-0">
+                    <Header
+                      i18n={I18n}
+                      onComplete={scrollToNext}
+                      onReady={() => setIsReady(true)}
+                      darkmodeReady={darkmodeReady}
+                    />
+                  </section>
+
+                  {interacted && <Music i18n={I18n} />}
+
+                </>
 
               )}
 
-            />
+            </div>
 
-            <link rel="icon" href="https://cdn.1998.media/favicon24.jpg" />
+          </div>
 
-          </Head>
+        )}
 
-          {/* <script>AOS.init();</script> */}
+        {isReady && <WhatsAppChat i18n={I18n} />}
 
-                <main className={`darkmode-ignore h-screen w-screen overflow-hidden ${(!isReady && !darkmodeReady) ? 'hide-darkmode-widget' : ''}`}>
+      </main>
 
-                  <LocaleSwitcher />
+    </div>
 
-                          {loading ? (
-
-                            <Loading />
-
-                          ) : (
-
-                                      <div className="h-full w-full relative">
-
-                                        {headerCompleted && (
-
-                                          <Navigation
-
-                                            i18n={I18n}
-
-                                            sections={sections}
-
-                                            activeSection={activeSection}
-
-                                            sidebarOpen={sidebarOpen}
-
-                                            toggleSidebar={toggleSidebar}
-
-                                          />
-
-                                        )}
-
-                      <div 
-
-                        ref={containerRef}
-
-                        onScroll={handleScroll}
-
-                        className={`${sidebarOpen && 'pl-6 lg:pl-0'} h-full w-full ${(isReady || headerCompleted) ? 'overflow-y-auto' : 'overflow-hidden'} snap-y snap-mandatory scroll-smooth`}
-
-                      >
-
-                        <section id="header" className="snap-start h-screen w-full flex-shrink-0">
-
-                          <Header 
-
-                            i18n={I18n} 
-
-                            onComplete={scrollToNext} 
-
-                            onReady={() => setIsReady(true)}
-
-                            darkmodeReady={darkmodeReady}
-
-                          />
-
-                        </section>
-
-                        <section id="about" className="snap-start h-screen w-full flex-shrink-0">
-
-                          <About i18n={I18n} />
-
-                        </section>
-
-                        <section id="achievements" className="snap-start h-screen w-full flex-shrink-0">
-
-                          <Achievements i18n={I18n} />
-
-                        </section>
-
-                        <section id="gallery" className="snap-start h-screen w-full flex-shrink-0">
-
-                          <Gallery
-
-                            i18n={I18n}
-
-                            unsplashData={unsplashData}
-
-                            locale={locale}
-
-                          />
-
-                        </section>
-
-                        <section id="experience" className="snap-start h-screen w-full flex-shrink-0">
-
-                          <Experience i18n={I18n} />
-
-                        </section>
-
-                        <section id="skills" className="snap-start h-screen w-full flex-shrink-0">
-
-                          <Skills i18n={I18n} />
-
-                        </section>
-
-                        <section id="projects" className="snap-start h-screen w-full flex-shrink-0">
-
-                          <Projects i18n={I18n} projectsData={projectsData} />
-
-                        </section>
-
-                        <section id="ai" className="snap-start h-screen w-full flex-shrink-0">
-
-                          <AI i18n={I18n} dalle={dalleData} />
-
-                        </section>
-
-                        <section id="blog" className="snap-start h-screen w-full flex-shrink-0">
-
-                          <Blog i18n={I18n} blogData={blogData} locale={locale} />
-
-                        </section>
-
-                        <section id="stocks" className="snap-start h-screen w-full flex-shrink-0">
-
-                          <Stocks i18n={I18n} stocksData={stocksData} />
-
-                        </section>
-
-                        <section id="faq" className="snap-start h-screen w-full flex-shrink-0">
-
-                          <Faq i18n={I18n} />
-
-                        </section>
-
-                                      <section id="contact" className="snap-start h-screen w-full flex-shrink-0 flex flex-col justify-between overflow-y-auto scrollbar-hide pt-24">
-
-                                        <div className="flex-1 flex flex-col justify-center">
-
-                                          <Contact i18n={I18n} />
-
-                                        </div>
-
-                                        <div className="w-full">
-
-                                          <Credits i18n={I18n} />
-
-                                          <Footer i18n={I18n} ipData={ipData} />
-
-                                        </div>
-
-                                      </section>
-
-                        {headerCompleted && interacted && <Music i18n={I18n} />}
-
-                      </div>
-
-                                        </div>
-
-                                      )}
-
-                                      {isReady && <WhatsAppChat i18n={I18n} />}
-
-                                    </main>
-
-      </div>
-
-    );
+  );
 }
 
 export async function getServerSideProps(context) {
   let { locale } = context.params;
   const { req } = context;
-  
+
   // Fallback to English if locale is not supported
   const supportedLocales = ['en', 'zh', 'zh-HK', 'ko', 'ja'];
   const normalizedLocale = locale?.includes('en') ? 'en' :
-                          locale?.includes('ja') || locale?.includes('jp') ? 'ja' :
-                          locale?.includes('ko') || locale?.includes('kr') ? 'ko' :
-                          locale?.includes('zh-TW') || locale?.includes('zh-MO') ? 'zh-HK' :
-                          locale?.includes('zh-CN') ? 'zh' :
-                          locale;
-  
+    locale?.includes('ja') || locale?.includes('jp') ? 'ja' :
+      locale?.includes('ko') || locale?.includes('kr') ? 'ko' :
+        locale?.includes('zh-TW') || locale?.includes('zh-MO') ? 'zh-HK' :
+          locale?.includes('zh-CN') ? 'zh' :
+            locale;
+
   if (!supportedLocales.includes(normalizedLocale)) {
     locale = 'en'; // Fallback to English
   } else {
@@ -579,9 +626,9 @@ async function fetchIPData(locale, req) {
   try {
     // Get IP from headers
     const ip =
-      req.headers['x-forwarded-for'] || 
+      req.headers['x-forwarded-for'] ||
       req.headers['cf-connecting-ip'] || // Cloudflare
-      req.socket?.remoteAddress || 
+      req.socket?.remoteAddress ||
       null;
 
     // Get location from Cloudflare headers (available on Cloudflare Pages)

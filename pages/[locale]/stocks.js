@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { fetchI18nData, fetchStocks } from '../../lib/fetchData';
 
 export const runtime = 'experimental-edge';
@@ -9,14 +9,14 @@ function StockCard({ stock, i18n, locale }) {
   const chartData = stock.chartData || [];
   const chartTimestamps = stock.chartTimestamps || [];
   const isPositive = stock.change >= 0;
-  
+
   // Map locale to proper locale string for date formatting
   const dateLocale = locale === 'zh' ? 'zh-CN' :
-                     locale === 'zh-HK' ? 'zh-HK' :
-                     locale === 'ja' ? 'ja-JP' :
-                     locale === 'ko' ? 'ko-KR' :
-                     'en-US';
-  
+    locale === 'zh-HK' ? 'zh-HK' :
+      locale === 'ja' ? 'ja-JP' :
+        locale === 'ko' ? 'ko-KR' :
+          'en-US';
+
   if (chartData.length === 0) {
     return (
       <div className="flex flex-col rounded-xl overflow-hidden bg-white dark:bg-black border border-gray-200 dark:border-gray-800 p-6 transform transition duration-300 hover:scale-105 hover:shadow-lg relative">
@@ -40,11 +40,10 @@ function StockCard({ stock, i18n, locale }) {
             <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">
               {stock.currency} {stock.price?.toFixed(2) || 'N/A'}
             </div>
-            <div className={`text-sm font-semibold mt-1 ${
-              stock.change >= 0 
-                ? 'text-green-600 dark:text-green-400' 
-                : 'text-red-600 dark:text-red-400'
-            }`}>
+            <div className={`text-sm font-semibold mt-1 ${stock.change >= 0
+              ? 'text-green-600 dark:text-green-400'
+              : 'text-red-600 dark:text-red-400'
+              }`}>
               {stock.change >= 0 ? '+' : ''}
               {stock.change?.toFixed(2) || '0.00'} ({stock.changePercent >= 0 ? '+' : ''}
               {stock.changePercent?.toFixed(2) || '0.00'}%)
@@ -150,17 +149,16 @@ function StockCard({ stock, i18n, locale }) {
           <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">
             {stock.currency} {hoveredPoint ? hoveredPoint.price.toFixed(2) : (stock.price?.toFixed(2) || 'N/A')}
           </div>
-          <div className={`text-sm font-semibold mt-1 ${
-            (() => {
-              if (hoveredPoint) {
-                const hoveredChange = hoveredPoint.price - (stock.chartPreviousClose || stock.price);
-                return hoveredChange >= 0;
-              }
-              return stock.change >= 0;
-            })()
-              ? 'text-green-600 dark:text-green-400' 
-              : 'text-red-600 dark:text-red-400'
-          }`}>
+          <div className={`text-sm font-semibold mt-1 ${(() => {
+            if (hoveredPoint) {
+              const hoveredChange = hoveredPoint.price - (stock.chartPreviousClose || stock.price);
+              return hoveredChange >= 0;
+            }
+            return stock.change >= 0;
+          })()
+            ? 'text-green-600 dark:text-green-400'
+            : 'text-red-600 dark:text-red-400'
+            }`}>
             {(() => {
               if (hoveredPoint) {
                 const previousClose = stock.chartPreviousClose || stock.price;
@@ -213,9 +211,14 @@ export default function Stocks(props) {
   const [selectedStock, setSelectedStock] = useState(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
+  const loggedMissingKeys = useRef(new Set());
+
   function i18n(key) {
     if (props.i18n && props.i18n['stocks'] && !props.i18n['stocks'][key]) {
-      console.log('Stocks Missing Translation: ' + key);
+      if (!loggedMissingKeys.current.has(key)) {
+        console.log('Stocks Missing Translation: ' + key);
+        loggedMissingKeys.current.add(key);
+      }
     }
     return props.i18n && props.i18n['stocks'] && props.i18n['stocks'][key]
       ? props.i18n['stocks'][key]
@@ -309,7 +312,7 @@ export default function Stocks(props) {
           >
             &#8203;
           </span>
-          
+
           {selectedStock && (
             <div className="inline-block align-bottom bg-white dark:bg-gray-900 rounded-3xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
               <div className="p-8">
@@ -339,7 +342,7 @@ export default function Stocks(props) {
                       {selectedStock.change >= 0 ? '+' : ''}{selectedStock.change?.toFixed(2)} ({selectedStock.changePercent >= 0 ? '+' : ''}{selectedStock.changePercent?.toFixed(2)}%)
                     </div>
                   </div>
-                  
+
                   <div className="flex flex-col justify-end space-y-2">
                     <div className="flex justify-between border-b border-gray-100 dark:border-gray-800 pb-2">
                       <span className="text-gray-500">Market State</span>
@@ -365,7 +368,7 @@ export default function Stocks(props) {
                     {/* Simplified path for the large chart */}
                     {selectedStock.chartData && selectedStock.chartData.length > 0 && (
                       <>
-                        <path 
+                        <path
                           d={`M 0,100 L ${selectedStock.chartData.map((price, i) => {
                             const x = (i / (selectedStock.chartData.length - 1)) * 100;
                             const min = Math.min(...selectedStock.chartData);
@@ -376,7 +379,7 @@ export default function Stocks(props) {
                           }).join(' L ')} L 100,100 Z`}
                           fill="url(#dialog-gradient)"
                         />
-                        <path 
+                        <path
                           d={`M ${selectedStock.chartData.map((price, i) => {
                             const x = (i / (selectedStock.chartData.length - 1)) * 100;
                             const min = Math.min(...selectedStock.chartData);
@@ -395,16 +398,8 @@ export default function Stocks(props) {
                     )}
                   </svg>
                 </div>
-                
-                <div className="mt-8 flex justify-end">
-                  <a 
-                    href={`https://finance.yahoo.com/quote/${selectedStock.symbol}`}
-                    target="_blank"
-                    className="px-6 py-2 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl transition-colors flex items-center gap-2"
-                  >
-                    View on Yahoo Finance <i className="fas fa-external-link-alt text-sm"></i>
-                  </a>
-                </div>
+
+
               </div>
             </div>
           )}
@@ -417,16 +412,16 @@ export default function Stocks(props) {
 export async function getServerSideProps(context) {
   let { locale } = context.params;
   const { req } = context;
-  
+
   // Fallback to English if locale is not supported
   const supportedLocales = ['en', 'zh', 'zh-HK', 'ko', 'ja'];
   const normalizedLocale = locale?.includes('en') ? 'en' :
-                          locale?.includes('ja') || locale?.includes('jp') ? 'ja' :
-                          locale?.includes('ko') || locale?.includes('kr') ? 'ko' :
-                          locale?.includes('zh-TW') || locale?.includes('zh-MO') ? 'zh-HK' :
-                          locale?.includes('zh-CN') ? 'zh' :
-                          locale;
-  
+    locale?.includes('ja') || locale?.includes('jp') ? 'ja' :
+      locale?.includes('ko') || locale?.includes('kr') ? 'ko' :
+        locale?.includes('zh-TW') || locale?.includes('zh-MO') ? 'zh-HK' :
+          locale?.includes('zh-CN') ? 'zh' :
+            locale;
+
   if (!supportedLocales.includes(normalizedLocale)) {
     locale = 'en'; // Fallback to English
   } else {

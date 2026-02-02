@@ -1,10 +1,16 @@
+import { useRef } from 'react';
 import Image from 'next/image';
 import { Tooltip } from '@nextui-org/tooltip';
 
 export default function Credits(props) {
+  const loggedMissingKeys = useRef(new Set());
+
   function i18n(key) {
     if (props.i18n && props.i18n['credits'] && !props.i18n['credits'][key]) {
-      console.log('Credits Missing Translation: ' + key);
+      if (!loggedMissingKeys.current.has(key)) {
+        console.log('Credits Missing Translation: ' + key);
+        loggedMissingKeys.current.add(key);
+      }
     }
     return props.i18n && props.i18n['credits'] && props.i18n['credits'][key]
       ? props.i18n['credits'][key]

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 
 export default function Header(props) {
@@ -26,9 +26,14 @@ export default function Header(props) {
     };
   }, []);
 
+  const loggedMissingKeys = useRef(new Set());
+
   function i18n(key) {
     if (props.i18n && props.i18n['header'] && !props.i18n['header'][key]) {
-      console.log('Header Missing Translation: ' + key);
+      if (!loggedMissingKeys.current.has(key)) {
+        console.log('Header Missing Translation: ' + key);
+        loggedMissingKeys.current.add(key);
+      }
     }
     return props.i18n && props.i18n['header'] && props.i18n['header'][key]
       ? props.i18n['header'][key]
@@ -63,8 +68,8 @@ export default function Header(props) {
   return (
     <div
       id="header"
-      onClick={() => showContinue && props.onComplete && props.onComplete()}
-      className={`relative h-full w-full flex flex-col items-center justify-center bg-gradient-to-b dark:from-[var(--arc-palette-background)] dark:text-[var(--arc-palette-foregroundPrimary)] ${showContinue ? 'cursor-pointer' : ''}`}
+      onClick={() => props.onComplete && props.onComplete()}
+      className={`relative h-full w-full flex flex-col items-center justify-center bg-gradient-to-b dark:from-[var(--arc-palette-background)] dark:text-[var(--arc-palette-foregroundPrimary)] cursor-pointer`}
     >
       <motion.h1
         variants={container}
@@ -73,7 +78,6 @@ export default function Header(props) {
         onAnimationComplete={() => {
           setTimeout(() => {
             setShowContinue(true);
-            if (props.onReady) props.onReady();
           }, 500);
         }}
         className="text-8xl font-bold dark:text-white px-3 text-center -mt-20"
@@ -95,6 +99,10 @@ export default function Header(props) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
+          onAnimationComplete={() => {
+            // Trigger navbar to appear after Continue button is fully visible
+            if (props.onReady) props.onReady();
+          }}
           className="absolute top-[75%] left-1/2 -translate-x-1/2"
         >
           <motion.button
@@ -108,19 +116,19 @@ export default function Header(props) {
           >
             {/* Background shimmer effect - vertical */}
             <div className="absolute inset-0 rounded-full overflow-hidden pointer-events-none">
-              <motion.div 
-                animate={{ 
+              <motion.div
+                animate={{
                   y: ['-100%', '100%'],
                 }}
-                transition={{ 
-                  repeat: Infinity, 
-                  duration: 3, 
-                  ease: "linear" 
+                transition={{
+                  repeat: Infinity,
+                  duration: 3,
+                  ease: "linear"
                 }}
                 className="absolute inset-0 bg-gradient-to-b from-transparent via-orange-500/10 to-transparent"
               />
             </div>
-            
+
             {/* Animated dashed border - Capsule shape */}
             <div className="absolute inset-0 pointer-events-none -m-[2px]">
               <svg width="100%" height="100%" className="overflow-visible">
@@ -164,28 +172,28 @@ export default function Header(props) {
             />
 
             <span className="relative z-10 flex items-center gap-2">
-              <motion.i 
-                animate={{ 
+              <motion.i
+                animate={{
                   y: [10, -10],
                   opacity: [0, 1, 0]
                 }}
-                transition={{ 
-                  repeat: Infinity, 
-                  duration: 3, 
-                  ease: "linear" 
+                transition={{
+                  repeat: Infinity,
+                  duration: 3,
+                  ease: "linear"
                 }}
                 className="far fa-arrow-up"
               ></motion.i>
-              {i18n('Continue')} 
-              <motion.i 
-                animate={{ 
+              {i18n('Continue')}
+              <motion.i
+                animate={{
                   y: [-10, 10],
                   opacity: [0, 1, 0]
                 }}
-                transition={{ 
-                  repeat: Infinity, 
-                  duration: 3, 
-                  ease: "linear" 
+                transition={{
+                  repeat: Infinity,
+                  duration: 3,
+                  ease: "linear"
                 }}
                 className="far fa-arrow-down"
               ></motion.i>

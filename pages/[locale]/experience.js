@@ -7,13 +7,18 @@ export default function Experience(props) {
   const desktopTabRefs = useRef({});
   const mobileTabRefs = useRef({});
 
+  const loggedMissingKeys = useRef(new Set());
+
   function i18n(key) {
     if (
       props.i18n &&
       props.i18n['experience'] &&
       !props.i18n['experience'][key]
     ) {
-      console.log('Experience Missing Translation: ' + key);
+      if (!loggedMissingKeys.current.has(key)) {
+        console.log('Experience Missing Translation: ' + key);
+        loggedMissingKeys.current.add(key);
+      }
     }
     return props.i18n &&
       props.i18n['experience'] &&
@@ -240,10 +245,10 @@ export default function Experience(props) {
     activeTab === 'all'
       ? positions
       : positions.filter(
-          (p) =>
-            p.type.toLowerCase().replaceAll(' ', '-') ===
-            activeTab.toLowerCase()
-        );
+        (p) =>
+          p.type.toLowerCase().replaceAll(' ', '-') ===
+          activeTab.toLowerCase()
+      );
 
   // Tab configuration with colors matching position types
   const tabs = [
@@ -355,11 +360,10 @@ export default function Experience(props) {
                     key={tab.id}
                     ref={(el) => (desktopTabRefs.current[tab.id] = el)}
                     onClick={() => handleTabChange(tab.id)}
-                    className={`relative z-10 px-3 py-2 text-xs font-medium rounded-xl transition-all duration-300 ${
-                      activeTab === tab.id
-                        ? 'text-white'
-                        : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
-                    }`}
+                    className={`relative z-10 px-3 py-2 text-xs font-medium rounded-xl transition-all duration-300 ${activeTab === tab.id
+                      ? 'text-white'
+                      : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
+                      }`}
                   >
                     <i className={`far ${tab.icon} mr-1`}></i>
                     {i18n(tab.label)}
@@ -386,11 +390,10 @@ export default function Experience(props) {
                   key={tab.id}
                   ref={(el) => (mobileTabRefs.current[tab.id] = el)}
                   onClick={() => handleTabChange(tab.id)}
-                  className={`relative z-10 px-3 py-2 text-xs font-medium rounded-xl transition-all duration-300 ${
-                    activeTab === tab.id
-                      ? 'text-white'
-                      : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
-                  }`}
+                  className={`relative z-10 px-3 py-2 text-xs font-medium rounded-xl transition-all duration-300 ${activeTab === tab.id
+                    ? 'text-white'
+                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
+                    }`}
                 >
                   <i className={`far ${tab.icon} mr-1`}></i>
                   {i18n(tab.label)}
@@ -399,7 +402,7 @@ export default function Experience(props) {
             </div>
           </div>
         </div>
-        <div className="bg-white dark:bg-black shadow rounded-xl mt-8 backlight max-h-[70vh] overflow-y-auto scrollbar-hide">
+        <div className="bg-white dark:bg-black shadow rounded-xl mt-8 max-h-[70vh] overflow-y-auto scrollbar-hide">
           <div
             className="transition-all duration-500 ease-in-out"
             style={{

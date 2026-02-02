@@ -8,9 +8,14 @@ export default function AI(props) {
   const featuredAnimationRef = useRef(null);
   const otherAnimationRef = useRef(null);
 
+  const loggedMissingKeys = useRef(new Set());
+
   function i18n(key) {
     if (props.i18n && props.i18n['ai'] && !props.i18n['ai'][key]) {
-      console.log('AI Missing Translation: ' + key);
+      if (!loggedMissingKeys.current.has(key)) {
+        console.log('AI Missing Translation: ' + key);
+        loggedMissingKeys.current.add(key);
+      }
     }
     return props.i18n && props.i18n['ai'] && props.i18n['ai'][key]
       ? props.i18n['ai'][key]
@@ -142,42 +147,42 @@ export default function AI(props) {
               ...dalle.filter((item) => item.featured === '🏆 Hall of Fame'),
               ...dalle.filter((item) => item.featured === '🏆 Hall of Fame'),
             ].map((item, index) => (
-                <a
-                  href={item.sourceURL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex-shrink-0 min-w-[300px] flex flex-col rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white transition-all xl:rounded-[25px]"
-                  key={`featured-${index}`}
-                >
-                  <div className="relative">
-                    <img
-                      alt={item.prompt}
-                      loading="lazy"
-                      src={item.output}
-                      className="w-[300px] h-[300px] object-cover"
-                    />
-                    {/* Hover Overlay */}
-                    <div className="absolute inset-0 bg-black/80 dark:bg-black/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl xl:rounded-t-[25px] flex flex-col justify-center items-center p-4">
-                      <div className="text-white text-center">
-                        <p className="text-sm font-semibold mb-2">
-                          "{i18n(item.prompt)}"
-                        </p>
-                        <p className="text-xs text-gray-300 mb-3">
-                          - {item.version}
-                        </p>
-                        <p className="text-xs text-gray-400">
-                          {i18n(`Open in ${item.source}`)}
-                        </p>
-                      </div>
-                    </div>
-                    {/* Top labels - always visible */}
-                    <div className="absolute top-2 left-2 z-10">
-                      <span className="text-xs text-white bg-black/50 px-3 py-1.5 rounded-xl backdrop-blur-sm">
-                        {i18n(item.featured)}
-                      </span>
+              <a
+                href={item.sourceURL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex-shrink-0 min-w-[300px] flex flex-col rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white transition-all xl:rounded-[25px]"
+                key={`featured-${index}`}
+              >
+                <div className="relative">
+                  <img
+                    alt={item.prompt}
+                    loading="lazy"
+                    src={item.output}
+                    className="w-[300px] h-[300px] object-cover"
+                  />
+                  {/* Hover Overlay */}
+                  <div className="absolute inset-0 bg-black/80 dark:bg-black/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl xl:rounded-t-[25px] flex flex-col justify-center items-center p-4">
+                    <div className="text-white text-center">
+                      <p className="text-sm font-semibold mb-2">
+                        "{i18n(item.prompt)}"
+                      </p>
+                      <p className="text-xs text-gray-300 mb-3">
+                        - {item.version}
+                      </p>
+                      <p className="text-xs text-gray-400">
+                        {i18n(`Open in ${item.source}`)}
+                      </p>
                     </div>
                   </div>
-                </a>
+                  {/* Top labels - always visible */}
+                  <div className="absolute top-2 left-2 z-10">
+                    <span className="text-xs text-white bg-black/50 px-3 py-1.5 rounded-xl backdrop-blur-sm">
+                      {i18n(item.featured)}
+                    </span>
+                  </div>
+                </div>
+              </a>
             ))}
           </div>
         </div>
@@ -188,42 +193,42 @@ export default function AI(props) {
               ...dalle.filter((item) => item.featured !== '🏆 Hall of Fame'),
               ...dalle.filter((item) => item.featured !== '🏆 Hall of Fame'),
             ].map((item, index) => (
-                <a
-                  href={item.sourceURL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex-shrink-0 min-w-[250px] flex flex-col rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white xl:rounded-[25px]"
-                  key={`other-${index}`}
-                >
-                  <div className="relative">
-                    <img
-                      alt={item.prompt}
-                      loading="lazy"
-                      src={item.output}
-                      className="w-[250px] h-[250px] object-cover"
-                    />
-                    {/* Hover Overlay */}
-                    <div className="absolute inset-0 bg-black/80 dark:bg-black/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl xl:rounded-t-[25px] flex flex-col justify-center items-center p-4">
-                      <div className="text-white text-center">
-                        <p className="text-xs md:text-sm font-semibold mb-2">
-                          "{i18n(item.prompt)}"
-                        </p>
-                        <p className="text-xs text-gray-300 mb-3">
-                          - {item.version}
-                        </p>
-                        <p className="text-xs text-gray-400">
-                          {i18n(`Open in ${item.source}`)}
-                        </p>
-                      </div>
-                    </div>
-                    {/* Top labels - always visible */}
-                    <div className="absolute top-2 left-2 z-10">
-                      <span className="text-xs text-white bg-black/50 px-3 py-1.5 rounded-xl backdrop-blur-sm">
-                        🌠 {i18n('NEW')}
-                      </span>
+              <a
+                href={item.sourceURL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex-shrink-0 min-w-[250px] flex flex-col rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white xl:rounded-[25px]"
+                key={`other-${index}`}
+              >
+                <div className="relative">
+                  <img
+                    alt={item.prompt}
+                    loading="lazy"
+                    src={item.output}
+                    className="w-[250px] h-[250px] object-cover"
+                  />
+                  {/* Hover Overlay */}
+                  <div className="absolute inset-0 bg-black/80 dark:bg-black/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl xl:rounded-t-[25px] flex flex-col justify-center items-center p-4">
+                    <div className="text-white text-center">
+                      <p className="text-xs md:text-sm font-semibold mb-2">
+                        "{i18n(item.prompt)}"
+                      </p>
+                      <p className="text-xs text-gray-300 mb-3">
+                        - {item.version}
+                      </p>
+                      <p className="text-xs text-gray-400">
+                        {i18n(`Open in ${item.source}`)}
+                      </p>
                     </div>
                   </div>
-                </a>
+                  {/* Top labels - always visible */}
+                  <div className="absolute top-2 left-2 z-10">
+                    <span className="text-xs text-white bg-black/50 px-3 py-1.5 rounded-xl backdrop-blur-sm">
+                      🌠 {i18n('NEW')}
+                    </span>
+                  </div>
+                </div>
+              </a>
             ))}
           </div>
         </div>

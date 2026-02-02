@@ -1,7 +1,14 @@
+import { useRef } from 'react';
+
 export default function Faq(props) {
+  const loggedMissingKeys = useRef(new Set());
+
   function i18n(key) {
     if (props.i18n && props.i18n['faq'] && !props.i18n['faq'][key]) {
-      console.log('FAQ Missing Translation: ' + key);
+      if (!loggedMissingKeys.current.has(key)) {
+        console.log('FAQ Missing Translation: ' + key);
+        loggedMissingKeys.current.add(key);
+      }
     }
     return props.i18n && props.i18n['faq'] && props.i18n['faq'][key]
       ? props.i18n['faq'][key]

@@ -5,13 +5,18 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 export default function Achievements(props) {
   const [hoveredAchievement, setHoveredAchievement] = useState(null);
 
+  const loggedMissingKeys = useRef(new Set());
+
   function i18n(key) {
     if (
       props.i18n &&
       props.i18n['achievements'] &&
       !props.i18n['achievements'][key]
     ) {
-      console.log('Achievements Missing Translation: ' + key);
+      if (!loggedMissingKeys.current.has(key)) {
+        console.log('Achievements Missing Translation: ' + key);
+        loggedMissingKeys.current.add(key);
+      }
     }
     return props.i18n &&
       props.i18n['achievements'] &&
@@ -166,14 +171,14 @@ export default function Achievements(props) {
     }
 
     const newStyle = isDark ? 'dark_all' : 'light_all';
-    
+
     // Prevent unnecessary updates if style hasn't changed
     if (currentMapStyleRef.current === newStyle) {
       return;
     }
-    
+
     currentMapStyleRef.current = newStyle;
-    
+
     // Remove existing source and layer
     if (map.current.getLayer('carto-basemap-layer')) {
       map.current.removeLayer('carto-basemap-layer');
@@ -210,11 +215,11 @@ export default function Achievements(props) {
         const hasDarkmodeClass = document.body.classList.contains('darkmode--activated');
         const hasDarkClass = document.documentElement.classList.contains('dark');
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        
+
         // Check if darkmode-js widget exists (means user can toggle)
         const darkmodeWidget = document.querySelector('.darkmode-toggle');
         const hasDarkmodeWidget = !!darkmodeWidget;
-        
+
         // If darkmode-js widget exists, prioritize its class over system preference
         // When user toggles, the class presence/absence is the source of truth
         let isDark;
@@ -225,7 +230,7 @@ export default function Achievements(props) {
           // No widget yet, use Tailwind class or system preference
           isDark = hasDarkClass || prefersDark;
         }
-        
+
         setIsDarkMode(isDark);
         return isDark;
       }
@@ -237,10 +242,10 @@ export default function Achievements(props) {
     // Watch for dark mode changes on both body and html
     const observer = new MutationObserver((mutations) => {
       // Check if class actually changed
-      const hasClassChange = mutations.some(mutation => 
+      const hasClassChange = mutations.some(mutation =>
         mutation.type === 'attributes' && mutation.attributeName === 'class'
       );
-      
+
       if (hasClassChange) {
         // Small delay to ensure class change is complete
         setTimeout(() => {
@@ -259,7 +264,7 @@ export default function Achievements(props) {
         attributeFilter: ['class'],
         subtree: false,
       });
-      
+
       // Also observe html for dark class (Tailwind)
       observer.observe(document.documentElement, {
         attributes: true,
@@ -276,7 +281,7 @@ export default function Achievements(props) {
           }
         }, 50);
       });
-      
+
       // Also add a periodic check as backup (every 500ms)
       // This ensures we catch dark mode changes even if MutationObserver misses them
       const intervalId = setInterval(() => {
@@ -288,7 +293,7 @@ export default function Achievements(props) {
           }
         }
       }, 500);
-      
+
       return () => {
         observer.disconnect();
         clearInterval(intervalId);
@@ -315,8 +320,8 @@ export default function Achievements(props) {
         const browserLang = navigator.language || navigator.userLanguage || 'en';
         // Extract language code (e.g., 'zh-HK' -> 'zh-HK', 'en-US' -> 'en')
         if (browserLang.startsWith('zh')) {
-          return browserLang.includes('HK') || browserLang.includes('TW') || browserLang.includes('MO') 
-            ? 'zh-HK' 
+          return browserLang.includes('HK') || browserLang.includes('TW') || browserLang.includes('MO')
+            ? 'zh-HK'
             : 'zh';
         }
         if (browserLang.startsWith('ja')) return 'ja';
@@ -327,7 +332,7 @@ export default function Achievements(props) {
     };
 
     const locale = getLocale();
-    
+
     // Calculate center from all achievement coordinates
     const allCoords = Object.values(achievementMapData).map((data) => data.coords);
     const allLats = allCoords.map((c) => c[1]);
@@ -342,11 +347,11 @@ export default function Achievements(props) {
         const hasDarkmodeClass = document.body.classList.contains('darkmode--activated');
         const hasDarkClass = document.documentElement.classList.contains('dark');
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        
+
         // Check if darkmode-js widget exists (means user can toggle)
         const darkmodeWidget = document.querySelector('.darkmode-toggle');
         const hasDarkmodeWidget = !!darkmodeWidget;
-        
+
         // If darkmode-js widget exists, prioritize its class over system preference
         let isDark;
         if (hasDarkmodeWidget) {
@@ -356,7 +361,7 @@ export default function Achievements(props) {
           // No widget yet, use Tailwind class or system preference
           isDark = hasDarkClass || prefersDark;
         }
-        
+
         return isDark;
       }
       return false;
@@ -414,7 +419,7 @@ export default function Achievements(props) {
       if (attribution) {
         attribution.style.display = 'none';
       }
-      
+
       // Check dark mode again after map loads and update if needed
       // Priority: explicit toggle (darkmode-js) > Tailwind dark class > system preference
       const checkDarkMode = () => {
@@ -422,11 +427,11 @@ export default function Achievements(props) {
           const hasDarkmodeClass = document.body.classList.contains('darkmode--activated');
           const hasDarkClass = document.documentElement.classList.contains('dark');
           const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          
+
           // Check if darkmode-js widget exists (means user can toggle)
           const darkmodeWidget = document.querySelector('.darkmode-toggle');
           const hasDarkmodeWidget = !!darkmodeWidget;
-          
+
           // If darkmode-js widget exists, prioritize its class over system preference
           if (hasDarkmodeWidget) {
             // User has the toggle widget, so respect the explicit toggle
@@ -452,10 +457,10 @@ export default function Achievements(props) {
         attribution.style.display = 'none';
       }
     };
-    
+
     // Check periodically for attribution element
     const attributionInterval = setInterval(hideAttribution, 100);
-    
+
     // Clear interval after 5 seconds
     const timeoutId = setTimeout(() => clearInterval(attributionInterval), 5000);
 
@@ -488,7 +493,7 @@ export default function Achievements(props) {
       const mapData = achievementMapData[achievement.title];
       const [lon, lat] = mapData.coords;
       const key = `${lon},${lat}`;
-      
+
       if (!locationMap.has(key)) {
         locationMap.set(key, {
           coords: [lon, lat],
@@ -504,7 +509,7 @@ export default function Achievements(props) {
       const { coords, mapData, achievements: locationAchievements } = location;
       const [lon, lat] = coords;
       const count = locationAchievements.length;
-      
+
       // Check if any achievement at this location is hovered
       const isHovered = locationAchievements.some(
         (a) => hoveredAchievement === a.title
@@ -513,7 +518,7 @@ export default function Achievements(props) {
       // Determine marker color and size
       // If nothing is hovered, show all markers in their original colors and large size
       // If something is hovered, highlight the hovered one (large) and gray out others (small)
-      const color = hoveredAchievement 
+      const color = hoveredAchievement
         ? (isHovered ? `#${mapData.color}` : '#808080')
         : `#${mapData.color}`;
       // All markers are large by default, only smaller when something else is hovered
@@ -537,7 +542,7 @@ export default function Achievements(props) {
       el.style.fontWeight = 'bold';
       el.style.color = '#ffffff';
       el.style.textShadow = '0 1px 2px rgba(0,0,0,0.5)';
-      
+
       // Add count number inside marker if count > 1
       if (count > 1) {
         el.textContent = count.toString();
@@ -609,7 +614,7 @@ export default function Achievements(props) {
 
   return (
     <>
-      <div className="relative h-full w-full flex flex-col justify-center py-4">
+      <div className="relative h-full w-full flex flex-col justify-center pt-24 pb-4">
         <img
           alt=""
           loading="lazy"
@@ -634,7 +639,7 @@ export default function Achievements(props) {
             <div className="mt-10 pb-12 sm:pb-16">
               <div className="relative max-w-7xl mx-auto">
                 <div className="cursor-default">
-                  <h3 className="mb-6 text-lg font-medium leading-6 text-gray-900 dark:text-gray-100">
+                  <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-gray-100">
                     {i18n(
                       'Apple App Store (iOS, iPadOS, watchOS, App Clips, macOS, visionOS)'
                     )}
@@ -642,57 +647,56 @@ export default function Achievements(props) {
                   </h3>
                   <div
                     ref={achievementScrollRef}
-                    className="overflow-x-auto my-5 py-8 scrollbar-hide"
+                    className="overflow-x-auto py-6 scrollbar-hide"
                     style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                   >
                     <div className="flex gap-5">
-                  {[...achievements, ...achievements].map((achievement, index) => {
-                    const isHovered = hoveredAchievement === achievement.title;
-                    const isGrayedOut = hoveredAchievement && !isHovered;
-                    
-                    // Extract color class for border - simplified mapping
-                    let borderColorClass = 'border-orange-500';
-                    if (achievement.color.includes('blue')) borderColorClass = 'border-blue-500';
-                    if (achievement.color.includes('teal')) borderColorClass = 'border-teal-500';
-                    if (achievement.color.includes('sky')) borderColorClass = 'border-sky-500';
-                    if (achievement.color.includes('green')) borderColorClass = 'border-green-500';
-                    if (achievement.color.includes('red')) borderColorClass = 'border-red-500';
+                      {[...achievements, ...achievements].map((achievement, index) => {
+                        const isHovered = hoveredAchievement === achievement.title;
+                        const isGrayedOut = hoveredAchievement && !isHovered;
 
-                    return (
-                      <div
-                        key={achievement.title + achievement.year + index}
-                        className={`flex-shrink-0 min-w-[200px] max-w-[300px] flex flex-col p-6 rounded-xl bg-white/50 dark:bg-black/50 backdrop-blur-md shadow-lg xl:rounded-[30px] transition-all border-2 ${
-                          isHovered
-                            ? `${borderColorClass} opacity-100`
-                            : isGrayedOut
-                            ? 'opacity-40 grayscale border-transparent'
-                            : 'border-transparent hover:border-black dark:hover:border-white'
-                        }`}
-                              onMouseEnter={() => {
-                                setHoveredAchievement(achievement.title);
-                              }}
-                              onMouseLeave={() => {
-                                setHoveredAchievement(null);
-                              }}
-                            >
-                              <div className="order-3 mt-1 text-md leading-6 font-medium text-gray-400">
-                                {achievement.year}
-                              </div>
-                              <div className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500 line-clamp-2 min-h-[3.5rem]">
-                                {i18n(achievement.title)} {achievement.flag}
-                              </div>
-                              <div
-                                className={`order-1 text-4xl font-extrabold ${achievement.color}`}
-                              >
-                                {i18n(achievement.rank)}
-                              </div>
+                        // Extract color class for border - simplified mapping
+                        let borderColorClass = 'border-orange-500';
+                        if (achievement.color.includes('blue')) borderColorClass = 'border-blue-500';
+                        if (achievement.color.includes('teal')) borderColorClass = 'border-teal-500';
+                        if (achievement.color.includes('sky')) borderColorClass = 'border-sky-500';
+                        if (achievement.color.includes('green')) borderColorClass = 'border-green-500';
+                        if (achievement.color.includes('red')) borderColorClass = 'border-red-500';
+
+                        return (
+                          <div
+                            key={achievement.title + achievement.year + index}
+                            className={`flex-shrink-0 min-w-[200px] max-w-[300px] flex flex-col p-6 rounded-xl bg-white/50 dark:bg-black/50 backdrop-blur-md shadow-lg xl:rounded-[30px] transition-all duration-500 border-2 ${isHovered
+                              ? `${borderColorClass} opacity-100 scale-105`
+                              : isGrayedOut
+                                ? 'opacity-40 grayscale border-transparent'
+                                : 'border-transparent hover:border-black dark:hover:border-white hover:scale-105'
+                              }`}
+                            onMouseEnter={() => {
+                              setHoveredAchievement(achievement.title);
+                            }}
+                            onMouseLeave={() => {
+                              setHoveredAchievement(null);
+                            }}
+                          >
+                            <div className="order-3 mt-1 text-md leading-6 font-medium text-gray-400">
+                              {achievement.year}
                             </div>
-                          );
-                        }
+                            <div className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500 line-clamp-2 min-h-[3.5rem]">
+                              {i18n(achievement.title)} {achievement.flag}
+                            </div>
+                            <div
+                              className={`order-1 text-4xl font-extrabold ${achievement.color}`}
+                            >
+                              {i18n(achievement.rank)}
+                            </div>
+                          </div>
+                        );
+                      }
                       )}
                     </div>
                   </div>
-                  <div className="relative my-6">
+                  <div className="relative">
                     {/* Interactive MapLibre map with Carto basemaps (OpenStreetMap-based) */}
                     <div
                       ref={mapContainer}

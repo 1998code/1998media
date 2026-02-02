@@ -25,20 +25,20 @@ a {
 }
 
 .darkmode-ignore {
-  display: block!important;
+  display: block !important;
 }
 
 .darkmode-toggle {
   z-index: 10;
 }
 
-.hide-darkmode-widget .darkmode-toggle,
-.hide-darkmode-widget-global .darkmode-toggle {
+/* Legacy support for other hide classes */
+.hide-darkmode-widget .darkmode-toggle {
   display: none !important;
 }
 
 .github-octo-flat-ui {
-  height: 35vh!important;
+  height: 35vh !important;
 }
 
 .DocSearch-Button {
@@ -47,16 +47,19 @@ a {
   _left: 45%;
   _opacity: 25%;
   z-index: 100;
-  margin: 0!important;
-  background: transparent!important;
+  margin: 0 !important;
+  background: transparent !important;
 }
+
 .DocSearch-Button:hover {
   opacity: 100%;
   transition: opacity 0.2s ease-in-out;
 }
+
 .DocSearch-Button-Placeholder {
-  font-size: 0.875rem!important;
+  font-size: 0.875rem !important;
 }
+
 .DocSearch-Button .DocSearch-Search-Icon {
   width: 1rem;
   height: 1rem;
@@ -82,17 +85,7 @@ a {
   -webkit-image-rendering: optimizeSpeed;
 }
 
-.darkmode--activated .backlight {
-  ---backlight: 0 0 0 1px #58fecf1a, -5px 5px 0px 0px #9a3412, 0 0 25px -10px #9a3412, 10px 0 25px -10px #9a3412;
-  color: var(--colors-hiContrast);
-  box-shadow: var(---backlight);
-}
-.darkmode--activated .backlight:hover {
-  ---backlight: 0 0 0 1px white, -5px 5px 0px 0px #9a341230, 0 0 25px -10px white, 10px 0 25px -10px white;
-  color: var(--colors-hiContrast);
-  box-shadow: var(---backlight);
-  transition: box-shadow 0.2s ease-in-out;
-}
+
 
 audio::-webkit-media-controls-play-button,
 audio::-webkit-media-controls-panel {
@@ -115,6 +108,7 @@ div.eapps-widget {
   0% {
     transform: translateX(0%);
   }
+
   100% {
     transform: translateX(-33.333%);
   }
@@ -135,6 +129,7 @@ div.eapps-widget {
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-50%);
   }

@@ -1,10 +1,15 @@
+import { useRef } from 'react';
 import { Tooltip } from '@nextui-org/tooltip';
-import { doc } from 'prettier';
 
 export default function Contact(props) {
+  const loggedMissingKeys = useRef(new Set());
+
   function i18n(key) {
     if (props.i18n && props.i18n['contact'] && !props.i18n['contact'][key]) {
-      console.log('Contact Missing Translation: ' + key);
+      if (!loggedMissingKeys.current.has(key)) {
+        console.log('Contact Missing Translation: ' + key);
+        loggedMissingKeys.current.add(key);
+      }
     }
     return props.i18n && props.i18n['contact'] && props.i18n['contact'][key]
       ? props.i18n['contact'][key]

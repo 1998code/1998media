@@ -6,9 +6,14 @@ export default function Music(props) {
   const [usingCharts, setUsingCharts] = useState(false);
   // Track music source
   const [musicSource, setMusicSource] = useState('apple'); // 'apple', 'spotify', or 'charts'
+  const loggedMissingKeys = useRef(new Set());
+
   function i18n(key) {
     if (props.i18n && props.i18n['music'] && !props.i18n['music'][key]) {
-      console.log('music Missing Translation: ' + key);
+      if (!loggedMissingKeys.current.has(key)) {
+        console.log('Music Missing Translation: ' + key);
+        loggedMissingKeys.current.add(key);
+      }
     }
     // Replace playlist title if using charts fallback
     if (usingCharts && key === 'My Recent Playlist') {
@@ -64,8 +69,8 @@ export default function Music(props) {
                             ...spotifyTrack.attributes,
                             previews: appleTrack.attributes.previews || [],
                             // Keep Spotify artwork if Apple Music doesn't have one
-                            artwork: appleTrack.attributes.artwork?.url 
-                              ? appleTrack.attributes.artwork 
+                            artwork: appleTrack.attributes.artwork?.url
+                              ? appleTrack.attributes.artwork
                               : spotifyTrack.attributes.artwork,
                           },
                         };
@@ -498,7 +503,7 @@ export default function Music(props) {
                   src={currentPlaying.attributes.artwork.url
                     .replace('{w}', '500')
                     .replace('{h}', '500')}
-                  className="min-w-[65px] h-[65px] rounded-xl shadow-lg border-2 border-black dark:border-white transition-all"
+                  className="min-w-[65px] h-[65px] rounded-xl shadow-lg md:border-2 md:border-black dark:md:border-white transition-all"
                 />
               </a>
               <button
@@ -575,18 +580,17 @@ export default function Music(props) {
                             <div
                               key={index}
                               data-lyric-index={index}
-                              className={`transition-all duration-300 text-left px-4 relative ${
-                                isUserScrolling
-                                  ? 'text-gray-300 dark:text-gray-400 text-base'
-                                  : index === currentLyricIndex
-                                    ? 'font-bold text-lg'
-                                    : index < currentLyricIndex
-                                      ? 'text-gray-400 dark:text-gray-500 text-base blur-sm'
-                                      : 'text-gray-400 dark:text-gray-500 text-base'
-                              }`}
+                              className={`transition-all duration-300 text-left px-4 relative ${isUserScrolling
+                                ? 'text-gray-300 dark:text-gray-400 text-base'
+                                : index === currentLyricIndex
+                                  ? 'font-bold text-lg'
+                                  : index < currentLyricIndex
+                                    ? 'text-gray-400 dark:text-gray-500 text-base blur-sm'
+                                    : 'text-gray-400 dark:text-gray-500 text-base'
+                                }`}
                             >
                               {index === currentLyricIndex &&
-                              !isUserScrolling ? (
+                                !isUserScrolling ? (
                                 // Current line with progress bar text mask
                                 <>
                                   {/* Background text (gray) */}
@@ -681,7 +685,7 @@ export default function Music(props) {
                         (item) => item.id === currentPlaying.id
                       ) +
                         1) %
-                        music.length
+                      music.length
                     ].attributes.name
                   }
                 </b>{' '}

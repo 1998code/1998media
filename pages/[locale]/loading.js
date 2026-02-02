@@ -5,7 +5,7 @@ export default function Loading(props) {
     // </div>
     <div
       id="header"
-      className="h-screen w-screen text-center flex flex-col justify-center bg-[#fff6eb] dark:bg-[#000914]"
+      className="h-dvh w-screen text-center flex flex-col justify-center bg-[#fff6eb] dark:bg-[#000914]"
     ></div>
   );
 }

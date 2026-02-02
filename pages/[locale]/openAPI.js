@@ -1,9 +1,14 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 export default function openAPI(props) {
+  const loggedMissingKeys = useRef(new Set());
+
   function i18n(key) {
     if (props.i18n && props.i18n['openAPI'] && !props.i18n['openAPI'][key]) {
-      console.log('openAPI Missing Translation: ' + key);
+      if (!loggedMissingKeys.current.has(key)) {
+        console.log('openAPI Missing Translation: ' + key);
+        loggedMissingKeys.current.add(key);
+      }
     }
     return props.i18n && props.i18n['openAPI'] && props.i18n['openAPI'][key]
       ? props.i18n['openAPI'][key]
@@ -123,7 +128,7 @@ export default function openAPI(props) {
             {i18n('Free to use.')}
           </p>
         </div>
-        <div className="bg-white dark:bg-black shadow overflow-hidden rounded-xl mt-8 backlight">
+        <div className="bg-white dark:bg-black shadow overflow-hidden rounded-xl mt-8">
           <ul
             role="list"
             className="divide-y divide-gray-200 dark:divide-gray-800"

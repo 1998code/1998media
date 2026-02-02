@@ -7,9 +7,14 @@ export default function Skills(props) {
   const desktopTabRefs = useRef({});
   const mobileTabRefs = useRef({});
 
+  const loggedMissingKeys = useRef(new Set());
+
   function i18n(key) {
     if (props.i18n && props.i18n['skills'] && !props.i18n['skills'][key]) {
-      console.log('Skills Missing Translation: ' + key);
+      if (!loggedMissingKeys.current.has(key)) {
+        console.log('Skills Missing Translation: ' + key);
+        loggedMissingKeys.current.add(key);
+      }
     }
     return props.i18n && props.i18n['skills'] && props.i18n['skills'][key]
       ? props.i18n['skills'][key]
@@ -368,11 +373,10 @@ export default function Skills(props) {
                     key={tab.id}
                     ref={(el) => (desktopTabRefs.current[tab.id] = el)}
                     onClick={() => handleTabChange(tab.id)}
-                    className={`relative z-10 px-3 py-2 text-xs font-medium rounded-xl transition-all duration-300 ${
-                      activeTab === tab.id
+                    className={`relative z-10 px-3 py-2 text-xs font-medium rounded-xl transition-all duration-300 ${activeTab === tab.id
                         ? 'text-white'
                         : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
-                    }`}
+                      }`}
                   >
                     <i className={`far ${tab.icon} mr-1`}></i>
                     {i18n(tab.label)}
@@ -395,11 +399,10 @@ export default function Skills(props) {
                   key={tab.id}
                   ref={(el) => (mobileTabRefs.current[tab.id] = el)}
                   onClick={() => handleTabChange(tab.id)}
-                  className={`relative z-10 px-3 py-2 text-xs font-medium rounded-xl transition-all duration-300 ${
-                    activeTab === tab.id
+                  className={`relative z-10 px-3 py-2 text-xs font-medium rounded-xl transition-all duration-300 ${activeTab === tab.id
                       ? 'text-white'
                       : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
-                  }`}
+                    }`}
                 >
                   <i className={`far ${tab.icon} mr-1`}></i>
                   {i18n(tab.label)}
@@ -418,44 +421,44 @@ export default function Skills(props) {
           {/* Certified */}
           {(activeTab === 'all' || activeTab === 'certified') && (
             <div className="mt-10">
-                <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
-                  {i18n('Certified')}
-                </h2>
-                <ul
-                  role="list"
-                  className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4"
-                >
-                  {certs.map((cert) => {
-                    const fromClass = cert.fromColor;
-                    const hexColor = colorMap[fromClass] || '#666';
-                    return (
-                      <li key={cert.name} className="col-span-1">
-                        <a
-                          href={cert.href}
-                          target="_blank"
-                          className="flex shadow-sm rounded-xl overflow-hidden hover:animate-pulse transition-all border-2 bg-transparent"
-                          style={{ 
-                            borderColor: hexColor,
-                            color: hexColor,
-                          }}
+              <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
+                {i18n('Certified')}
+              </h2>
+              <ul
+                role="list"
+                className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4"
+              >
+                {certs.map((cert) => {
+                  const fromClass = cert.fromColor;
+                  const hexColor = colorMap[fromClass] || '#666';
+                  return (
+                    <li key={cert.name} className="col-span-1">
+                      <a
+                        href={cert.href}
+                        target="_blank"
+                        className="flex shadow-sm rounded-xl overflow-hidden hover:animate-pulse transition-all border-2 bg-transparent"
+                        style={{
+                          borderColor: hexColor,
+                          color: hexColor,
+                        }}
+                      >
+                        <div
+                          className="flex-shrink-0 flex items-center justify-center w-12 text-current text-sm font-medium ml-4"
                         >
-                          <div
-                            className="flex-shrink-0 flex items-center justify-center w-12 text-current text-sm font-medium ml-4"
-                          >
-                            <i className={classNames('fab', cert.icons)}>
-                              {cert.icons.includes('fa') ? '' : cert.icons}
-                            </i>
+                          <i className={classNames('fab', cert.icons)}>
+                            {cert.icons.includes('fa') ? '' : cert.icons}
+                          </i>
+                        </div>
+                        <div className="flex-1 flex items-center justify-between bg-transparent truncate">
+                          <div className="flex-1 px-4 py-2 text-sm truncate font-bold">
+                            {i18n(cert.name)}
                           </div>
-                          <div className="flex-1 flex items-center justify-between bg-transparent truncate">
-                            <div className="flex-1 px-4 py-2 text-sm truncate font-bold">
-                              {i18n(cert.name)}
-                            </div>
-                          </div>
-                        </a>
-                      </li>
-                    );
-                  })}
-                </ul>
+                        </div>
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
             </div>
           )}
 
@@ -479,7 +482,7 @@ export default function Skills(props) {
                             href={software.href}
                             target="_blank"
                             className="flex shadow-sm rounded-xl overflow-hidden hover:animate-pulse transition-all border-2 bg-transparent"
-                            style={{ 
+                            style={{
                               borderColor: hexColor,
                               color: hexColor,
                             }}
@@ -509,84 +512,84 @@ export default function Skills(props) {
           {/* Languages & Technologies */}
           {(activeTab === 'all' || activeTab === 'languages') && (
             <div className="mt-10">
-                <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
-                  {i18n('Languages & Technologies')}
-                </h2>
-                <ul
-                  role="list"
-                  className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5"
-                >
-                  {languages.map((language) => {
-                    const hexColor = colorMap[language.fromColor] || '#666';
-                    return (
-                      <li key={language.name} className="col-span-1">
-                        <a
-                          href={language.href}
-                          target="_blank"
-                          className="flex shadow-sm rounded-xl overflow-hidden hover:animate-pulse transition-all border-2 bg-transparent"
-                          style={{ 
-                            borderColor: hexColor,
-                            color: hexColor,
-                          }}
+              <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
+                {i18n('Languages & Technologies')}
+              </h2>
+              <ul
+                role="list"
+                className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5"
+              >
+                {languages.map((language) => {
+                  const hexColor = colorMap[language.fromColor] || '#666';
+                  return (
+                    <li key={language.name} className="col-span-1">
+                      <a
+                        href={language.href}
+                        target="_blank"
+                        className="flex shadow-sm rounded-xl overflow-hidden hover:animate-pulse transition-all border-2 bg-transparent"
+                        style={{
+                          borderColor: hexColor,
+                          color: hexColor,
+                        }}
+                      >
+                        <div
+                          className="flex-shrink-0 flex items-center justify-center w-12 text-current text-sm font-medium ml-4"
                         >
-                          <div
-                            className="flex-shrink-0 flex items-center justify-center w-12 text-current text-sm font-medium ml-4"
-                          >
-                            <i className={classNames('fab', language.icons)}>
-                              {language.icons.includes('fa') ? '' : language.icons}
-                            </i>
+                          <i className={classNames('fab', language.icons)}>
+                            {language.icons.includes('fa') ? '' : language.icons}
+                          </i>
+                        </div>
+                        <div className="flex-1 flex items-center justify-between bg-transparent truncate">
+                          <div className="flex-1 px-4 py-2 text-sm truncate font-bold">
+                            {i18n(language.name)}
                           </div>
-                          <div className="flex-1 flex items-center justify-between bg-transparent truncate">
-                            <div className="flex-1 px-4 py-2 text-sm truncate font-bold">
-                              {i18n(language.name)}
-                            </div>
-                          </div>
-                        </a>
-                      </li>
-                    );
-                  })}
-                </ul>
+                        </div>
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
             </div>
           )}
 
           {/* Speak & Write */}
           {(activeTab === 'all' || activeTab === 'speak-write') && (
             <div className="mt-10">
-                <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
-                  {i18n('Speak & Write')}
-                </h2>
-                <ul
-                  role="list"
-                  className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2 2xl:grid-cols-4"
-                >
-                  {speakWrites.map((speakWrite) => {
-                    const hexColor = colorMap[speakWrite.fromColor] || '#666';
-                    return (
-                      <li key={speakWrite.name} className="col-span-1">
-                        <a
-                          href={speakWrite.href}
-                          target="_blank"
-                          className="flex shadow-sm rounded-xl overflow-hidden hover:animate-pulse transition-all border-2 bg-transparent"
-                          style={{ 
-                            borderColor: hexColor,
-                            color: hexColor,
-                          }}
+              <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
+                {i18n('Speak & Write')}
+              </h2>
+              <ul
+                role="list"
+                className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2 2xl:grid-cols-4"
+              >
+                {speakWrites.map((speakWrite) => {
+                  const hexColor = colorMap[speakWrite.fromColor] || '#666';
+                  return (
+                    <li key={speakWrite.name} className="col-span-1">
+                      <a
+                        href={speakWrite.href}
+                        target="_blank"
+                        className="flex shadow-sm rounded-xl overflow-hidden hover:animate-pulse transition-all border-2 bg-transparent"
+                        style={{
+                          borderColor: hexColor,
+                          color: hexColor,
+                        }}
+                      >
+                        <div
+                          className="flex-shrink-0 flex items-center justify-center w-12 text-current text-xs font-medium ml-4"
                         >
-                          <div
-                            className="flex-shrink-0 flex items-center justify-center w-12 text-current text-xs font-medium ml-4"
-                          >
-                            {i18n(speakWrite.icons)}
+                          {i18n(speakWrite.icons)}
+                        </div>
+                        <div className="flex-1 flex items-center justify-between bg-transparent truncate">
+                          <div className="flex-1 px-4 py-2 text-sm truncate font-bold">
+                            {i18n(speakWrite.name)}
                           </div>
-                          <div className="flex-1 flex items-center justify-between bg-transparent truncate">
-                            <div className="flex-1 px-4 py-2 text-sm truncate font-bold">
-                              {i18n(speakWrite.name)}
-                            </div>
-                          </div>
-                        </a>
-                      </li>
-                    );
-                  })}
-                </ul>
+                        </div>
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
             </div>
           )}
         </div>

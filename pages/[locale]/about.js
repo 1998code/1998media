@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Tooltip } from '@nextui-org/tooltip';
 
 export default function About(props) {
   const currentSection = 'about';
-  
+
   const sections = [
     'header',
     'about',
@@ -22,13 +22,13 @@ export default function About(props) {
   const handleNavigate = (direction) => {
     const currentIndex = sections.indexOf(currentSection);
     let targetSection = null;
-    
+
     if (direction === 'up' && currentIndex > 0) {
       targetSection = sections[currentIndex - 1];
     } else if (direction === 'down' && currentIndex < sections.length - 1) {
       targetSection = sections[currentIndex + 1];
     }
-    
+
     if (targetSection) {
       const element = document.getElementById(targetSection);
       if (element) {
@@ -39,9 +39,14 @@ export default function About(props) {
     }
   };
 
+  const loggedMissingKeys = useRef(new Set());
+
   function i18n(key) {
     if (props.i18n && props.i18n['about'] && !props.i18n['about'][key]) {
-      console.log('About Missing Translation: ' + key);
+      if (!loggedMissingKeys.current.has(key)) {
+        console.log('About Missing Translation: ' + key);
+        loggedMissingKeys.current.add(key);
+      }
     }
     return props.i18n && props.i18n['about'] && props.i18n['about'][key]
       ? props.i18n['about'][key]

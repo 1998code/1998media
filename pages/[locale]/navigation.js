@@ -3,13 +3,23 @@ import { DocSearch } from '@docsearch/react';
 import '@docsearch/css';
 
 export default function Navigation(props) {
+  const [visible, setVisible] = useState(false);
+  const loggedMissingKeys = useRef(new Set());
+
+  useEffect(() => {
+    setVisible(true);
+  }, []);
+
   function i18n(key) {
     if (
       props.i18n &&
       props.i18n['navigation'] &&
       !props.i18n['navigation'][key]
     ) {
-      console.log('Navigation Missing Translation: ' + key);
+      if (!loggedMissingKeys.current.has(key)) {
+        console.log('Navigation Missing Translation: ' + key);
+        loggedMissingKeys.current.add(key);
+      }
     }
     return props.i18n &&
       props.i18n['navigation'] &&
@@ -61,7 +71,7 @@ export default function Navigation(props) {
   return (
     <div
       id="navigation"
-      className={`group fixed ${props.sidebarOpen ? 'top-0 left-0 md:min-w-[10vw]' : 'w-full flex items-center md:justify-center p-3.5 sm:py-5'} select-none z-[100] transition-all`}
+      className={`group fixed ${props.sidebarOpen ? 'top-0 left-0 md:min-w-[10vw]' : 'w-full flex items-center md:justify-center p-3.5 sm:py-5'} select-none z-[100] transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'}`}
     >
       <div
         className={`flex bg-white/50 dark:bg-black/50 dark:text-white backdrop-blur-md shadow dark:shadow-gray-900 ${props.sidebarOpen ? 'h-screen flex-col overflow-auto' : 'items-center pl-1 rounded-full'} transition-all`}
@@ -113,7 +123,7 @@ export default function Navigation(props) {
                   >
                     {i18n(
                       section.charAt(0).toUpperCase() +
-                        section.replace(/ai/g, 'AI').slice(1).replace(/-/g, ' ')
+                      section.replace(/ai/g, 'AI').slice(1).replace(/-/g, ' ')
                     )}
                   </span>
                 </div>

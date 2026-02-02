@@ -1,9 +1,15 @@
+import { useRef } from 'react';
 import { Tooltip } from '@nextui-org/tooltip';
 
 export default function Footer(props) {
+  const loggedMissingKeys = useRef(new Set());
+
   function i18n(key) {
     if (props.i18n && props.i18n['footer'] && !props.i18n['footer'][key]) {
-      console.log('Footer Missing Translation: ' + key);
+      if (!loggedMissingKeys.current.has(key)) {
+        console.log('Footer Missing Translation: ' + key);
+        loggedMissingKeys.current.add(key);
+      }
     }
     const translation = props.i18n && props.i18n['footer'] && props.i18n['footer'][key]
       ? props.i18n['footer'][key]

@@ -30,9 +30,9 @@ export default function Gallery(props) {
   const xiaohongshuData = {
     profileUrl:
       'https://www.xiaohongshu.com/user/profile/6662438f00000000030300c4',
-    totalExposure: 5094666,
-    totalWorks: 168,
-    totalWatchDuration: 2789 * 1480078 / 60,
+    totalExposure: 5094666 + 187666,
+    totalWorks: 168 + 30,
+    totalWatchDuration: (2789 + 365) * (1480078 + 31930) / 60,
     featuredPhotos: [
       {
         id: 'xhs-1',
@@ -99,6 +99,8 @@ export default function Gallery(props) {
   const unsplashTabRef = useRef(null);
   const spatialTabRef = useRef(null);
   const unsplashScrollRef = useRef(null);
+  const xhsScrollRef = useRef(null);
+  const xhsScrollRef2 = useRef(null);
   const [isPausedUnsplash, setIsPausedUnsplash] = useState(false);
 
   // Initialize client-side state and Safari detection
@@ -218,162 +220,257 @@ export default function Gallery(props) {
     };
   }, [activeTab, photos]);
 
+  // Auto-scroll for XHS photos - Row 1 (Left to Right)
+  useEffect(() => {
+    const xhsContainer = xhsScrollRef.current;
+    if (!xhsContainer || activeTab !== 'xiaohongshu') return;
+
+    let isUserScrolling = false;
+    let scrollTimeout;
+    let animationFrame;
+
+    const handleInteraction = () => {
+      isUserScrolling = true;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        isUserScrolling = false;
+      }, 3000);
+    };
+
+    const autoScroll = () => {
+      if (!isUserScrolling && xhsContainer) {
+        xhsContainer.scrollLeft += 0.5;
+        // Reset to start when reaching the end (seamless loop)
+        if (xhsContainer.scrollLeft >= xhsContainer.scrollWidth / 2) {
+          xhsContainer.scrollLeft = 0;
+        }
+      }
+      animationFrame = requestAnimationFrame(autoScroll);
+    };
+
+    xhsContainer.addEventListener('wheel', handleInteraction, { passive: true });
+    xhsContainer.addEventListener('touchstart', handleInteraction);
+    xhsContainer.addEventListener('touchmove', handleInteraction);
+    xhsContainer.addEventListener('mousedown', handleInteraction);
+
+    animationFrame = requestAnimationFrame(autoScroll);
+
+    return () => {
+      xhsContainer.removeEventListener('wheel', handleInteraction);
+      xhsContainer.removeEventListener('touchstart', handleInteraction);
+      xhsContainer.removeEventListener('touchmove', handleInteraction);
+      xhsContainer.removeEventListener('mousedown', handleInteraction);
+      cancelAnimationFrame(animationFrame);
+      clearTimeout(scrollTimeout);
+    };
+  }, [activeTab, xiaohongshuData]);
+
+  // Auto-scroll for XHS photos - Row 2 (Right to Left)
+  useEffect(() => {
+    const xhsContainer = xhsScrollRef2.current;
+    if (!xhsContainer || activeTab !== 'xiaohongshu') return;
+
+    let isUserScrolling = false;
+    let scrollTimeout;
+    let animationFrame;
+
+    const handleInteraction = () => {
+      isUserScrolling = true;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        isUserScrolling = false;
+      }, 3000);
+    };
+
+    const autoScroll = () => {
+      if (!isUserScrolling && xhsContainer) {
+        xhsContainer.scrollLeft -= 0.5;
+        // Reset to end when reaching the start (seamless loop)
+        if (xhsContainer.scrollLeft <= 0) {
+          xhsContainer.scrollLeft = xhsContainer.scrollWidth / 2;
+        }
+      }
+      animationFrame = requestAnimationFrame(autoScroll);
+    };
+
+    // Initialize position to half for smooth reverse loop
+    if (xhsContainer.scrollLeft === 0) {
+      xhsContainer.scrollLeft = xhsContainer.scrollWidth / 2;
+    }
+
+    xhsContainer.addEventListener('wheel', handleInteraction, { passive: true });
+    xhsContainer.addEventListener('touchstart', handleInteraction);
+    xhsContainer.addEventListener('touchmove', handleInteraction);
+    xhsContainer.addEventListener('mousedown', handleInteraction);
+
+    animationFrame = requestAnimationFrame(autoScroll);
+
+    return () => {
+      xhsContainer.removeEventListener('wheel', handleInteraction);
+      xhsContainer.removeEventListener('touchstart', handleInteraction);
+      xhsContainer.removeEventListener('touchmove', handleInteraction);
+      xhsContainer.removeEventListener('mousedown', handleInteraction);
+      cancelAnimationFrame(animationFrame);
+      clearTimeout(scrollTimeout);
+    };
+  }, [activeTab, xiaohongshuData]);
+
   // Data is now fetched server-side via SSR
   // Removed client-side fetching functions
 
   // Only initialize spatial photos data for Safari to save traffic - but ensure consistent SSR
   const spatialPhotos = spatialPhotosReady
     ? [
-        // Beijing
-        {
-          id: 'summer-palace-pano-1',
-          title: 'Summer Palace Panorama',
-          url: 'https://cdn.1998.media/spatial/pano/SummerPalace1.HEIC',
-          type: 'photo',
-        },
-        {
-          id: 'summer-palace-pano-2',
-          title: 'Summer Palace Panorama',
-          url: 'https://cdn.1998.media/spatial/pano/SummerPalace2.HEIC',
-        },
-        {
-          id: 'summer-palace-pano-3',
-          title: 'Summer Palace Panorama',
-          url: 'https://cdn.1998.media/spatial/pano/SummerPalace3.HEIC',
-          type: 'photo',
-        },
-        {
-          id: 'summer-palace-pano-4',
-          title: 'Summer Palace Panorama',
-          url: 'https://cdn.1998.media/spatial/pano/SummerPalace4.HEIC',
-          type: 'photo',
-        },
-        {
-          id: 'shichahai-pano-1',
-          title: 'Shichahai Panorama',
-          url: 'https://cdn.1998.media/spatial/pano/Shichahai1.HEIC',
-          type: 'photo',
-        },
-        {
-          id: 'shichahai-pano-2',
-          title: 'Shichahai Panorama',
-          url: 'https://cdn.1998.media/spatial/pano/Shichahai2.HEIC',
-          type: 'photo',
-        },
-        // Osaka (Expo)
-        {
-          id: 'osaka-expo-pano',
-          title: 'Osaka Expo Panorama',
-          url: 'https://cdn.1998.media/spatial/pano/OsakaExpo.HEIC',
-          type: 'photo',
-        },
-        {
-          id: 'osaka-expo-east-gate',
-          title: 'Osaka Expo East Gate',
-          url: 'https://cdn.1998.media/spatial/photo/OsakaExpoEastGate.HEIC',
-          type: 'photo',
-        },
-        {
-          id: 'osaka-expo-water-plaza',
-          title: 'Osaka Expo Water Plaza',
-          url: 'https://cdn.1998.media/spatial/photo/OsakaExpoWaterPlaza.HEIC',
-          type: 'photo',
-        },
-        // Changsha
-        {
-          id: 'juzizhou-pano',
-          title: 'Juzizhou Panorama',
-          url: 'https://cdn.1998.media/spatial/pano/Juzizhou.HEIC',
-          type: 'photo',
-        },
-        {
-          id: 'juzizhou',
-          title: 'Juzizhou',
-          url: 'https://cdn.1998.media/spatial/photo/Juzizhou.HEIC',
-          type: 'photo',
-        },
-        {
-          id: 'changsha-south-station',
-          title: 'Changsha South Station',
-          url: 'https://cdn.1998.media/spatial/photo/ChangshaSouthStation.HEIC',
-          type: 'photo',
-        },
-        // Tokyo
-        {
-          id: 'tokyo-tower-night-video',
-          title: 'Tokyo Tower Night',
-          url: 'https://cdn.1998.media/spatial/video/TokyoTowerNight.MOV',
-          type: 'video',
-        },
-        {
-          id: 'akasaka-palace',
-          title: 'Akasaka Palace',
-          url: 'https://cdn.1998.media/spatial/photo/AkasakaPalace.HEIC',
-          type: 'photo',
-        },
-        // San Francisco
-        {
-          id: 'golden-gate-bridge',
-          title: 'Golden Gate Bridge',
-          url: 'https://cdn.1998.media/spatial/photo/GoldenGateBridge.HEIC',
-          type: 'photo',
-        },
-        {
-          id: 'sf-sea-video',
-          title: 'San Francisco Sea',
-          url: 'https://cdn.1998.media/spatial/video/SanFranciscoSea.MOV',
-          type: 'video',
-        },
-        {
-          id: 'sf-night-pano',
-          title: 'San Francisco Night Panorama',
-          url: 'https://cdn.1998.media/spatial/pano/SanFranciscoNight.HEIC',
-          type: 'photo',
-        },
-        // Nagoya
-        {
-          id: 'nagoya-rocket-video',
-          title: 'Nagoya Rocket',
-          url: 'https://cdn.1998.media/spatial/video/NagoyaRocket.MOV',
-          type: 'video',
-        },
-        {
-          id: 'nagoya-station-day-video',
-          title: 'Nagoya Station Day',
-          url: 'https://cdn.1998.media/spatial/video/NagoyaStationDay.MOV',
-          type: 'video',
-        },
-        {
-          id: 'nagoya-station-night-video',
-          title: 'Nagoya Station Night',
-          url: 'https://cdn.1998.media/spatial/video/NagoyaStationNight.MOV',
-          type: 'video',
-        },
-        {
-          id: 'nagoya-night-pano',
-          title: 'Nagoya Station Night Panorama',
-          url: 'https://cdn.1998.media/spatial/pano/NagoyaStationNight.HEIC',
-          type: 'photo',
-        },
-        {
-          id: 'nagoya-station-day1',
-          title: 'Nagoya Station Day',
-          url: 'https://cdn.1998.media/spatial/photo/NagoyaStationDay1.HEIC',
-          type: 'photo',
-        },
-        {
-          id: 'nagoya-station-night1',
-          title: 'Nagoya Station Night',
-          url: 'https://cdn.1998.media/spatial/photo/NagoyaStationNight1.HEIC',
-          type: 'photo',
-        },
-        {
-          id: 'nagoya-station-day2',
-          title: 'Nagoya Station Day',
-          url: 'https://cdn.1998.media/spatial/photo/NagoyaStationDay2.HEIC',
-          type: 'photo',
-        },
-      ]
+      // Beijing
+      {
+        id: 'summer-palace-pano-1',
+        title: 'Summer Palace Panorama',
+        url: 'https://cdn.1998.media/spatial/pano/SummerPalace1.HEIC',
+        type: 'photo',
+      },
+      {
+        id: 'summer-palace-pano-2',
+        title: 'Summer Palace Panorama',
+        url: 'https://cdn.1998.media/spatial/pano/SummerPalace2.HEIC',
+      },
+      {
+        id: 'summer-palace-pano-3',
+        title: 'Summer Palace Panorama',
+        url: 'https://cdn.1998.media/spatial/pano/SummerPalace3.HEIC',
+        type: 'photo',
+      },
+      {
+        id: 'summer-palace-pano-4',
+        title: 'Summer Palace Panorama',
+        url: 'https://cdn.1998.media/spatial/pano/SummerPalace4.HEIC',
+        type: 'photo',
+      },
+      {
+        id: 'shichahai-pano-1',
+        title: 'Shichahai Panorama',
+        url: 'https://cdn.1998.media/spatial/pano/Shichahai1.HEIC',
+        type: 'photo',
+      },
+      {
+        id: 'shichahai-pano-2',
+        title: 'Shichahai Panorama',
+        url: 'https://cdn.1998.media/spatial/pano/Shichahai2.HEIC',
+        type: 'photo',
+      },
+      // Osaka (Expo)
+      {
+        id: 'osaka-expo-pano',
+        title: 'Osaka Expo Panorama',
+        url: 'https://cdn.1998.media/spatial/pano/OsakaExpo.HEIC',
+        type: 'photo',
+      },
+      {
+        id: 'osaka-expo-east-gate',
+        title: 'Osaka Expo East Gate',
+        url: 'https://cdn.1998.media/spatial/photo/OsakaExpoEastGate.HEIC',
+        type: 'photo',
+      },
+      {
+        id: 'osaka-expo-water-plaza',
+        title: 'Osaka Expo Water Plaza',
+        url: 'https://cdn.1998.media/spatial/photo/OsakaExpoWaterPlaza.HEIC',
+        type: 'photo',
+      },
+      // Changsha
+      {
+        id: 'juzizhou-pano',
+        title: 'Juzizhou Panorama',
+        url: 'https://cdn.1998.media/spatial/pano/Juzizhou.HEIC',
+        type: 'photo',
+      },
+      {
+        id: 'juzizhou',
+        title: 'Juzizhou',
+        url: 'https://cdn.1998.media/spatial/photo/Juzizhou.HEIC',
+        type: 'photo',
+      },
+      {
+        id: 'changsha-south-station',
+        title: 'Changsha South Station',
+        url: 'https://cdn.1998.media/spatial/photo/ChangshaSouthStation.HEIC',
+        type: 'photo',
+      },
+      // Tokyo
+      {
+        id: 'tokyo-tower-night-video',
+        title: 'Tokyo Tower Night',
+        url: 'https://cdn.1998.media/spatial/video/TokyoTowerNight.MOV',
+        type: 'video',
+      },
+      {
+        id: 'akasaka-palace',
+        title: 'Akasaka Palace',
+        url: 'https://cdn.1998.media/spatial/photo/AkasakaPalace.HEIC',
+        type: 'photo',
+      },
+      // San Francisco
+      {
+        id: 'golden-gate-bridge',
+        title: 'Golden Gate Bridge',
+        url: 'https://cdn.1998.media/spatial/photo/GoldenGateBridge.HEIC',
+        type: 'photo',
+      },
+      {
+        id: 'sf-sea-video',
+        title: 'San Francisco Sea',
+        url: 'https://cdn.1998.media/spatial/video/SanFranciscoSea.MOV',
+        type: 'video',
+      },
+      {
+        id: 'sf-night-pano',
+        title: 'San Francisco Night Panorama',
+        url: 'https://cdn.1998.media/spatial/pano/SanFranciscoNight.HEIC',
+        type: 'photo',
+      },
+      // Nagoya
+      {
+        id: 'nagoya-rocket-video',
+        title: 'Nagoya Rocket',
+        url: 'https://cdn.1998.media/spatial/video/NagoyaRocket.MOV',
+        type: 'video',
+      },
+      {
+        id: 'nagoya-station-day-video',
+        title: 'Nagoya Station Day',
+        url: 'https://cdn.1998.media/spatial/video/NagoyaStationDay.MOV',
+        type: 'video',
+      },
+      {
+        id: 'nagoya-station-night-video',
+        title: 'Nagoya Station Night',
+        url: 'https://cdn.1998.media/spatial/video/NagoyaStationNight.MOV',
+        type: 'video',
+      },
+      {
+        id: 'nagoya-night-pano',
+        title: 'Nagoya Station Night Panorama',
+        url: 'https://cdn.1998.media/spatial/pano/NagoyaStationNight.HEIC',
+        type: 'photo',
+      },
+      {
+        id: 'nagoya-station-day1',
+        title: 'Nagoya Station Day',
+        url: 'https://cdn.1998.media/spatial/photo/NagoyaStationDay1.HEIC',
+        type: 'photo',
+      },
+      {
+        id: 'nagoya-station-night1',
+        title: 'Nagoya Station Night',
+        url: 'https://cdn.1998.media/spatial/photo/NagoyaStationNight1.HEIC',
+        type: 'photo',
+      },
+      {
+        id: 'nagoya-station-day2',
+        title: 'Nagoya Station Day',
+        url: 'https://cdn.1998.media/spatial/photo/NagoyaStationDay2.HEIC',
+        type: 'photo',
+      },
+    ]
     : [];
 
   const totalReleases = photos.length;
@@ -384,7 +481,7 @@ export default function Gallery(props) {
   // Update main tab styles when active tab changes
   useEffect(() => {
     if (!isClient) return;
-    
+
     const updateMainTabStyles = () => {
       const activeTabElement = mainTabRefs.current[activeTab];
       if (activeTabElement && activeTabElement.offsetParent !== null) {
@@ -408,7 +505,7 @@ export default function Gallery(props) {
   // Update filter tab styles when spatial filter changes
   useEffect(() => {
     if (!isClient) return;
-    
+
     const updateFilterTabStyles = () => {
       const activeFilterElement = filterTabRefs.current[spatialFilter];
       if (activeFilterElement && activeFilterElement.offsetParent !== null) {
@@ -494,13 +591,12 @@ export default function Gallery(props) {
                 >
                   {photo.type === 'video' ? (
                     <div
-                      className={`relative h-[25vh] w-full -mb-14 ${
-                        isSpatialPhoto &&
+                      className={`relative h-[25vh] w-full -mb-14 ${isSpatialPhoto &&
                         selectedImage === photo.url &&
                         isDialogOpen
-                          ? 'cursor-default'
-                          : 'cursor-pointer'
-                      }`}
+                        ? 'cursor-default'
+                        : 'cursor-pointer'
+                        }`}
                       onClick={
                         !(
                           isSpatialPhoto &&
@@ -527,13 +623,12 @@ export default function Gallery(props) {
                       {photo.id && photo.id.includes('pano') ? (
                         <div
                           key={`pano-${photo.id}`}
-                          className={`flex h-full animate-pan-slow ${
-                            isSpatialPhoto &&
+                          className={`flex h-full animate-pan-slow ${isSpatialPhoto &&
                             selectedImage === photo.url &&
                             isDialogOpen
-                              ? 'cursor-default'
-                              : 'cursor-pointer'
-                          }`}
+                            ? 'cursor-default'
+                            : 'cursor-pointer'
+                            }`}
                           {...(!(
                             isSpatialPhoto &&
                             selectedImage === photo.url &&
@@ -541,7 +636,7 @@ export default function Gallery(props) {
                           ) && {
                             onClick: () => handleClick(photo),
                           })}
-                          onAnimationStart={() => {}}
+                          onAnimationStart={() => { }}
                         >
                           <img
                             loading="lazy"
@@ -565,13 +660,12 @@ export default function Gallery(props) {
                       ) : (
                         <img
                           loading="lazy"
-                          className={`h-full w-full object-cover ${
-                            isSpatialPhoto &&
+                          className={`h-full w-full object-cover ${isSpatialPhoto &&
                             selectedImage === photo.url &&
                             isDialogOpen
-                              ? 'cursor-default'
-                              : 'cursor-pointer'
-                          }`}
+                            ? 'cursor-default'
+                            : 'cursor-pointer'
+                            }`}
                           src={photo.url}
                           alt={photo.title}
                           {...(!(
@@ -744,7 +838,7 @@ export default function Gallery(props) {
     <>
       <div className="relative h-full w-full max-w-7xl mx-auto flex flex-col items-start px-4 sm:px-6 lg:px-8 pt-24 overflow-hidden">
         <div id="gallery" className="w-full">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-wrap items-center justify-between gap-3">
             <a
               className="text-3xl font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl"
               href="#gallery"
@@ -755,9 +849,8 @@ export default function Gallery(props) {
             <div className="relative flex bg-white/50 dark:bg-black/50 backdrop-blur-md rounded-2xl p-1 border border-gray-200 dark:border-gray-700 xl:rounded-[20px]">
               {/* Sliding Background for Main Tabs */}
               <div
-                className={`absolute top-1 bottom-1 rounded-xl transition-all duration-300 ease-out shadow-sm pointer-events-none ${
-                  activeTab === 'xiaohongshu' ? 'bg-red-500' : 'bg-emerald-600'
-                }`}
+                className={`absolute top-1 bottom-1 rounded-xl transition-all duration-300 ease-out shadow-sm pointer-events-none ${activeTab === 'xiaohongshu' ? 'bg-red-500' : 'bg-emerald-600'
+                  }`}
                 style={mainTabStyles}
               />
               {/* Xiaohongshu Tab - Only show for zh-CN locale */}
@@ -765,11 +858,10 @@ export default function Gallery(props) {
                 <button
                   ref={(el) => (mainTabRefs.current['xiaohongshu'] = el)}
                   onClick={() => setActiveTab('xiaohongshu')}
-                  className={`relative z-10 p-2 text-sm font-medium rounded-xl transition-all duration-300 ${
-                    activeTab === 'xiaohongshu'
-                      ? 'text-white'
-                      : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
-                  }`}
+                  className={`relative z-10 p-2 text-sm font-medium rounded-xl transition-all duration-300 ${activeTab === 'xiaohongshu'
+                    ? 'text-white'
+                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
+                    }`}
                 >
                   <i className="fab fa-redhat mr-1"></i>
                   小红书
@@ -778,11 +870,10 @@ export default function Gallery(props) {
               <button
                 ref={(el) => (mainTabRefs.current['unsplash'] = el)}
                 onClick={() => setActiveTab('unsplash')}
-                className={`relative z-10 p-2 text-sm font-medium rounded-xl transition-all duration-300 ${
-                  activeTab === 'unsplash'
-                    ? 'text-white'
-                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
-                }`}
+                className={`relative z-10 p-2 text-sm font-medium rounded-xl transition-all duration-300 ${activeTab === 'unsplash'
+                  ? 'text-white'
+                  : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
+                  }`}
               >
                 <i className="fab fa-unsplash mr-1"></i>
                 Unsplash
@@ -799,13 +890,12 @@ export default function Gallery(props) {
                   }
                   setActiveTab('spatial');
                 }}
-                className={`relative z-10 p-2 text-sm font-medium rounded-xl transition-all duration-300 ${
-                  !isClient || !isSafari || isMobile
-                    ? 'bg-transparent text-gray-400 opacity-60 cursor-not-allowed'
-                    : activeTab === 'spatial'
-                      ? 'text-white'
-                      : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
-                }`}
+                className={`relative z-10 p-2 text-sm font-medium rounded-xl transition-all duration-300 ${!isClient || !isSafari || isMobile
+                  ? 'bg-transparent text-gray-400 opacity-60 cursor-not-allowed'
+                  : activeTab === 'spatial'
+                    ? 'text-white'
+                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
+                  }`}
                 type="button"
               >
                 <i className="fas fa-cube mr-1"></i>
@@ -825,11 +915,10 @@ export default function Gallery(props) {
                 <button
                   ref={(el) => (filterTabRefs.current['all'] = el)}
                   onClick={() => handleSpatialFilterChange('all')}
-                  className={`relative z-10 px-3 py-1.5 text-xs font-medium rounded-xl transition-all duration-300 ${
-                    spatialFilter === 'all'
-                      ? 'text-white'
-                      : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
-                  }`}
+                  className={`relative z-10 px-3 py-1.5 text-xs font-medium rounded-xl transition-all duration-300 ${spatialFilter === 'all'
+                    ? 'text-white'
+                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
+                    }`}
                 >
                   <i className="fas fa-th mr-1"></i>
                   {i18n('ALL')}
@@ -837,11 +926,10 @@ export default function Gallery(props) {
                 <button
                   ref={(el) => (filterTabRefs.current['photo'] = el)}
                   onClick={() => handleSpatialFilterChange('photo')}
-                  className={`relative z-10 px-3 py-1.5 text-xs font-medium rounded-xl transition-all duration-300 ${
-                    spatialFilter === 'photo'
-                      ? 'text-white'
-                      : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
-                  }`}
+                  className={`relative z-10 px-3 py-1.5 text-xs font-medium rounded-xl transition-all duration-300 ${spatialFilter === 'photo'
+                    ? 'text-white'
+                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
+                    }`}
                 >
                   <i className="fal fa-cube mr-1"></i>
                   {i18n('Spatial Photo')}
@@ -849,11 +937,10 @@ export default function Gallery(props) {
                 <button
                   ref={(el) => (filterTabRefs.current['video'] = el)}
                   onClick={() => handleSpatialFilterChange('video')}
-                  className={`relative z-10 px-3 py-1.5 text-xs font-medium rounded-xl transition-all duration-300 ${
-                    spatialFilter === 'video'
-                      ? 'text-white'
-                      : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
-                  }`}
+                  className={`relative z-10 px-3 py-1.5 text-xs font-medium rounded-xl transition-all duration-300 ${spatialFilter === 'video'
+                    ? 'text-white'
+                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
+                    }`}
                 >
                   <i className="fal fa-video mr-1"></i>
                   {i18n('Spatial Video')}
@@ -861,11 +948,10 @@ export default function Gallery(props) {
                 <button
                   ref={(el) => (filterTabRefs.current['panorama'] = el)}
                   onClick={() => handleSpatialFilterChange('panorama')}
-                  className={`relative z-10 px-3 py-1.5 text-xs font-medium rounded-xl transition-all duration-300 ${
-                    spatialFilter === 'panorama'
-                      ? 'text-white'
-                      : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
-                  }`}
+                  className={`relative z-10 px-3 py-1.5 text-xs font-medium rounded-xl transition-all duration-300 ${spatialFilter === 'panorama'
+                    ? 'text-white'
+                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
+                    }`}
                 >
                   <i className="fal fa-panorama mr-1"></i>
                   {i18n('Panorama')}
@@ -879,13 +965,12 @@ export default function Gallery(props) {
             {/* Xiaohongshu Tab - Only show for zh-CN locale */}
             {isZhCN && (
               <div
-                className={`w-full px-1 transition-all duration-500 ease-in-out ${
-                  activeTab === 'xiaohongshu'
-                    ? 'relative translate-x-0 opacity-100'
-                    : 'absolute top-0 left-0 -translate-x-full opacity-0 pointer-events-none'
-                }`}
+                className={`w-full px-1 transition-all duration-500 ease-in-out ${activeTab === 'xiaohongshu'
+                  ? 'relative translate-x-0 opacity-100'
+                  : 'absolute top-0 left-0 -translate-x-full opacity-0 pointer-events-none'
+                  }`}
               >
-                <dl className="bg-white/50 dark:bg-black/50 backdrop-blur-md grid grid-cols-1 overflow-hidden rounded-xl shadow md:grid-cols-3 divide-y divide-gray-200 dark:divide-gray-800 md:divide-y-0 md:divide-x backlight xl:rounded-[25px]">
+                <dl className="bg-white/50 dark:bg-black/50 backdrop-blur-md grid grid-cols-1 overflow-hidden rounded-xl shadow md:grid-cols-3 divide-y divide-gray-200 dark:divide-gray-800 md:divide-y-0 md:divide-x xl:rounded-[25px]">
                   <div className="px-4 py-5 sm:p-6">
                     <dt className="flex items-baseline justify-between gap-1">
                       <div className="text-base font-normal text-gray-900 dark:text-gray-100">
@@ -939,21 +1024,56 @@ export default function Gallery(props) {
                     </dd>
                   </div>
                 </dl>
-                <div className="overflow-hidden my-5">
-                  <div className="flex gap-3 animate-scroll-left hover:pause-animation">
+                {/* Xiaohongshu Row 1 (Left to Right) */}
+                <div
+                  ref={xhsScrollRef}
+                  className="overflow-x-auto my-4 scrollbar-hide"
+                >
+                  <div className="flex gap-5">
                     {/* Duplicate photos for seamless infinite scroll */}
                     {[
                       ...xiaohongshuData.featuredPhotos,
                       ...xiaohongshuData.featuredPhotos,
                     ].map((photo, index) => (
                       <a
-                        key={`${photo.id}-${index}`}
+                        key={`${photo.id}-row1-${index}`}
                         href={xiaohongshuData.profileUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group flex-shrink-0 w-[180px] rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-[0.98] border border-transparent hover:border-red-500 dark:hover:border-red-400 xl:rounded-[20px]"
+                        className="group flex-shrink-0 w-[200px] rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-[0.98] border border-transparent hover:border-red-500 dark:hover:border-red-400 xl:rounded-[20px]"
                       >
-                        <div className="aspect-video w-full">
+                        <div className="aspect-[3/4] w-full">
+                          <img
+                            loading="lazy"
+                            className="w-full h-full object-cover cursor-pointer"
+                            src={photo.url}
+                            alt={photo.title}
+                          />
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Xiaohongshu Row 2 (Right to Left) */}
+                <div
+                  ref={xhsScrollRef2}
+                  className="overflow-x-auto my-4 scrollbar-hide"
+                >
+                  <div className="flex gap-5">
+                    {/* Duplicate and reverse for variation */}
+                    {[
+                      ...xiaohongshuData.featuredPhotos,
+                      ...xiaohongshuData.featuredPhotos,
+                    ].reverse().map((photo, index) => (
+                      <a
+                        key={`${photo.id}-row2-${index}`}
+                        href={xiaohongshuData.profileUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group flex-shrink-0 w-[200px] rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-[0.98] border border-transparent hover:border-red-500 dark:hover:border-red-400 xl:rounded-[20px]"
+                      >
+                        <div className="aspect-[3/4] w-full">
                           <img
                             loading="lazy"
                             className="w-full h-full object-cover cursor-pointer"
@@ -970,13 +1090,12 @@ export default function Gallery(props) {
             {/* Unsplash Tab */}
             <div
               ref={unsplashTabRef}
-              className={`w-full px-1 transition-all duration-500 ease-in-out ${
-                activeTab === 'unsplash'
-                  ? 'relative translate-x-0 opacity-100'
-                  : 'absolute top-0 left-0 -translate-x-full opacity-0 pointer-events-none'
-              }`}
+              className={`w-full px-1 transition-all duration-500 ease-in-out ${activeTab === 'unsplash'
+                ? 'relative translate-x-0 opacity-100'
+                : 'absolute top-0 left-0 -translate-x-full opacity-0 pointer-events-none'
+                }`}
             >
-              <dl className="bg-white/50 dark:bg-black/50 backdrop-blur-md grid grid-cols-1 overflow-hidden rounded-xl shadow md:grid-cols-3 divide-y divide-gray-200 dark:divide-gray-800 md:divide-y-0 md:divide-x backlight xl:rounded-[25px]">
+              <dl className="bg-white/50 dark:bg-black/50 backdrop-blur-md grid grid-cols-1 overflow-hidden rounded-xl shadow md:grid-cols-3 divide-y divide-gray-200 dark:divide-gray-800 md:divide-y-0 md:divide-x xl:rounded-[25px]">
                 {stats.map((item) => (
                   <div key={item.name} className="px-4 py-5 sm:p-6">
                     <dt className="flex items-baseline justify-between gap-1">
@@ -995,7 +1114,7 @@ export default function Gallery(props) {
                   </div>
                 ))}
               </dl>
-              
+
               {/* Unsplash Row 1 (Left to Right) */}
               <div
                 ref={unsplashScrollRef}
@@ -1047,11 +1166,10 @@ export default function Gallery(props) {
             {/* Spatial Tab - Only render for Safari to save traffic */}
             <div
               ref={spatialTabRef}
-              className={`w-full transition-all duration-500 ease-in-out ${
-                activeTab === 'spatial'
-                  ? 'relative translate-x-0 opacity-100'
-                  : 'absolute top-0 left-0 translate-x-full opacity-0 pointer-events-none'
-              }`}
+              className={`w-full transition-all duration-500 ease-in-out ${activeTab === 'spatial'
+                ? 'relative translate-x-0 opacity-100'
+                : 'absolute top-0 left-0 translate-x-full opacity-0 pointer-events-none'
+                }`}
             >
               {renderSpatialTab()}
             </div>
@@ -1077,8 +1195,8 @@ export default function Gallery(props) {
           </span>
           <a href={selectedImageURL} target="_blank">
             {isSpatialPhoto &&
-            selectedImage &&
-            selectedImage.endsWith('.MOV') ? (
+              selectedImage &&
+              selectedImage.endsWith('.MOV') ? (
               <video
                 id="img"
                 src={selectedImage}
@@ -1107,16 +1225,16 @@ export default function Gallery(props) {
 
 export async function getServerSideProps(context) {
   let { locale } = context.params;
-  
+
   // Fallback to English if locale is not supported
   const supportedLocales = ['en', 'zh', 'zh-HK', 'ko', 'ja'];
   const normalizedLocale = locale?.includes('en') ? 'en' :
-                          locale?.includes('ja') || locale?.includes('jp') ? 'ja' :
-                          locale?.includes('ko') || locale?.includes('kr') ? 'ko' :
-                          locale?.includes('zh-TW') || locale?.includes('zh-MO') ? 'zh-HK' :
-                          locale?.includes('zh-CN') ? 'zh' :
-                          locale;
-  
+    locale?.includes('ja') || locale?.includes('jp') ? 'ja' :
+      locale?.includes('ko') || locale?.includes('kr') ? 'ko' :
+        locale?.includes('zh-TW') || locale?.includes('zh-MO') ? 'zh-HK' :
+          locale?.includes('zh-CN') ? 'zh' :
+            locale;
+
   if (!supportedLocales.includes(normalizedLocale)) {
     locale = 'en'; // Fallback to English
   } else {

@@ -6,9 +6,14 @@ export default function Blog(props) {
   const blogScrollRef = useRef(null);
   const tripScrollRef = useRef(null);
 
+  const loggedMissingKeys = useRef(new Set());
+
   function i18n(key) {
     if (props.i18n && props.i18n['blog'] && !props.i18n['blog'][key]) {
-      console.log('Blog Missing Translation: ' + key);
+      if (!loggedMissingKeys.current.has(key)) {
+        console.log('Blog Missing Translation: ' + key);
+        loggedMissingKeys.current.add(key);
+      }
     }
     return props.i18n && props.i18n['blog'] && props.i18n['blog'][key]
       ? props.i18n['blog'][key]
@@ -23,7 +28,7 @@ export default function Blog(props) {
     if (hasChineseChars) {
       return 'zh';
     }
-    
+
     // Fall back to franc for other languages
     const lang = franc(text);
     if (
@@ -86,11 +91,11 @@ export default function Blog(props) {
     const autoScroll = () => {
       if (!isUserScrolling && blogContainer) {
         blogContainer.scrollLeft += 0.5;
-        
+
         // Reset when we've scrolled past the first set (one third of total scroll width since we have 3 sets)
         const scrollWidth = blogContainer.scrollWidth;
         const firstSetWidth = scrollWidth / 3;
-        
+
         if (blogContainer.scrollLeft >= firstSetWidth) {
           blogContainer.scrollLeft = blogContainer.scrollLeft - firstSetWidth;
         }
@@ -249,7 +254,7 @@ export default function Blog(props) {
       </div>
 
       {/* Moments */}
-      <div id="trip" className="relative w-full space-y-8 pt-4">
+      <div id="trip" className="relative w-full space-y-8">
         <div className="text-left flex flex-wrap">
           <a
             className="text-3xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl grow"
@@ -275,14 +280,14 @@ export default function Blog(props) {
                   loading="lazy"
                   src={medal.medalStageIcon}
                   alt={medal.medalStageName || ''}
-                  className="h-16 w-16 hover:scale-105 transition-all"
+                  className="h-10 w-10 hover:scale-105 transition-all"
                 />
               </Tooltip>
             ))}
           </div>
           <a
             href="https://hk.trip.com/travel-guide/personal-home/E1B9A703A2E3FEF984D86D1D507FB324B4A7CBA7500F0E62A0BFA68DCC95C09E"
-            className="flex-1 md:flex-none block text-lg font-semibold text-white whitespace-nowrap bg-sky-600 hover:bg-sky-500 p-3 rounded-xl transition-all"
+            className="flex-1 md:flex-none block text-sm font-semibold text-white whitespace-nowrap bg-sky-600 hover:bg-sky-500 px-4 py-2 rounded-xl transition-all"
             target="_blank"
           >
             <i className="fa fa-suitcase-rolling mr-2"></i>
