@@ -1,5 +1,7 @@
 # Personal Website with Next.js 15
 
+[繁體中文](./README_zh.md)
+
 A modern, full-screen Slide-style personal portfolio built with Next.js 15, optimized for performance and aesthetics.
 
 ![CleanShot](https://user-images.githubusercontent.com/54872601/185557701-5b1fec2d-a86a-43d1-bc03-16ac7e0a91a7.png)
