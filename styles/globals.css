@@ -5,6 +5,7 @@
 html {
   scroll-behavior: smooth;
   background-color: #fff6eb;
+  overflow-x: hidden;
 }
 
 body {
@@ -13,6 +14,8 @@ body {
   background-color: #fff6eb;
   font-family: 'Google Sans Flex', 'Roboto Flex', system-ui, 'SF Pro Display', BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 a {

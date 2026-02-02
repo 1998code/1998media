@@ -330,7 +330,7 @@ export default function Home({
 
       {/* <script>AOS.init();</script> */}
 
-      <main className="darkmode-ignore h-dvh w-screen overflow-hidden">
+      <main className="darkmode-ignore h-dvh w-full overflow-hidden overflow-x-hidden">
 
         <LocaleSwitcher />
 
