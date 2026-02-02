@@ -27,6 +27,7 @@ export default function Contact(props) {
                   className="p-1 mt-2 border text-xs dark:text-white bg-white dark:bg-black rounded-xl"
                 >
                   <img
+                    alt={i18n('Map location')}
                     loading="lazy"
                     className="object-cover object-center rounded-xl md:rounded-3xl shadow-2xl hover:scale-105 transition duration-500"
                     src="https://snapshot.apple-mapkit.com/api/v1/snapshot?center=22.34501591896432%2C114.17990720272064&t=standard&scale=1&spn=0.3175427580212222%2C0.34332275390625&size=500x500&lang=en-US&poi=0&annotations=%5B%7B%22point%22%3A%2222.428117752075195%2C114.208251953125%22%2C%22markerStyle%22%3A%22large%22%2C%22color%22%3A%22006d8f%22%2C%22glyphText%22%3A%22S%22%7D%2C%7B%22point%22%3A%2222.30408477783203%2C114.17972564697266%22%2C%22markerStyle%22%3A%22balloon%22%2C%22color%22%3A%22b92d5d%22%2C%22glyphText%22%3A%22P%22%7D%2C%7B%22point%22%3A%2222.336124420166016%2C114.1732177734375%22%2C%22markerStyle%22%3A%22balloon%22%2C%22color%22%3A%22e63b7a%22%2C%22glyphText%22%3A%22C%22%7D%5D&teamId=9PAHLTG8AD&keyId=FD3N2TP9F5&signature=7EQjssZqx9iYI1uJYqBU8ZDgqHPJrbZadAfT8G6rTwXM2l08vy6XREcWCWOk4gWLeQUIC80SUJLz8ZE0pqlC1w"
@@ -151,6 +152,7 @@ export default function Contact(props) {
             className="relative block w-full mt-6 text-center md:text-right max-w-7xl mx-auto sm:px-6 md:px-8"
           >
             <img
+              alt="Xiaohongshu Profile"
               loading="lazy"
               className="rounded-3xl max-w-[500px]"
               src="https://cdn.1998.media/banners/Xiaohongshu.jpg"

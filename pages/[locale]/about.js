@@ -84,6 +84,7 @@ export default function About(props) {
         <div className="lg:flex flex-col lg:flex-row gap-3 lg:gap-8 items-center min-h-[75vh]">
           <h2 className="-mt-0 lg:-mt-32 min-w-[36%] mx-auto text-3xl font-extrabold text-orange-900 dark:text-orange-100 text-center lg:text-left lg:min-w-[50%]">
             <img
+              alt="Profile"
               loading="lazy"
               src="https://cdn.1998.media/favicon24.jpg"
               className="rounded-full w-24 h-24"
@@ -167,6 +168,7 @@ export default function About(props) {
               />
             </div>
             <img
+              alt=""
               loading="lazy"
               src="https://cdn.1998.media/bgs/Calculator.png"
             />

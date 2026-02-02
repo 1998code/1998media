@@ -611,6 +611,7 @@ export default function Achievements(props) {
     <>
       <div className="relative h-full w-full flex flex-col justify-center py-4">
         <img
+          alt=""
           loading="lazy"
           src="https://cdn.1998.media/bgs/App.png"
           className="absolute -z-[1] w-[25vw] top-14 -right-16"
@@ -703,6 +704,7 @@ export default function Achievements(props) {
                   </div>
                 </div>
                 <img
+                  alt=""
                   loading="lazy"
                   src="https://cdn.1998.media/bgs/Camera.png"
                   className="absolute -z-[1] w-[25vw] top-25 -right-72"

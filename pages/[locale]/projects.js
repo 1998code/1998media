@@ -97,6 +97,7 @@ export default function Projects(props) {
             alt="Top Languages"
           />
           <img
+            alt="Lapras Score"
             loading="lazy"
             className="col-span-3 md:col-span-1 hover:scale-95 transition duration-300 rounded-xl xl:rounded-[25px]"
             src="https://lapras-card-generator-auto.vercel.app/api/svg?b1=%23020E27&b2=%230E5593&i1=%23030E21&i2=%231688BF&l=en&u=MING"

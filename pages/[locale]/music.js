@@ -437,6 +437,7 @@ export default function Music(props) {
                           }}
                         >
                           <img
+                            alt={item.attributes.name}
                             loading="lazy"
                             src={item.attributes.artwork.url
                               .replace('{w}', '50')
@@ -492,6 +493,7 @@ export default function Music(props) {
             <div className="relative group/album md:absolute md:-left-7 md:top-2 min-w-[65px] h-[65px] z-[2]">
               <a href={currentPlaying.attributes?.url} target="_blank">
                 <img
+                  alt={currentPlaying.attributes.name}
                   loading="lazy"
                   src={currentPlaying.attributes.artwork.url
                     .replace('{w}', '500')

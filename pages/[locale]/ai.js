@@ -151,6 +151,7 @@ export default function AI(props) {
                 >
                   <div className="relative">
                     <img
+                      alt={item.prompt}
                       loading="lazy"
                       src={item.output}
                       className="w-[300px] h-[300px] object-cover"
@@ -196,6 +197,7 @@ export default function AI(props) {
                 >
                   <div className="relative">
                     <img
+                      alt={item.prompt}
                       loading="lazy"
                       src={item.output}
                       className="w-[250px] h-[250px] object-cover"
