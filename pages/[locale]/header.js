@@ -80,7 +80,7 @@ export default function Header(props) {
             setShowContinue(true);
           }, 500);
         }}
-        className="text-8xl font-bold dark:text-white px-3 text-center -mt-20"
+        className="text-5xl md:text-8xl font-bold dark:text-white px-3 text-center -mt-20"
       >
         {splitText(i18n('Hi'))}{' '}
         <motion.i

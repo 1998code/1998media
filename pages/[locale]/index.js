@@ -366,7 +366,7 @@ export default function Home({
 
               onScroll={handleScroll}
 
-              className={`${sidebarOpen && 'pl-6 lg:pl-0'} h-full w-full ${(isReady || headerCompleted) ? 'overflow-y-auto' : 'overflow-hidden'} snap-y snap-mandatory scroll-smooth`}
+              className={`${sidebarOpen && 'pl-6 lg:pl-0'} h-full w-full ${(isReady || headerCompleted) ? 'overflow-y-auto' : 'overflow-hidden'} lg:snap-y lg:snap-mandatory scroll-smooth`}
 
             >
 
@@ -390,19 +390,19 @@ export default function Home({
 
                 <>
 
-                  <section id="about" className="snap-start h-dvh w-full flex-shrink-0">
+                  <section id="about" className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0">
 
                     <About i18n={I18n} />
 
                   </section>
 
-                  <section id="achievements" className="snap-start h-dvh w-full flex-shrink-0">
+                  <section id="achievements" className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0">
 
                     <Achievements i18n={I18n} />
 
                   </section>
 
-                  <section id="gallery" className="snap-start h-dvh w-full flex-shrink-0">
+                  <section id="gallery" className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0">
 
                     <Gallery
 
@@ -416,49 +416,49 @@ export default function Home({
 
                   </section>
 
-                  <section id="experience" className="snap-start h-dvh w-full flex-shrink-0">
+                  <section id="experience" className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0">
 
                     <Experience i18n={I18n} />
 
                   </section>
 
-                  <section id="skills" className="snap-start h-dvh w-full flex-shrink-0">
+                  <section id="skills" className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0">
 
                     <Skills i18n={I18n} />
 
                   </section>
 
-                  <section id="projects" className="snap-start h-dvh w-full flex-shrink-0">
+                  <section id="projects" className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0">
 
                     <Projects i18n={I18n} projectsData={projectsData} />
 
                   </section>
 
-                  <section id="ai" className="snap-start h-dvh w-full flex-shrink-0">
+                  <section id="ai" className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0">
 
                     <AI i18n={I18n} dalle={dalleData} />
 
                   </section>
 
-                  <section id="blog" className="snap-start h-dvh w-full flex-shrink-0">
+                  <section id="blog" className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0">
 
                     <Blog i18n={I18n} blogData={blogData} locale={locale} />
 
                   </section>
 
-                  <section id="stocks" className="snap-start h-dvh w-full flex-shrink-0">
+                  <section id="stocks" className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0">
 
                     <Stocks i18n={I18n} stocksData={stocksData} />
 
                   </section>
 
-                  <section id="faq" className="snap-start h-dvh w-full flex-shrink-0">
+                  <section id="faq" className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0">
 
                     <Faq i18n={I18n} />
 
                   </section>
 
-                  <section id="contact" className="snap-start h-dvh w-full flex-shrink-0 flex flex-col justify-between overflow-y-auto scrollbar-hide pt-24">
+                  <section id="contact" className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0 flex flex-col justify-between overflow-y-auto scrollbar-hide pt-24">
 
                     <div className="flex-1 flex flex-col justify-center">
 
