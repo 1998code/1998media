@@ -82,6 +82,20 @@ export default function Faq(props) {
         </span>
       ),
     },
+    {
+      question: 'What search engine does your open source software use?',
+      answer: () => (
+        <span>
+          <a
+            href="https://docsearch.algolia.com/?ref=1998.media"
+            target="_blank"
+            className="hover:underline"
+          >
+            Algolia DocSearch<i className="ml-1 fa fa-external-link fa-sm"></i>
+          </a>
+        </span>
+      ),
+    },
   ];
   return (
     <div
