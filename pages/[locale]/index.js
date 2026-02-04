@@ -535,6 +535,7 @@ export async function getServerSideProps(context) {
       moments,
       githubProjects,
       currentStocks,
+      futureStocks,
       previousStocks,
       dalleData,
       unsplashData,
@@ -546,6 +547,7 @@ export async function getServerSideProps(context) {
       fetchTripMoments(locale),
       fetchGithubProjects(),
       fetchStocks('AAPL,NVDA,MC.PA,3033.HK'),
+      fetchStocks('MA'),
       fetchStocks('MSFT,AMZN'),
       fetchDalleData(),
       fetchUnsplashData(),
@@ -562,6 +564,7 @@ export async function getServerSideProps(context) {
         },
         stocksData: {
           current: currentStocks,
+          future: futureStocks,
           previous: previousStocks
         },
         projectsData: githubProjects,

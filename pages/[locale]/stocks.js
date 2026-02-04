@@ -236,6 +236,7 @@ export default function Stocks(props) {
   };
 
   const currentStocks = props.stocksData?.current || [];
+  const futureStocks = props.stocksData?.future || [];
   const previousStocks = props.stocksData?.previous || [];
 
   return (
@@ -272,6 +273,22 @@ export default function Stocks(props) {
             ))}
           </div>
         </div>
+
+        {/* Future Portfolio */}
+        {futureStocks.length > 0 && (
+          <div className="space-y-4 w-full">
+            <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+              {i18n('Future')}
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {futureStocks.map((stock, index) => (
+                <div key={stock.symbol || index} onClick={() => handleStockClick(stock)} className="cursor-pointer">
+                  <StockCard stock={stock} i18n={i18n} locale={props.locale} />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Previous Portfolio */}
         <div className="space-y-4 pb-12 w-full">
@@ -405,7 +422,7 @@ export default function Stocks(props) {
           )}
         </div>
       </div>
-    </div>
+    </div >
   );
 }
 
@@ -429,9 +446,10 @@ export async function getServerSideProps(context) {
   }
 
   try {
-    const [i18nData, currentStocks, previousStocks] = await Promise.all([
+    const [i18nData, currentStocks, futureStocks, previousStocks] = await Promise.all([
       fetchI18nData(locale),
       fetchStocks('AAPL,NVDA,MC.PA,3033.HK'),
+      fetchStocks('MA'),
       fetchStocks('MSFT,AMZN'),
     ]);
 
@@ -440,6 +458,7 @@ export async function getServerSideProps(context) {
         i18nData,
         stocksData: {
           current: currentStocks,
+          future: futureStocks,
           previous: previousStocks
         },
         locale,
@@ -450,7 +469,7 @@ export async function getServerSideProps(context) {
     return {
       props: {
         i18nData: {},
-        stocksData: { current: [], previous: [] },
+        stocksData: { current: [], future: [], previous: [] },
         locale: 'en',
       },
     };
