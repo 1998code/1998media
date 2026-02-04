@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { fetchI18nData, fetchStocks } from '../../lib/fetchData';
 
 export const runtime = 'experimental-edge';

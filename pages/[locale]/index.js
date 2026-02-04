@@ -135,29 +135,45 @@ export default function Home({
     };
   }, []);
 
+  const hasInitialScrolled = useRef(false);
+
   // Wait the page loaded, if url contains #, scroll to the section
   useEffect(() => {
-    setTimeout(() => {
-      if (window.location.hash) {
-        const hash = window.location.hash.replace('#', '');
-        if (sections.includes(hash)) {
-          setActiveSection(hash);
+    if (window.location.hash && !hasInitialScrolled.current) {
+      const hash = window.location.hash.replace('#', '');
+      if (sections.includes(hash) && hash !== 'header') {
+        hasInitialScrolled.current = true;
+        // Immediately show the content if navigating to a specific section
+        setIsReady(true);
+        setHeaderCompleted(true);
+        setLoading(false);
+
+        // Wait longer for full rendering of dynamically imported components
+        setTimeout(() => {
           const element = document.getElementById(hash);
-          if (element) {
+          if (element && containerRef.current) {
+            // Temporarily disable snap to prevent scroll interference
+            const originalSnap = containerRef.current.className;
+            containerRef.current.className = originalSnap.replace('lg:snap-y', '').replace('lg:snap-mandatory', '');
+
+            containerRef.current.style.scrollBehavior = 'auto';
             element.scrollIntoView({
-              behavior: 'smooth',
+              behavior: 'auto',
               block: 'start',
             });
-          } else {
-            console.log('Element not found');
+
+            // Restore snap and smooth behavior after a short delay
+            setTimeout(() => {
+              if (containerRef.current) {
+                containerRef.current.className = originalSnap;
+                containerRef.current.style.scrollBehavior = 'smooth';
+                setActiveSection(hash);
+              }
+            }, 100);
           }
-        } else {
-          console.log('Hash is not in sections');
-        }
-      } else {
-        console.log('window.location.hash is empty');
+        }, 1500); // Increased wait time for full layout stability
       }
-    }, 2000);
+    }
   }, [loading]);
 
   // Watch hash changed, set the active section
