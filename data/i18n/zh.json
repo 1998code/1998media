@@ -125,7 +125,8 @@
         "Trip": "旅行家",
         "AI": "人工智能",
         "OpenAPI": "开放API",
-        "Gallery": "艺廊"
+        "Gallery": "艺廊",
+        "Back": "返回"
     },
     "connect": {
         "Find me on social media and other platforms.": "在社群媒体和其他平台上找我。",

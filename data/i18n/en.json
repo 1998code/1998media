@@ -125,7 +125,8 @@
         "Trip": "Trip",
         "AI": "AI",
         "OpenAPI": "OpenAPI",
-        "Gallery": "Gallery"
+        "Gallery": "Gallery",
+        "Back": "Back"
     },
     "connect": {
         "Find me on social media and other platforms.": "Find me on social media and other platforms.",

@@ -125,7 +125,8 @@
         "Trip": "여행",
         "AI": "인공 지능",
         "OpenAPI": "OpenAPI",
-        "Gallery": "갤러리"
+        "Gallery": "갤러리",
+        "Back": "뒤로"
     },
     "connect": {
         "Find me on social media and other platforms.": "소셜 미디어 및 기타 플랫폼에서 저를 찾아보세요.",

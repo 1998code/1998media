@@ -124,8 +124,9 @@
         "Stocks": "株式",
         "Trip": "旅行",
         "AI": "人工知能",
-        "OpenAPI": "OpenAPI",
-        "Gallery": "ギャラリー"
+        "OpenAPI": "オープンAPI",
+        "Gallery": "ギャラリー",
+        "Back": "戻る"
     },
     "connect": {
         "Find me on social media and other platforms.": "ソーシャルメディアや他のプラットフォームで私を見つけてください。",
