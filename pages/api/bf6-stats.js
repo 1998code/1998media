@@ -49,12 +49,15 @@ export default async function handler(req) {
     });
   } catch (error) {
     console.error('Error fetching BF6 data:', error);
-    return new Response(JSON.stringify({
-      message: 'Failed to fetch Battlefield 6 data',
-      error: error.message,
-    }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({
+        message: 'Failed to fetch Battlefield 6 data',
+        error: error.message,
+      }),
+      {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
   }
 }

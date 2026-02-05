@@ -1,5 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import { EffectComposer, RenderPass, EffectPass, BloomEffect, ChromaticAberrationEffect } from 'postprocessing';
+import {
+  EffectComposer,
+  RenderPass,
+  EffectPass,
+  BloomEffect,
+  ChromaticAberrationEffect,
+} from 'postprocessing';
 import * as THREE from 'three';
 import * as faceapi from 'face-api.js';
 
@@ -269,596 +275,672 @@ void main(){
 `;
 
 export default function GridScan({
-    enableWebcam = false,
-    showPreview = false,
-    modelsPath = 'https://cdn.jsdelivr.net/gh/justadudewhohacks/face-api.js@0.22.2/weights',
-    sensitivity = 0.55,
-    lineThickness = 1,
-    linesColor = '#392e4e',
-    scanColor = '#FF9FFC',
-    scanOpacity = 0.4,
-    gridScale = 0.1,
-    lineStyle = 'solid',
-    lineJitter = 0.1,
-    scanDirection = 'pingpong',
-    enablePost = true,
-    bloomIntensity = 0,
-    bloomThreshold = 0,
-    bloomSmoothing = 0,
-    chromaticAberration = 0.002,
-    noiseIntensity = 0.01,
-    scanGlow = 0.5,
-    scanSoftness = 2,
-    scanPhaseTaper = 0.9,
-    scanDuration = 2.0,
-    scanDelay = 2.0,
-    enableGyro = false,
-    scanOnClick = false,
-    snapBackDelay = 250,
-    className,
-    style
+  enableWebcam = false,
+  showPreview = false,
+  modelsPath = 'https://cdn.jsdelivr.net/gh/justadudewhohacks/face-api.js@0.22.2/weights',
+  sensitivity = 0.55,
+  lineThickness = 1,
+  linesColor = '#392e4e',
+  scanColor = '#FF9FFC',
+  scanOpacity = 0.4,
+  gridScale = 0.1,
+  lineStyle = 'solid',
+  lineJitter = 0.1,
+  scanDirection = 'pingpong',
+  enablePost = true,
+  bloomIntensity = 0,
+  bloomThreshold = 0,
+  bloomSmoothing = 0,
+  chromaticAberration = 0.002,
+  noiseIntensity = 0.01,
+  scanGlow = 0.5,
+  scanSoftness = 2,
+  scanPhaseTaper = 0.9,
+  scanDuration = 2.0,
+  scanDelay = 2.0,
+  enableGyro = false,
+  scanOnClick = false,
+  snapBackDelay = 250,
+  className,
+  style,
 }) {
-    const containerRef = useRef(null);
-    const videoRef = useRef(null);
+  const containerRef = useRef(null);
+  const videoRef = useRef(null);
 
-    const rendererRef = useRef(null);
-    const materialRef = useRef(null);
-    const composerRef = useRef(null);
-    const bloomRef = useRef(null);
-    const chromaRef = useRef(null);
-    const rafRef = useRef(null);
+  const rendererRef = useRef(null);
+  const materialRef = useRef(null);
+  const composerRef = useRef(null);
+  const bloomRef = useRef(null);
+  const chromaRef = useRef(null);
+  const rafRef = useRef(null);
 
-    const [modelsReady, setModelsReady] = useState(false);
-    const [uiFaceActive, setUiFaceActive] = useState(false);
+  const [modelsReady, setModelsReady] = useState(false);
+  const [uiFaceActive, setUiFaceActive] = useState(false);
 
-    const lookTarget = useRef(new THREE.Vector2(0, 0));
-    const tiltTarget = useRef(0);
-    const yawTarget = useRef(0);
+  const lookTarget = useRef(new THREE.Vector2(0, 0));
+  const tiltTarget = useRef(0);
+  const yawTarget = useRef(0);
 
-    const lookCurrent = useRef(new THREE.Vector2(0, 0));
-    const lookVel = useRef(new THREE.Vector2(0, 0));
-    const tiltCurrent = useRef(0);
-    const tiltVel = useRef(0);
-    const yawCurrent = useRef(0);
-    const yawVel = useRef(0);
+  const lookCurrent = useRef(new THREE.Vector2(0, 0));
+  const lookVel = useRef(new THREE.Vector2(0, 0));
+  const tiltCurrent = useRef(0);
+  const tiltVel = useRef(0);
+  const yawCurrent = useRef(0);
+  const yawVel = useRef(0);
 
-    const MAX_SCANS = 8;
-    const scanStartsRef = useRef([]);
+  const MAX_SCANS = 8;
+  const scanStartsRef = useRef([]);
 
-    const pushScan = t => {
-        const arr = scanStartsRef.current.slice();
-        if (arr.length >= MAX_SCANS) arr.shift();
-        arr.push(t);
-        scanStartsRef.current = arr;
-        if (materialRef.current) {
-            const u = materialRef.current.uniforms;
-            const buf = new Array(MAX_SCANS).fill(0);
-            for (let i = 0; i < arr.length && i < MAX_SCANS; i++) buf[i] = arr[i];
-            u.uScanStarts.value = buf;
-            u.uScanCount.value = arr.length;
+  const pushScan = (t) => {
+    const arr = scanStartsRef.current.slice();
+    if (arr.length >= MAX_SCANS) arr.shift();
+    arr.push(t);
+    scanStartsRef.current = arr;
+    if (materialRef.current) {
+      const u = materialRef.current.uniforms;
+      const buf = new Array(MAX_SCANS).fill(0);
+      for (let i = 0; i < arr.length && i < MAX_SCANS; i++) buf[i] = arr[i];
+      u.uScanStarts.value = buf;
+      u.uScanCount.value = arr.length;
+    }
+  };
+
+  const s = THREE.MathUtils.clamp(sensitivity, 0, 1);
+  const skewScale = THREE.MathUtils.lerp(0.06, 0.2, s);
+  const tiltScale = THREE.MathUtils.lerp(0.12, 0.3, s);
+  const yawScale = THREE.MathUtils.lerp(0.1, 0.28, s);
+  const depthResponse = THREE.MathUtils.lerp(0.25, 0.45, s);
+  const smoothTime = THREE.MathUtils.lerp(0.45, 0.12, s);
+  const maxSpeed = Infinity;
+
+  const yBoost = THREE.MathUtils.lerp(1.2, 1.6, s);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    let leaveTimer = null;
+    const onMove = (e) => {
+      if (uiFaceActive) return;
+      if (leaveTimer) {
+        clearTimeout(leaveTimer);
+        leaveTimer = null;
+      }
+      const nx = (e.clientX / window.innerWidth) * 2 - 1;
+      const ny = -((e.clientY / window.innerHeight) * 2 - 1);
+      lookTarget.current.set(nx, ny);
+    };
+    const onClick = async () => {
+      const nowSec = performance.now() / 1000;
+      if (scanOnClick) pushScan(nowSec);
+      if (
+        enableGyro &&
+        typeof window !== 'undefined' &&
+        window.DeviceOrientationEvent &&
+        DeviceOrientationEvent.requestPermission
+      ) {
+        try {
+          await DeviceOrientationEvent.requestPermission();
+        } catch {
+          // noop
         }
+      }
+    };
+    const onEnter = () => {
+      if (leaveTimer) {
+        clearTimeout(leaveTimer);
+        leaveTimer = null;
+      }
+    };
+    const onLeave = () => {
+      if (uiFaceActive) return;
+      if (leaveTimer) clearTimeout(leaveTimer);
+      leaveTimer = window.setTimeout(
+        () => {
+          lookTarget.current.set(0, 0);
+          tiltTarget.current = 0;
+          yawTarget.current = 0;
+        },
+        Math.max(0, snapBackDelay || 0)
+      );
+    };
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseenter', onEnter);
+    if (scanOnClick) window.addEventListener('click', onClick);
+    window.addEventListener('mouseleave', onLeave);
+    return () => {
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseenter', onEnter);
+      window.removeEventListener('mouseleave', onLeave);
+      if (scanOnClick) window.removeEventListener('click', onClick);
+      if (leaveTimer) clearTimeout(leaveTimer);
+    };
+  }, [uiFaceActive, snapBackDelay, scanOnClick, enableGyro, s]);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    rendererRef.current = renderer;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.NoToneMapping;
+    renderer.autoClear = false;
+    renderer.setClearColor(0x000000, 0);
+    container.appendChild(renderer.domElement);
+
+    const uniforms = {
+      iResolution: {
+        value: new THREE.Vector3(
+          container.clientWidth,
+          container.clientHeight,
+          renderer.getPixelRatio()
+        ),
+      },
+      iTime: { value: 0 },
+      uSkew: { value: new THREE.Vector2(0, 0) },
+      uTilt: { value: 0 },
+      uYaw: { value: 0 },
+      uLineThickness: { value: lineThickness },
+      uLinesColor: { value: srgbColor(linesColor) },
+      uScanColor: { value: srgbColor(scanColor) },
+      uGridScale: { value: gridScale },
+      uLineStyle: {
+        value: lineStyle === 'dashed' ? 1 : lineStyle === 'dotted' ? 2 : 0,
+      },
+      uLineJitter: { value: Math.max(0, Math.min(1, lineJitter || 0)) },
+      uScanOpacity: { value: scanOpacity },
+      uNoise: { value: noiseIntensity },
+      uBloomOpacity: { value: bloomIntensity },
+      uScanGlow: { value: scanGlow },
+      uScanSoftness: { value: scanSoftness },
+      uPhaseTaper: { value: scanPhaseTaper },
+      uScanDuration: { value: scanDuration },
+      uScanDelay: { value: scanDelay },
+      uScanDirection: {
+        value:
+          scanDirection === 'backward'
+            ? 1
+            : scanDirection === 'pingpong'
+              ? 2
+              : 0,
+      },
+      uScanStarts: { value: new Array(MAX_SCANS).fill(0) },
+      uScanCount: { value: 0 },
     };
 
-    const s = THREE.MathUtils.clamp(sensitivity, 0, 1);
-    const skewScale = THREE.MathUtils.lerp(0.06, 0.2, s);
-    const tiltScale = THREE.MathUtils.lerp(0.12, 0.3, s);
-    const yawScale = THREE.MathUtils.lerp(0.1, 0.28, s);
-    const depthResponse = THREE.MathUtils.lerp(0.25, 0.45, s);
-    const smoothTime = THREE.MathUtils.lerp(0.45, 0.12, s);
-    const maxSpeed = Infinity;
+    const material = new THREE.ShaderMaterial({
+      uniforms,
+      vertexShader: vert,
+      fragmentShader: frag,
+      transparent: true,
+      depthWrite: false,
+      depthTest: false,
+    });
+    materialRef.current = material;
 
-    const yBoost = THREE.MathUtils.lerp(1.2, 1.6, s);
+    const scene = new THREE.Scene();
+    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+    const quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material);
+    scene.add(quad);
 
-    useEffect(() => {
-        const el = containerRef.current;
-        if (!el) return;
-        let leaveTimer = null;
-        const onMove = e => {
-            if (uiFaceActive) return;
-            if (leaveTimer) {
-                clearTimeout(leaveTimer);
-                leaveTimer = null;
-            }
-            const nx = (e.clientX / window.innerWidth) * 2 - 1;
-            const ny = - ((e.clientY / window.innerHeight) * 2 - 1);
-            lookTarget.current.set(nx, ny);
-        };
-        const onClick = async () => {
-            const nowSec = performance.now() / 1000;
-            if (scanOnClick) pushScan(nowSec);
-            if (
-                enableGyro
-                && typeof window !== 'undefined'
-                && window.DeviceOrientationEvent
-                && DeviceOrientationEvent.requestPermission
-            ) {
-                try {
-                    await DeviceOrientationEvent.requestPermission();
-                } catch {
-                    // noop
-                }
-            }
-        };
-        const onEnter = () => {
-            if (leaveTimer) {
-                clearTimeout(leaveTimer);
-                leaveTimer = null;
-            }
-        };
-        const onLeave = () => {
-            if (uiFaceActive) return;
-            if (leaveTimer) clearTimeout(leaveTimer);
-            leaveTimer = window.setTimeout(
-                () => {
-                    lookTarget.current.set(0, 0);
-                    tiltTarget.current = 0;
-                    yawTarget.current = 0;
-                },
-                Math.max(0, snapBackDelay || 0)
-            );
-        };
-        window.addEventListener('mousemove', onMove);
-        window.addEventListener('mouseenter', onEnter);
-        if (scanOnClick) window.addEventListener('click', onClick);
-        window.addEventListener('mouseleave', onLeave);
-        return () => {
-            window.removeEventListener('mousemove', onMove);
-            window.removeEventListener('mouseenter', onEnter);
-            window.removeEventListener('mouseleave', onLeave);
-            if (scanOnClick) window.removeEventListener('click', onClick);
-            if (leaveTimer) clearTimeout(leaveTimer);
-        };
-    }, [uiFaceActive, snapBackDelay, scanOnClick, enableGyro, s]);
+    let composer = null;
+    if (enablePost) {
+      composer = new EffectComposer(renderer);
+      composerRef.current = composer;
+      const renderPass = new RenderPass(scene, camera);
+      composer.addPass(renderPass);
 
-    useEffect(() => {
-        const container = containerRef.current;
-        if (!container) return;
+      const bloom = new BloomEffect({
+        intensity: 1.0,
+        luminanceThreshold: bloomThreshold,
+        luminanceSmoothing: bloomSmoothing,
+      });
+      bloom.blendMode.opacity.value = Math.max(0, bloomIntensity);
+      bloomRef.current = bloom;
 
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        rendererRef.current = renderer;
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-        renderer.setSize(container.clientWidth, container.clientHeight);
-        renderer.outputColorSpace = THREE.SRGBColorSpace;
-        renderer.toneMapping = THREE.NoToneMapping;
-        renderer.autoClear = false;
-        renderer.setClearColor(0x000000, 0);
-        container.appendChild(renderer.domElement);
+      const chroma = new ChromaticAberrationEffect({
+        offset: new THREE.Vector2(chromaticAberration, chromaticAberration),
+        radialModulation: true,
+        modulationOffset: 0.0,
+      });
+      chromaRef.current = chroma;
 
-        const uniforms = {
-            iResolution: {
-                value: new THREE.Vector3(container.clientWidth, container.clientHeight, renderer.getPixelRatio())
-            },
-            iTime: { value: 0 },
-            uSkew: { value: new THREE.Vector2(0, 0) },
-            uTilt: { value: 0 },
-            uYaw: { value: 0 },
-            uLineThickness: { value: lineThickness },
-            uLinesColor: { value: srgbColor(linesColor) },
-            uScanColor: { value: srgbColor(scanColor) },
-            uGridScale: { value: gridScale },
-            uLineStyle: { value: lineStyle === 'dashed' ? 1 : lineStyle === 'dotted' ? 2 : 0 },
-            uLineJitter: { value: Math.max(0, Math.min(1, lineJitter || 0)) },
-            uScanOpacity: { value: scanOpacity },
-            uNoise: { value: noiseIntensity },
-            uBloomOpacity: { value: bloomIntensity },
-            uScanGlow: { value: scanGlow },
-            uScanSoftness: { value: scanSoftness },
-            uPhaseTaper: { value: scanPhaseTaper },
-            uScanDuration: { value: scanDuration },
-            uScanDelay: { value: scanDelay },
-            uScanDirection: { value: scanDirection === 'backward' ? 1 : scanDirection === 'pingpong' ? 2 : 0 },
-            uScanStarts: { value: new Array(MAX_SCANS).fill(0) },
-            uScanCount: { value: 0 }
-        };
+      const effectPass = new EffectPass(camera, bloom, chroma);
+      effectPass.renderToScreen = true;
+      composer.addPass(effectPass);
+    }
 
-        const material = new THREE.ShaderMaterial({
-            uniforms,
-            vertexShader: vert,
-            fragmentShader: frag,
-            transparent: true,
-            depthWrite: false,
-            depthTest: false
-        });
-        materialRef.current = material;
+    const onResize = () => {
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      material.uniforms.iResolution.value.set(
+        container.clientWidth,
+        container.clientHeight,
+        renderer.getPixelRatio()
+      );
+      if (composerRef.current)
+        composerRef.current.setSize(
+          container.clientWidth,
+          container.clientHeight
+        );
+    };
+    window.addEventListener('resize', onResize);
 
-        const scene = new THREE.Scene();
-        const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-        const quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material);
-        scene.add(quad);
+    let last = performance.now();
+    const tick = () => {
+      const now = performance.now();
+      const dt = Math.max(0, Math.min(0.1, (now - last) / 1000));
+      last = now;
 
-        let composer = null;
-        if (enablePost) {
-            composer = new EffectComposer(renderer);
-            composerRef.current = composer;
-            const renderPass = new RenderPass(scene, camera);
-            composer.addPass(renderPass);
+      lookCurrent.current.copy(
+        smoothDampVec2(
+          lookCurrent.current,
+          lookTarget.current,
+          lookVel.current,
+          smoothTime,
+          maxSpeed,
+          dt
+        )
+      );
 
-            const bloom = new BloomEffect({
-                intensity: 1.0,
-                luminanceThreshold: bloomThreshold,
-                luminanceSmoothing: bloomSmoothing
-            });
-            bloom.blendMode.opacity.value = Math.max(0, bloomIntensity);
-            bloomRef.current = bloom;
-
-            const chroma = new ChromaticAberrationEffect({
-                offset: new THREE.Vector2(chromaticAberration, chromaticAberration),
-                radialModulation: true,
-                modulationOffset: 0.0
-            });
-            chromaRef.current = chroma;
-
-            const effectPass = new EffectPass(camera, bloom, chroma);
-            effectPass.renderToScreen = true;
-            composer.addPass(effectPass);
-        }
-
-        const onResize = () => {
-            renderer.setSize(container.clientWidth, container.clientHeight);
-            material.uniforms.iResolution.value.set(container.clientWidth, container.clientHeight, renderer.getPixelRatio());
-            if (composerRef.current) composerRef.current.setSize(container.clientWidth, container.clientHeight);
-        };
-        window.addEventListener('resize', onResize);
-
-        let last = performance.now();
-        const tick = () => {
-            const now = performance.now();
-            const dt = Math.max(0, Math.min(0.1, (now - last) / 1000));
-            last = now;
-
-            lookCurrent.current.copy(
-                smoothDampVec2(lookCurrent.current, lookTarget.current, lookVel.current, smoothTime, maxSpeed, dt)
-            );
-
-            const tiltSm = smoothDampFloat(
-                tiltCurrent.current,
-                tiltTarget.current,
-                { v: tiltVel.current },
-                smoothTime,
-                maxSpeed,
-                dt
-            );
-            tiltCurrent.current = tiltSm.value;
-            tiltVel.current = tiltSm.v;
-
-            const yawSm = smoothDampFloat(
-                yawCurrent.current,
-                yawTarget.current,
-                { v: yawVel.current },
-                smoothTime,
-                maxSpeed,
-                dt
-            );
-            yawCurrent.current = yawSm.value;
-            yawVel.current = yawSm.v;
-
-            const skew = new THREE.Vector2(lookCurrent.current.x * skewScale, -lookCurrent.current.y * yBoost * skewScale);
-            material.uniforms.uSkew.value.set(skew.x, skew.y);
-            material.uniforms.uTilt.value = tiltCurrent.current * tiltScale;
-            material.uniforms.uYaw.value = THREE.MathUtils.clamp(yawCurrent.current * yawScale, -0.6, 0.6);
-
-            material.uniforms.iTime.value = now / 1000;
-            renderer.clear(true, true, true);
-            if (composerRef.current) {
-                composerRef.current.render(dt);
-            } else {
-                renderer.render(scene, camera);
-            }
-            rafRef.current = requestAnimationFrame(tick);
-        };
-        rafRef.current = requestAnimationFrame(tick);
-
-        return () => {
-            if (rafRef.current) cancelAnimationFrame(rafRef.current);
-            window.removeEventListener('resize', onResize);
-            material.dispose();
-            quad.geometry.dispose();
-
-            if (composerRef.current) {
-                composerRef.current.dispose();
-                composerRef.current = null;
-            }
-            renderer.dispose();
-            container.removeChild(renderer.domElement);
-        };
-    }, [
-        sensitivity,
-        lineThickness,
-        linesColor,
-        scanColor,
-        scanOpacity,
-        gridScale,
-        lineStyle,
-        lineJitter,
-        scanDirection,
-        enablePost,
-        noiseIntensity,
-        bloomIntensity,
-        scanGlow,
-        scanSoftness,
-        scanPhaseTaper,
-        scanDuration,
-        scanDelay,
-        bloomThreshold,
-        bloomSmoothing,
-        chromaticAberration,
+      const tiltSm = smoothDampFloat(
+        tiltCurrent.current,
+        tiltTarget.current,
+        { v: tiltVel.current },
         smoothTime,
         maxSpeed,
-        skewScale,
-        yBoost,
-        tiltScale,
-        yawScale,
-        s
-    ]);
+        dt
+      );
+      tiltCurrent.current = tiltSm.value;
+      tiltVel.current = tiltSm.v;
 
-    useEffect(() => {
-        const m = materialRef.current;
-        if (m) {
-            const u = m.uniforms;
-            u.uLineThickness.value = lineThickness;
-            u.uLinesColor.value.copy(srgbColor(linesColor));
-            u.uScanColor.value.copy(srgbColor(scanColor));
-            u.uGridScale.value = gridScale;
-            u.uLineStyle.value = lineStyle === 'dashed' ? 1 : lineStyle === 'dotted' ? 2 : 0;
-            u.uLineJitter.value = Math.max(0, Math.min(1, lineJitter || 0));
-            u.uBloomOpacity.value = Math.max(0, bloomIntensity);
-            u.uNoise.value = Math.max(0, noiseIntensity);
-            u.uScanGlow.value = scanGlow;
-            u.uScanOpacity.value = Math.max(0, Math.min(1, scanOpacity));
-            u.uScanDirection.value = scanDirection === 'backward' ? 1 : scanDirection === 'pingpong' ? 2 : 0;
-            u.uScanSoftness.value = scanSoftness;
-            u.uPhaseTaper.value = scanPhaseTaper;
-            u.uScanDuration.value = Math.max(0.05, scanDuration);
-            u.uScanDelay.value = Math.max(0.0, scanDelay);
-        }
-        if (bloomRef.current) {
-            bloomRef.current.blendMode.opacity.value = Math.max(0, bloomIntensity);
-            bloomRef.current.luminanceMaterial.threshold = bloomThreshold;
-            bloomRef.current.luminanceMaterial.smoothing = bloomSmoothing;
-        }
-        if (chromaRef.current) {
-            chromaRef.current.offset.set(chromaticAberration, chromaticAberration);
-        }
-    }, [
-        lineThickness,
-        linesColor,
-        scanColor,
-        gridScale,
-        lineStyle,
-        lineJitter,
-        bloomIntensity,
-        bloomThreshold,
-        bloomSmoothing,
-        chromaticAberration,
-        noiseIntensity,
-        scanGlow,
-        scanOpacity,
-        scanDirection,
-        scanSoftness,
-        scanPhaseTaper,
-        scanDuration,
-        scanDelay
-    ]);
+      const yawSm = smoothDampFloat(
+        yawCurrent.current,
+        yawTarget.current,
+        { v: yawVel.current },
+        smoothTime,
+        maxSpeed,
+        dt
+      );
+      yawCurrent.current = yawSm.value;
+      yawVel.current = yawSm.v;
 
-    useEffect(() => {
-        if (!enableGyro) return;
-        const handler = e => {
-            if (uiFaceActive) return;
-            const gamma = e.gamma ?? 0;
-            const beta = e.beta ?? 0;
-            const nx = THREE.MathUtils.clamp(gamma / 45, -1, 1);
-            const ny = THREE.MathUtils.clamp(-beta / 30, -1, 1);
-            lookTarget.current.set(nx, ny);
-            tiltTarget.current = THREE.MathUtils.degToRad(gamma) * 0.4;
-        };
-        window.addEventListener('deviceorientation', handler);
-        return () => {
-            window.removeEventListener('deviceorientation', handler);
-        };
-    }, [enableGyro, uiFaceActive]);
+      const skew = new THREE.Vector2(
+        lookCurrent.current.x * skewScale,
+        -lookCurrent.current.y * yBoost * skewScale
+      );
+      material.uniforms.uSkew.value.set(skew.x, skew.y);
+      material.uniforms.uTilt.value = tiltCurrent.current * tiltScale;
+      material.uniforms.uYaw.value = THREE.MathUtils.clamp(
+        yawCurrent.current * yawScale,
+        -0.6,
+        0.6
+      );
 
-    useEffect(() => {
-        let canceled = false;
-        const load = async () => {
-            try {
-                await Promise.all([
-                    faceapi.nets.tinyFaceDetector.loadFromUri(modelsPath),
-                    faceapi.nets.faceLandmark68TinyNet.loadFromUri(modelsPath)
-                ]);
-                if (!canceled) setModelsReady(true);
-            } catch {
-                if (!canceled) setModelsReady(false);
+      material.uniforms.iTime.value = now / 1000;
+      renderer.clear(true, true, true);
+      if (composerRef.current) {
+        composerRef.current.render(dt);
+      } else {
+        renderer.render(scene, camera);
+      }
+      rafRef.current = requestAnimationFrame(tick);
+    };
+    rafRef.current = requestAnimationFrame(tick);
+
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      window.removeEventListener('resize', onResize);
+      material.dispose();
+      quad.geometry.dispose();
+
+      if (composerRef.current) {
+        composerRef.current.dispose();
+        composerRef.current = null;
+      }
+      renderer.dispose();
+      container.removeChild(renderer.domElement);
+    };
+  }, [
+    sensitivity,
+    lineThickness,
+    linesColor,
+    scanColor,
+    scanOpacity,
+    gridScale,
+    lineStyle,
+    lineJitter,
+    scanDirection,
+    enablePost,
+    noiseIntensity,
+    bloomIntensity,
+    scanGlow,
+    scanSoftness,
+    scanPhaseTaper,
+    scanDuration,
+    scanDelay,
+    bloomThreshold,
+    bloomSmoothing,
+    chromaticAberration,
+    smoothTime,
+    maxSpeed,
+    skewScale,
+    yBoost,
+    tiltScale,
+    yawScale,
+    s,
+  ]);
+
+  useEffect(() => {
+    const m = materialRef.current;
+    if (m) {
+      const u = m.uniforms;
+      u.uLineThickness.value = lineThickness;
+      u.uLinesColor.value.copy(srgbColor(linesColor));
+      u.uScanColor.value.copy(srgbColor(scanColor));
+      u.uGridScale.value = gridScale;
+      u.uLineStyle.value =
+        lineStyle === 'dashed' ? 1 : lineStyle === 'dotted' ? 2 : 0;
+      u.uLineJitter.value = Math.max(0, Math.min(1, lineJitter || 0));
+      u.uBloomOpacity.value = Math.max(0, bloomIntensity);
+      u.uNoise.value = Math.max(0, noiseIntensity);
+      u.uScanGlow.value = scanGlow;
+      u.uScanOpacity.value = Math.max(0, Math.min(1, scanOpacity));
+      u.uScanDirection.value =
+        scanDirection === 'backward' ? 1 : scanDirection === 'pingpong' ? 2 : 0;
+      u.uScanSoftness.value = scanSoftness;
+      u.uPhaseTaper.value = scanPhaseTaper;
+      u.uScanDuration.value = Math.max(0.05, scanDuration);
+      u.uScanDelay.value = Math.max(0.0, scanDelay);
+    }
+    if (bloomRef.current) {
+      bloomRef.current.blendMode.opacity.value = Math.max(0, bloomIntensity);
+      bloomRef.current.luminanceMaterial.threshold = bloomThreshold;
+      bloomRef.current.luminanceMaterial.smoothing = bloomSmoothing;
+    }
+    if (chromaRef.current) {
+      chromaRef.current.offset.set(chromaticAberration, chromaticAberration);
+    }
+  }, [
+    lineThickness,
+    linesColor,
+    scanColor,
+    gridScale,
+    lineStyle,
+    lineJitter,
+    bloomIntensity,
+    bloomThreshold,
+    bloomSmoothing,
+    chromaticAberration,
+    noiseIntensity,
+    scanGlow,
+    scanOpacity,
+    scanDirection,
+    scanSoftness,
+    scanPhaseTaper,
+    scanDuration,
+    scanDelay,
+  ]);
+
+  useEffect(() => {
+    if (!enableGyro) return;
+    const handler = (e) => {
+      if (uiFaceActive) return;
+      const gamma = e.gamma ?? 0;
+      const beta = e.beta ?? 0;
+      const nx = THREE.MathUtils.clamp(gamma / 45, -1, 1);
+      const ny = THREE.MathUtils.clamp(-beta / 30, -1, 1);
+      lookTarget.current.set(nx, ny);
+      tiltTarget.current = THREE.MathUtils.degToRad(gamma) * 0.4;
+    };
+    window.addEventListener('deviceorientation', handler);
+    return () => {
+      window.removeEventListener('deviceorientation', handler);
+    };
+  }, [enableGyro, uiFaceActive]);
+
+  useEffect(() => {
+    let canceled = false;
+    const load = async () => {
+      try {
+        await Promise.all([
+          faceapi.nets.tinyFaceDetector.loadFromUri(modelsPath),
+          faceapi.nets.faceLandmark68TinyNet.loadFromUri(modelsPath),
+        ]);
+        if (!canceled) setModelsReady(true);
+      } catch {
+        if (!canceled) setModelsReady(false);
+      }
+    };
+    load();
+    return () => {
+      canceled = true;
+    };
+  }, [modelsPath]);
+
+  useEffect(() => {
+    let stop = false;
+    let lastDetect = 0;
+    const video = videoRef.current;
+
+    const start = async () => {
+      if (!enableWebcam || !modelsReady) return;
+      if (!video) return;
+
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            facingMode: 'user',
+            width: { ideal: 1280 },
+            height: { ideal: 720 },
+          },
+          audio: false,
+        });
+        video.srcObject = stream;
+        await video.play();
+      } catch {
+        return;
+      }
+
+      const opts = new faceapi.TinyFaceDetectorOptions({
+        inputSize: 320,
+        scoreThreshold: 0.5,
+      });
+
+      const detect = async (ts) => {
+        if (stop) return;
+
+        if (ts - lastDetect >= 33) {
+          lastDetect = ts;
+          try {
+            const res = await faceapi
+              .detectSingleFace(video, opts)
+              .withFaceLandmarks(true);
+            if (res && res.detection) {
+              const det = res.detection;
+              const box = det.box;
+              const vw = video.videoWidth || 1;
+              const vh = video.videoHeight || 1;
+
+              const cx = box.x + box.width * 0.5;
+              const cy = box.y + box.height * 0.5;
+              const nx = (cx / vw) * 2 - 1;
+              const ny = (cy / vh) * 2 - 1;
+
+              const look = new THREE.Vector2(Math.tanh(nx), Math.tanh(ny));
+
+              const faceSize = Math.min(
+                1,
+                Math.hypot(box.width / vw, box.height / vh)
+              );
+              const dResponse = depthResponse;
+              const depthScale = 1 + dResponse * (faceSize - 0.25);
+              lookTarget.current.copy(look.multiplyScalar(depthScale));
+
+              setUiFaceActive(true);
+            } else {
+              setUiFaceActive(false);
             }
-        };
-        load();
-        return () => {
-            canceled = true;
-        };
-    }, [modelsPath]);
+          } catch {
+            setUiFaceActive(false);
+          }
+        }
 
-    useEffect(() => {
-        let stop = false;
-        let lastDetect = 0;
-        const video = videoRef.current;
+        if ('requestVideoFrameCallback' in HTMLVideoElement.prototype) {
+          video.requestVideoFrameCallback(() => detect(performance.now()));
+        } else {
+          requestAnimationFrame(detect);
+        }
+      };
 
-        const start = async () => {
-            if (!enableWebcam || !modelsReady) return;
-            if (!video) return;
+      requestAnimationFrame(detect);
+    };
 
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({
-                    video: { facingMode: 'user', width: { ideal: 1280 }, height: { ideal: 720 } },
-                    audio: false
-                });
-                video.srcObject = stream;
-                await video.play();
-            } catch {
-                return;
-            }
+    start();
 
-            const opts = new faceapi.TinyFaceDetectorOptions({ inputSize: 320, scoreThreshold: 0.5 });
+    return () => {
+      stop = true;
+      if (video) {
+        const stream = video.srcObject;
+        if (stream) stream.getTracks().forEach((t) => t.stop());
+        video.pause();
+        video.srcObject = null;
+      }
+    };
+  }, [enableWebcam, modelsReady, depthResponse]);
 
-            const detect = async ts => {
-                if (stop) return;
-
-                if (ts - lastDetect >= 33) {
-                    lastDetect = ts;
-                    try {
-                        const res = await faceapi.detectSingleFace(video, opts).withFaceLandmarks(true);
-                        if (res && res.detection) {
-                            const det = res.detection;
-                            const box = det.box;
-                            const vw = video.videoWidth || 1;
-                            const vh = video.videoHeight || 1;
-
-                            const cx = box.x + box.width * 0.5;
-                            const cy = box.y + box.height * 0.5;
-                            const nx = (cx / vw) * 2 - 1;
-                            const ny = (cy / vh) * 2 - 1;
-
-                            const look = new THREE.Vector2(Math.tanh(nx), Math.tanh(ny));
-
-                            const faceSize = Math.min(1, Math.hypot(box.width / vw, box.height / vh));
-                            const dResponse = depthResponse;
-                            const depthScale = 1 + dResponse * (faceSize - 0.25);
-                            lookTarget.current.copy(look.multiplyScalar(depthScale));
-
-                            setUiFaceActive(true);
-                        } else {
-                            setUiFaceActive(false);
-                        }
-                    } catch {
-                        setUiFaceActive(false);
-                    }
-                }
-
-                if ('requestVideoFrameCallback' in HTMLVideoElement.prototype) {
-                    video.requestVideoFrameCallback(() => detect(performance.now()));
-                } else {
-                    requestAnimationFrame(detect);
-                }
-            };
-
-            requestAnimationFrame(detect);
-        };
-
-        start();
-
-        return () => {
-            stop = true;
-            if (video) {
-                const stream = video.srcObject;
-                if (stream) stream.getTracks().forEach(t => t.stop());
-                video.pause();
-                video.srcObject = null;
-            }
-        };
-    }, [enableWebcam, modelsReady, depthResponse]);
-
-    return (
-        <div ref={containerRef} className={`relative w-full h-full overflow-hidden ${className ?? ''}`} style={style}>
-            {showPreview && (
-                <div className="absolute right-3 bottom-3 w-[220px] h-[132px] rounded-lg overflow-hidden border border-white/25 shadow-[0_4px_16px_rgba(0,0,0,0.4)] bg-black text-white text-[12px] leading-[1.2] font-sans pointer-events-none">
-                    <video ref={videoRef} muted playsInline autoPlay className="w-full h-full object-cover -scale-x-100" />
-                    <div className="absolute left-2 top-2 px-[6px] py-[2px] bg-black/50 rounded-[6px] backdrop-blur-[4px]">
-                        {enableWebcam
-                            ? modelsReady
-                                ? uiFaceActive
-                                    ? 'Face: tracking'
-                                    : 'Face: searching'
-                                : 'Loading models'
-                            : 'Webcam disabled'}
-                    </div>
-                </div>
-            )}
+  return (
+    <div
+      ref={containerRef}
+      className={`relative w-full h-full overflow-hidden ${className ?? ''}`}
+      style={style}
+    >
+      {showPreview && (
+        <div className="absolute right-3 bottom-3 w-[220px] h-[132px] rounded-lg overflow-hidden border border-white/25 shadow-[0_4px_16px_rgba(0,0,0,0.4)] bg-black text-white text-[12px] leading-[1.2] font-sans pointer-events-none">
+          <video
+            ref={videoRef}
+            muted
+            playsInline
+            autoPlay
+            className="w-full h-full object-cover -scale-x-100"
+          />
+          <div className="absolute left-2 top-2 px-[6px] py-[2px] bg-black/50 rounded-[6px] backdrop-blur-[4px]">
+            {enableWebcam
+              ? modelsReady
+                ? uiFaceActive
+                  ? 'Face: tracking'
+                  : 'Face: searching'
+                : 'Loading models'
+              : 'Webcam disabled'}
+          </div>
         </div>
-    );
+      )}
+    </div>
+  );
 }
 
 function srgbColor(hex) {
-    const c = new THREE.Color(hex);
-    return c;
+  const c = new THREE.Color(hex);
+  return c;
 }
 
-function smoothDampVec2(current, target, currentVelocity, smoothTime, maxSpeed, deltaTime) {
-    const out = current.clone();
-    smoothTime = Math.max(0.0001, smoothTime);
-    const omega = 2 / smoothTime;
-    const x = omega * deltaTime;
-    const exp = 1 / (1 + x + 0.48 * x * x + 0.235 * x * x * x);
+function smoothDampVec2(
+  current,
+  target,
+  currentVelocity,
+  smoothTime,
+  maxSpeed,
+  deltaTime
+) {
+  const out = current.clone();
+  smoothTime = Math.max(0.0001, smoothTime);
+  const omega = 2 / smoothTime;
+  const x = omega * deltaTime;
+  const exp = 1 / (1 + x + 0.48 * x * x + 0.235 * x * x * x);
 
-    let change = current.clone().sub(target);
-    const originalTo = target.clone();
+  let change = current.clone().sub(target);
+  const originalTo = target.clone();
 
-    const maxChange = maxSpeed * smoothTime;
-    if (change.length() > maxChange) change.setLength(maxChange);
+  const maxChange = maxSpeed * smoothTime;
+  if (change.length() > maxChange) change.setLength(maxChange);
 
-    target = current.clone().sub(change);
-    const temp = currentVelocity.clone().addScaledVector(change, omega).multiplyScalar(deltaTime);
-    currentVelocity.sub(temp.clone().multiplyScalar(omega));
-    currentVelocity.multiplyScalar(exp);
+  target = current.clone().sub(change);
+  const temp = currentVelocity
+    .clone()
+    .addScaledVector(change, omega)
+    .multiplyScalar(deltaTime);
+  currentVelocity.sub(temp.clone().multiplyScalar(omega));
+  currentVelocity.multiplyScalar(exp);
 
-    out.copy(target.clone().add(change.add(temp).multiplyScalar(exp)));
+  out.copy(target.clone().add(change.add(temp).multiplyScalar(exp)));
 
-    const origMinusCurrent = originalTo.clone().sub(current);
-    const outMinusOrig = out.clone().sub(originalTo);
-    if (origMinusCurrent.dot(outMinusOrig) > 0) {
-        out.copy(originalTo);
-        currentVelocity.set(0, 0);
-    }
-    return out;
+  const origMinusCurrent = originalTo.clone().sub(current);
+  const outMinusOrig = out.clone().sub(originalTo);
+  if (origMinusCurrent.dot(outMinusOrig) > 0) {
+    out.copy(originalTo);
+    currentVelocity.set(0, 0);
+  }
+  return out;
 }
 
-function smoothDampFloat(current, target, velRef, smoothTime, maxSpeed, deltaTime) {
-    smoothTime = Math.max(0.0001, smoothTime);
-    const omega = 2 / smoothTime;
-    const x = omega * deltaTime;
-    const exp = 1 / (1 + x + 0.48 * x * x + 0.235 * x * x * x);
+function smoothDampFloat(
+  current,
+  target,
+  velRef,
+  smoothTime,
+  maxSpeed,
+  deltaTime
+) {
+  smoothTime = Math.max(0.0001, smoothTime);
+  const omega = 2 / smoothTime;
+  const x = omega * deltaTime;
+  const exp = 1 / (1 + x + 0.48 * x * x + 0.235 * x * x * x);
 
-    let change = current - target;
-    const originalTo = target;
+  let change = current - target;
+  const originalTo = target;
 
-    const maxChange = maxSpeed * smoothTime;
-    change = Math.sign(change) * Math.min(Math.abs(change), maxChange);
+  const maxChange = maxSpeed * smoothTime;
+  change = Math.sign(change) * Math.min(Math.abs(change), maxChange);
 
-    target = current - change;
-    const temp = (velRef.v + omega * change) * deltaTime;
-    velRef.v = (velRef.v - omega * temp) * exp;
+  target = current - change;
+  const temp = (velRef.v + omega * change) * deltaTime;
+  velRef.v = (velRef.v - omega * temp) * exp;
 
-    let out = target + (change + temp) * exp;
+  let out = target + (change + temp) * exp;
 
-    const origMinusCurrent = originalTo - current;
-    const outMinusOrig = out - originalTo;
-    if (origMinusCurrent * outMinusOrig > 0) {
-        out = originalTo;
-        velRef.v = 0;
-    }
-    return { value: out, v: velRef.v };
+  const origMinusCurrent = originalTo - current;
+  const outMinusOrig = out - originalTo;
+  if (origMinusCurrent * outMinusOrig > 0) {
+    out = originalTo;
+    velRef.v = 0;
+  }
+  return { value: out, v: velRef.v };
 }
 
 function medianPush(buf, v, maxLen) {
-    buf.push(v);
-    if (buf.length > maxLen) buf.shift();
+  buf.push(v);
+  if (buf.length > maxLen) buf.shift();
 }
 
 function median(buf) {
-    if (buf.length === 0) return 0;
-    const a = [...buf].sort((x, y) => x - y);
-    const mid = Math.floor(a.length / 2);
-    return a.length % 2 ? a[mid] : (a[mid - 1] + a[mid]) * 0.5;
+  if (buf.length === 0) return 0;
+  const a = [...buf].sort((x, y) => x - y);
+  const mid = Math.floor(a.length / 2);
+  return a.length % 2 ? a[mid] : (a[mid - 1] + a[mid]) * 0.5;
 }
 
 function centroid(points) {
-    let x = 0,
-        y = 0;
-    const n = points.length || 1;
-    for (const p of points) {
-        x += p.x;
-        y += p.y;
-    }
-    return { x: x / n, y: y / n };
+  let x = 0,
+    y = 0;
+  const n = points.length || 1;
+  for (const p of points) {
+    x += p.x;
+    y += p.y;
+  }
+  return { x: x / n, y: y / n };
 }
 
 function dist2(a, b) {
-    return Math.hypot(a.x - b.x, a.y - b.y);
+  return Math.hypot(a.x - b.x, a.y - b.y);
 }

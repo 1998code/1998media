@@ -5,13 +5,41 @@ import StaggeredMenu from '../../components/StaggeredMenu/StaggeredMenu';
 
 // Social items provided in the request
 const socialItems = [
-  { label: <i className="fab fa-x text-lg" />, link: 'https://twitter.com/1998design', ariaLabel: 'X (Twitter)' },
-  { label: <i className="fab fa-github text-lg" />, link: 'https://github.com/1998code', ariaLabel: 'GitHub' },
-  { label: <i className="fab fa-dribbble text-lg" />, link: 'https://dribbble.com/1998design', ariaLabel: 'Dribbble' },
-  { label: <i className="fab fa-behance text-lg" />, link: 'https://www.behance.net/1998design', ariaLabel: 'Behance' },
-  { label: <i className="fab fa-instagram text-lg" />, link: 'https://instagram.com/1998trip', ariaLabel: 'Instagram' },
-  { label: <i className="fab fa-youtube text-lg" />, link: 'https://www.youtube.com/@MingsExplorer', ariaLabel: 'YouTube' },
-  { label: <i className="fab fa-tiktok text-lg" />, link: 'https://www.tiktok.com/@ming.explorer', ariaLabel: 'Tiktok' }
+  {
+    label: <i className="fab fa-x text-lg" />,
+    link: 'https://twitter.com/1998design',
+    ariaLabel: 'X (Twitter)',
+  },
+  {
+    label: <i className="fab fa-github text-lg" />,
+    link: 'https://github.com/1998code',
+    ariaLabel: 'GitHub',
+  },
+  {
+    label: <i className="fab fa-dribbble text-lg" />,
+    link: 'https://dribbble.com/1998design',
+    ariaLabel: 'Dribbble',
+  },
+  {
+    label: <i className="fab fa-behance text-lg" />,
+    link: 'https://www.behance.net/1998design',
+    ariaLabel: 'Behance',
+  },
+  {
+    label: <i className="fab fa-instagram text-lg" />,
+    link: 'https://instagram.com/1998trip',
+    ariaLabel: 'Instagram',
+  },
+  {
+    label: <i className="fab fa-youtube text-lg" />,
+    link: 'https://www.youtube.com/@MingsExplorer',
+    ariaLabel: 'YouTube',
+  },
+  {
+    label: <i className="fab fa-tiktok text-lg" />,
+    link: 'https://www.tiktok.com/@ming.explorer',
+    ariaLabel: 'Tiktok',
+  },
 ];
 
 export default function Navigation(props) {
@@ -81,12 +109,17 @@ export default function Navigation(props) {
   };
 
   // Convert sections to StaggeredMenu items
-  const menuItems = props.sections ? props.sections.map(section => ({
-    label: i18n(section.charAt(0).toUpperCase() + section.replace(/ai/g, 'AI').slice(1).replace(/-/g, ' ')),
-    link: `#${section}`,
-    ariaLabel: `Go to ${section}`,
-    icon: <i className={`fad fa-${sectionIconMap[section]}`}></i>
-  })) : [];
+  const menuItems = props.sections
+    ? props.sections.map((section) => ({
+        label: i18n(
+          section.charAt(0).toUpperCase() +
+            section.replace(/ai/g, 'AI').slice(1).replace(/-/g, ' ')
+        ),
+        link: `#${section}`,
+        ariaLabel: `Go to ${section}`,
+        icon: <i className={`fad fa-${sectionIconMap[section]}`}></i>,
+      }))
+    : [];
 
   return (
     <div
@@ -96,9 +129,7 @@ export default function Navigation(props) {
       <div
         className={`flex bg-white/50 dark:bg-black/50 dark:text-white backdrop-blur-md shadow dark:shadow-gray-900 items-center pl-1 rounded-full transition-all`}
       >
-        <div
-          className={`px-2 flex items-center gap-2 text-sm font-semibold`}
-        >
+        <div className={`px-2 flex items-center gap-2 text-sm font-semibold`}>
           {/* Sidebar Toggle replaced by StaggeredMenu */}
           <StaggeredMenu
             isFixed={false}
@@ -142,11 +173,11 @@ export default function Navigation(props) {
                     className={`inline ${section != 'header' && 'lg:hidden'} fad fa-${sectionIconMap[section]}`}
                   ></i>
                   <span
-                    className={`hidden ${(section != 'header') && 'lg:inline'}`}
+                    className={`hidden ${section != 'header' && 'lg:inline'}`}
                   >
                     {i18n(
                       section.charAt(0).toUpperCase() +
-                      section.replace(/ai/g, 'AI').slice(1).replace(/-/g, ' ')
+                        section.replace(/ai/g, 'AI').slice(1).replace(/-/g, ' ')
                     )}
                   </span>
                 </div>

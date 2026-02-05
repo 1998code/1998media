@@ -45,7 +45,10 @@ export default function Credits(props) {
           placement="bottom"
           className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-xl"
         >
-          <a href="https://docsearch.algolia.com/?ref=1998.media" target="_blank">
+          <a
+            href="https://docsearch.algolia.com/?ref=1998.media"
+            target="_blank"
+          >
             <Image
               className="h-10 rounded-xl bg-white p-2 dark:hidden border border-black"
               src="https://docsearch.algolia.com/img/docsearch-logo.svg"

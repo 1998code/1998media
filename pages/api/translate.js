@@ -14,10 +14,13 @@ export default async function handler(req) {
   const to = url.searchParams.get('to') || 'en';
 
   if (!text) {
-    return new Response(JSON.stringify({ error: 'Text parameter is required' }), {
-      status: 400,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({ error: 'Text parameter is required' }),
+      {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
   }
 
   try {
@@ -56,23 +59,29 @@ export default async function handler(req) {
       translatedText = data[0].map((item) => item[0]).join('');
     }
 
-    return new Response(JSON.stringify({
-      input: text,
-      output: translatedText || text,
-      from: data.src || from,
-      to,
-    }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({
+        input: text,
+        output: translatedText || text,
+        from: data.src || from,
+        to,
+      }),
+      {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
   } catch (error) {
     console.error('Translation error:', error);
-    return new Response(JSON.stringify({
-      error: 'Translation failed',
-      message: error.message,
-    }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({
+        error: 'Translation failed',
+        message: error.message,
+      }),
+      {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
   }
 }

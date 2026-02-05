@@ -54,7 +54,9 @@ export default function AI(props) {
       animationFrame = requestAnimationFrame(autoScroll);
     };
 
-    featuredContainer.addEventListener('wheel', handleInteraction, { passive: true });
+    featuredContainer.addEventListener('wheel', handleInteraction, {
+      passive: true,
+    });
     featuredContainer.addEventListener('touchstart', handleInteraction);
     featuredContainer.addEventListener('touchmove', handleInteraction);
     featuredContainer.addEventListener('mousedown', handleInteraction);
@@ -108,7 +110,9 @@ export default function AI(props) {
       animationFrame = requestAnimationFrame(autoScroll);
     };
 
-    otherContainer.addEventListener('wheel', handleInteraction, { passive: true });
+    otherContainer.addEventListener('wheel', handleInteraction, {
+      passive: true,
+    });
     otherContainer.addEventListener('touchstart', handleInteraction);
     otherContainer.addEventListener('touchmove', handleInteraction);
     otherContainer.addEventListener('mousedown', handleInteraction);
@@ -126,7 +130,10 @@ export default function AI(props) {
   }, []);
 
   return (
-    <div id="ai" className="relative h-full w-full max-w-7xl mx-auto flex flex-col items-start px-4 sm:px-6 lg:px-8 pt-24 overflow-y-auto scrollbar-hide">
+    <div
+      id="ai"
+      className="relative h-full w-full max-w-7xl mx-auto flex flex-col items-start px-4 sm:px-6 lg:px-8 pt-24 overflow-y-auto scrollbar-hide"
+    >
       <div className="relative w-full">
         <div className="text-left flex flex-wrap">
           <a
@@ -141,7 +148,11 @@ export default function AI(props) {
           </p>
         </div>
         {/* Featured */}
-        <div className="overflow-x-auto my-5 scrollbar-hide" ref={featuredScrollRef} style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+        <div
+          className="overflow-x-auto my-5 scrollbar-hide"
+          ref={featuredScrollRef}
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
           <div className="flex gap-6">
             {[
               ...dalle.filter((item) => item.featured === '🏆 Hall of Fame'),
@@ -187,7 +198,11 @@ export default function AI(props) {
           </div>
         </div>
         {/* Other */}
-        <div className="overflow-x-auto my-5 scrollbar-hide" ref={otherScrollRef} style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+        <div
+          className="overflow-x-auto my-5 scrollbar-hide"
+          ref={otherScrollRef}
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
           <div className="flex gap-6">
             {[
               ...dalle.filter((item) => item.featured !== '🏆 Hall of Fame'),

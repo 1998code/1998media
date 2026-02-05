@@ -275,10 +275,30 @@ export default function Skills(props) {
   // Tab configuration
   const tabs = [
     { id: 'all', label: 'All', icon: 'fa-th', color: 'bg-orange-600' },
-    { id: 'certified', label: 'Certified', icon: 'fa-certificate', color: 'bg-blue-600' },
-    { id: 'softwares', label: 'Softwares', icon: 'fa-desktop', color: 'bg-purple-600' },
-    { id: 'languages', label: 'Languages & Technologies', icon: 'fa-code', color: 'bg-indigo-600' },
-    { id: 'speak-write', label: 'Speak & Write', icon: 'fa-language', color: 'bg-green-600' },
+    {
+      id: 'certified',
+      label: 'Certified',
+      icon: 'fa-certificate',
+      color: 'bg-blue-600',
+    },
+    {
+      id: 'softwares',
+      label: 'Softwares',
+      icon: 'fa-desktop',
+      color: 'bg-purple-600',
+    },
+    {
+      id: 'languages',
+      label: 'Languages & Technologies',
+      icon: 'fa-code',
+      color: 'bg-indigo-600',
+    },
+    {
+      id: 'speak-write',
+      label: 'Speak & Write',
+      icon: 'fa-language',
+      color: 'bg-green-600',
+    },
   ];
 
   // Get active tab color
@@ -348,7 +368,10 @@ export default function Skills(props) {
   };
 
   return (
-    <div id="skills" className="relative h-full w-full max-w-7xl mx-auto flex flex-col items-start px-4 sm:px-6 lg:px-8 pt-24 overflow-y-auto scrollbar-hide">
+    <div
+      id="skills"
+      className="relative h-full w-full max-w-7xl mx-auto flex flex-col items-start px-4 sm:px-6 lg:px-8 pt-24 overflow-y-auto scrollbar-hide"
+    >
       <div className="relative w-full">
         <div className="text-left">
           <div className="flex items-center justify-between flex-wrap gap-4">
@@ -373,10 +396,11 @@ export default function Skills(props) {
                     key={tab.id}
                     ref={(el) => (desktopTabRefs.current[tab.id] = el)}
                     onClick={() => handleTabChange(tab.id)}
-                    className={`relative z-10 px-3 py-2 text-xs font-medium rounded-xl transition-all duration-300 ${activeTab === tab.id
+                    className={`relative z-10 px-3 py-2 text-xs font-medium rounded-xl transition-all duration-300 ${
+                      activeTab === tab.id
                         ? 'text-white'
                         : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
-                      }`}
+                    }`}
                   >
                     <i className={`far ${tab.icon} mr-1`}></i>
                     {i18n(tab.label)}
@@ -399,10 +423,11 @@ export default function Skills(props) {
                   key={tab.id}
                   ref={(el) => (mobileTabRefs.current[tab.id] = el)}
                   onClick={() => handleTabChange(tab.id)}
-                  className={`relative z-10 px-3 py-2 text-xs font-medium rounded-xl transition-all duration-300 ${activeTab === tab.id
+                  className={`relative z-10 px-3 py-2 text-xs font-medium rounded-xl transition-all duration-300 ${
+                    activeTab === tab.id
                       ? 'text-white'
                       : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
-                    }`}
+                  }`}
                 >
                   <i className={`far ${tab.icon} mr-1`}></i>
                   {i18n(tab.label)}
@@ -442,9 +467,7 @@ export default function Skills(props) {
                           color: hexColor,
                         }}
                       >
-                        <div
-                          className="flex-shrink-0 flex items-center justify-center w-12 text-current text-sm font-medium ml-4"
-                        >
+                        <div className="flex-shrink-0 flex items-center justify-center w-12 text-current text-sm font-medium ml-4">
                           <i className={classNames('fab', cert.icons)}>
                             {cert.icons.includes('fa') ? '' : cert.icons}
                           </i>
@@ -532,11 +555,11 @@ export default function Skills(props) {
                           color: hexColor,
                         }}
                       >
-                        <div
-                          className="flex-shrink-0 flex items-center justify-center w-12 text-current text-sm font-medium ml-4"
-                        >
+                        <div className="flex-shrink-0 flex items-center justify-center w-12 text-current text-sm font-medium ml-4">
                           <i className={classNames('fab', language.icons)}>
-                            {language.icons.includes('fa') ? '' : language.icons}
+                            {language.icons.includes('fa')
+                              ? ''
+                              : language.icons}
                           </i>
                         </div>
                         <div className="flex-1 flex items-center justify-between bg-transparent truncate">
@@ -575,9 +598,7 @@ export default function Skills(props) {
                           color: hexColor,
                         }}
                       >
-                        <div
-                          className="flex-shrink-0 flex items-center justify-center w-12 text-current text-xs font-medium ml-4"
-                        >
+                        <div className="flex-shrink-0 flex items-center justify-center w-12 text-current text-xs font-medium ml-4">
                           {i18n(speakWrite.icons)}
                         </div>
                         <div className="flex-1 flex items-center justify-between bg-transparent truncate">

@@ -11,11 +11,16 @@ function StockCard({ stock, i18n, locale }) {
   const isPositive = stock.change >= 0;
 
   // Map locale to proper locale string for date formatting
-  const dateLocale = locale === 'zh' ? 'zh-CN' :
-    locale === 'zh-HK' ? 'zh-HK' :
-      locale === 'ja' ? 'ja-JP' :
-        locale === 'ko' ? 'ko-KR' :
-          'en-US';
+  const dateLocale =
+    locale === 'zh'
+      ? 'zh-CN'
+      : locale === 'zh-HK'
+        ? 'zh-HK'
+        : locale === 'ja'
+          ? 'ja-JP'
+          : locale === 'ko'
+            ? 'ko-KR'
+            : 'en-US';
 
   if (chartData.length === 0) {
     return (
@@ -40,12 +45,16 @@ function StockCard({ stock, i18n, locale }) {
             <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">
               {stock.currency} {stock.price?.toFixed(2) || 'N/A'}
             </div>
-            <div className={`text-sm font-semibold mt-1 ${stock.change >= 0
-              ? 'text-green-600 dark:text-green-400'
-              : 'text-red-600 dark:text-red-400'
-              }`}>
+            <div
+              className={`text-sm font-semibold mt-1 ${
+                stock.change >= 0
+                  ? 'text-green-600 dark:text-green-400'
+                  : 'text-red-600 dark:text-red-400'
+              }`}
+            >
               {stock.change >= 0 ? '+' : ''}
-              {stock.change?.toFixed(2) || '0.00'} ({stock.changePercent >= 0 ? '+' : ''}
+              {stock.change?.toFixed(2) || '0.00'} (
+              {stock.changePercent >= 0 ? '+' : ''}
               {stock.changePercent?.toFixed(2) || '0.00'}%)
             </div>
           </div>
@@ -67,8 +76,8 @@ function StockCard({ stock, i18n, locale }) {
     return { x, y, price, timestamp: chartTimestamps[index] };
   });
 
-  const areaPath = `M 0,${height} L ${points.map(p => `${p.x},${p.y}`).join(' L ')} L ${width},${height} Z`;
-  const linePath = `M ${points.map(p => `${p.x},${p.y}`).join(' L ')}`;
+  const areaPath = `M 0,${height} L ${points.map((p) => `${p.x},${p.y}`).join(' L ')} L ${width},${height} Z`;
+  const linePath = `M ${points.map((p) => `${p.x},${p.y}`).join(' L ')}`;
   const color = isPositive ? '#10b981' : '#ef4444';
 
   const handleMouseMove = (e) => {
@@ -83,30 +92,67 @@ function StockCard({ stock, i18n, locale }) {
   };
 
   const hoveredPoint = hoveredIndex !== null ? points[hoveredIndex] : null;
-  const hoveredDate = hoveredPoint?.timestamp ? new Date(hoveredPoint.timestamp * 1000) : null;
+  const hoveredDate = hoveredPoint?.timestamp
+    ? new Date(hoveredPoint.timestamp * 1000)
+    : null;
 
   return (
-    <div
-      className="flex flex-col rounded-xl overflow-hidden bg-white dark:bg-black border border-gray-200 dark:border-gray-800 p-6 transform transition duration-300 hover:scale-105 hover:shadow-lg relative"
-    >
+    <div className="flex flex-col rounded-xl overflow-hidden bg-white dark:bg-black border border-gray-200 dark:border-gray-800 p-6 transform transition duration-300 hover:scale-105 hover:shadow-lg relative">
       {/* Interactive Chart Background */}
       <div
         className="absolute inset-0 opacity-20 dark:opacity-30 overflow-hidden rounded-xl cursor-crosshair z-0"
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
-        <svg width="100%" height="100%" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <svg
+          width="100%"
+          height="100%"
+          viewBox="0 0 100 100"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="none"
+        >
           <defs>
-            <linearGradient id={`gradient-${stock.symbol}-${isPositive ? 'up' : 'down'}`} x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" style={{ stopColor: color, stopOpacity: 0.4 }} />
-              <stop offset="100%" style={{ stopColor: color, stopOpacity: 0.1 }} />
+            <linearGradient
+              id={`gradient-${stock.symbol}-${isPositive ? 'up' : 'down'}`}
+              x1="0%"
+              y1="0%"
+              x2="0%"
+              y2="100%"
+            >
+              <stop
+                offset="0%"
+                style={{ stopColor: color, stopOpacity: 0.4 }}
+              />
+              <stop
+                offset="100%"
+                style={{ stopColor: color, stopOpacity: 0.1 }}
+              />
             </linearGradient>
           </defs>
-          <path d={areaPath} fill={`url(#gradient-${stock.symbol}-${isPositive ? 'up' : 'down'})`} />
-          <path d={linePath} stroke={color} strokeWidth="0.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+          <path
+            d={areaPath}
+            fill={`url(#gradient-${stock.symbol}-${isPositive ? 'up' : 'down'})`}
+          />
+          <path
+            d={linePath}
+            stroke={color}
+            strokeWidth="0.5"
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
           {hoveredPoint && (
             <>
-              <line x1={hoveredPoint.x} y1="0" x2={hoveredPoint.x} y2="100" stroke={color} strokeWidth="0.3" strokeDasharray="2,2" opacity="0.5" />
+              <line
+                x1={hoveredPoint.x}
+                y1="0"
+                x2={hoveredPoint.x}
+                y2="100"
+                stroke={color}
+                strokeWidth="0.3"
+                strokeDasharray="2,2"
+                opacity="0.5"
+              />
             </>
           )}
         </svg>
@@ -147,27 +193,39 @@ function StockCard({ stock, i18n, locale }) {
         </div>
         <div className="mt-2">
           <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-            {stock.currency} {hoveredPoint ? hoveredPoint.price.toFixed(2) : (stock.price?.toFixed(2) || 'N/A')}
+            {stock.currency}{' '}
+            {hoveredPoint
+              ? hoveredPoint.price.toFixed(2)
+              : stock.price?.toFixed(2) || 'N/A'}
           </div>
-          <div className={`text-sm font-semibold mt-1 ${(() => {
-            if (hoveredPoint) {
-              const hoveredChange = hoveredPoint.price - (stock.chartPreviousClose || stock.price);
-              return hoveredChange >= 0;
-            }
-            return stock.change >= 0;
-          })()
-            ? 'text-green-600 dark:text-green-400'
-            : 'text-red-600 dark:text-red-400'
-            }`}>
+          <div
+            className={`text-sm font-semibold mt-1 ${
+              (() => {
+                if (hoveredPoint) {
+                  const hoveredChange =
+                    hoveredPoint.price -
+                    (stock.chartPreviousClose || stock.price);
+                  return hoveredChange >= 0;
+                }
+                return stock.change >= 0;
+              })()
+                ? 'text-green-600 dark:text-green-400'
+                : 'text-red-600 dark:text-red-400'
+            }`}
+          >
             {(() => {
               if (hoveredPoint) {
                 const previousClose = stock.chartPreviousClose || stock.price;
                 const hoveredChange = hoveredPoint.price - previousClose;
-                const hoveredChangePercent = previousClose !== 0 ? ((hoveredChange / previousClose) * 100) : 0;
+                const hoveredChangePercent =
+                  previousClose !== 0
+                    ? (hoveredChange / previousClose) * 100
+                    : 0;
                 return (
                   <>
                     {hoveredChange >= 0 ? '+' : ''}
-                    {hoveredChange.toFixed(2)} ({hoveredChangePercent >= 0 ? '+' : ''}
+                    {hoveredChange.toFixed(2)} (
+                    {hoveredChangePercent >= 0 ? '+' : ''}
                     {hoveredChangePercent.toFixed(2)}%)
                   </>
                 );
@@ -175,7 +233,8 @@ function StockCard({ stock, i18n, locale }) {
               return (
                 <>
                   {stock.change >= 0 ? '+' : ''}
-                  {stock.change?.toFixed(2) || '0.00'} ({stock.changePercent >= 0 ? '+' : ''}
+                  {stock.change?.toFixed(2) || '0.00'} (
+                  {stock.changePercent >= 0 ? '+' : ''}
                   {stock.changePercent?.toFixed(2) || '0.00'}%)
                 </>
               );
@@ -185,7 +244,11 @@ function StockCard({ stock, i18n, locale }) {
             {hoveredPoint && hoveredDate ? (
               <span className="inline-flex items-center">
                 <span className="w-2 h-2 bg-blue-500 rounded-full mr-1"></span>
-                {hoveredDate.toLocaleDateString(dateLocale)} {hoveredDate.toLocaleTimeString(dateLocale, { hour: '2-digit', minute: '2-digit' })}
+                {hoveredDate.toLocaleDateString(dateLocale)}{' '}
+                {hoveredDate.toLocaleTimeString(dateLocale, {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                })}
               </span>
             ) : stock.marketState ? (
               stock.marketState === 'REGULAR' ? (
@@ -267,7 +330,11 @@ export default function Stocks(props) {
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {currentStocks.map((stock, index) => (
-              <div key={stock.symbol || index} onClick={() => handleStockClick(stock)} className="cursor-pointer">
+              <div
+                key={stock.symbol || index}
+                onClick={() => handleStockClick(stock)}
+                className="cursor-pointer"
+              >
                 <StockCard stock={stock} i18n={i18n} locale={props.locale} />
               </div>
             ))}
@@ -282,7 +349,11 @@ export default function Stocks(props) {
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {futureStocks.map((stock, index) => (
-                <div key={stock.symbol || index} onClick={() => handleStockClick(stock)} className="cursor-pointer">
+                <div
+                  key={stock.symbol || index}
+                  onClick={() => handleStockClick(stock)}
+                  className="cursor-pointer"
+                >
                   <StockCard stock={stock} i18n={i18n} locale={props.locale} />
                 </div>
               ))}
@@ -297,7 +368,11 @@ export default function Stocks(props) {
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 opacity-80">
             {previousStocks.map((stock, index) => (
-              <div key={stock.symbol || index} onClick={() => handleStockClick(stock)} className="cursor-pointer">
+              <div
+                key={stock.symbol || index}
+                onClick={() => handleStockClick(stock)}
+                className="cursor-pointer"
+              >
                 <StockCard stock={stock} i18n={i18n} locale={props.locale} />
               </div>
             ))}
@@ -355,74 +430,128 @@ export default function Stocks(props) {
                     <p className="text-5xl font-bold text-gray-900 dark:text-white mb-2">
                       {selectedStock.currency} {selectedStock.price?.toFixed(2)}
                     </p>
-                    <div className={`text-xl font-semibold ${selectedStock.change >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
-                      {selectedStock.change >= 0 ? '+' : ''}{selectedStock.change?.toFixed(2)} ({selectedStock.changePercent >= 0 ? '+' : ''}{selectedStock.changePercent?.toFixed(2)}%)
+                    <div
+                      className={`text-xl font-semibold ${selectedStock.change >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}
+                    >
+                      {selectedStock.change >= 0 ? '+' : ''}
+                      {selectedStock.change?.toFixed(2)} (
+                      {selectedStock.changePercent >= 0 ? '+' : ''}
+                      {selectedStock.changePercent?.toFixed(2)}%)
                     </div>
                   </div>
 
                   <div className="flex flex-col justify-end space-y-2">
                     <div className="flex justify-between border-b border-gray-100 dark:border-gray-800 pb-2">
                       <span className="text-gray-500">Market State</span>
-                      <span className={`font-semibold ${selectedStock.marketState === 'REGULAR' ? 'text-green-500' : 'text-gray-500'}`}>
-                        {selectedStock.marketState === 'REGULAR' ? 'Open' : 'Closed'}
+                      <span
+                        className={`font-semibold ${selectedStock.marketState === 'REGULAR' ? 'text-green-500' : 'text-gray-500'}`}
+                      >
+                        {selectedStock.marketState === 'REGULAR'
+                          ? 'Open'
+                          : 'Closed'}
                       </span>
                     </div>
                     <div className="flex justify-between border-b border-gray-100 dark:border-gray-800 pb-2">
                       <span className="text-gray-500">Currency</span>
-                      <span className="text-gray-900 dark:text-white font-semibold">{selectedStock.currency}</span>
+                      <span className="text-gray-900 dark:text-white font-semibold">
+                        {selectedStock.currency}
+                      </span>
                     </div>
                   </div>
                 </div>
 
                 <div className="h-[300px] w-full bg-gray-50 dark:bg-black/20 rounded-2xl p-4">
-                  <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none" className="overflow-visible">
+                  <svg
+                    width="100%"
+                    height="100%"
+                    viewBox="0 0 100 100"
+                    preserveAspectRatio="none"
+                    className="overflow-visible"
+                  >
                     <defs>
-                      <linearGradient id="dialog-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" style={{ stopColor: selectedStock.change >= 0 ? '#10b981' : '#ef4444', stopOpacity: 0.4 }} />
-                        <stop offset="100%" style={{ stopColor: selectedStock.change >= 0 ? '#10b981' : '#ef4444', stopOpacity: 0.1 }} />
+                      <linearGradient
+                        id="dialog-gradient"
+                        x1="0%"
+                        y1="0%"
+                        x2="0%"
+                        y2="100%"
+                      >
+                        <stop
+                          offset="0%"
+                          style={{
+                            stopColor:
+                              selectedStock.change >= 0 ? '#10b981' : '#ef4444',
+                            stopOpacity: 0.4,
+                          }}
+                        />
+                        <stop
+                          offset="100%"
+                          style={{
+                            stopColor:
+                              selectedStock.change >= 0 ? '#10b981' : '#ef4444',
+                            stopOpacity: 0.1,
+                          }}
+                        />
                       </linearGradient>
                     </defs>
                     {/* Simplified path for the large chart */}
-                    {selectedStock.chartData && selectedStock.chartData.length > 0 && (
-                      <>
-                        <path
-                          d={`M 0,100 L ${selectedStock.chartData.map((price, i) => {
-                            const x = (i / (selectedStock.chartData.length - 1)) * 100;
-                            const min = Math.min(...selectedStock.chartData);
-                            const max = Math.max(...selectedStock.chartData);
-                            const range = max - min || 1;
-                            const y = 100 - ((price - min) / range) * 100;
-                            return `${x},${y}`;
-                          }).join(' L ')} L 100,100 Z`}
-                          fill="url(#dialog-gradient)"
-                        />
-                        <path
-                          d={`M ${selectedStock.chartData.map((price, i) => {
-                            const x = (i / (selectedStock.chartData.length - 1)) * 100;
-                            const min = Math.min(...selectedStock.chartData);
-                            const max = Math.max(...selectedStock.chartData);
-                            const range = max - min || 1;
-                            const y = 100 - ((price - min) / range) * 100;
-                            return `${x},${y}`;
-                          }).join(' L ')}`}
-                          fill="none"
-                          stroke={selectedStock.change >= 0 ? '#10b981' : '#ef4444'}
-                          strokeWidth="1"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </>
-                    )}
+                    {selectedStock.chartData &&
+                      selectedStock.chartData.length > 0 && (
+                        <>
+                          <path
+                            d={`M 0,100 L ${selectedStock.chartData
+                              .map((price, i) => {
+                                const x =
+                                  (i / (selectedStock.chartData.length - 1)) *
+                                  100;
+                                const min = Math.min(
+                                  ...selectedStock.chartData
+                                );
+                                const max = Math.max(
+                                  ...selectedStock.chartData
+                                );
+                                const range = max - min || 1;
+                                const y = 100 - ((price - min) / range) * 100;
+                                return `${x},${y}`;
+                              })
+                              .join(' L ')} L 100,100 Z`}
+                            fill="url(#dialog-gradient)"
+                          />
+                          <path
+                            d={`M ${selectedStock.chartData
+                              .map((price, i) => {
+                                const x =
+                                  (i / (selectedStock.chartData.length - 1)) *
+                                  100;
+                                const min = Math.min(
+                                  ...selectedStock.chartData
+                                );
+                                const max = Math.max(
+                                  ...selectedStock.chartData
+                                );
+                                const range = max - min || 1;
+                                const y = 100 - ((price - min) / range) * 100;
+                                return `${x},${y}`;
+                              })
+                              .join(' L ')}`}
+                            fill="none"
+                            stroke={
+                              selectedStock.change >= 0 ? '#10b981' : '#ef4444'
+                            }
+                            strokeWidth="1"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </>
+                      )}
                   </svg>
                 </div>
-
-
               </div>
             </div>
           )}
         </div>
       </div>
-    </div >
+    </div>
   );
 }
 
@@ -432,12 +561,17 @@ export async function getServerSideProps(context) {
 
   // Fallback to English if locale is not supported
   const supportedLocales = ['en', 'zh', 'zh-HK', 'ko', 'ja'];
-  const normalizedLocale = locale?.includes('en') ? 'en' :
-    locale?.includes('ja') || locale?.includes('jp') ? 'ja' :
-      locale?.includes('ko') || locale?.includes('kr') ? 'ko' :
-        locale?.includes('zh-TW') || locale?.includes('zh-MO') ? 'zh-HK' :
-          locale?.includes('zh-CN') ? 'zh' :
-            locale;
+  const normalizedLocale = locale?.includes('en')
+    ? 'en'
+    : locale?.includes('ja') || locale?.includes('jp')
+      ? 'ja'
+      : locale?.includes('ko') || locale?.includes('kr')
+        ? 'ko'
+        : locale?.includes('zh-TW') || locale?.includes('zh-MO')
+          ? 'zh-HK'
+          : locale?.includes('zh-CN')
+            ? 'zh'
+            : locale;
 
   if (!supportedLocales.includes(normalizedLocale)) {
     locale = 'en'; // Fallback to English
@@ -446,12 +580,13 @@ export async function getServerSideProps(context) {
   }
 
   try {
-    const [i18nData, currentStocks, futureStocks, previousStocks] = await Promise.all([
-      fetchI18nData(locale),
-      fetchStocks('AAPL,NVDA,MC.PA,3033.HK'),
-      fetchStocks('MA'),
-      fetchStocks('MSFT,AMZN'),
-    ]);
+    const [i18nData, currentStocks, futureStocks, previousStocks] =
+      await Promise.all([
+        fetchI18nData(locale),
+        fetchStocks('AAPL,NVDA,MC.PA,3033.HK'),
+        fetchStocks('MA'),
+        fetchStocks('MSFT,AMZN'),
+      ]);
 
     return {
       props: {
@@ -459,7 +594,7 @@ export async function getServerSideProps(context) {
         stocksData: {
           current: currentStocks,
           future: futureStocks,
-          previous: previousStocks
+          previous: previousStocks,
         },
         locale,
       },

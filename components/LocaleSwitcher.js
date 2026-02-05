@@ -64,7 +64,7 @@ export default function LocaleSwitcher() {
       const pathname = window.location.pathname || '';
       const pathParts = pathname.replace(/^\/+/, '').split('/');
       const currentPath = pathParts[0] || '';
-      
+
       const currentLocale = locales.find(
         (l) =>
           (currentPath && l.aliases?.includes(currentPath)) ||

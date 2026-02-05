@@ -31,12 +31,7 @@ export default function Blog(props) {
 
     // Fall back to franc for other languages
     const lang = franc(text);
-    if (
-      lang === 'cmn' ||
-      lang === 'yue' ||
-      lang === 'wuu' ||
-      lang === 'nan'
-    ) {
+    if (lang === 'cmn' || lang === 'yue' || lang === 'wuu' || lang === 'nan') {
       return 'zh';
     } else {
       return 'en';
@@ -103,7 +98,9 @@ export default function Blog(props) {
       animationFrame = requestAnimationFrame(autoScroll);
     };
 
-    blogContainer.addEventListener('wheel', handleInteraction, { passive: true });
+    blogContainer.addEventListener('wheel', handleInteraction, {
+      passive: true,
+    });
     blogContainer.addEventListener('touchstart', handleInteraction);
     blogContainer.addEventListener('touchmove', handleInteraction);
     blogContainer.addEventListener('mousedown', handleInteraction);
@@ -153,7 +150,9 @@ export default function Blog(props) {
       animationFrame = requestAnimationFrame(autoScroll);
     };
 
-    tripContainer.addEventListener('wheel', handleInteraction, { passive: true });
+    tripContainer.addEventListener('wheel', handleInteraction, {
+      passive: true,
+    });
     tripContainer.addEventListener('touchstart', handleInteraction);
     tripContainer.addEventListener('touchmove', handleInteraction);
     tripContainer.addEventListener('mousedown', handleInteraction);
@@ -186,43 +185,44 @@ export default function Blog(props) {
             {i18n('Find out the latest posts and tutorials.')}
           </p>
         </div>
-        <div className="overflow-x-auto my-5 scrollbar-hide" ref={blogScrollRef} style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+        <div
+          className="overflow-x-auto my-5 scrollbar-hide"
+          ref={blogScrollRef}
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
           <div className="flex gap-5">
-            {[
-              ...filteredBlogs,
-              ...filteredBlogs,
-              ...filteredBlogs,
-            ].map((post, index) => (
-              <a
-                key={`${post.title}-${index}`}
-                href={post.link}
-                target="_blank"
-                className="flex-shrink-0 w-[350px] flex flex-col rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white xl:rounded-[25px]"
-              >
-                <div className="flex-shrink-0">
-                  <img
-                    loading="lazy"
-                    className="h-64 w-[350px] object-cover"
-                    src={post.enclosure.link}
-                    alt={post.title}
-                  />
-                  <div className="invisible dark:visible absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black h-64"></div>
-                </div>
-                <div className="flex-1 p-6 flex flex-col justify-between">
-                  <div className=" text-gray-400 text-xs">
-                    <i className="far fa-calendar mr-1"></i>
-                    <time
-                      dateTime={
-                        new Date(post.pubDate).toISOString().split('T')[0]
-                      }
-                    >
-                      {new Date(post.pubDate).toISOString().split('T')[0]}
-                    </time>
+            {[...filteredBlogs, ...filteredBlogs, ...filteredBlogs].map(
+              (post, index) => (
+                <a
+                  key={`${post.title}-${index}`}
+                  href={post.link}
+                  target="_blank"
+                  className="flex-shrink-0 w-[350px] flex flex-col rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white xl:rounded-[25px]"
+                >
+                  <div className="flex-shrink-0">
+                    <img
+                      loading="lazy"
+                      className="h-64 w-[350px] object-cover"
+                      src={post.enclosure.link}
+                      alt={post.title}
+                    />
+                    <div className="invisible dark:visible absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black h-64"></div>
                   </div>
-                  <div className="flex-1 mt-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
-                    {post.title}
-                  </div>
-                  {/* <span className="text-sm font-medium text-orange-600 space-x-2 mt-3">
+                  <div className="flex-1 p-6 flex flex-col justify-between">
+                    <div className=" text-gray-400 text-xs">
+                      <i className="far fa-calendar mr-1"></i>
+                      <time
+                        dateTime={
+                          new Date(post.pubDate).toISOString().split('T')[0]
+                        }
+                      >
+                        {new Date(post.pubDate).toISOString().split('T')[0]}
+                      </time>
+                    </div>
+                    <div className="flex-1 mt-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
+                      {post.title}
+                    </div>
+                    {/* <span className="text-sm font-medium text-orange-600 space-x-2 mt-3">
                     {post.categories.map((category, index) => {
                       let level = 1;
                       for (let i = 0; i < index; i++) {
@@ -246,9 +246,10 @@ export default function Blog(props) {
                       );
                     })}
                   </span> */}
-                </div>
-              </a>
-            ))}
+                  </div>
+                </a>
+              )
+            )}
           </div>
         </div>
       </div>
@@ -294,55 +295,56 @@ export default function Blog(props) {
             {i18n('View all on Trip.com')}
           </a>
         </div>
-        <div className="overflow-x-auto my-5 scrollbar-hide" ref={tripScrollRef} style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+        <div
+          className="overflow-x-auto my-5 scrollbar-hide"
+          ref={tripScrollRef}
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
           <div className="flex gap-5">
-            {[
-              tripPromo,
-              ...moments,
-              ...moments,
-              ...moments,
-            ].map((post, index) => (
-              <a
-                href={post.shareURL}
-                target="_blank"
-                key={`${post.translateTitle || post.title}-${index}`}
-                className="flex-shrink-0 w-[350px] flex flex-col rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white xl:rounded-[25px]"
-              >
-                <div className="flex-shrink-0">
-                  <img
-                    loading="lazy"
-                    className="h-64 w-[350px] object-cover"
-                    src={post.coverURL}
-                    alt={post.translateTitle || post.title}
-                  />
-                  <div className="invisible dark:visible absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black h-64"></div>
-                </div>
-                <div className="flex-1 p-6 flex flex-col justify-between">
-                  <div className=" text-gray-400 text-xs">
-                    <i className="far fa-calendar mr-1"></i>
-                    <time
-                      dateTime={
-                        new Date(post.publishTime).toISOString().split('T')[0]
-                      }
-                    >
-                      {new Date(post.publishTime).toISOString().split('T')[0]}
-                    </time>
-                    {!post.translateTitle && (
-                      <span>
-                        <i className="far fa-map-marker-alt ml-2 mr-1"></i>
-                        {post.title.split('「')[1] &&
-                          post.title.split('「')[1].split('」')[0]}
-                      </span>
-                    )}
+            {[tripPromo, ...moments, ...moments, ...moments].map(
+              (post, index) => (
+                <a
+                  href={post.shareURL}
+                  target="_blank"
+                  key={`${post.translateTitle || post.title}-${index}`}
+                  className="flex-shrink-0 w-[350px] flex flex-col rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white xl:rounded-[25px]"
+                >
+                  <div className="flex-shrink-0">
+                    <img
+                      loading="lazy"
+                      className="h-64 w-[350px] object-cover"
+                      src={post.coverURL}
+                      alt={post.translateTitle || post.title}
+                    />
+                    <div className="invisible dark:visible absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black h-64"></div>
                   </div>
-                  <div className="flex-1">
-                    <div className="mt-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
-                      {post.translateTitle || post.title.split('」')[1]}
+                  <div className="flex-1 p-6 flex flex-col justify-between">
+                    <div className=" text-gray-400 text-xs">
+                      <i className="far fa-calendar mr-1"></i>
+                      <time
+                        dateTime={
+                          new Date(post.publishTime).toISOString().split('T')[0]
+                        }
+                      >
+                        {new Date(post.publishTime).toISOString().split('T')[0]}
+                      </time>
+                      {!post.translateTitle && (
+                        <span>
+                          <i className="far fa-map-marker-alt ml-2 mr-1"></i>
+                          {post.title.split('「')[1] &&
+                            post.title.split('「')[1].split('」')[0]}
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex-1">
+                      <div className="mt-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
+                        {post.translateTitle || post.title.split('」')[1]}
+                      </div>
                     </div>
                   </div>
-                </div>
-              </a>
-            ))}
+                </a>
+              )
+            )}
           </div>
         </div>
       </div>

@@ -27,15 +27,26 @@ export default async function handler(req) {
   };
 
   const normalizedLocale = selectedLang(lang);
-  
+
   let data;
   switch (normalizedLocale) {
-    case 'en': data = en; break;
-    case 'zh': data = zh; break;
-    case 'zh-HK': data = zhHK; break;
-    case 'ko': data = ko; break;
-    case 'ja': data = ja; break;
-    default: data = en;
+    case 'en':
+      data = en;
+      break;
+    case 'zh':
+      data = zh;
+      break;
+    case 'zh-HK':
+      data = zhHK;
+      break;
+    case 'ko':
+      data = ko;
+      break;
+    case 'ja':
+      data = ja;
+      break;
+    default:
+      data = en;
   }
 
   return new Response(JSON.stringify(data), {

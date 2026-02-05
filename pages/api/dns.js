@@ -3,7 +3,7 @@ export const runtime = 'edge';
 export default async function handler(req) {
   const url = new URL(req.url);
   const domain = url.searchParams.get('domain');
-  
+
   if (!domain) {
     return new Response(JSON.stringify({ error: 'Domain is required' }), {
       status: 400,
@@ -17,13 +17,13 @@ export default async function handler(req) {
       `https://cloudflare-dns.com/dns-query?name=${encodeURIComponent(domain)}&type=A`,
       {
         headers: {
-          'Accept': 'application/dns-json',
+          Accept: 'application/dns-json',
         },
       }
     );
 
     const data = await response.json();
-    const addresses = data.Answer?.map(record => record.data) || [];
+    const addresses = data.Answer?.map((record) => record.data) || [];
 
     return new Response(JSON.stringify({ addresses }), {
       status: 200,

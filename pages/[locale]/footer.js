@@ -11,9 +11,10 @@ export default function Footer(props) {
         loggedMissingKeys.current.add(key);
       }
     }
-    const translation = props.i18n && props.i18n['footer'] && props.i18n['footer'][key]
-      ? props.i18n['footer'][key]
-      : key;
+    const translation =
+      props.i18n && props.i18n['footer'] && props.i18n['footer'][key]
+        ? props.i18n['footer'][key]
+        : key;
     return translation || String(key); // Ensure it always returns a string
   }
 

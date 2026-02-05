@@ -36,10 +36,13 @@ export default async function handler(req) {
     const userToken = process.env.APPLE_MUSIC_USER_TOKEN;
 
     if (!p8 || !teamId || !keyId) {
-      return new Response(JSON.stringify({ error: 'Apple Music credentials not configured' }), {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({ error: 'Apple Music credentials not configured' }),
+        {
+          status: 500,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
     }
 
     // Create JWT using Web Crypto API
@@ -73,54 +76,64 @@ async function handleSpotify(url) {
   const spotifyToken = process.env.SPOTIFY_TOKEN;
 
   if (!spotifyToken) {
-    return new Response(JSON.stringify({ error: 'Spotify token not configured' }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({ error: 'Spotify token not configured' }),
+      {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
   }
 
   try {
     let apiUrl;
-    
+
     switch (path) {
       case 'me/top/tracks':
         // User's top tracks (requires user-top-read scope)
         const timeRange = url.searchParams.get('time_range') || 'medium_term';
         apiUrl = `https://api.spotify.com/v1/me/top/tracks?time_range=${timeRange}&limit=20`;
         break;
-      
+
       case 'top/us':
         // Top 50 USA playlist (public, no user scope needed)
-        apiUrl = 'https://api.spotify.com/v1/playlists/37i9dQZEVXbLRQDuF5jeBp/tracks?limit=20';
+        apiUrl =
+          'https://api.spotify.com/v1/playlists/37i9dQZEVXbLRQDuF5jeBp/tracks?limit=20';
         break;
-      
+
       default:
-        return new Response(JSON.stringify({ error: `Unknown path: ${path}` }), {
-          status: 400,
-          headers: { 'Content-Type': 'application/json' },
-        });
+        return new Response(
+          JSON.stringify({ error: `Unknown path: ${path}` }),
+          {
+            status: 400,
+            headers: { 'Content-Type': 'application/json' },
+          }
+        );
     }
 
     const response = await fetch(apiUrl, {
       headers: {
-        'Authorization': `Bearer ${spotifyToken}`,
+        Authorization: `Bearer ${spotifyToken}`,
         'Content-Type': 'application/json',
       },
     });
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      return new Response(JSON.stringify({ 
-        error: errorData.error?.message || 'Spotify API error',
-        data: []
-      }), {
-        status: 200,
-        headers: { 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({
+          error: errorData.error?.message || 'Spotify API error',
+          data: [],
+        }),
+        {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
     }
 
     const data = await response.json();
-    
+
     // Transform Spotify response to match Apple Music format
     if (data.items && data.items.length > 0) {
       const transformedData = {
@@ -131,9 +144,12 @@ async function handleSpotify(url) {
             type: 'songs',
             attributes: {
               name: track.name,
-              artistName: track.artists?.map(a => a.name).join(', ') || 'Unknown Artist',
+              artistName:
+                track.artists?.map((a) => a.name).join(', ') ||
+                'Unknown Artist',
               artwork: {
-                url: track.album?.images?.[0]?.url || track.images?.[0]?.url || '',
+                url:
+                  track.album?.images?.[0]?.url || track.images?.[0]?.url || '',
               },
               durationInMillis: track.duration_ms || 0,
               url: track.external_urls?.spotify || '',
@@ -180,12 +196,15 @@ async function handleQQMusic(url) {
       case 'search':
         // Search endpoint
         if (!key) {
-          return new Response(JSON.stringify({ result: 500, errMsg: 'key is required' }), {
-            status: 400,
-            headers: { 'Content-Type': 'application/json' },
-          });
+          return new Response(
+            JSON.stringify({ result: 500, errMsg: 'key is required' }),
+            {
+              status: 400,
+              headers: { 'Content-Type': 'application/json' },
+            }
+          );
         }
-        
+
         if (t === '2') {
           // Playlist search
           apiUrl = `https://c.y.qq.com/soso/fcgi-bin/client_music_search_songlist?remoteplace=txt.yqq.playlist&page_no=${parseInt(pageNo) - 1}&num_per_page=${pageSize}&query=${encodeURIComponent(key)}`;
@@ -203,10 +222,13 @@ async function handleQQMusic(url) {
       case 'search/quick':
         // Quick search suggestions
         if (!key) {
-          return new Response(JSON.stringify({ result: 500, errMsg: 'key is required' }), {
-            status: 400,
-            headers: { 'Content-Type': 'application/json' },
-          });
+          return new Response(
+            JSON.stringify({ result: 500, errMsg: 'key is required' }),
+            {
+              status: 400,
+              headers: { 'Content-Type': 'application/json' },
+            }
+          );
         }
         apiUrl = `https://c.y.qq.com/splcloud/fcgi-bin/smartbox_new.fcg?key=${encodeURIComponent(key)}&g_tk=5381`;
         break;
@@ -214,10 +236,13 @@ async function handleQQMusic(url) {
       case 'singer':
         // Singer info
         if (!singermid) {
-          return new Response(JSON.stringify({ result: 500, errMsg: 'singermid is required' }), {
-            status: 400,
-            headers: { 'Content-Type': 'application/json' },
-          });
+          return new Response(
+            JSON.stringify({ result: 500, errMsg: 'singermid is required' }),
+            {
+              status: 400,
+              headers: { 'Content-Type': 'application/json' },
+            }
+          );
         }
         apiUrl = `https://c.y.qq.com/v8/fcg-bin/fcg_v8_singer_track_cp.fcg?singermid=${singermid}&num=${pageSize}&begin=${(parseInt(pageNo) - 1) * parseInt(pageSize)}&g_tk=5381&format=json`;
         break;
@@ -225,10 +250,13 @@ async function handleQQMusic(url) {
       case 'album':
         // Album info
         if (!albummid) {
-          return new Response(JSON.stringify({ result: 500, errMsg: 'albummid is required' }), {
-            status: 400,
-            headers: { 'Content-Type': 'application/json' },
-          });
+          return new Response(
+            JSON.stringify({ result: 500, errMsg: 'albummid is required' }),
+            {
+              status: 400,
+              headers: { 'Content-Type': 'application/json' },
+            }
+          );
         }
         apiUrl = `https://c.y.qq.com/v8/fcg-bin/fcg_v8_album_info_cp.fcg?albummid=${albummid}&g_tk=5381&format=json`;
         break;
@@ -236,10 +264,13 @@ async function handleQQMusic(url) {
       case 'song':
         // Song info
         if (!songmid) {
-          return new Response(JSON.stringify({ result: 500, errMsg: 'songmid is required' }), {
-            status: 400,
-            headers: { 'Content-Type': 'application/json' },
-          });
+          return new Response(
+            JSON.stringify({ result: 500, errMsg: 'songmid is required' }),
+            {
+              status: 400,
+              headers: { 'Content-Type': 'application/json' },
+            }
+          );
         }
         apiUrl = `https://c.y.qq.com/v8/fcg-bin/fcg_play_single_song.fcg?songmid=${songmid}&g_tk=5381&format=json`;
         break;
@@ -247,33 +278,47 @@ async function handleQQMusic(url) {
       case 'lyric':
         // Lyrics - use alternative endpoint that's more reliable
         if (!songmid) {
-          return new Response(JSON.stringify({ result: 500, errMsg: 'songmid is required' }), {
-            status: 400,
-            headers: { 'Content-Type': 'application/json' },
-          });
+          return new Response(
+            JSON.stringify({ result: 500, errMsg: 'songmid is required' }),
+            {
+              status: 400,
+              headers: { 'Content-Type': 'application/json' },
+            }
+          );
         }
         // Try the newer API endpoint which is more reliable
         try {
-          const lyricResponse = await fetch(`https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric_new.fcg?songmid=${songmid}&g_tk=5381&format=json&nobase64=1`, {
-            headers: {
-              'Referer': 'https://y.qq.com/portal/player.html',
-              'Host': 'c.y.qq.com',
-              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-            },
-          });
+          const lyricResponse = await fetch(
+            `https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric_new.fcg?songmid=${songmid}&g_tk=5381&format=json&nobase64=1`,
+            {
+              headers: {
+                Referer: 'https://y.qq.com/portal/player.html',
+                Host: 'c.y.qq.com',
+                'User-Agent':
+                  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+              },
+            }
+          );
           let lyricResult = await lyricResponse.text();
           // Remove JSONP callback
           lyricResult = lyricResult.replace(/^(MusicJsonCallback\(|\)$)/g, '');
-          
+
           try {
             const lyricData = JSON.parse(lyricResult);
             // If the API returns an error, try a fallback
             if (lyricData.retcode !== 0 && lyricData.code !== 0) {
               // Try fallback - use NetEase or return empty
-              return new Response(JSON.stringify({ lyric: '', trans: '', retcode: lyricData.retcode || lyricData.code }), {
-                status: 200,
-                headers: { 'Content-Type': 'application/json' },
-              });
+              return new Response(
+                JSON.stringify({
+                  lyric: '',
+                  trans: '',
+                  retcode: lyricData.retcode || lyricData.code,
+                }),
+                {
+                  status: 200,
+                  headers: { 'Content-Type': 'application/json' },
+                }
+              );
             }
             return new Response(JSON.stringify(lyricData), {
               status: 200,
@@ -286,15 +331,19 @@ async function handleQQMusic(url) {
             });
           }
         } catch (error) {
-          return new Response(JSON.stringify({ lyric: '', trans: '', error: error.message }), {
-            status: 200,
-            headers: { 'Content-Type': 'application/json' },
-          });
+          return new Response(
+            JSON.stringify({ lyric: '', trans: '', error: error.message }),
+            {
+              status: 200,
+              headers: { 'Content-Type': 'application/json' },
+            }
+          );
         }
 
       case 'recommend':
         // Recommendations
-        apiUrl = 'https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg?g_tk=5381&format=json';
+        apiUrl =
+          'https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg?g_tk=5381&format=json';
         break;
 
       case 'top':
@@ -304,24 +353,31 @@ async function handleQQMusic(url) {
         break;
 
       default:
-        return new Response(JSON.stringify({ result: 500, errMsg: `Unknown path: ${path}` }), {
-          status: 400,
-          headers: { 'Content-Type': 'application/json' },
-        });
+        return new Response(
+          JSON.stringify({ result: 500, errMsg: `Unknown path: ${path}` }),
+          {
+            status: 400,
+            headers: { 'Content-Type': 'application/json' },
+          }
+        );
     }
 
     const response = await fetch(apiUrl, {
       headers: {
-        'Referer': 'https://y.qq.com',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+        Referer: 'https://y.qq.com',
+        'User-Agent':
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
       },
     });
 
     let result = await response.text();
-    
+
     // Remove JSONP callback wrapper if present
-    result = result.replace(/^(callback\(|MusicJsonCallback\(|jsonCallback\(|\)$)/g, '');
-    
+    result = result.replace(
+      /^(callback\(|MusicJsonCallback\(|jsonCallback\(|\)$)/g,
+      ''
+    );
+
     try {
       const jsonData = JSON.parse(result);
       return new Response(JSON.stringify(jsonData), {
@@ -336,22 +392,25 @@ async function handleQQMusic(url) {
     }
   } catch (error) {
     console.error('QQ Music API error:', error);
-    return new Response(JSON.stringify({ result: 500, errMsg: error.message }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({ result: 500, errMsg: error.message }),
+      {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
   }
 }
 
 // Edge-compatible JWT creation using Web Crypto API
 async function createAppleMusicJWT(privateKeyPem, teamId, keyId) {
   const now = Math.floor(Date.now() / 1000);
-  
+
   const header = {
     alg: 'ES256',
     kid: keyId,
   };
-  
+
   const payload = {
     iss: teamId,
     iat: now,
@@ -363,9 +422,9 @@ async function createAppleMusicJWT(privateKeyPem, teamId, keyId) {
     .replace('-----BEGIN PRIVATE KEY-----', '')
     .replace('-----END PRIVATE KEY-----', '')
     .replace(/\s/g, '');
-  
-  const binaryKey = Uint8Array.from(atob(pemContents), c => c.charCodeAt(0));
-  
+
+  const binaryKey = Uint8Array.from(atob(pemContents), (c) => c.charCodeAt(0));
+
   const key = await crypto.subtle.importKey(
     'pkcs8',
     binaryKey,
@@ -376,8 +435,14 @@ async function createAppleMusicJWT(privateKeyPem, teamId, keyId) {
 
   // Create the signing input
   const encoder = new TextEncoder();
-  const headerB64 = btoa(JSON.stringify(header)).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
-  const payloadB64 = btoa(JSON.stringify(payload)).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
+  const headerB64 = btoa(JSON.stringify(header))
+    .replace(/=/g, '')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_');
+  const payloadB64 = btoa(JSON.stringify(payload))
+    .replace(/=/g, '')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_');
   const signingInput = encoder.encode(`${headerB64}.${payloadB64}`);
 
   // Sign

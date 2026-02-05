@@ -57,7 +57,15 @@ export default function Header(props) {
 
   const loggedMissingKeys = useRef(new Set());
 
-  const darkAnims = ['aurora', 'colorbends', 'galaxy', 'gridscan', 'orb', 'prism', 'prismaticburst'];
+  const darkAnims = [
+    'aurora',
+    'colorbends',
+    'galaxy',
+    'gridscan',
+    'orb',
+    'prism',
+    'prismaticburst',
+  ];
   const lightAnims = ['dotgrid', 'orb', 'prism', 'iridescence'];
   const currentAnims = isDarkMode ? darkAnims : lightAnims;
 
@@ -73,7 +81,8 @@ export default function Header(props) {
     e.stopPropagation();
     if (!props.setBg) return;
     const currentIndex = currentAnims.indexOf(bgType);
-    const prevIndex = (currentIndex - 1 + currentAnims.length) % currentAnims.length;
+    const prevIndex =
+      (currentIndex - 1 + currentAnims.length) % currentAnims.length;
     props.setBg(currentAnims[prevIndex], -1);
   };
 
@@ -147,15 +156,15 @@ export default function Header(props) {
             animate="center"
             exit="exit"
             transition={{
-              x: { type: "spring", stiffness: 200, damping: 25 },
-              opacity: { duration: 0.3 }
+              x: { type: 'spring', stiffness: 200, damping: 25 },
+              opacity: { duration: 0.3 },
             }}
             className="absolute inset-0 bg-[#fff6eb] dark:bg-[#000914]"
           >
             {isDarkMode ? (
               bgType === 'aurora' ? (
                 <Aurora
-                  colorStops={["#7cff67", "#B19EEF", "#5227FF"]}
+                  colorStops={['#7cff67', '#B19EEF', '#5227FF']}
                   blend={0.5}
                   amplitude={0.5}
                   speed={1}
@@ -238,7 +247,7 @@ export default function Header(props) {
                 />
               ) : (
                 <ColorBends
-                  colors={["#ff5c7a", "#8a5cff", "#00ffd1"]}
+                  colors={['#ff5c7a', '#8a5cff', '#00ffd1']}
                   rotation={0}
                   speed={0.2}
                   scale={1}
@@ -251,47 +260,45 @@ export default function Header(props) {
                   autoRotate={0}
                 />
               )
+            ) : bgType === 'orb' ? (
+              <Orb
+                hoverIntensity={0}
+                rotateOnHover={false}
+                hue={0}
+                forceHoverState={false}
+                backgroundColor="#fff6eb"
+              />
+            ) : bgType === 'prism' ? (
+              <Prism
+                animationType="rotate"
+                timeScale={0.5}
+                height={3.5}
+                baseWidth={5.5}
+                scale={3.6}
+                hueShift={0}
+                colorFrequency={1}
+                noise={0}
+                glow={1}
+              />
+            ) : bgType === 'iridescence' ? (
+              <Iridescence
+                color={[1, 1, 1]}
+                mouseReact={true}
+                amplitude={0.1}
+                speed={0.7}
+              />
             ) : (
-              bgType === 'orb' ? (
-                <Orb
-                  hoverIntensity={0}
-                  rotateOnHover={false}
-                  hue={0}
-                  forceHoverState={false}
-                  backgroundColor="#fff6eb"
-                />
-              ) : bgType === 'prism' ? (
-                <Prism
-                  animationType="rotate"
-                  timeScale={0.5}
-                  height={3.5}
-                  baseWidth={5.5}
-                  scale={3.6}
-                  hueShift={0}
-                  colorFrequency={1}
-                  noise={0}
-                  glow={1}
-                />
-              ) : bgType === 'iridescence' ? (
-                <Iridescence
-                  color={[1, 1, 1]}
-                  mouseReact={true}
-                  amplitude={0.1}
-                  speed={0.7}
-                />
-              ) : (
-                <DotGrid
-                  dotSize={5}
-                  gap={20}
-                  baseColor="#e5e7eb"
-                  activeColor="#f97316"
-                  proximity={80}
-                  shockRadius={150}
-                  shockStrength={5}
-                  resistance={750}
-                  returnDuration={1.5}
-                />
-              )
+              <DotGrid
+                dotSize={5}
+                gap={20}
+                baseColor="#e5e7eb"
+                activeColor="#f97316"
+                proximity={80}
+                shockRadius={150}
+                shockStrength={5}
+                resistance={750}
+                returnDuration={1.5}
+              />
             )}
           </motion.div>
         </AnimatePresence>
@@ -308,7 +315,7 @@ export default function Header(props) {
             >
               <motion.div
                 whileHover={{ x: -8 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 17 }}
               >
                 <i className="far fa-chevron-left text-4xl" />
               </motion.div>
@@ -322,7 +329,7 @@ export default function Header(props) {
             >
               <motion.div
                 whileHover={{ x: 8 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 17 }}
               >
                 <i className="far fa-chevron-right text-4xl" />
               </motion.div>
@@ -334,7 +341,7 @@ export default function Header(props) {
       <motion.h1
         variants={container}
         initial="hidden"
-        animate={props.darkmodeReady ? "visible" : "hidden"}
+        animate={props.darkmodeReady ? 'visible' : 'hidden'}
         onAnimationComplete={() => {
           setTimeout(() => {
             setShowContinue(true);
@@ -383,7 +390,7 @@ export default function Header(props) {
                 transition={{
                   repeat: Infinity,
                   duration: 3,
-                  ease: "linear"
+                  ease: 'linear',
                 }}
                 className="absolute inset-0 bg-gradient-to-b from-transparent via-orange-500/10 to-transparent"
               />
@@ -426,7 +433,7 @@ export default function Header(props) {
               transition={{
                 repeat: Infinity,
                 duration: 3,
-                ease: "easeInOut",
+                ease: 'easeInOut',
               }}
               className="absolute inset-0 rounded-full border border-orange-500/20 pointer-events-none"
             />
@@ -435,12 +442,12 @@ export default function Header(props) {
               <motion.i
                 animate={{
                   y: [10, -10],
-                  opacity: [0, 1, 0]
+                  opacity: [0, 1, 0],
                 }}
                 transition={{
                   repeat: Infinity,
                   duration: 3,
-                  ease: "linear"
+                  ease: 'linear',
                 }}
                 className="far fa-arrow-up"
               ></motion.i>
@@ -448,12 +455,12 @@ export default function Header(props) {
               <motion.i
                 animate={{
                   y: [-10, 10],
-                  opacity: [0, 1, 0]
+                  opacity: [0, 1, 0],
                 }}
                 transition={{
                   repeat: Infinity,
                   duration: 3,
-                  ease: "linear"
+                  ease: 'linear',
                 }}
                 className="far fa-arrow-down"
               ></motion.i>

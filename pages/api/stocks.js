@@ -5,7 +5,10 @@ export default async function handler(req) {
   const symbols = url.searchParams.get('symbols') || 'AAPL,MSFT,GOOGL';
 
   // Split symbols by comma and filter empty strings
-  const symbolList = symbols.split(',').map(s => s.trim()).filter(s => s.length > 0);
+  const symbolList = symbols
+    .split(',')
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0);
 
   if (symbolList.length === 0) {
     return new Response(JSON.stringify({ error: 'No symbols provided' }), {
@@ -23,7 +26,8 @@ export default async function handler(req) {
           `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?interval=1d&range=1d`,
           {
             headers: {
-              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+              'User-Agent':
+                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
             },
           }
         );
@@ -33,8 +37,12 @@ export default async function handler(req) {
         }
 
         const data = await response.json();
-        
-        if (!data.chart || !data.chart.result || data.chart.result.length === 0) {
+
+        if (
+          !data.chart ||
+          !data.chart.result ||
+          data.chart.result.length === 0
+        ) {
           return { symbol, error: 'No data found' };
         }
 
@@ -42,13 +50,18 @@ export default async function handler(req) {
         const meta = result.meta || {};
         const quote = result.indicators?.quote?.[0] || {};
         const timestamps = result.timestamp || [];
-        
+
         // Get the latest price
         const latestIndex = timestamps.length - 1;
-        const currentPrice = quote.close?.[latestIndex] || meta.regularMarketPrice || meta.previousClose || 0;
+        const currentPrice =
+          quote.close?.[latestIndex] ||
+          meta.regularMarketPrice ||
+          meta.previousClose ||
+          0;
         const previousClose = meta.previousClose || currentPrice;
         const change = currentPrice - previousClose;
-        const changePercent = previousClose !== 0 ? ((change / previousClose) * 100) : 0;
+        const changePercent =
+          previousClose !== 0 ? (change / previousClose) * 100 : 0;
 
         return {
           symbol: meta.symbol || symbol,
@@ -66,10 +79,10 @@ export default async function handler(req) {
     });
 
     const results = await Promise.all(promises);
-    
+
     return new Response(JSON.stringify({ stocks: results }), {
       status: 200,
-      headers: { 
+      headers: {
         'Content-Type': 'application/json',
         'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
       },

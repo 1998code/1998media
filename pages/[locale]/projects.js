@@ -20,9 +20,7 @@ export default function Projects(props) {
   const githubRaw = props.projectsData || [];
 
   // Filter and limit to 8 non-fork repositories
-  const filteredProjects = githubRaw
-    .filter((repo) => !repo.fork)
-    .slice(0, 8);
+  const filteredProjects = githubRaw.filter((repo) => !repo.fork).slice(0, 8);
 
   // Auto-scroll for Projects
   useEffect(() => {
@@ -51,7 +49,9 @@ export default function Projects(props) {
       animationFrame = requestAnimationFrame(autoScroll);
     };
 
-    projectContainer.addEventListener('wheel', handleInteraction, { passive: true });
+    projectContainer.addEventListener('wheel', handleInteraction, {
+      passive: true,
+    });
     projectContainer.addEventListener('touchstart', handleInteraction);
     projectContainer.addEventListener('touchmove', handleInteraction);
     projectContainer.addEventListener('mousedown', handleInteraction);
@@ -68,7 +68,10 @@ export default function Projects(props) {
     };
   }, [filteredProjects]);
   return (
-    <div id="projects" className="relative h-full w-full max-w-7xl mx-auto flex flex-col items-start px-4 sm:px-6 lg:px-8 pt-24 overflow-y-auto scrollbar-hide">
+    <div
+      id="projects"
+      className="relative h-full w-full max-w-7xl mx-auto flex flex-col items-start px-4 sm:px-6 lg:px-8 pt-24 overflow-y-auto scrollbar-hide"
+    >
       <div className="relative w-full space-y-8">
         <div className="text-left flex flex-wrap">
           <a
@@ -115,12 +118,13 @@ export default function Projects(props) {
           src="https://ghchart.rshah.org/1998code"
           alt="Github chart"
         />
-        <div className="overflow-x-auto my-5 scrollbar-hide" ref={projectScrollRef} style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+        <div
+          className="overflow-x-auto my-5 scrollbar-hide"
+          ref={projectScrollRef}
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
           <div className="flex gap-5">
-            {[
-              ...filteredProjects,
-              ...filteredProjects,
-            ].map((repo, index) => (
+            {[...filteredProjects, ...filteredProjects].map((repo, index) => (
               <a
                 href={repo.html_url}
                 target="_blank"

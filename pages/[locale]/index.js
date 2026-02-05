@@ -68,7 +68,16 @@ export default function Home({
   };
 
   useEffect(() => {
-    const types = ['aurora', 'colorbends', 'galaxy', 'gridscan', 'orb', 'prism', 'prismaticburst', 'iridescence'];
+    const types = [
+      'aurora',
+      'colorbends',
+      'galaxy',
+      'gridscan',
+      'orb',
+      'prism',
+      'prismaticburst',
+      'iridescence',
+    ];
     setBgType(types[Math.floor(Math.random() * types.length)]);
   }, []);
 
@@ -81,7 +90,6 @@ export default function Home({
   useEffect(() => {
     setLoading(false);
   }, []);
-
 
   const sections = [
     'header',
@@ -99,7 +107,6 @@ export default function Home({
     'faq',
     'contact',
   ];
-
 
   function i18n(key) {
     if (I18n && I18n['index'] && !I18n['index'][key]) {
@@ -166,7 +173,9 @@ export default function Home({
           if (element && containerRef.current) {
             // Temporarily disable snap to prevent scroll interference
             const originalSnap = containerRef.current.className;
-            containerRef.current.className = originalSnap.replace('lg:snap-y', '').replace('lg:snap-mandatory', '');
+            containerRef.current.className = originalSnap
+              .replace('lg:snap-y', '')
+              .replace('lg:snap-mandatory', '');
 
             containerRef.current.style.scrollBehavior = 'auto';
             element.scrollIntoView({
@@ -230,9 +239,12 @@ export default function Home({
       });
     };
 
-    const timer = setTimeout(() => {
-      setupObserver();
-    }, headerCompleted ? 100 : 3000);
+    const timer = setTimeout(
+      () => {
+        setupObserver();
+      },
+      headerCompleted ? 100 : 3000
+    );
 
     return () => {
       clearTimeout(timer);
@@ -241,8 +253,6 @@ export default function Home({
       }
     };
   }, [headerCompleted]);
-
-
 
   useEffect(() => {
     const handleDarkmodeInit = () => {
@@ -266,15 +276,9 @@ export default function Home({
     };
   }, []);
 
-
-
   function toggleSidebar() {
-
     setSidebarOpen(!sidebarOpen);
-
   }
-
-
 
   const scrollToNext = () => {
     setIsReady(true);
@@ -288,14 +292,9 @@ export default function Home({
     }, 100);
   };
 
-
-
   const handleScroll = (e) => {
-
     if (!headerCompleted && e.target.scrollTop > 10) {
-
       setHeaderCompleted(true);
-
     }
 
     // Infinite scroll: seamlessly loop from footer back to header
@@ -308,7 +307,10 @@ export default function Home({
         const containerRect = container.getBoundingClientRect();
 
         // Check if the duplicate header is in view (scrolled to it)
-        if (rect.top <= containerRect.top + 100 && rect.bottom >= containerRect.top) {
+        if (
+          rect.top <= containerRect.top + 100 &&
+          rect.bottom >= containerRect.top
+        ) {
           setIsScrollingToTop(true);
 
           // Instantly jump back to the real header
@@ -327,79 +329,51 @@ export default function Home({
         }
       }
     }
-
   };
 
-
-
   return (
-
     <div>
-
       <Head>
-
         <title>{i18n('1998 MEDIA (Official Website)')}</title>
 
         <meta
-
           name="description"
-
           content={i18n(
-
             'Experience the Art of Design - Your Vision, My Craftsmanship.'
-
           )}
-
         />
 
         <link rel="icon" href="https://cdn.1998.media/favicon24.jpg" />
-
       </Head>
 
       {/* <script>AOS.init();</script> */}
 
       <main className="darkmode-ignore h-dvh w-full overflow-hidden overflow-x-hidden">
-
         <LocaleSwitcher />
 
         {loading ? (
-
           <Loading />
-
         ) : (
-
           <div className="h-full w-full relative">
-
             {(headerCompleted || isReady) && (
-
               <Navigation
-
                 i18n={I18n}
-
                 sections={sections}
-
                 activeSection={activeSection}
-
                 sidebarOpen={sidebarOpen}
-
                 toggleSidebar={toggleSidebar}
-
               />
-
             )}
 
             <div
-
               ref={containerRef}
-
               onScroll={handleScroll}
-
-              className={`${sidebarOpen && 'pl-6 lg:pl-0'} h-full w-full ${(isReady || headerCompleted) ? 'overflow-y-auto' : 'overflow-hidden'} lg:snap-y lg:snap-mandatory scroll-smooth`}
-
+              className={`${sidebarOpen && 'pl-6 lg:pl-0'} h-full w-full ${isReady || headerCompleted ? 'overflow-y-auto' : 'overflow-hidden'} lg:snap-y lg:snap-mandatory scroll-smooth`}
             >
-
-              <section id="header" className="snap-start h-dvh w-full flex-shrink-0">
-
+              <section
+                id="header"
+                className="snap-start h-dvh w-full flex-shrink-0"
+              >
                 <Header
                   i18n={I18n}
                   onComplete={scrollToNext}
@@ -409,101 +383,104 @@ export default function Home({
                   direction={bgDirection}
                   setBg={changeBg}
                 />
-
               </section>
 
               {(headerCompleted || isReady) && (
-
                 <>
-
-                  <section id="about" className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0">
-
+                  <section
+                    id="about"
+                    className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0"
+                  >
                     <About i18n={I18n} />
-
                   </section>
 
-                  <section id="achievements" className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0">
-
+                  <section
+                    id="achievements"
+                    className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0"
+                  >
                     <Achievements i18n={I18n} />
-
                   </section>
 
-                  <section id="gallery" className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0">
-
+                  <section
+                    id="gallery"
+                    className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0"
+                  >
                     <Gallery
-
                       i18n={I18n}
-
                       unsplashData={unsplashData}
-
                       locale={locale}
-
                     />
-
                   </section>
 
-                  <section id="experience" className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0">
-
+                  <section
+                    id="experience"
+                    className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0"
+                  >
                     <Experience i18n={I18n} />
-
                   </section>
 
-                  <section id="skills" className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0">
-
+                  <section
+                    id="skills"
+                    className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0"
+                  >
                     <Skills i18n={I18n} />
-
                   </section>
 
-                  <section id="projects" className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0">
-
+                  <section
+                    id="projects"
+                    className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0"
+                  >
                     <Projects i18n={I18n} projectsData={projectsData} />
-
                   </section>
 
-                  <section id="ai" className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0">
-
+                  <section
+                    id="ai"
+                    className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0"
+                  >
                     <AI i18n={I18n} dalle={dalleData} />
-
                   </section>
 
-                  <section id="blog" className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0">
-
+                  <section
+                    id="blog"
+                    className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0"
+                  >
                     <Blog i18n={I18n} blogData={blogData} locale={locale} />
-
                   </section>
 
-                  <section id="stocks" className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0">
-
+                  <section
+                    id="stocks"
+                    className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0"
+                  >
                     <Stocks i18n={I18n} stocksData={stocksData} />
-
                   </section>
 
-                  <section id="faq" className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0">
-
+                  <section
+                    id="faq"
+                    className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0"
+                  >
                     <Faq i18n={I18n} />
-
                   </section>
 
-                  <section id="contact" className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0 flex flex-col justify-between overflow-y-auto scrollbar-hide pt-24">
-
+                  <section
+                    id="contact"
+                    className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0 flex flex-col justify-between overflow-y-auto scrollbar-hide pt-24"
+                  >
                     <div className="flex-1 flex flex-col justify-center">
-
                       <Contact i18n={I18n} />
-
                     </div>
 
                     <div className="w-full">
-
                       <Credits i18n={I18n} />
 
                       <Footer i18n={I18n} ipData={ipData} />
-
                     </div>
-
                   </section>
 
                   {/* Duplicate header for infinite scroll effect */}
-                  <section id="header-loop" className="snap-start h-dvh w-full flex-shrink-0">
+                  <section
+                    id="header-loop"
+                    className="snap-start h-dvh w-full flex-shrink-0"
+                  >
                     <Header
                       i18n={I18n}
                       onComplete={scrollToNext}
@@ -516,23 +493,15 @@ export default function Home({
                   </section>
 
                   {interacted && <Music i18n={I18n} />}
-
                 </>
-
               )}
-
             </div>
-
           </div>
-
         )}
 
         {isReady && <WhatsAppChat i18n={I18n} />}
-
       </main>
-
     </div>
-
   );
 }
 
@@ -542,12 +511,17 @@ export async function getServerSideProps(context) {
 
   // Fallback to English if locale is not supported
   const supportedLocales = ['en', 'zh', 'zh-HK', 'ko', 'ja'];
-  const normalizedLocale = locale?.includes('en') ? 'en' :
-    locale?.includes('ja') || locale?.includes('jp') ? 'ja' :
-      locale?.includes('ko') || locale?.includes('kr') ? 'ko' :
-        locale?.includes('zh-TW') || locale?.includes('zh-MO') ? 'zh-HK' :
-          locale?.includes('zh-CN') ? 'zh' :
-            locale;
+  const normalizedLocale = locale?.includes('en')
+    ? 'en'
+    : locale?.includes('ja') || locale?.includes('jp')
+      ? 'ja'
+      : locale?.includes('ko') || locale?.includes('kr')
+        ? 'ko'
+        : locale?.includes('zh-TW') || locale?.includes('zh-MO')
+          ? 'zh-HK'
+          : locale?.includes('zh-CN')
+            ? 'zh'
+            : locale;
 
   if (!supportedLocales.includes(normalizedLocale)) {
     locale = 'en'; // Fallback to English
@@ -594,7 +568,7 @@ export async function getServerSideProps(context) {
         stocksData: {
           current: currentStocks,
           future: futureStocks,
-          previous: previousStocks
+          previous: previousStocks,
         },
         projectsData: githubProjects,
         dalleData,
@@ -666,8 +640,14 @@ async function fetchIPData(locale, req) {
     // Get location from Cloudflare headers (available on Cloudflare Pages)
     const cfCity = req.headers['cf-ipcity'] || null;
     const cfCountry = req.headers['cf-ipcountry'] || null;
-    const latitude = req.headers['cf-iplatitude'] || req.headers['x-vercel-ip-latitude'] || null;
-    const longitude = req.headers['cf-iplongitude'] || req.headers['x-vercel-ip-longitude'] || null;
+    const latitude =
+      req.headers['cf-iplatitude'] ||
+      req.headers['x-vercel-ip-latitude'] ||
+      null;
+    const longitude =
+      req.headers['cf-iplongitude'] ||
+      req.headers['x-vercel-ip-longitude'] ||
+      null;
 
     let geo;
     if (cfCity || cfCountry) {
@@ -685,7 +665,11 @@ async function fetchIPData(locale, req) {
         if (response.ok) {
           const data = await response.json();
           geo = {
-            city: data.address?.city || data.address?.town || data.address?.village || '?',
+            city:
+              data.address?.city ||
+              data.address?.town ||
+              data.address?.village ||
+              '?',
             state: data.address?.state || data.address?.country || '?',
           };
         } else {
@@ -703,7 +687,10 @@ async function fetchIPData(locale, req) {
 
     return {
       ip,
-      geo: geo.city && geo.state ? `${geo.city}, ${geo.state}` : (geo.city || geo.state || 'Unknown'),
+      geo:
+        geo.city && geo.state
+          ? `${geo.city}, ${geo.state}`
+          : geo.city || geo.state || 'Unknown',
       latitude: latitude || 'Unknown',
       longitude: longitude || 'Unknown',
     };

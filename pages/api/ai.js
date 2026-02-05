@@ -24,7 +24,9 @@ export default async function handler(req) {
         fullText += chunk;
       }
 
-      const debug = url.searchParams.get('debug') === 'true' || url.searchParams.get('debug') === '1';
+      const debug =
+        url.searchParams.get('debug') === 'true' ||
+        url.searchParams.get('debug') === '1';
       const response = {
         input,
         text: fullText,

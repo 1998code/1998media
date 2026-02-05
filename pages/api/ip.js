@@ -2,19 +2,22 @@ export const runtime = 'edge';
 
 export default async function handler(req) {
   const url = new URL(req.url);
-  
-  const ip = req.headers.get('x-forwarded-for') || 
-             req.headers.get('cf-connecting-ip') || 
-             'unknown';
 
-  const latitude = url.searchParams.get('la') || 
-                   req.headers.get('cf-iplatitude') || 
-                   req.headers.get('x-vercel-ip-latitude');
-  const longitude = url.searchParams.get('lo') || 
-                    req.headers.get('cf-iplongitude') || 
-                    req.headers.get('x-vercel-ip-longitude');
-  const countryCode = req.headers.get('cf-ipcountry') || 
-                      req.headers.get('x-vercel-ip-country');
+  const ip =
+    req.headers.get('x-forwarded-for') ||
+    req.headers.get('cf-connecting-ip') ||
+    'unknown';
+
+  const latitude =
+    url.searchParams.get('la') ||
+    req.headers.get('cf-iplatitude') ||
+    req.headers.get('x-vercel-ip-latitude');
+  const longitude =
+    url.searchParams.get('lo') ||
+    req.headers.get('cf-iplongitude') ||
+    req.headers.get('x-vercel-ip-longitude');
+  const countryCode =
+    req.headers.get('cf-ipcountry') || req.headers.get('x-vercel-ip-country');
   const lang = url.searchParams.get('l') || 'en';
 
   let geo;
@@ -25,11 +28,17 @@ export default async function handler(req) {
         `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&accept-language=${lang}`,
         { headers: { 'User-Agent': '1998media/1.0' } }
       );
-      
+
       if (response.ok) {
         const data = await response.json();
         const country = data.address?.country || countryCode || '?';
-        const city = data.address?.city || data.address?.town || data.address?.village || data.address?.suburb || data.address?.district || data.address?.county;
+        const city =
+          data.address?.city ||
+          data.address?.town ||
+          data.address?.village ||
+          data.address?.suburb ||
+          data.address?.district ||
+          data.address?.county;
         geo = {
           city: city || country,
           state: data.address?.state || country,

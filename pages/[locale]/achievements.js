@@ -29,35 +29,35 @@ export default function Achievements(props) {
   const achievementMapData = {
     'Developer Tools in Hong Kong': {
       coords: [113.9745954, 22.3526409],
-      color: 'b8172a'
+      color: 'b8172a',
     },
     'Developer Tools in Maldives': {
       coords: [73.5089, 4.1755],
-      color: 'dc143c'
+      color: 'dc143c',
     },
     'Developer Tools in Taiwan': {
       coords: [121.1945767, 25.0169013],
-      color: '1f89e3'
+      color: '1f89e3',
     },
     'Developer Tools in the United Kingdom': {
       coords: [-9.7459993, 54.4364324],
-      color: '0b236f'
+      color: '0b236f',
     },
     'Developer Tools in the United States': {
       coords: [-95.7129, 37.0902],
-      color: '0033a0'
+      color: '0033a0',
     },
     'Developer Tools in Canada': {
       coords: [-106.3468, 56.1304],
-      color: 'ff0000'
+      color: 'ff0000',
     },
     'Graphics & Design App in Uzbekistan': {
       coords: [64.5853, 41.3775],
-      color: '0099b5'
+      color: '0099b5',
     },
     'Developer Tools in Kuwait': {
       coords: [47.4818, 29.3117],
-      color: '007a3d'
+      color: '007a3d',
     },
   };
 
@@ -212,9 +212,14 @@ export default function Achievements(props) {
     // Priority: explicit toggle (darkmode-js) > Tailwind dark class > system preference
     const checkDarkMode = () => {
       if (typeof window !== 'undefined') {
-        const hasDarkmodeClass = document.body.classList.contains('darkmode--activated');
-        const hasDarkClass = document.documentElement.classList.contains('dark');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const hasDarkmodeClass = document.body.classList.contains(
+          'darkmode--activated'
+        );
+        const hasDarkClass =
+          document.documentElement.classList.contains('dark');
+        const prefersDark = window.matchMedia(
+          '(prefers-color-scheme: dark)'
+        ).matches;
 
         // Check if darkmode-js widget exists (means user can toggle)
         const darkmodeWidget = document.querySelector('.darkmode-toggle');
@@ -242,8 +247,9 @@ export default function Achievements(props) {
     // Watch for dark mode changes on both body and html
     const observer = new MutationObserver((mutations) => {
       // Check if class actually changed
-      const hasClassChange = mutations.some(mutation =>
-        mutation.type === 'attributes' && mutation.attributeName === 'class'
+      const hasClassChange = mutations.some(
+        (mutation) =>
+          mutation.type === 'attributes' && mutation.attributeName === 'class'
       );
 
       if (hasClassChange) {
@@ -317,10 +323,13 @@ export default function Achievements(props) {
       }
       // Fall back to browser language
       if (typeof window !== 'undefined') {
-        const browserLang = navigator.language || navigator.userLanguage || 'en';
+        const browserLang =
+          navigator.language || navigator.userLanguage || 'en';
         // Extract language code (e.g., 'zh-HK' -> 'zh-HK', 'en-US' -> 'en')
         if (browserLang.startsWith('zh')) {
-          return browserLang.includes('HK') || browserLang.includes('TW') || browserLang.includes('MO')
+          return browserLang.includes('HK') ||
+            browserLang.includes('TW') ||
+            browserLang.includes('MO')
             ? 'zh-HK'
             : 'zh';
         }
@@ -334,7 +343,9 @@ export default function Achievements(props) {
     const locale = getLocale();
 
     // Calculate center from all achievement coordinates
-    const allCoords = Object.values(achievementMapData).map((data) => data.coords);
+    const allCoords = Object.values(achievementMapData).map(
+      (data) => data.coords
+    );
     const allLats = allCoords.map((c) => c[1]);
     const allLons = allCoords.map((c) => c[0]);
     const centerLat = (Math.min(...allLats) + Math.max(...allLats)) / 2;
@@ -344,9 +355,14 @@ export default function Achievements(props) {
     // Priority: explicit toggle (darkmode-js) > Tailwind dark class > system preference
     const checkDarkMode = () => {
       if (typeof window !== 'undefined') {
-        const hasDarkmodeClass = document.body.classList.contains('darkmode--activated');
-        const hasDarkClass = document.documentElement.classList.contains('dark');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const hasDarkmodeClass = document.body.classList.contains(
+          'darkmode--activated'
+        );
+        const hasDarkClass =
+          document.documentElement.classList.contains('dark');
+        const prefersDark = window.matchMedia(
+          '(prefers-color-scheme: dark)'
+        ).matches;
 
         // Check if darkmode-js widget exists (means user can toggle)
         const darkmodeWidget = document.querySelector('.darkmode-toggle');
@@ -415,7 +431,9 @@ export default function Achievements(props) {
     map.current.on('load', () => {
       updateMarkers();
       // Hide attribution
-      const attribution = mapContainer.current?.querySelector('.maplibregl-ctrl-attrib');
+      const attribution = mapContainer.current?.querySelector(
+        '.maplibregl-ctrl-attrib'
+      );
       if (attribution) {
         attribution.style.display = 'none';
       }
@@ -424,9 +442,14 @@ export default function Achievements(props) {
       // Priority: explicit toggle (darkmode-js) > Tailwind dark class > system preference
       const checkDarkMode = () => {
         if (typeof window !== 'undefined') {
-          const hasDarkmodeClass = document.body.classList.contains('darkmode--activated');
-          const hasDarkClass = document.documentElement.classList.contains('dark');
-          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          const hasDarkmodeClass = document.body.classList.contains(
+            'darkmode--activated'
+          );
+          const hasDarkClass =
+            document.documentElement.classList.contains('dark');
+          const prefersDark = window.matchMedia(
+            '(prefers-color-scheme: dark)'
+          ).matches;
 
           // Check if darkmode-js widget exists (means user can toggle)
           const darkmodeWidget = document.querySelector('.darkmode-toggle');
@@ -452,7 +475,9 @@ export default function Achievements(props) {
 
     // Also hide attribution immediately if it exists
     const hideAttribution = () => {
-      const attribution = mapContainer.current?.querySelector('.maplibregl-ctrl-attrib');
+      const attribution = mapContainer.current?.querySelector(
+        '.maplibregl-ctrl-attrib'
+      );
       if (attribution) {
         attribution.style.display = 'none';
       }
@@ -462,7 +487,10 @@ export default function Achievements(props) {
     const attributionInterval = setInterval(hideAttribution, 100);
 
     // Clear interval after 5 seconds
-    const timeoutId = setTimeout(() => clearInterval(attributionInterval), 5000);
+    const timeoutId = setTimeout(
+      () => clearInterval(attributionInterval),
+      5000
+    );
 
     return () => {
       clearInterval(attributionInterval);
@@ -519,7 +547,9 @@ export default function Achievements(props) {
       // If nothing is hovered, show all markers in their original colors and large size
       // If something is hovered, highlight the hovered one (large) and gray out others (small)
       const color = hoveredAchievement
-        ? (isHovered ? `#${mapData.color}` : '#808080')
+        ? isHovered
+          ? `#${mapData.color}`
+          : '#808080'
         : `#${mapData.color}`;
       // All markers are large by default, only smaller when something else is hovered
       const size = hoveredAchievement ? (isHovered ? 20 : 12) : 20;
@@ -556,7 +586,6 @@ export default function Achievements(props) {
       markersRef.current.push(marker);
     });
   }, [hoveredAchievement]);
-
 
   // Update markers when hover state changes
   useEffect(() => {
@@ -595,7 +624,9 @@ export default function Achievements(props) {
       animationFrame = requestAnimationFrame(autoScroll);
     };
 
-    scrollContainer.addEventListener('wheel', handleInteraction, { passive: true });
+    scrollContainer.addEventListener('wheel', handleInteraction, {
+      passive: true,
+    });
     scrollContainer.addEventListener('touchstart', handleInteraction);
     scrollContainer.addEventListener('touchmove', handleInteraction);
     scrollContainer.addEventListener('mousedown', handleInteraction);
@@ -628,7 +659,9 @@ export default function Achievements(props) {
                 className="text-3xl font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl"
                 href="#achievements"
               >
-                {i18n('Trusted by customers from over 175 countries and regions')}
+                {i18n(
+                  'Trusted by customers from over 175 countries and regions'
+                )}
                 <i className="far fa-earth-americas ml-2"></i>
               </a>
               <p className="mt-3 text-xl text-gray-500 sm:mt-4">
@@ -651,48 +684,56 @@ export default function Achievements(props) {
                     style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                   >
                     <div className="flex gap-5">
-                      {[...achievements, ...achievements].map((achievement, index) => {
-                        const isHovered = hoveredAchievement === achievement.title;
-                        const isGrayedOut = hoveredAchievement && !isHovered;
+                      {[...achievements, ...achievements].map(
+                        (achievement, index) => {
+                          const isHovered =
+                            hoveredAchievement === achievement.title;
+                          const isGrayedOut = hoveredAchievement && !isHovered;
 
-                        // Extract color class for border - simplified mapping
-                        let borderColorClass = 'border-orange-500';
-                        if (achievement.color.includes('blue')) borderColorClass = 'border-blue-500';
-                        if (achievement.color.includes('teal')) borderColorClass = 'border-teal-500';
-                        if (achievement.color.includes('sky')) borderColorClass = 'border-sky-500';
-                        if (achievement.color.includes('green')) borderColorClass = 'border-green-500';
-                        if (achievement.color.includes('red')) borderColorClass = 'border-red-500';
+                          // Extract color class for border - simplified mapping
+                          let borderColorClass = 'border-orange-500';
+                          if (achievement.color.includes('blue'))
+                            borderColorClass = 'border-blue-500';
+                          if (achievement.color.includes('teal'))
+                            borderColorClass = 'border-teal-500';
+                          if (achievement.color.includes('sky'))
+                            borderColorClass = 'border-sky-500';
+                          if (achievement.color.includes('green'))
+                            borderColorClass = 'border-green-500';
+                          if (achievement.color.includes('red'))
+                            borderColorClass = 'border-red-500';
 
-                        return (
-                          <div
-                            key={achievement.title + achievement.year + index}
-                            className={`flex-shrink-0 min-w-[200px] max-w-[300px] flex flex-col p-6 rounded-xl bg-white/50 dark:bg-black/50 backdrop-blur-md shadow-lg xl:rounded-[30px] transition-all duration-500 border-2 ${isHovered
-                              ? `${borderColorClass} opacity-100 scale-105`
-                              : isGrayedOut
-                                ? 'opacity-40 grayscale border-transparent'
-                                : 'border-transparent hover:border-black dark:hover:border-white hover:scale-105'
-                              }`}
-                            onMouseEnter={() => {
-                              setHoveredAchievement(achievement.title);
-                            }}
-                            onMouseLeave={() => {
-                              setHoveredAchievement(null);
-                            }}
-                          >
-                            <div className="order-3 mt-1 text-md leading-6 font-medium text-gray-400">
-                              {achievement.year}
-                            </div>
-                            <div className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500 line-clamp-2 min-h-[3.5rem]">
-                              {i18n(achievement.title)} {achievement.flag}
-                            </div>
+                          return (
                             <div
-                              className={`order-1 text-4xl font-extrabold ${achievement.color}`}
+                              key={achievement.title + achievement.year + index}
+                              className={`flex-shrink-0 min-w-[200px] max-w-[300px] flex flex-col p-6 rounded-xl bg-white/50 dark:bg-black/50 backdrop-blur-md shadow-lg xl:rounded-[30px] transition-all duration-500 border-2 ${
+                                isHovered
+                                  ? `${borderColorClass} opacity-100 scale-105`
+                                  : isGrayedOut
+                                    ? 'opacity-40 grayscale border-transparent'
+                                    : 'border-transparent hover:border-black dark:hover:border-white hover:scale-105'
+                              }`}
+                              onMouseEnter={() => {
+                                setHoveredAchievement(achievement.title);
+                              }}
+                              onMouseLeave={() => {
+                                setHoveredAchievement(null);
+                              }}
                             >
-                              {i18n(achievement.rank)}
+                              <div className="order-3 mt-1 text-md leading-6 font-medium text-gray-400">
+                                {achievement.year}
+                              </div>
+                              <div className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500 line-clamp-2 min-h-[3.5rem]">
+                                {i18n(achievement.title)} {achievement.flag}
+                              </div>
+                              <div
+                                className={`order-1 text-4xl font-extrabold ${achievement.color}`}
+                              >
+                                {i18n(achievement.rank)}
+                              </div>
                             </div>
-                          </div>
-                        );
-                      }
+                          );
+                        }
                       )}
                     </div>
                   </div>

@@ -10,16 +10,19 @@ export default async function handler(req) {
       // Modify URL, say https://www.apple.com to https://apple.com
       const modURL = url.replace('www.', '');
 
-      const response = await fetch('https://tools.applemediaservices.com/api/short-link/shorten', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-csrf-token': process.env.APPLE_SHORTEN_CSRF_TOKEN || '',
-          cookie: process.env.APPLE_SHORTEN_COOKIE || '',
-          pragma: 'no-cache',
-        },
-        body: JSON.stringify({ url: modURL }),
-      });
+      const response = await fetch(
+        'https://tools.applemediaservices.com/api/short-link/shorten',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-csrf-token': process.env.APPLE_SHORTEN_CSRF_TOKEN || '',
+            cookie: process.env.APPLE_SHORTEN_COOKIE || '',
+            pragma: 'no-cache',
+          },
+          body: JSON.stringify({ url: modURL }),
+        }
+      );
       const data = await response.json();
       return new Response(JSON.stringify(data), {
         status: 200,

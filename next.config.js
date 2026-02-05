@@ -37,11 +37,11 @@ const nextConfig = {
   },
 
   // Cloudflare Pages requires specific image optimization settings or unoptimized images
-  // if you are not using a specific loader. 
+  // if you are not using a specific loader.
   // For Next.js on Cloudflare Pages (via @cloudflare/next-on-pages), images usually work with some config,
   // but standard Next.js Image Optimization API (sharp) isn't supported out of the box on Edge.
   // We'll keep it as is, but be aware.
-  
+
   async rewrites() {
     return [
       {

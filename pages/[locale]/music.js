@@ -49,7 +49,9 @@ export default function Music(props) {
       })
       .catch(() => {
         // Try Spotify as fallback before charts
-        fetch(`/api/music?provider=spotify&path=me/top/tracks&time_range=medium_term`)
+        fetch(
+          `/api/music?provider=spotify&path=me/top/tracks&time_range=medium_term`
+        )
           .then((response) => response.json())
           .then((data) => {
             if (data.data && data.data.length > 0) {
@@ -57,7 +59,9 @@ export default function Music(props) {
               Promise.all(
                 data.data.map((spotifyTrack) => {
                   const searchQuery = `${spotifyTrack.attributes.name} ${spotifyTrack.attributes.artistName}`;
-                  return fetch(`/api/music?path=catalog/us/search?term=${encodeURIComponent(searchQuery)}&types=songs&limit=1`)
+                  return fetch(
+                    `/api/music?path=catalog/us/search?term=${encodeURIComponent(searchQuery)}&types=songs&limit=1`
+                  )
                     .then((res) => res.json())
                     .then((searchData) => {
                       if (searchData.results?.songs?.data?.[0]) {
@@ -399,12 +403,16 @@ export default function Music(props) {
               <div className="flex flex-col max-h-[50vh]">
                 <div className="sticky top-0 z-10 flex items-start justify-between text-sm md:text-2xl font-bold dark:text-white p-2 bg-white/95 dark:bg-black/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 rounded-t-xl md:rounded-t-2xl">
                   {i18n('My Recent Playlist')}
-                  <span className={`text-sm ml-3 ${musicSource === 'spotify' ? 'text-green-600' : 'text-red-600'}`}>
+                  <span
+                    className={`text-sm ml-3 ${musicSource === 'spotify' ? 'text-green-600' : 'text-red-600'}`}
+                  >
                     {musicSource === 'spotify' ? (
                       <>
                         <i className="fab fa-spotify mr-1"></i>Spotify
                       </>
-                    ) : i18n(' Music')}
+                    ) : (
+                      i18n(' Music')
+                    )}
                   </span>
                 </div>
                 <div className="overflow-auto">
@@ -580,17 +588,18 @@ export default function Music(props) {
                             <div
                               key={index}
                               data-lyric-index={index}
-                              className={`transition-all duration-300 text-left px-4 relative ${isUserScrolling
-                                ? 'text-gray-300 dark:text-gray-400 text-base'
-                                : index === currentLyricIndex
-                                  ? 'font-bold text-lg'
-                                  : index < currentLyricIndex
-                                    ? 'text-gray-400 dark:text-gray-500 text-base blur-sm'
-                                    : 'text-gray-400 dark:text-gray-500 text-base'
-                                }`}
+                              className={`transition-all duration-300 text-left px-4 relative ${
+                                isUserScrolling
+                                  ? 'text-gray-300 dark:text-gray-400 text-base'
+                                  : index === currentLyricIndex
+                                    ? 'font-bold text-lg'
+                                    : index < currentLyricIndex
+                                      ? 'text-gray-400 dark:text-gray-500 text-base blur-sm'
+                                      : 'text-gray-400 dark:text-gray-500 text-base'
+                              }`}
                             >
                               {index === currentLyricIndex &&
-                                !isUserScrolling ? (
+                              !isUserScrolling ? (
                                 // Current line with progress bar text mask
                                 <>
                                   {/* Background text (gray) */}
@@ -685,7 +694,7 @@ export default function Music(props) {
                         (item) => item.id === currentPlaying.id
                       ) +
                         1) %
-                      music.length
+                        music.length
                     ].attributes.name
                   }
                 </b>{' '}

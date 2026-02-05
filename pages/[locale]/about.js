@@ -78,7 +78,9 @@ export default function About(props) {
           >
             <button
               onClick={() => handleNavigate('down')}
-              disabled={sections.indexOf(currentSection) === sections.length - 1}
+              disabled={
+                sections.indexOf(currentSection) === sections.length - 1
+              }
               className="flex items-center justify-center w-12 h-12 rounded-xl xl:rounded-[25px] bg-gradient-to-b from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 border-2 border-gray-400 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:from-gray-200 hover:to-gray-300 dark:hover:from-gray-700 dark:hover:to-gray-800 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-lg hover:shadow-xl font-semibold"
               aria-label="Navigate down"
             >
