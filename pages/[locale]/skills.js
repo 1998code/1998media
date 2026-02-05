@@ -396,11 +396,10 @@ export default function Skills(props) {
                     key={tab.id}
                     ref={(el) => (desktopTabRefs.current[tab.id] = el)}
                     onClick={() => handleTabChange(tab.id)}
-                    className={`relative z-10 px-3 py-2 text-xs font-medium rounded-xl transition-all duration-300 ${
-                      activeTab === tab.id
+                    className={`relative z-10 px-3 py-2 text-xs font-medium rounded-xl transition-all duration-300 ${activeTab === tab.id
                         ? 'text-white'
                         : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
-                    }`}
+                      }`}
                   >
                     <i className={`far ${tab.icon} mr-1`}></i>
                     {i18n(tab.label)}
@@ -411,7 +410,7 @@ export default function Skills(props) {
           </div>
 
           {/* Tab Switcher - Mobile & Tablet */}
-          <div className="flex justify-center mt-6 lg:hidden">
+          <div className="flex justify-start mt-6 lg:hidden">
             <div className="relative flex bg-white/50 dark:bg-black/50 backdrop-blur-md rounded-2xl p-1 border border-gray-200 dark:border-gray-700 xl:rounded-[20px]">
               {/* Sliding Background */}
               <div
@@ -423,11 +422,10 @@ export default function Skills(props) {
                   key={tab.id}
                   ref={(el) => (mobileTabRefs.current[tab.id] = el)}
                   onClick={() => handleTabChange(tab.id)}
-                  className={`relative z-10 px-3 py-2 text-xs font-medium rounded-xl transition-all duration-300 ${
-                    activeTab === tab.id
+                  className={`relative z-10 px-3 py-2 text-xs font-medium rounded-xl transition-all duration-300 ${activeTab === tab.id
                       ? 'text-white'
                       : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
-                  }`}
+                    }`}
                 >
                   <i className={`far ${tab.icon} mr-1`}></i>
                   {i18n(tab.label)}

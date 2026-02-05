@@ -125,17 +125,16 @@ export default function WhatsAppChat({ i18n: i18nData }) {
 
   return (
     <div
-      className={`fixed bottom-6 right-6 z-[102] transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+      className={`fixed bottom-6 right-6 z-[102] max-w-full transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
       style={{ pointerEvents: 'none' }}
     >
       {/* Chat Popup with Intercom-style design */}
       {isOpen && (
         <div
-          className={`absolute bottom-16 right-0 w-[380px] bg-white dark:bg-gray-900 rounded-3xl shadow-2xl overflow-hidden mb-2 transition-all duration-300 ease-out ${
-            isAnimating
+          className={`absolute bottom-16 right-0 w-[380px] bg-white dark:bg-gray-900 rounded-3xl shadow-2xl overflow-hidden mb-2 transition-all duration-300 ease-out ${isAnimating
               ? 'opacity-100 translate-y-0 scale-100'
               : 'opacity-0 translate-y-8 scale-50'
-          }`}
+            }`}
           style={{
             boxShadow:
               '0 12px 48px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
@@ -227,11 +226,10 @@ export default function WhatsAppChat({ i18n: i18nData }) {
                 <button
                   onClick={handleSend}
                   disabled={!message.trim()}
-                  className={`rounded-xl px-4 transition-all duration-200 flex items-center justify-center min-w-[44px] ${
-                    message.trim()
+                  className={`rounded-xl px-4 transition-all duration-200 flex items-center justify-center min-w-[44px] ${message.trim()
                       ? 'bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white shadow-md hover:shadow-lg'
                       : 'bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed'
-                  }`}
+                    }`}
                 >
                   <i className="fas fa-paper-plane text-lg"></i>
                 </button>

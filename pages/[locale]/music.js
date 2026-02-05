@@ -6,6 +6,7 @@ export default function Music(props) {
   const [usingCharts, setUsingCharts] = useState(false);
   // Track music source
   const [musicSource, setMusicSource] = useState('apple'); // 'apple', 'spotify', or 'charts'
+  const [isMobile, setIsMobile] = useState(false);
   const loggedMissingKeys = useRef(new Set());
 
   function i18n(key) {
@@ -25,7 +26,16 @@ export default function Music(props) {
   }
 
   useEffect(() => {
+    // Detect mobile device
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
     fetchMusicList();
+
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   const [timer, setTimer] = useState(0);
@@ -369,14 +379,14 @@ export default function Music(props) {
   const progress = ((timer % 30) / 30) * 100;
 
   return (
-    <div className="fixed w-screen flex items-center justify-center bottom-0 md:bottom-5 z-[10] pointer-events-none">
+    <div className="fixed max-w-full w-full flex items-center justify-center bottom-0 md:bottom-5 z-[10] pointer-events-none left-0 right-0">
       {music && music.length > 0 && currentPlaying ? (
         // <div
         //   className="group flex items-center w-full md:w-fit h-[90px] md:h-[80px] p-1 shadow md:border border-white bg-white/50 dark:bg-black/50 hover:bg-gradient-to-r from-white/50 via-white to-white dark:from-black/50 dark:via-[#808080] dark:to-white dark:shadow-black backdrop-blur-lg md:rounded-xl">
         <div className="group relative flex items-center w-full md:w-fit h-[90px] md:h-[80px] p-1 shadow bg-white/50 dark:bg-black/50 dark:hover:bg-black dark:shadow-black backdrop-blur-lg md:rounded-xl transition-all pointer-events-auto">
           {/* Progress bar border - Light mode */}
           <div
-            className="dark:hidden absolute inset-0 rounded-xl pointer-events-none z-[1]"
+            className="hidden md:block dark:hidden absolute inset-0 rounded-xl pointer-events-none z-[1]"
             style={{
               background: `conic-gradient(from 0deg, ${musicSource === 'spotify' ? '#22c55e' : '#ef4444'} 0%, ${musicSource === 'spotify' ? '#22c55e' : '#ef4444'} ${progress}%, #000000 ${progress}%, #000000 100%)`,
               padding: '2px',
@@ -388,7 +398,7 @@ export default function Music(props) {
           />
           {/* Progress bar border - Dark mode */}
           <div
-            className="hidden dark:block absolute inset-0 rounded-xl pointer-events-none z-[1]"
+            className="hidden md:dark:block absolute inset-0 rounded-xl pointer-events-none z-[1]"
             style={{
               background: `conic-gradient(from 0deg, ${musicSource === 'spotify' ? '#22c55e' : '#ef4444'} 0%, ${musicSource === 'spotify' ? '#22c55e' : '#ef4444'} ${progress}%, #ffffff ${progress}%, #ffffff 100%)`,
               padding: '2px',
@@ -399,6 +409,7 @@ export default function Music(props) {
             }}
           />
           <Tooltip
+            isDisabled={isMobile}
             content={
               <div className="flex flex-col max-h-[50vh]">
                 <div className="sticky top-0 z-10 flex items-start justify-between text-sm md:text-2xl font-bold dark:text-white p-2 bg-white/95 dark:bg-black/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 rounded-t-xl md:rounded-t-2xl">
@@ -503,7 +514,7 @@ export default function Music(props) {
             placement="top-center"
             className="min-w-[50px] mb-2 md:mb-3 p-0 border text-xs dark:text-white bg-white/50 dark:bg-black backdrop-blur-lg rounded-xl md:rounded-2xl"
           >
-            <div className="relative group/album md:absolute md:-left-7 md:top-2 min-w-[65px] h-[65px] z-[2]">
+            <div className="relative group/album ml-2 md:ml-0 md:absolute md:-left-7 md:top-2 min-w-[65px] h-[65px] z-[2]">
               <a href={currentPlaying.attributes?.url} target="_blank">
                 <img
                   alt={currentPlaying.attributes.name}
@@ -526,6 +537,7 @@ export default function Music(props) {
           </Tooltip>
           <div className="ml-12 flex items-center w-full h-full">
             <Tooltip
+              isDisabled={isMobile}
               content={
                 <div className="flex flex-col max-w-[450px] max-h-[40vh]">
                   <div className="sticky top-0 z-10 text-sm md:text-2xl font-bold dark:text-white p-2 bg-white/95 dark:bg-black/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 rounded-t-xl md:rounded-t-2xl">
@@ -588,18 +600,17 @@ export default function Music(props) {
                             <div
                               key={index}
                               data-lyric-index={index}
-                              className={`transition-all duration-300 text-left px-4 relative ${
-                                isUserScrolling
-                                  ? 'text-gray-300 dark:text-gray-400 text-base'
-                                  : index === currentLyricIndex
-                                    ? 'font-bold text-lg'
-                                    : index < currentLyricIndex
-                                      ? 'text-gray-400 dark:text-gray-500 text-base blur-sm'
-                                      : 'text-gray-400 dark:text-gray-500 text-base'
-                              }`}
+                              className={`transition-all duration-300 text-left px-4 relative ${isUserScrolling
+                                ? 'text-gray-300 dark:text-gray-400 text-base'
+                                : index === currentLyricIndex
+                                  ? 'font-bold text-lg'
+                                  : index < currentLyricIndex
+                                    ? 'text-gray-400 dark:text-gray-500 text-base blur-sm'
+                                    : 'text-gray-400 dark:text-gray-500 text-base'
+                                }`}
                             >
                               {index === currentLyricIndex &&
-                              !isUserScrolling ? (
+                                !isUserScrolling ? (
                                 // Current line with progress bar text mask
                                 <>
                                   {/* Background text (gray) */}
@@ -694,7 +705,7 @@ export default function Music(props) {
                         (item) => item.id === currentPlaying.id
                       ) +
                         1) %
-                        music.length
+                      music.length
                     ].attributes.name
                   }
                 </b>{' '}

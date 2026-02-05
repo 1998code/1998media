@@ -111,20 +111,20 @@ export default function Navigation(props) {
   // Convert sections to StaggeredMenu items
   const menuItems = props.sections
     ? props.sections.map((section) => ({
-        label: i18n(
-          section.charAt(0).toUpperCase() +
-            section.replace(/ai/g, 'AI').slice(1).replace(/-/g, ' ')
-        ),
-        link: `#${section}`,
-        ariaLabel: `Go to ${section}`,
-        icon: <i className={`fad fa-${sectionIconMap[section]}`}></i>,
-      }))
+      label: i18n(
+        section.charAt(0).toUpperCase() +
+        section.replace(/ai/g, 'AI').slice(1).replace(/-/g, ' ')
+      ),
+      link: `#${section}`,
+      ariaLabel: `Go to ${section}`,
+      icon: <i className={`fad fa-${sectionIconMap[section]}`}></i>,
+    }))
     : [];
 
   return (
     <div
       id="navigation"
-      className={`group fixed w-full flex items-center md:justify-center p-3.5 sm:py-5 select-none z-[100] transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'}`}
+      className={`group fixed max-w-full w-full left-0 right-0 flex items-center md:justify-center p-3.5 sm:py-5 select-none z-[100] transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'}`}
     >
       <div
         className={`flex bg-white/50 dark:bg-black/50 dark:text-white backdrop-blur-md shadow dark:shadow-gray-900 items-center pl-1 rounded-full transition-all`}
@@ -177,7 +177,7 @@ export default function Navigation(props) {
                   >
                     {i18n(
                       section.charAt(0).toUpperCase() +
-                        section.replace(/ai/g, 'AI').slice(1).replace(/-/g, ' ')
+                      section.replace(/ai/g, 'AI').slice(1).replace(/-/g, ' ')
                     )}
                   </span>
                 </div>
