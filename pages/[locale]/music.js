@@ -600,17 +600,18 @@ export default function Music(props) {
                             <div
                               key={index}
                               data-lyric-index={index}
-                              className={`transition-all duration-300 text-left px-4 relative ${isUserScrolling
-                                ? 'text-gray-300 dark:text-gray-400 text-base'
-                                : index === currentLyricIndex
-                                  ? 'font-bold text-lg'
-                                  : index < currentLyricIndex
-                                    ? 'text-gray-400 dark:text-gray-500 text-base blur-sm'
-                                    : 'text-gray-400 dark:text-gray-500 text-base'
-                                }`}
+                              className={`transition-all duration-300 text-left px-4 relative ${
+                                isUserScrolling
+                                  ? 'text-gray-300 dark:text-gray-400 text-base'
+                                  : index === currentLyricIndex
+                                    ? 'font-bold text-lg'
+                                    : index < currentLyricIndex
+                                      ? 'text-gray-400 dark:text-gray-500 text-base blur-sm'
+                                      : 'text-gray-400 dark:text-gray-500 text-base'
+                              }`}
                             >
                               {index === currentLyricIndex &&
-                                !isUserScrolling ? (
+                              !isUserScrolling ? (
                                 // Current line with progress bar text mask
                                 <>
                                   {/* Background text (gray) */}
@@ -705,7 +706,7 @@ export default function Music(props) {
                         (item) => item.id === currentPlaying.id
                       ) +
                         1) %
-                      music.length
+                        music.length
                     ].attributes.name
                   }
                 </b>{' '}
