@@ -170,7 +170,7 @@ export default function Blog(props) {
   }, [moment]);
 
   return (
-    <div className="relative h-full w-full max-w-7xl mx-auto flex flex-col items-start px-4 sm:px-6 lg:px-8 pt-24 overflow-y-auto scrollbar-hide space-y-16">
+    <div className="relative h-full w-full max-w-7xl mx-auto flex flex-col items-start px-4 sm:px-6 lg:px-8 pt-24 overflow-y-auto scrollbar-hide space-y-8 md:space-y-16">
       {/* Blog */}
       <div id="blog" className="relative w-full space-y-8">
         <div className="text-left flex flex-wrap">

@@ -435,14 +435,14 @@ export default function Home({
 
                   <section
                     id="ai"
-                    className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0 overflow-x-hidden"
+                    className="snap-start lg:h-dvh lg:min-h-dvh w-full flex-shrink-0 overflow-x-hidden"
                   >
                     <AI i18n={I18n} dalle={dalleData} />
                   </section>
 
                   <section
                     id="blog"
-                    className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0 overflow-x-hidden"
+                    className="snap-start lg:h-dvh lg:min-h-dvh w-full flex-shrink-0 overflow-x-hidden"
                   >
                     <Blog i18n={I18n} blogData={blogData} locale={locale} />
                   </section>
@@ -456,7 +456,7 @@ export default function Home({
 
                   <section
                     id="faq"
-                    className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0 overflow-x-hidden"
+                    className="snap-start lg:h-dvh lg:min-h-dvh w-full flex-shrink-0 overflow-x-hidden"
                   >
                     <Faq i18n={I18n} />
                   </section>

@@ -100,32 +100,35 @@ export default function Faq(props) {
   return (
     <div
       id="faq"
-      className="max-w-7xl mx-auto lg:min-h-[75vh] py-16 px-4 sm:px-6 lg:py-20 lg:px-8 md:grid md:grid-cols-2 lg:grid-cols-3 lg:gap-8 items-center"
+      className="relative h-full w-full max-w-7xl mx-auto flex flex-col items-start px-4 sm:px-6 lg:px-8 pt-24 overflow-y-auto scrollbar-hide"
     >
-      <div>
-        <a
-          className="text-3xl font-extrabold text-gray-900 dark:text-gray-100"
-          href="#faq"
-        >
-          {i18n('Ask')}
-          <i className="fa fa-question-circle ml-2"></i>
-        </a>
-        <p className="mt-4 text-lg text-gray-500">
-          {i18n('Cannot find what you are looking for')}?
-          <br />
+      <div className="relative w-full space-y-8">
+        <div className="text-left flex flex-wrap items-center justify-between">
           <a
-            href="#contact"
-            className="font-medium text-orange-600 dark:text-orange-300 hover:text-orange-500"
+            className="text-3xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl"
+            href="#faq"
           >
-            {i18n('Contact now')}
-            <i className="ml-1 far fa-arrow-circle-down"></i>
+            {i18n('Frequently Asked Questions')}
+            <i className="fa fa-question-circle ml-2"></i>
           </a>
-        </p>
-      </div>
-      <div className="mt-12 lg:mt-0 lg:col-span-2">
-        <dl className="space-y-12">
+          <div className="flex flex-col sm:items-end">
+            <p className="text-xl text-gray-500">
+              {i18n('Cannot find what you are looking for')}?
+            </p>
+            <p className="text-xl text-gray-500">
+              <a
+                href="#contact"
+                className="font-medium text-orange-600 dark:text-orange-300 hover:text-orange-500"
+              >
+                {i18n('Contact now')}
+                <i className="ml-1 far fa-arrow-circle-down"></i>
+              </a>
+            </p>
+          </div>
+        </div>
+        <dl className="space-y-8">
           {faqs.map((faq) => (
-            <div key={faq.question}>
+            <div key={faq.question} className="bg-white/50 dark:bg-black/50 backdrop-blur-md rounded-xl p-6 border border-gray-200 dark:border-gray-700 xl:rounded-[25px] transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
               <dt className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
                 {i18n(faq.question)}
               </dt>
