@@ -372,7 +372,7 @@ export default function Header(props) {
             }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="group relative px-10 py-4 rounded-full text-orange-500 font-medium text-xl transition-all duration-300 border-0 bg-white/80 dark:bg-black/20 backdrop-blur-sm shadow-lg shadow-orange-500/10"
+            className="group relative px-10 py-4 rounded-full text-orange-500 font-medium text-xl transition-all duration-300 border-0 bg-white/80 dark:bg-black/20 backdrop-blur-sm shadow-lg shadow-orange-500/10 hover:shadow-orange-500/40 hover:bg-white dark:hover:bg-black/40"
           >
             {/* Background shimmer effect - vertical */}
             <div className="absolute inset-0 rounded-full overflow-hidden pointer-events-none">
