@@ -128,7 +128,10 @@ export default function Faq(props) {
         </div>
         <dl className="space-y-8">
           {faqs.map((faq) => (
-            <div key={faq.question} className="bg-white/50 dark:bg-black/50 backdrop-blur-md rounded-xl p-6 border border-gray-200 dark:border-gray-700 xl:rounded-[25px] transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
+            <div
+              key={faq.question}
+              className="bg-white/50 dark:bg-black/50 backdrop-blur-md rounded-xl p-6 border border-gray-200 dark:border-gray-700 xl:rounded-[25px] transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
+            >
               <dt className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
                 {i18n(faq.question)}
               </dt>
