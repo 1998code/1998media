@@ -3,6 +3,7 @@ name: Update Version
 on:
   push:
     branches:
+      - nextJS15
       - nextJS12
       - html
   schedule:

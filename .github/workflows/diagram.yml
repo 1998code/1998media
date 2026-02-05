@@ -3,6 +3,7 @@ on:
   workflow_dispatch: {}
   push:
     branches:
+      - nextJS15
       - nextJS12
 jobs:
   get_data:

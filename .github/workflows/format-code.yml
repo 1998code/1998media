@@ -3,6 +3,7 @@ name: Format Code
 on:
   push:
     branches:
+      - nextJS15
       - nextJS12
       - html
   workflow_dispatch: {}
