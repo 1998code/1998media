@@ -59,6 +59,18 @@ export default function Home({
   const [darkmodeReady, setDarkmodeReady] = useState(false);
   const [interacted, setInteracted] = useState(false);
   const [isScrollingToTop, setIsScrollingToTop] = useState(false);
+  const [bgType, setBgType] = useState('colorbends');
+  const [bgDirection, setBgDirection] = useState(0);
+
+  const changeBg = (type, dir) => {
+    setBgDirection(dir);
+    setBgType(type);
+  };
+
+  useEffect(() => {
+    const types = ['aurora', 'colorbends', 'galaxy', 'gridscan', 'orb', 'prism', 'prismaticburst', 'iridescence'];
+    setBgType(types[Math.floor(Math.random() * types.length)]);
+  }, []);
 
   const containerRef = useRef(null);
   const loggedMissingKeys = useRef(new Set());
@@ -389,15 +401,13 @@ export default function Home({
               <section id="header" className="snap-start h-dvh w-full flex-shrink-0">
 
                 <Header
-
                   i18n={I18n}
-
                   onComplete={scrollToNext}
-
                   onReady={() => setIsReady(true)}
-
                   darkmodeReady={darkmodeReady}
-
+                  bgType={bgType}
+                  direction={bgDirection}
+                  setBg={changeBg}
                 />
 
               </section>
@@ -499,6 +509,9 @@ export default function Home({
                       onComplete={scrollToNext}
                       onReady={() => setIsReady(true)}
                       darkmodeReady={darkmodeReady}
+                      bgType={bgType}
+                      direction={bgDirection}
+                      setBg={changeBg}
                     />
                   </section>
 
