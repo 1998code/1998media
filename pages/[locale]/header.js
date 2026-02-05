@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
+import ColorBends from '../../components/ColorBends';
 
 export default function Header(props) {
   const [bannerVisible, setBannerVisible] = useState(false);
@@ -69,8 +70,24 @@ export default function Header(props) {
     <div
       id="header"
       onClick={() => props.onComplete && props.onComplete()}
-      className={`relative h-full w-full flex flex-col items-center justify-center bg-gradient-to-b dark:from-[var(--arc-palette-background)] dark:text-[var(--arc-palette-foregroundPrimary)] cursor-pointer`}
+      className={`relative h-full w-full flex flex-col items-center justify-center bg-transparent dark:text-[var(--arc-palette-foregroundPrimary)] cursor-pointer`}
     >
+      <div className="absolute inset-0 -z-10">
+        <ColorBends
+          colors={["#ff5c7a", "#8a5cff", "#00ffd1"]}
+          rotation={0}
+          speed={0.2}
+          scale={1}
+          frequency={1}
+          warpStrength={1}
+          mouseInfluence={1}
+          parallax={0.5}
+          noise={0.1}
+          transparent
+          autoRotate={0}
+        />
+      </div>
+
       <motion.h1
         variants={container}
         initial="hidden"
