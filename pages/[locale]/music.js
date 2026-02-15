@@ -459,7 +459,7 @@ export default function Music(props) {
       console.log('Translating to locale:', targetLocale);
 
       // Combine all lyrics into a single text with newline separators
-      const combinedText = parsedLyrics.map(line => line.text).join('\n');
+      const combinedText = parsedLyrics.map((line) => line.text).join('\n');
 
       // Make a single API call for all lyrics
       const response = await fetch(
@@ -713,11 +713,16 @@ export default function Music(props) {
                   <span>{i18n('Lyrics')}</span>
                   <button
                     onClick={toggleTranslation}
-                    disabled={isTranslating || !parsedLyrics || parsedLyrics.length === 0}
-                    className={`px-3 py-1 rounded-md text-[10px] md:text-xs font-bold transition-all ${isTranslated
-                      ? 'bg-blue-600 text-white shadow-sm'
-                      : 'text-gray-500 dark:text-gray-400 hover:dark:text-white'
-                      } ${(isTranslating || !parsedLyrics || parsedLyrics.length === 0) ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    disabled={
+                      isTranslating ||
+                      !parsedLyrics ||
+                      parsedLyrics.length === 0
+                    }
+                    className={`px-3 py-1 rounded-md text-[10px] md:text-xs font-bold transition-all ${
+                      isTranslated
+                        ? 'bg-blue-600 text-white shadow-sm'
+                        : 'text-gray-500 dark:text-gray-400 hover:dark:text-white'
+                    } ${isTranslating || !parsedLyrics || parsedLyrics.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
                   >
                     {isTranslating ? (
                       <i className="fa fa-circle-notch fa-spin" />
@@ -756,7 +761,9 @@ export default function Music(props) {
                     // Karaoke-style view with timestamps and auto-scroll
                     <div className="flex flex-col gap-3 py-2">
                       {parsedLyrics.map((line, index) => {
-                        const translatedLine = isTranslated ? translatedLyrics[index] : null;
+                        const translatedLine = isTranslated
+                          ? translatedLyrics[index]
+                          : null;
                         return (
                           <div
                             key={index}
@@ -780,23 +787,30 @@ export default function Music(props) {
                                 }
                               }
                             }}
-                            className={`transition-all duration-300 text-left pl-2 pr-4 py-1 relative break-words cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg ${index === currentLyricIndex
-                              ? 'font-bold'
-                              : ''
-                              }`}
+                            className={`transition-all duration-300 text-left pl-2 pr-4 py-1 relative break-words cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg ${
+                              index === currentLyricIndex ? 'font-bold' : ''
+                            }`}
                           >
                             {/* Translated lyrics (if available) - TOP and BIGGER - NO HIGHLIGHT */}
                             {isTranslated && translatedLine ? (
-                              <div className={
-                                index === currentLyricIndex
-                                  ? 'text-xl md:text-2xl font-bold text-gray-900 dark:text-white'
-                                  : 'text-base md:text-lg text-gray-500 dark:text-gray-400'
-                              }>
+                              <div
+                                className={
+                                  index === currentLyricIndex
+                                    ? 'text-xl md:text-2xl font-bold text-gray-900 dark:text-white'
+                                    : 'text-base md:text-lg text-gray-500 dark:text-gray-400'
+                                }
+                              >
                                 {translatedLine.text}
                               </div>
                             ) : (
                               // Original lyrics when no translation - WITH HIGHLIGHT
-                              <div className={index === currentLyricIndex ? 'text-xl md:text-2xl' : 'text-base md:text-lg'}>
+                              <div
+                                className={
+                                  index === currentLyricIndex
+                                    ? 'text-xl md:text-2xl'
+                                    : 'text-base md:text-lg'
+                                }
+                              >
                                 {index === currentLyricIndex ? (
                                   // Current line with progress bar text mask
                                   <div className="relative">
@@ -817,17 +831,22 @@ export default function Music(props) {
                                     </div>
                                   </div>
                                 ) : (
-                                  <span className="text-gray-500 dark:text-gray-400">{line.text}</span>
+                                  <span className="text-gray-500 dark:text-gray-400">
+                                    {line.text}
+                                  </span>
                                 )}
                               </div>
                             )}
 
                             {/* Original lyrics (if translation is enabled) - BOTTOM and SMALLER - WITH HIGHLIGHT */}
                             {isTranslated && translatedLine && (
-                              <div className={`mt-1 ${index === currentLyricIndex
-                                ? 'text-base md:text-lg'
-                                : 'text-sm md:text-base'
-                                }`}>
+                              <div
+                                className={`mt-1 ${
+                                  index === currentLyricIndex
+                                    ? 'text-base md:text-lg'
+                                    : 'text-sm md:text-base'
+                                }`}
+                              >
                                 {index === currentLyricIndex ? (
                                   // Current line with progress bar text mask
                                   <div className="relative">
@@ -848,7 +867,9 @@ export default function Music(props) {
                                     </div>
                                   </div>
                                 ) : (
-                                  <span className="text-gray-400 dark:text-gray-500">{line.text}</span>
+                                  <span className="text-gray-400 dark:text-gray-500">
+                                    {line.text}
+                                  </span>
                                 )}
                               </div>
                             )}
@@ -903,7 +924,7 @@ export default function Music(props) {
                   music[
                     (music.findIndex((item) => item.id === currentPlaying.id) +
                       1) %
-                    music.length
+                      music.length
                   ].attributes.name
                 }
               </b>{' '}
