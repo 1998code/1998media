@@ -20,6 +20,8 @@
 - **互動式股票投資組合** - 具有動態 SVG 圖表和詳細對話視窗的即時市場數據。
 - **動態畫廊** - 整合 Unsplash 多列顯示，具備無縫自動滾動和空間內容支持。
 - **性能優化** - 移除重量級依賴（如 Liveblocks, Spline），改用輕量級的 Framer Motion 動畫。
+- **頂級音樂播放模組** - 整合 Spotify Web Playback SDK 實現完整歌曲播放，並以 Apple Music 30秒同步試聽作為回退方案。
+- **動態歌詞引擎** - 支持「Live」（列表）與「Full」（卡拉OK）模式的同步歌詞，具備元數據過濾與自動滾動功能。
 
 ## 🚀 開始使用
 
@@ -42,8 +44,10 @@ npm run dev
 - **Framer Motion** - 流暢、輕量級的動畫。
 - **股票數據** - 從 Yahoo Finance API 獲取。
 - **i18n** - 透過本地 JSON 清單管理，具備動態翻譯回退機制。
+- **Spotify SDK** - 整合 Web Playback SDK 用於完整音軌串流與設備控制。
 - **部落格與 Trip.com** - 使用 RSS 饋送和 Trip.com REST API 實現即時更新。
 - **Unsplash** - 動態攝影統計數據和照片流。
+- **音樂數據** - 混合 Spotify, Apple Music 與 QQ Music API 以獲取元數據與試聽資源。
 
 ## 📐 架構
 

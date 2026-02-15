@@ -20,6 +20,8 @@ This website has been modernized into a **full-screen Slide-style experience**, 
 - **Interactive Stock Portfolio** - Real-time market data with dynamic SVG charts and detailed dialog views.
 - **Dynamic Gallery** - Multi-row Unsplash integration with seamless auto-scrolling and spatial content support.
 - **Performance Optimized** - Removed heavy dependencies (Liveblocks, Spline) in favor of lightweight Framer Motion animations.
+- **Premium Music Integration** - Full song playback via Spotify Web Playback SDK, with synchronized 30s previews as fallbacks for Apple Music.
+- **Dynamic Lyrics Engine** - Synchronized lyrics with "Live" (List) and "Full" (Karaoke) modes, featuring metadata filtering and auto-scroll.
 
 ## 🚀 Getting Started
 
@@ -42,8 +44,10 @@ This application leverages SSR to pre-render content, hiding complex API logic f
 - **Framer Motion** - Fluid, lightweight animations.
 - **Stock Data** - Fetched from Yahoo Finance API.
 - **i18n** - Managed via local JSON manifests with dynamic translation fallback.
+- **Spotify SDK** - Integrated Web Playback SDK for full track streaming and device control.
 - **Blog & Trip.com** - RSS feeds and Trip.com REST APIs for real-time updates.
 - **Unsplash** - Dynamic photography stats and photo streams.
+- **Music Data** - Hybrid integration of Spotify, Apple Music, and QQ Music APIs for metadata and previews.
 
 ## 📐 Architecture
 
