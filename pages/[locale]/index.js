@@ -492,7 +492,7 @@ export default function Home({
                     />
                   </section>
 
-                  <Music i18n={I18n} interacted={interacted} />
+                  <Music i18n={I18n} interacted={interacted} locale={locale} />
                 </>
               )}
             </div>

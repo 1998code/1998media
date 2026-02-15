@@ -344,5 +344,13 @@
         "Current": "Current",
         "Previous": "Previous",
         "Future": "Future"
+    },
+    "music": {
+        "Lyrics": "Lyrics",
+        "Now Playing": "Now Playing",
+        "My Recent Playlist": "My Recent Playlist",
+        "Next": "Next",
+        "Your browser does not support the audio element.": "Your browser does not support the audio element.",
+        " Music": " Music"
     }
 }

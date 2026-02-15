@@ -345,5 +345,13 @@
         "Current": "當前持倉",
         "Previous": "過往持倉",
         "Future": "未來持倉"
+    },
+    "music": {
+        "Lyrics": "歌詞",
+        "Now Playing": "正在播放",
+        "My Recent Playlist": "我的最近播放列表",
+        "Next": "下一首",
+        "Your browser does not support the audio element.": "您的瀏覽器不支援音訊元素。",
+        " Music": " 音樂"
     }
 }
