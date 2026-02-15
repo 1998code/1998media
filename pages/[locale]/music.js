@@ -330,7 +330,10 @@ export default function Music(props) {
 
         if (text) {
           // Filter out metadata lines (Lyrics by, Composed by, Produced by, etc.)
-          const isMetadata = /^(Lyrics|Composed|Produced|Arranged|Music|Written|Mixed|Mastered|Recorded|Vocal|Chorus|Engineer|Mixing|Recording|作曲|作詞|作词|編曲|编曲|監製|监制|製作人|制作人)\s*(by|:|：)/i.test(text);
+          const isMetadata =
+            /^(Lyrics|Composed|Produced|Arranged|Music|Written|Mixed|Mastered|Recorded|Vocal|Chorus|Engineer|Mixing|Recording|作曲|作詞|作词|編曲|编曲|監製|监制|製作人|制作人)\s*(by|:|：)/i.test(
+              text
+            );
           if (!isMetadata) {
             parsed.push({ time: timeInSeconds, text });
           }
@@ -649,23 +652,25 @@ export default function Music(props) {
                   <div className="flex gap-1 p-1 bg-gray-100 dark:bg-gray-800 rounded-lg ml-2">
                     <button
                       onClick={() => setLyricsMode('live')}
-                      className={`px-3 py-1 rounded-md text-[10px] md:text-xs font-bold transition-all ${lyricsMode === 'live'
-                        ? (musicSource === 'spotify'
-                          ? 'bg-green-600'
-                          : 'bg-red-500') + ' text-white shadow-sm'
-                        : 'text-gray-500 dark:text-gray-400 hover:dark:text-white'
-                        }`}
+                      className={`px-3 py-1 rounded-md text-[10px] md:text-xs font-bold transition-all ${
+                        lyricsMode === 'live'
+                          ? (musicSource === 'spotify'
+                              ? 'bg-green-600'
+                              : 'bg-red-500') + ' text-white shadow-sm'
+                          : 'text-gray-500 dark:text-gray-400 hover:dark:text-white'
+                      }`}
                     >
                       Live
                     </button>
                     <button
                       onClick={() => setLyricsMode('full')}
-                      className={`px-3 py-1 rounded-md text-[10px] md:text-xs font-bold transition-all ${lyricsMode === 'full'
-                        ? (musicSource === 'spotify'
-                          ? 'bg-green-600'
-                          : 'bg-red-500') + ' text-white shadow-sm'
-                        : 'text-gray-500 dark:text-gray-400 hover:dark:text-white'
-                        }`}
+                      className={`px-3 py-1 rounded-md text-[10px] md:text-xs font-bold transition-all ${
+                        lyricsMode === 'full'
+                          ? (musicSource === 'spotify'
+                              ? 'bg-green-600'
+                              : 'bg-red-500') + ' text-white shadow-sm'
+                          : 'text-gray-500 dark:text-gray-400 hover:dark:text-white'
+                      }`}
                     >
                       Full
                     </button>
@@ -705,14 +710,15 @@ export default function Music(props) {
                           <div
                             key={index}
                             data-lyric-index={index}
-                            className={`transition-all duration-300 text-left pl-2 pr-4 relative break-words ${isUserScrolling
-                              ? 'text-gray-300 dark:text-gray-400 text-base'
-                              : index === currentLyricIndex
-                                ? 'font-bold text-lg'
-                                : index < currentLyricIndex
-                                  ? 'text-gray-400 dark:text-gray-500 text-base blur-sm'
-                                  : 'text-gray-400 dark:text-gray-500 text-base'
-                              }`}
+                            className={`transition-all duration-300 text-left pl-2 pr-4 relative break-words ${
+                              isUserScrolling
+                                ? 'text-gray-300 dark:text-gray-400 text-base'
+                                : index === currentLyricIndex
+                                  ? 'font-bold text-lg'
+                                  : index < currentLyricIndex
+                                    ? 'text-gray-400 dark:text-gray-500 text-base blur-sm'
+                                    : 'text-gray-400 dark:text-gray-500 text-base'
+                            }`}
                           >
                             {index === currentLyricIndex && !isUserScrolling ? (
                               // Current line with progress bar text mask
@@ -760,10 +766,11 @@ export default function Music(props) {
                                 audioRef.current.currentTime = line.time;
                               }
                             }}
-                            className={`transition-all duration-500 text-left pl-2 pr-6 py-2 cursor-pointer rounded-xl ${index === currentLyricIndex
-                              ? 'text-white dark:text-white text-xl font-bold scale-105 origin-left'
-                              : 'text-gray-500/60 dark:text-white/30 text-lg hover:text-gray-700 dark:hover:text-white/60'
-                              }`}
+                            className={`transition-all duration-500 text-left pl-2 pr-6 py-2 cursor-pointer rounded-xl ${
+                              index === currentLyricIndex
+                                ? 'text-white dark:text-white text-xl font-bold scale-105 origin-left'
+                                : 'text-gray-500/60 dark:text-white/30 text-lg hover:text-gray-700 dark:hover:text-white/60'
+                            }`}
                           >
                             {line.text}
                           </div>
@@ -778,7 +785,9 @@ export default function Music(props) {
                             .filter((line) => {
                               const trimmed = line.trim();
                               if (!trimmed) return false;
-                              return !/^(Lyrics|Composed|Produced|Arranged|Music|Written|Mixed|Mastered|Recorded|Vocal|Chorus|Engineer|Mixing|Recording|作曲|作詞|作词|編曲|编曲|監製|监制|製作人|制作人)\s*(by|:|：)/i.test(trimmed);
+                              return !/^(Lyrics|Composed|Produced|Arranged|Music|Written|Mixed|Mastered|Recorded|Vocal|Chorus|Engineer|Mixing|Recording|作曲|作詞|作词|編曲|编曲|監製|监制|製作人|制作人)\s*(by|:|：)/i.test(
+                                trimmed
+                              );
                             })
                             .map((line, index) => (
                               <div key={index} className="mb-3 text-base">
@@ -831,7 +840,7 @@ export default function Music(props) {
                   music[
                     (music.findIndex((item) => item.id === currentPlaying.id) +
                       1) %
-                    music.length
+                      music.length
                   ].attributes.name
                 }
               </b>{' '}
