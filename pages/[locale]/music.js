@@ -8,6 +8,9 @@ export default function Music(props) {
   const [musicSource, setMusicSource] = useState('apple'); // 'apple', 'spotify', or 'charts'
   const [isMobile, setIsMobile] = useState(false);
   const loggedMissingKeys = useRef(new Set());
+  const [deviceId, setDeviceId] = useState(null);
+  const [sdkPlayer, setSdkPlayer] = useState(null);
+  const [isSdkReady, setIsSdkReady] = useState(false);
 
   function i18n(key) {
     if (props.i18n && props.i18n['music'] && !props.i18n['music'][key]) {
@@ -35,8 +38,61 @@ export default function Music(props) {
 
     fetchMusicList();
 
-    return () => window.removeEventListener('resize', checkMobile);
+    // Spotify SDK Setup
+    if (!window.Spotify) {
+      const script = document.createElement('script');
+      script.src = 'https://sdk.scdn.co/spotify-player.js';
+      script.async = true;
+      document.body.appendChild(script);
+    }
+
+    window.onSpotifyWebPlaybackSDKReady = () => {
+      initializeSpotifySDK();
+    };
+
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+      if (sdkPlayer) sdkPlayer.disconnect();
+    };
   }, []);
+
+  const initializeSpotifySDK = async () => {
+
+    const player = new window.Spotify.Player({
+      name: '1998 MEDIA Player',
+      getOAuthToken: async (cb) => {
+        const res = await fetch('/api/music?provider=spotify&path=token');
+        const { access_token: token } = await res.json();
+        cb(token);
+      },
+      volume: 0.5,
+    });
+
+    player.addListener('ready', ({ device_id }) => {
+      console.log('Ready with Device ID', device_id);
+      setDeviceId(device_id);
+      setIsSdkReady(true);
+    });
+
+    player.addListener('not_ready', ({ device_id }) => {
+      console.log('Device ID has gone offline', device_id);
+    });
+
+    player.addListener('player_state_changed', (state) => {
+      if (!state) return;
+      setIsPlaying(!state.paused);
+      setTimer(state.position / 1000);
+
+      // Update current playing if it changed from Spotify side
+      const currentTrack = state.track_window.current_track;
+      if (currentTrack && currentTrack.id !== currentPlaying.id) {
+        // Optionally sync state back, but we usually control from here
+      }
+    });
+
+    player.connect();
+    setSdkPlayer(player);
+  };
 
   const [timer, setTimer] = useState(0);
   const [music, setMusic] = useState([]);
@@ -155,9 +211,18 @@ export default function Music(props) {
 
   useEffect(() => {
     // Reset timer when song changes
-    setTimer(0);
+    if (musicSource !== 'spotify') {
+      setTimer(0);
+    }
 
-    // Autoplay when component mounts or user interacts
+    if (musicSource === 'spotify' && deviceId && props.interacted) {
+      playSpotifyTrack(currentPlaying.id);
+      setIsPlaying(true);
+      setHasStarted(true);
+      return;
+    }
+
+    // Autoplay when component mounts or user interacts (for Apple/QQ/Charts)
     if (audioRef.current && !hasStarted && props.interacted) {
       audioRef.current
         .play()
@@ -169,14 +234,18 @@ export default function Music(props) {
           // If autoplay fails, set to paused
           setIsPlaying(false);
         });
-    } else if (audioRef.current && hasStarted && isPlaying) {
+    } else if (audioRef.current && hasStarted && isPlaying && musicSource !== 'spotify') {
       // When song changes, continue playing if user hasn't manually paused
       audioRef.current.play();
     }
-  }, [currentPlaying, props.interacted]); // Run this effect whenever currentPlaying or interaction state changes
+  }, [currentPlaying, props.interacted, deviceId]); // Added deviceId as dependency
 
   const togglePlayPause = (e) => {
     e.preventDefault();
+    if (musicSource === 'spotify' && sdkPlayer) {
+      sdkPlayer.togglePlay();
+      return;
+    }
     if (audioRef.current) {
       if (isPlaying) {
         audioRef.current.pause();
@@ -187,10 +256,28 @@ export default function Music(props) {
     }
   };
 
-  // Switch to next song per 30 sec (only if playing)
+  const playSpotifyTrack = async (trackId) => {
+    if (!deviceId || !sdkPlayer) return;
+
+    // Get fresh token
+    const res = await fetch('/api/music?provider=spotify&path=token');
+    const { access_token } = await res.json();
+
+    await fetch(`https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`, {
+      method: 'PUT',
+      body: JSON.stringify({ uris: [`spotify:track:${trackId}`] }),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${access_token}`
+      },
+    });
+  };
+
+  // Switch to next song per 30 sec (only if playing and not spotify)
   useEffect(() => {
     const timeInSeconds = Math.floor(timer);
     if (
+      musicSource !== 'spotify' &&
       timeInSeconds > 0 &&
       timeInSeconds % 30 === 0 &&
       music.length > 0 &&
@@ -262,21 +349,23 @@ export default function Music(props) {
   const getCurrentLyricIndex = () => {
     if (parsedLyrics.length === 0) return -1;
 
+    const currentTime = musicSource === 'spotify' ? timer : (timer % 30);
+
     for (let i = parsedLyrics.length - 1; i >= 0; i--) {
-      if (timer % 30 >= parsedLyrics[i].time) {
+      if (currentTime >= parsedLyrics[i].time) {
         return i;
       }
     }
     return -1;
   };
 
-  const currentLyricIndex = lyricsMode === 'live' ? getCurrentLyricIndex() : -1;
+  const currentLyricIndex = getCurrentLyricIndex();
 
   // Calculate progress within current lyric line (0-100%)
   const getCurrentLyricProgress = () => {
     if (currentLyricIndex === -1 || parsedLyrics.length === 0) return 0;
 
-    const currentTime = timer % 30;
+    const currentTime = musicSource === 'spotify' ? timer : (timer % 30);
     const currentLyric = parsedLyrics[currentLyricIndex];
     const nextLyric = parsedLyrics[currentLyricIndex + 1];
 
@@ -288,7 +377,7 @@ export default function Music(props) {
     return Math.min(100, Math.max(0, (elapsed / duration) * 100));
   };
 
-  const lyricProgress = lyricsMode === 'live' ? getCurrentLyricProgress() : 0;
+  const lyricProgress = getCurrentLyricProgress();
   function searchSongMID(songName, singerName) {
     fetch(
       `/api/music?provider=qq&path=search&pageSize=3&key=${encodeURIComponent(songName + ' ' + singerName)}`
@@ -365,7 +454,7 @@ export default function Music(props) {
   // Auto-scroll to current lyric in live mode (only if user is not scrolling)
   useEffect(() => {
     if (
-      lyricsMode === 'live' &&
+      (lyricsMode === 'live' || lyricsMode === 'full') &&
       currentLyricIndex >= 0 &&
       lyricsContainerRef.current &&
       !isUserScrolling
@@ -377,10 +466,13 @@ export default function Music(props) {
         activeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
     }
-  }, [currentLyricIndex, lyricsMode, isUserScrolling]);
+  }, [currentLyricIndex, lyricsMode, isUserScrolling, parsedLyrics]);
 
-  // Calculate progress percentage (0-100) based on 30 second cycles
-  const progress = ((timer % 30) / 30) * 100;
+  // Calculate progress percentage (0-100)
+  const duration = (currentPlaying.attributes?.durationInMillis / 1000) || 30;
+  const progress = musicSource === 'spotify'
+    ? (timer / duration) * 100
+    : ((timer % 30) / 30) * 100;
 
   if (!music || music.length === 0 || !currentPlaying) return null;
 
@@ -446,21 +538,16 @@ export default function Music(props) {
                           e.preventDefault();
                           const isCurrentSong = item.id === currentPlaying.id;
                           if (isCurrentSong) {
-                            // Toggle play/pause for current song
-                            if (isPlaying) {
-                              audioRef.current.pause();
-                              setIsPlaying(false);
-                            } else {
-                              audioRef.current.play();
-                              setIsPlaying(true);
-                            }
+                            togglePlayPause(e);
                           } else {
                             // Switch to new song
                             setCurrentPlaying(item);
-                            setTimer(0);
-                            if (audioRef.current) {
-                              audioRef.current.play();
-                              setIsPlaying(true);
+                            if (musicSource !== 'spotify') {
+                              setTimer(0);
+                              if (audioRef.current) {
+                                audioRef.current.play();
+                                setIsPlaying(true);
+                              }
                             }
                           }
                         }}
@@ -547,29 +634,26 @@ export default function Music(props) {
                 <div className="sticky top-0 z-10 text-sm md:text-2xl font-bold dark:text-white p-2 bg-white/95 dark:bg-black/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 rounded-t-xl md:rounded-t-2xl">
                   {i18n('Lyrics')}
                 </div>
-                {/* Segmented Picker - Commented out for 30s trial limitation */}
-                {/* <div className="flex gap-2 px-2 pb-2">
-                    <button
-                      onClick={() => setLyricsMode('live')}
-                      className={`flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                        lyricsMode === 'live'
-                          ? 'bg-red-500 text-white'
-                          : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
+                <div className="flex gap-2 px-2 pb-2 mt-2">
+                  <button
+                    onClick={() => setLyricsMode('live')}
+                    className={`flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-all ${lyricsMode === 'live'
+                        ? (musicSource === 'spotify' ? 'bg-green-600' : 'bg-red-500') + ' text-white'
+                        : 'bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-700'
                       }`}
-                    >
-                      Live
-                    </button>
-                    <button
-                      onClick={() => setLyricsMode('full')}
-                      className={`flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                        lyricsMode === 'full'
-                          ? 'bg-red-500 text-white'
-                          : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
+                  >
+                    Live
+                  </button>
+                  <button
+                    onClick={() => setLyricsMode('full')}
+                    className={`flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-all ${lyricsMode === 'full'
+                        ? (musicSource === 'spotify' ? 'bg-green-600' : 'bg-red-500') + ' text-white'
+                        : 'bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-700'
                       }`}
-                    >
-                      Full
-                    </button>
-                  </div> */}
+                  >
+                    Full
+                  </button>
+                </div>
                 {/* Lyrics Content */}
                 <div
                   ref={lyricsContainerRef}
@@ -644,28 +728,44 @@ export default function Music(props) {
                       </div>
                     )
                   ) : (
-                    // Full mode - all lyrics without timestamps
-                    <div className="leading-relaxed text-gray-700 dark:text-gray-200">
-                      {lyrics
-                        .replace(/\[\d{2}:\d{2}\.\d{2}\]/g, '')
-                        .replace(/\[(ti|ar|al|by|offset):[^\]]*\]/g, '')
-                        .split('\n')
-                        .filter((line) => {
-                          return (
-                            line.trim() &&
-                            !line.includes('Lyrics by') &&
-                            !line.includes('Composed by') &&
-                            !line.match(/^[^\-]+ - [^\(]+\(.+\)$/)
-                          );
-                        })
-                        .map((line, index) => (
+                    // Full mode - unified Spotify-style synchronized view or plain tech fallback
+                    <div className="flex flex-col gap-4 py-6">
+                      {parsedLyrics.length > 0 ? (
+                        parsedLyrics.map((line, index) => (
                           <div
                             key={index}
-                            className="mb-3 text-base hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
+                            data-lyric-index={index}
+                            onClick={() => {
+                              // Optional: jump to this time
+                              if (musicSource === 'spotify' && sdkPlayer) {
+                                sdkPlayer.seek(line.time * 1000);
+                              } else if (audioRef.current) {
+                                audioRef.current.currentTime = line.time;
+                              }
+                            }}
+                            className={`transition-all duration-500 text-left px-6 py-2 cursor-pointer rounded-xl ${index === currentLyricIndex
+                              ? 'text-white dark:text-white text-xl font-bold scale-105 origin-left'
+                              : 'text-gray-500/60 dark:text-white/30 text-lg hover:text-gray-700 dark:hover:text-white/60'
+                              }`}
                           >
-                            {line}
+                            {line.text}
                           </div>
-                        ))}
+                        ))
+                      ) : (
+                        // Fallback for non-synced lyrics
+                        <div className="leading-relaxed text-gray-700 dark:text-gray-200 px-4">
+                          {lyrics
+                            .replace(/\[\d{2}:\d{2}\.\d{2}\]/g, '')
+                            .replace(/\[(ti|ar|al|by|offset):[^\]]*\]/g, '')
+                            .split('\n')
+                            .filter((line) => line.trim())
+                            .map((line, index) => (
+                              <div key={index} className="mb-3 text-base">
+                                {line}
+                              </div>
+                            ))}
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>

@@ -141,6 +141,13 @@ async function handleSpotify(url) {
         apiUrl = `https://api.spotify.com/v1/tracks/${trackId}`;
         break;
 
+      case 'token':
+        // Return token for Web Playback SDK
+        return new Response(JSON.stringify({ access_token: spotifyToken }), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        });
+
       default:
         return new Response(
           JSON.stringify({ error: `Unknown or unauthorized path: ${path}` }),
