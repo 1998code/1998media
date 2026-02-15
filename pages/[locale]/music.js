@@ -65,9 +65,13 @@ export default function Music(props) {
           .then((response) => response.json())
           .then((data) => {
             if (data.data && data.data.length > 0) {
-              // Search Apple Music for each track to get preview URLs
+              // Only search Apple Music for tracks that don't have a native Spotify preview
               Promise.all(
                 data.data.map((spotifyTrack) => {
+                  if (spotifyTrack.attributes.previews?.length > 0) {
+                    return Promise.resolve(spotifyTrack);
+                  }
+
                   const searchQuery = `${spotifyTrack.attributes.name} ${spotifyTrack.attributes.artistName}`;
                   return fetch(
                     `/api/music?path=catalog/us/search?term=${encodeURIComponent(searchQuery)}&types=songs&limit=1`
@@ -153,8 +157,8 @@ export default function Music(props) {
     // Reset timer when song changes
     setTimer(0);
 
-    // Autoplay when component mounts (user has already interacted)
-    if (audioRef.current && !hasStarted) {
+    // Autoplay when component mounts or user interacts
+    if (audioRef.current && !hasStarted && props.interacted) {
       audioRef.current
         .play()
         .then(() => {
@@ -169,7 +173,7 @@ export default function Music(props) {
       // When song changes, continue playing if user hasn't manually paused
       audioRef.current.play();
     }
-  }, [currentPlaying]); // Run this effect whenever currentPlaying changes
+  }, [currentPlaying, props.interacted]); // Run this effect whenever currentPlaying or interaction state changes
 
   const togglePlayPause = (e) => {
     e.preventDefault();
@@ -378,173 +382,172 @@ export default function Music(props) {
   // Calculate progress percentage (0-100) based on 30 second cycles
   const progress = ((timer % 30) / 30) * 100;
 
+  if (!music || music.length === 0 || !currentPlaying) return null;
+
   return (
-    <div className="fixed max-w-full w-full flex items-center justify-center bottom-0 md:bottom-5 z-[10] pointer-events-none left-0 right-0">
-      {music && music.length > 0 && currentPlaying ? (
-        // <div
-        //   className="group flex items-center w-full md:w-fit h-[90px] md:h-[80px] p-1 shadow md:border border-white bg-white/50 dark:bg-black/50 hover:bg-gradient-to-r from-white/50 via-white to-white dark:from-black/50 dark:via-[#808080] dark:to-white dark:shadow-black backdrop-blur-lg md:rounded-xl">
-        <div className="group relative flex items-center w-full md:w-fit h-[90px] md:h-[80px] p-1 shadow bg-white/50 dark:bg-black/50 dark:hover:bg-black dark:shadow-black backdrop-blur-lg md:rounded-xl transition-all pointer-events-auto">
-          {/* Progress bar border - Light mode */}
-          <div
-            className="hidden md:block dark:hidden absolute inset-0 rounded-xl pointer-events-none z-[1]"
-            style={{
-              background: `conic-gradient(from 0deg, ${musicSource === 'spotify' ? '#22c55e' : '#ef4444'} 0%, ${musicSource === 'spotify' ? '#22c55e' : '#ef4444'} ${progress}%, #000000 ${progress}%, #000000 100%)`,
-              padding: '2px',
-              WebkitMask:
-                'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-              WebkitMaskComposite: 'xor',
-              maskComposite: 'exclude',
-            }}
-          />
-          {/* Progress bar border - Dark mode */}
-          <div
-            className="hidden md:dark:block absolute inset-0 rounded-xl pointer-events-none z-[1]"
-            style={{
-              background: `conic-gradient(from 0deg, ${musicSource === 'spotify' ? '#22c55e' : '#ef4444'} 0%, ${musicSource === 'spotify' ? '#22c55e' : '#ef4444'} ${progress}%, #ffffff ${progress}%, #ffffff 100%)`,
-              padding: '2px',
-              WebkitMask:
-                'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-              WebkitMaskComposite: 'xor',
-              maskComposite: 'exclude',
-            }}
-          />
+    <div className={`${!props.interacted ? 'hidden' : 'fixed'} max-w-full w-full flex items-center justify-center bottom-0 md:bottom-5 z-[10] pointer-events-none left-0 right-0`}>
+      <div className="group relative flex items-center w-full md:w-fit h-[90px] md:h-[80px] p-1 shadow bg-white/50 dark:bg-black/50 dark:hover:bg-black dark:shadow-black backdrop-blur-lg md:rounded-xl transition-all pointer-events-auto">
+        {/* Progress bar border - Light mode */}
+        <div
+          className="hidden md:block dark:hidden absolute inset-0 rounded-xl pointer-events-none z-[1]"
+          style={{
+            background: `conic-gradient(from 0deg, ${musicSource === 'spotify' ? '#22c55e' : '#ef4444'} 0%, ${musicSource === 'spotify' ? '#22c55e' : '#ef4444'} ${progress}%, #000000 ${progress}%, #000000 100%)`,
+            padding: '2px',
+            WebkitMask:
+              'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+            WebkitMaskComposite: 'xor',
+            maskComposite: 'exclude',
+          }}
+        />
+        {/* Progress bar border - Dark mode */}
+        <div
+          className="hidden md:dark:block absolute inset-0 rounded-xl pointer-events-none z-[1]"
+          style={{
+            background: `conic-gradient(from 0deg, ${musicSource === 'spotify' ? '#22c55e' : '#ef4444'} 0%, ${musicSource === 'spotify' ? '#22c55e' : '#ef4444'} ${progress}%, #ffffff ${progress}%, #ffffff 100%)`,
+            padding: '2px',
+            WebkitMask:
+              'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+            WebkitMaskComposite: 'xor',
+            maskComposite: 'exclude',
+          }}
+        />
+        <Tooltip
+          isDisabled={isMobile}
+          content={
+            <div className="flex flex-col max-h-[50vh]">
+              <div className="sticky top-0 z-10 flex items-start justify-between text-sm md:text-2xl font-bold dark:text-white p-2 bg-white/95 dark:bg-black/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 rounded-t-xl md:rounded-t-2xl">
+                {i18n('My Recent Playlist')}
+                <span
+                  className={`text-sm ml-3 ${musicSource === 'spotify' ? 'text-green-600' : 'text-red-600'}`}
+                >
+                  {musicSource === 'spotify' ? (
+                    <>
+                      <i className="fab fa-spotify mr-1"></i>Spotify
+                    </>
+                  ) : (
+                    i18n(' Music')
+                  )}
+                </span>
+              </div>
+              <div className="overflow-auto">
+                {music.map((item, index) => (
+                  <a
+                    key={index}
+                    href={item.attributes.url}
+                    target="_blank"
+                    className={`p-3 flex items-center justify-between gap-4 ${index === music.findIndex((music) => music.id === currentPlaying.id) ? (musicSource === 'spotify' ? 'bg-green-600 text-white animate-pulse' : 'bg-red-600 text-white animate-pulse') : 'hover:bg-black/10 dark:text-white dark:hover:bg-white/10'}`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div
+                        className="relative group/playlistitem w-10 h-10 cursor-pointer"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          const isCurrentSong = item.id === currentPlaying.id;
+                          if (isCurrentSong) {
+                            // Toggle play/pause for current song
+                            if (isPlaying) {
+                              audioRef.current.pause();
+                              setIsPlaying(false);
+                            } else {
+                              audioRef.current.play();
+                              setIsPlaying(true);
+                            }
+                          } else {
+                            // Switch to new song
+                            setCurrentPlaying(item);
+                            setTimer(0);
+                            if (audioRef.current) {
+                              audioRef.current.play();
+                              setIsPlaying(true);
+                            }
+                          }
+                        }}
+                      >
+                        <img
+                          alt={item.attributes.name}
+                          loading="lazy"
+                          src={item.attributes.artwork.url
+                            .replace('{w}', '50')
+                            .replace('{h}', '50')}
+                          className="w-10 h-10 rounded-xl shadow-lg"
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-xl opacity-0 group-hover/playlistitem:opacity-100 transition-opacity">
+                          <i
+                            className={`fa ${item.id === currentPlaying.id && isPlaying ? 'fa-pause' : 'fa-play'} text-white text-sm`}
+                          />
+                        </div>
+                      </div>
+                      <div className="flex flex-col">
+                        <div className="text-xs font-bold whitespace-nowrap">
+                          {item.attributes.name}
+                        </div>
+                        <div
+                          className={`text-[10px]  ${index === music.findIndex((music) => music.id === currentPlaying.id) ? 'text-gray-100' : 'text-gray-500'} whitespace-nowrap`}
+                        >
+                          {item.attributes.artistName}
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      className={`text-[10px] ${index === music.findIndex((music) => music.id === currentPlaying.id) ? 'text-gray-100' : 'text-gray-500'} text-right`}
+                    >
+                      <span>
+                        {index ===
+                          music.findIndex(
+                            (music) => music.id === currentPlaying.id
+                          ) && i18n('Now Playing')}
+                      </span>
+                      <br />
+                      <span>
+                        {Math.floor(item.attributes.durationInMillis / 60000)}
+                        :
+                        {(
+                          '0' +
+                          Math.floor(
+                            (item.attributes.durationInMillis % 60000) / 1000
+                          )
+                        ).slice(-2)}
+                      </span>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          }
+          placement="top-center"
+          className="min-w-[50px] mb-2 md:mb-3 p-0 border text-xs dark:text-white bg-white/50 dark:bg-black backdrop-blur-lg rounded-xl md:rounded-2xl"
+        >
+          <div className="relative group/album ml-2 md:ml-0 md:absolute md:-left-7 md:top-2 min-w-[65px] h-[65px] z-[2]">
+            <a href={currentPlaying.attributes?.url} target="_blank">
+              <img
+                alt={currentPlaying.attributes.name}
+                loading="lazy"
+                src={currentPlaying.attributes.artwork.url
+                  .replace('{w}', '500')
+                  .replace('{h}', '500')}
+                className="min-w-[65px] h-[65px] rounded-xl shadow-lg md:border-2 md:border-black dark:md:border-white transition-all"
+              />
+            </a>
+            <button
+              onClick={togglePlayPause}
+              className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-xl opacity-0 group-hover/album:opacity-100 transition-opacity"
+            >
+              <i
+                className={`fa ${isPlaying ? 'fa-pause' : 'fa-play'} text-white text-2xl`}
+              />
+            </button>
+          </div>
+        </Tooltip>
+        <div className="ml-12 flex items-center w-full h-full">
           <Tooltip
             isDisabled={isMobile}
             content={
-              <div className="flex flex-col max-h-[50vh]">
-                <div className="sticky top-0 z-10 flex items-start justify-between text-sm md:text-2xl font-bold dark:text-white p-2 bg-white/95 dark:bg-black/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 rounded-t-xl md:rounded-t-2xl">
-                  {i18n('My Recent Playlist')}
-                  <span
-                    className={`text-sm ml-3 ${musicSource === 'spotify' ? 'text-green-600' : 'text-red-600'}`}
-                  >
-                    {musicSource === 'spotify' ? (
-                      <>
-                        <i className="fab fa-spotify mr-1"></i>Spotify
-                      </>
-                    ) : (
-                      i18n(' Music')
-                    )}
-                  </span>
+              <div className="flex flex-col max-w-[450px] max-h-[40vh]">
+                <div className="sticky top-0 z-10 text-sm md:text-2xl font-bold dark:text-white p-2 bg-white/95 dark:bg-black/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 rounded-t-xl md:rounded-t-2xl">
+                  {i18n('Lyrics')}
                 </div>
-                <div className="overflow-auto">
-                  {music.map((item, index) => (
-                    <a
-                      key={index}
-                      href={item.attributes.url}
-                      target="_blank"
-                      className={`p-3 flex items-center justify-between gap-4 ${index === music.findIndex((music) => music.id === currentPlaying.id) ? (musicSource === 'spotify' ? 'bg-green-600 text-white animate-pulse' : 'bg-red-600 text-white animate-pulse') : 'hover:bg-black/10 dark:text-white dark:hover:bg-white/10'}`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <div
-                          className="relative group/playlistitem w-10 h-10 cursor-pointer"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            const isCurrentSong = item.id === currentPlaying.id;
-                            if (isCurrentSong) {
-                              // Toggle play/pause for current song
-                              if (isPlaying) {
-                                audioRef.current.pause();
-                                setIsPlaying(false);
-                              } else {
-                                audioRef.current.play();
-                                setIsPlaying(true);
-                              }
-                            } else {
-                              // Switch to new song
-                              setCurrentPlaying(item);
-                              setTimer(0);
-                              if (audioRef.current) {
-                                audioRef.current.play();
-                                setIsPlaying(true);
-                              }
-                            }
-                          }}
-                        >
-                          <img
-                            alt={item.attributes.name}
-                            loading="lazy"
-                            src={item.attributes.artwork.url
-                              .replace('{w}', '50')
-                              .replace('{h}', '50')}
-                            className="w-10 h-10 rounded-xl shadow-lg"
-                          />
-                          <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-xl opacity-0 group-hover/playlistitem:opacity-100 transition-opacity">
-                            <i
-                              className={`fa ${item.id === currentPlaying.id && isPlaying ? 'fa-pause' : 'fa-play'} text-white text-sm`}
-                            />
-                          </div>
-                        </div>
-                        <div className="flex flex-col">
-                          <div className="text-xs font-bold whitespace-nowrap">
-                            {item.attributes.name}
-                          </div>
-                          <div
-                            className={`text-[10px]  ${index === music.findIndex((music) => music.id === currentPlaying.id) ? 'text-gray-100' : 'text-gray-500'} whitespace-nowrap`}
-                          >
-                            {item.attributes.artistName}
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        className={`text-[10px] ${index === music.findIndex((music) => music.id === currentPlaying.id) ? 'text-gray-100' : 'text-gray-500'} text-right`}
-                      >
-                        <span>
-                          {index ===
-                            music.findIndex(
-                              (music) => music.id === currentPlaying.id
-                            ) && i18n('Now Playing')}
-                        </span>
-                        <br />
-                        <span>
-                          {Math.floor(item.attributes.durationInMillis / 60000)}
-                          :
-                          {(
-                            '0' +
-                            Math.floor(
-                              (item.attributes.durationInMillis % 60000) / 1000
-                            )
-                          ).slice(-2)}
-                        </span>
-                      </div>
-                    </a>
-                  ))}
-                </div>
-              </div>
-            }
-            placement="top-center"
-            className="min-w-[50px] mb-2 md:mb-3 p-0 border text-xs dark:text-white bg-white/50 dark:bg-black backdrop-blur-lg rounded-xl md:rounded-2xl"
-          >
-            <div className="relative group/album ml-2 md:ml-0 md:absolute md:-left-7 md:top-2 min-w-[65px] h-[65px] z-[2]">
-              <a href={currentPlaying.attributes?.url} target="_blank">
-                <img
-                  alt={currentPlaying.attributes.name}
-                  loading="lazy"
-                  src={currentPlaying.attributes.artwork.url
-                    .replace('{w}', '500')
-                    .replace('{h}', '500')}
-                  className="min-w-[65px] h-[65px] rounded-xl shadow-lg md:border-2 md:border-black dark:md:border-white transition-all"
-                />
-              </a>
-              <button
-                onClick={togglePlayPause}
-                className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-xl opacity-0 group-hover/album:opacity-100 transition-opacity"
-              >
-                <i
-                  className={`fa ${isPlaying ? 'fa-pause' : 'fa-play'} text-white text-2xl`}
-                />
-              </button>
-            </div>
-          </Tooltip>
-          <div className="ml-12 flex items-center w-full h-full">
-            <Tooltip
-              isDisabled={isMobile}
-              content={
-                <div className="flex flex-col max-w-[450px] max-h-[40vh]">
-                  <div className="sticky top-0 z-10 text-sm md:text-2xl font-bold dark:text-white p-2 bg-white/95 dark:bg-black/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 rounded-t-xl md:rounded-t-2xl">
-                    {i18n('Lyrics')}
-                  </div>
-                  {/* Segmented Picker - Commented out for 30s trial limitation */}
-                  {/* <div className="flex gap-2 px-2 pb-2">
+                {/* Segmented Picker - Commented out for 30s trial limitation */}
+                {/* <div className="flex gap-2 px-2 pb-2">
                     <button
                       onClick={() => setLyricsMode('live')}
                       className={`flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
@@ -566,127 +569,127 @@ export default function Music(props) {
                       Full
                     </button>
                   </div> */}
-                  {/* Lyrics Content */}
-                  <div
-                    ref={lyricsContainerRef}
-                    className="text-sm p-2 overflow-auto"
-                    onScroll={handleLyricsScroll}
-                    onWheel={handleLyricsScroll}
-                    onTouchMove={handleLyricsScroll}
-                  >
-                    {lyrics === null ? (
-                      // Loading state
-                      <div className="text-center">
-                        <i className="fa fa-circle-notch fa-spin" />
-                      </div>
-                    ) : lyrics === '' ? (
-                      // No lyrics found
-                      <div className="text-gray-400 dark:text-gray-500 text-center py-8 flex flex-col items-center gap-2">
-                        <i className="fa fa-music-slash text-3xl" />
-                        <div className="text-base">No lyrics available</div>
-                      </div>
-                    ) : isInstrumental(lyrics) ? (
-                      // Show instrumental message
-                      <div className="text-gray-400 dark:text-gray-500 text-center py-8 flex flex-col items-center gap-2">
-                        <i className="fa fa-music text-3xl" />
-                        <div className="text-base">Pure Music</div>
-                        <div className="text-sm">No lyrics</div>
-                      </div>
-                    ) : lyricsMode === 'live' ? (
-                      // Live mode with timestamps
-                      parsedLyrics.length > 0 ? (
-                        <div className="flex flex-col gap-3 py-4">
-                          {parsedLyrics.map((line, index) => (
-                            <div
-                              key={index}
-                              data-lyric-index={index}
-                              className={`transition-all duration-300 text-left px-4 relative ${
-                                isUserScrolling
-                                  ? 'text-gray-300 dark:text-gray-400 text-base'
-                                  : index === currentLyricIndex
-                                    ? 'font-bold text-lg'
-                                    : index < currentLyricIndex
-                                      ? 'text-gray-400 dark:text-gray-500 text-base blur-sm'
-                                      : 'text-gray-400 dark:text-gray-500 text-base'
+                {/* Lyrics Content */}
+                <div
+                  ref={lyricsContainerRef}
+                  className="text-sm p-2 overflow-auto"
+                  onScroll={handleLyricsScroll}
+                  onWheel={handleLyricsScroll}
+                  onTouchMove={handleLyricsScroll}
+                >
+                  {lyrics === null ? (
+                    // Loading state
+                    <div className="text-center">
+                      <i className="fa fa-circle-notch fa-spin" />
+                    </div>
+                  ) : lyrics === '' ? (
+                    // No lyrics found
+                    <div className="text-gray-400 dark:text-gray-500 text-center py-8 flex flex-col items-center gap-2">
+                      <i className="fa fa-music-slash text-3xl" />
+                      <div className="text-base">No lyrics available</div>
+                    </div>
+                  ) : isInstrumental(lyrics) ? (
+                    // Show instrumental message
+                    <div className="text-gray-400 dark:text-gray-500 text-center py-8 flex flex-col items-center gap-2">
+                      <i className="fa fa-music text-3xl" />
+                      <div className="text-base">Pure Music</div>
+                      <div className="text-sm">No lyrics</div>
+                    </div>
+                  ) : lyricsMode === 'live' ? (
+                    // Live mode with timestamps
+                    parsedLyrics.length > 0 ? (
+                      <div className="flex flex-col gap-3 py-4">
+                        {parsedLyrics.map((line, index) => (
+                          <div
+                            key={index}
+                            data-lyric-index={index}
+                            className={`transition-all duration-300 text-left px-4 relative ${isUserScrolling
+                              ? 'text-gray-300 dark:text-gray-400 text-base'
+                              : index === currentLyricIndex
+                                ? 'font-bold text-lg'
+                                : index < currentLyricIndex
+                                  ? 'text-gray-400 dark:text-gray-500 text-base blur-sm'
+                                  : 'text-gray-400 dark:text-gray-500 text-base'
                               }`}
-                            >
-                              {index === currentLyricIndex &&
+                          >
+                            {index === currentLyricIndex &&
                               !isUserScrolling ? (
-                                // Current line with progress bar text mask
-                                <>
-                                  {/* Background text (gray) */}
-                                  <div className="text-gray-400 dark:text-gray-500">
-                                    {line.text}
-                                  </div>
-                                  {/* Foreground text (white) with progress mask */}
-                                  <div
-                                    className="absolute top-0 left-0 px-4 text-white dark:text-white overflow-hidden whitespace-nowrap"
-                                    style={{
-                                      width: `${lyricProgress}%`,
-                                      transition: 'width 0.05s linear',
-                                    }}
-                                  >
-                                    {line.text}
-                                  </div>
-                                </>
-                              ) : (
-                                line.text
-                              )}
-                            </div>
-                          ))}
-                        </div>
-                      ) : (
-                        <div className="text-gray-400 dark:text-gray-500 text-center">
-                          No synced lyrics available
-                        </div>
-                      )
-                    ) : (
-                      // Full mode - all lyrics without timestamps
-                      <div className="leading-relaxed text-gray-700 dark:text-gray-200">
-                        {lyrics
-                          .replace(/\[\d{2}:\d{2}\.\d{2}\]/g, '')
-                          .replace(/\[(ti|ar|al|by|offset):[^\]]*\]/g, '')
-                          .split('\n')
-                          .filter((line) => {
-                            return (
-                              line.trim() &&
-                              !line.includes('Lyrics by') &&
-                              !line.includes('Composed by') &&
-                              !line.match(/^[^\-]+ - [^\(]+\(.+\)$/)
-                            );
-                          })
-                          .map((line, index) => (
-                            <div
-                              key={index}
-                              className="mb-3 text-base hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
-                            >
-                              {line}
-                            </div>
-                          ))}
+                              // Current line with progress bar text mask
+                              <>
+                                {/* Background text (gray) */}
+                                <div className="text-gray-400 dark:text-gray-500">
+                                  {line.text}
+                                </div>
+                                {/* Foreground text (white) with progress mask */}
+                                <div
+                                  className="absolute top-0 left-0 px-4 text-white dark:text-white overflow-hidden whitespace-nowrap"
+                                  style={{
+                                    width: `${lyricProgress}%`,
+                                    transition: 'width 0.05s linear',
+                                  }}
+                                >
+                                  {line.text}
+                                </div>
+                              </>
+                            ) : (
+                              line.text
+                            )}
+                          </div>
+                        ))}
                       </div>
-                    )}
-                  </div>
+                    ) : (
+                      <div className="text-gray-400 dark:text-gray-500 text-center">
+                        No synced lyrics available
+                      </div>
+                    )
+                  ) : (
+                    // Full mode - all lyrics without timestamps
+                    <div className="leading-relaxed text-gray-700 dark:text-gray-200">
+                      {lyrics
+                        .replace(/\[\d{2}:\d{2}\.\d{2}\]/g, '')
+                        .replace(/\[(ti|ar|al|by|offset):[^\]]*\]/g, '')
+                        .split('\n')
+                        .filter((line) => {
+                          return (
+                            line.trim() &&
+                            !line.includes('Lyrics by') &&
+                            !line.includes('Composed by') &&
+                            !line.match(/^[^\-]+ - [^\(]+\(.+\)$/)
+                          );
+                        })
+                        .map((line, index) => (
+                          <div
+                            key={index}
+                            className="mb-3 text-base hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
+                          >
+                            {line}
+                          </div>
+                        ))}
+                    </div>
+                  )}
                 </div>
-              }
-              placement="top-center"
-              className="min-w-[50px] mb-5 p-0 border text-xs dark:text-white bg-white/50 dark:bg-black backdrop-blur-lg rounded-xl md:rounded-2xl"
+              </div>
+            }
+            placement="top-center"
+            className="min-w-[50px] mb-5 p-0 border text-xs dark:text-white bg-white/50 dark:bg-black backdrop-blur-lg rounded-xl md:rounded-2xl"
+          >
+            <a
+              href={currentPlaying.attributes?.url}
+              target="_blank"
+              className="flex flex-col justify-center items-start min-w-40"
             >
-              <a
-                href={currentPlaying.attributes?.url}
-                target="_blank"
-                className="flex flex-col justify-center items-start min-w-40"
-              >
-                <div className="text-sm font-bold text-left dark:text-white">
-                  {currentPlaying.attributes.name}
-                </div>
-                <div className="text-xs text-gray-500">
-                  {currentPlaying.attributes.artistName}
-                </div>
-              </a>
-            </Tooltip>
+              <div className="text-sm font-bold text-left dark:text-white">
+                {currentPlaying.attributes.name}
+              </div>
+              <div className="text-xs text-gray-500">
+                {currentPlaying.attributes.artistName}
+              </div>
+            </a>
+          </Tooltip>
 
-            {/* Hidden audio element for playback */}
-            <div className="hidden relative text-right">
+          {/* Hidden audio element for playback */}
+          <div className="hidden relative text-right">
+            {currentPlaying.attributes.previews?.length > 0 && (
               <audio
                 ref={audioRef}
                 key={currentPlaying.attributes.previews[0].url}
@@ -697,27 +700,25 @@ export default function Music(props) {
                 />
                 {i18n('Your browser does not support the audio element.')}
               </audio>
-              <div className="hidden md:group-hover:block absolute -bottom-3.5 right-5 text-[10px] text-gray-400 dark:text-gray-600 z-[1] whitespace-nowrap animate-pulse transition-all">
-                {i18n('Next')}:{' '}
-                <b>
-                  {
-                    music[
-                      (music.findIndex(
-                        (item) => item.id === currentPlaying.id
-                      ) +
-                        1) %
-                        music.length
-                    ].attributes.name
-                  }
-                </b>{' '}
-                in {30 - (timer % 30)}s
-              </div>
+            )}
+            <div className="hidden md:group-hover:block absolute -bottom-3.5 right-5 text-[10px] text-gray-400 dark:text-gray-600 z-[1] whitespace-nowrap animate-pulse transition-all">
+              {i18n('Next')}:{' '}
+              <b>
+                {
+                  music[
+                    (music.findIndex(
+                      (item) => item.id === currentPlaying.id
+                    ) +
+                      1) %
+                    music.length
+                  ].attributes.name
+                }
+              </b>{' '}
+              in {30 - (timer % 30)}s
             </div>
           </div>
         </div>
-      ) : (
-        <></>
-      )}
+      </div>
     </div>
   );
 }

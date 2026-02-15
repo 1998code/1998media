@@ -492,7 +492,7 @@ export default function Home({
                     />
                   </section>
 
-                  {interacted && <Music i18n={I18n} />}
+                  <Music i18n={I18n} interacted={interacted} />
                 </>
               )}
             </div>

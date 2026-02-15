@@ -73,7 +73,16 @@ export default async function handler(req) {
 // Spotify API handler - direct HTTP calls (edge-compatible)
 async function handleSpotify(url) {
   const path = url.searchParams.get('path');
-  const spotifyToken = process.env.SPOTIFY_TOKEN;
+  let spotifyToken = process.env.SPOTIFY_TOKEN;
+
+  // If no manually configured token, try to get one using client credentials
+  if (!spotifyToken && process.env.SPOTIFY_Client_ID && process.env.SPOTIFY_Client_Secret) {
+    try {
+      spotifyToken = await getSpotifyToken();
+    } catch (error) {
+      console.error('Failed to get Spotify token:', error);
+    }
+  }
 
   if (!spotifyToken) {
     return new Response(
@@ -88,7 +97,18 @@ async function handleSpotify(url) {
   try {
     let apiUrl;
 
-    switch (path) {
+    // Check if the path requested requires a user token (Client Credentials doesn't support /me/)
+    // If it's a /me/ path and we only have Client Credentials (likely, if SPOTIFY_TOKEN is missing),
+    // we should point to a public alternative as a fallback.
+    let effectivePath = path;
+    if (path.startsWith('me/') && !process.env.SPOTIFY_TOKEN && !process.env.SPOTIFY_REFRESH_TOKEN) {
+      // Fallback for me/top/tracks to top/us if using client credentials
+      if (path === 'me/top/tracks') {
+        effectivePath = 'top/us';
+      }
+    }
+
+    switch (effectivePath) {
       case 'me/top/tracks':
         // User's top tracks (requires user-top-read scope)
         const timeRange = url.searchParams.get('time_range') || 'medium_term';
@@ -101,9 +121,21 @@ async function handleSpotify(url) {
           'https://api.spotify.com/v1/playlists/37i9dQZEVXbLRQDuF5jeBp/tracks?limit=20';
         break;
 
+      case 'search':
+        // Search tracks
+        const query = url.searchParams.get('q') || 'newjeans';
+        apiUrl = `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=track&limit=20`;
+        break;
+
+      case 'track':
+        // Get single track info
+        const trackId = url.searchParams.get('id');
+        apiUrl = `https://api.spotify.com/v1/tracks/${trackId}`;
+        break;
+
       default:
         return new Response(
-          JSON.stringify({ error: `Unknown path: ${path}` }),
+          JSON.stringify({ error: `Unknown or unauthorized path: ${path}` }),
           {
             status: 400,
             headers: { 'Content-Type': 'application/json' },
@@ -135,30 +167,49 @@ async function handleSpotify(url) {
     const data = await response.json();
 
     // Transform Spotify response to match Apple Music format
-    if (data.items && data.items.length > 0) {
-      const transformedData = {
-        data: data.items.map((item) => {
-          const track = item.track || item;
-          return {
-            id: track.id,
-            type: 'songs',
-            attributes: {
-              name: track.name,
-              artistName:
-                track.artists?.map((a) => a.name).join(', ') ||
-                'Unknown Artist',
-              artwork: {
-                url:
-                  track.album?.images?.[0]?.url || track.images?.[0]?.url || '',
-              },
-              durationInMillis: track.duration_ms || 0,
-              url: track.external_urls?.spotify || '',
-              previews: [], // Empty - will search Apple Music for previews
+    let items = data.tracks?.items || data.items || [];
+
+    // If it's a single track result (no items but has name/id)
+    if (items.length === 0 && data.id && data.name) {
+      items = [data];
+    }
+
+    if (items.length > 0) {
+      // Create partial transformation first
+      const transformedItems = items.map((item) => {
+        const track = item.track || item;
+        return {
+          id: track.id,
+          type: 'songs',
+          attributes: {
+            name: track.name,
+            artistName:
+              track.artists?.map((a) => a.name).join(', ') || 'Unknown Artist',
+            artwork: {
+              url:
+                track.album?.images?.[0]?.url || track.images?.[0]?.url || '',
             },
-          };
-        }),
-      };
-      return new Response(JSON.stringify(transformedData), {
+            durationInMillis: track.duration_ms || 0,
+            url: track.external_urls?.spotify || '',
+            previews: track.preview_url ? [{ url: track.preview_url }] : [],
+          },
+        };
+      });
+
+      // Attempt to resolve missing previews via Embed API for top 10 items (to avoid rate limits/slowdown)
+      const tracksToResolve = transformedItems.slice(0, 10);
+      await Promise.all(
+        tracksToResolve.map(async (item) => {
+          if (item.attributes.previews.length === 0) {
+            const previewUrl = await getSpotifyPreviewFromEmbed(item.id);
+            if (previewUrl) {
+              item.attributes.previews = [{ url: previewUrl }];
+            }
+          }
+        })
+      );
+
+      return new Response(JSON.stringify({ data: transformedItems }), {
         status: 200,
         headers: { 'Content-Type': 'application/json' },
       });
@@ -460,3 +511,81 @@ async function createAppleMusicJWT(privateKeyPem, teamId, keyId) {
 
   return `${headerB64}.${payloadB64}.${signatureB64}`;
 }
+
+async function getSpotifyToken() {
+  const clientId = process.env.SPOTIFY_Client_ID;
+  const clientSecret = process.env.SPOTIFY_Client_Secret;
+  const refreshToken = process.env.SPOTIFY_REFRESH_TOKEN;
+
+  if (!clientId || !clientSecret) return null;
+
+  const auth = btoa(`${clientId}:${clientSecret}`);
+
+  // Use refresh token if available to get user-scoped token
+  if (refreshToken) {
+    const response = await fetch('https://accounts.spotify.com/api/token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: `Basic ${auth}`,
+      },
+      body: new URLSearchParams({
+        grant_type: 'refresh_token',
+        refresh_token: refreshToken,
+      }).toString(),
+    });
+
+    const data = await response.json();
+    if (data.access_token) {
+      return data.access_token;
+    }
+    console.error('Spotify Refresh Token Error:', data);
+  }
+
+  // Fallback to client credentials
+  const response = await fetch('https://accounts.spotify.com/api/token', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      Authorization: `Basic ${auth}`,
+    },
+    body: 'grant_type=client_credentials',
+  });
+
+  const data = await response.json();
+  return data.access_token;
+}
+
+async function getSpotifyPreviewFromEmbed(trackId) {
+  try {
+    const response = await fetch(
+      `https://open.spotify.com/embed/track/${trackId}`,
+      {
+        headers: {
+          'User-Agent':
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        },
+      }
+    );
+
+    if (!response.ok) return null;
+
+    const html = await response.text();
+
+    // Extract JSON from __NEXT_DATA__ script tag
+    const match = html.match(
+      /<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/
+    );
+    if (match && match[1]) {
+      const data = JSON.parse(match[1]);
+      return (
+        data.props?.pageProps?.state?.data?.entity?.audioPreview?.url || null
+      );
+    }
+    return null;
+  } catch (error) {
+    console.error('Error scraping Spotify preview:', error);
+    return null;
+  }
+}
+
