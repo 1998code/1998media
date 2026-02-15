@@ -76,7 +76,11 @@ async function handleSpotify(url) {
   let spotifyToken = process.env.SPOTIFY_TOKEN;
 
   // If no manually configured token, try to get one using client credentials
-  if (!spotifyToken && process.env.SPOTIFY_Client_ID && process.env.SPOTIFY_Client_Secret) {
+  if (
+    !spotifyToken &&
+    process.env.SPOTIFY_Client_ID &&
+    process.env.SPOTIFY_Client_Secret
+  ) {
     try {
       spotifyToken = await getSpotifyToken();
     } catch (error) {
@@ -101,7 +105,11 @@ async function handleSpotify(url) {
     // If it's a /me/ path and we only have Client Credentials (likely, if SPOTIFY_TOKEN is missing),
     // we should point to a public alternative as a fallback.
     let effectivePath = path;
-    if (path.startsWith('me/') && !process.env.SPOTIFY_TOKEN && !process.env.SPOTIFY_REFRESH_TOKEN) {
+    if (
+      path.startsWith('me/') &&
+      !process.env.SPOTIFY_TOKEN &&
+      !process.env.SPOTIFY_REFRESH_TOKEN
+    ) {
       // Fallback for me/top/tracks to top/us if using client credentials
       if (path === 'me/top/tracks') {
         effectivePath = 'top/us';
@@ -588,4 +596,3 @@ async function getSpotifyPreviewFromEmbed(trackId) {
     return null;
   }
 }
-

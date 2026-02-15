@@ -385,7 +385,9 @@ export default function Music(props) {
   if (!music || music.length === 0 || !currentPlaying) return null;
 
   return (
-    <div className={`${!props.interacted ? 'hidden' : 'fixed'} max-w-full w-full flex items-center justify-center bottom-0 md:bottom-5 z-[10] pointer-events-none left-0 right-0`}>
+    <div
+      className={`${!props.interacted ? 'hidden' : 'fixed'} max-w-full w-full flex items-center justify-center bottom-0 md:bottom-5 z-[10] pointer-events-none left-0 right-0`}
+    >
       <div className="group relative flex items-center w-full md:w-fit h-[90px] md:h-[80px] p-1 shadow bg-white/50 dark:bg-black/50 dark:hover:bg-black dark:shadow-black backdrop-blur-lg md:rounded-xl transition-all pointer-events-auto">
         {/* Progress bar border - Light mode */}
         <div
@@ -499,8 +501,7 @@ export default function Music(props) {
                       </span>
                       <br />
                       <span>
-                        {Math.floor(item.attributes.durationInMillis / 60000)}
-                        :
+                        {Math.floor(item.attributes.durationInMillis / 60000)}:
                         {(
                           '0' +
                           Math.floor(
@@ -603,17 +604,17 @@ export default function Music(props) {
                           <div
                             key={index}
                             data-lyric-index={index}
-                            className={`transition-all duration-300 text-left px-4 relative ${isUserScrolling
-                              ? 'text-gray-300 dark:text-gray-400 text-base'
-                              : index === currentLyricIndex
-                                ? 'font-bold text-lg'
-                                : index < currentLyricIndex
-                                  ? 'text-gray-400 dark:text-gray-500 text-base blur-sm'
-                                  : 'text-gray-400 dark:text-gray-500 text-base'
-                              }`}
+                            className={`transition-all duration-300 text-left px-4 relative ${
+                              isUserScrolling
+                                ? 'text-gray-300 dark:text-gray-400 text-base'
+                                : index === currentLyricIndex
+                                  ? 'font-bold text-lg'
+                                  : index < currentLyricIndex
+                                    ? 'text-gray-400 dark:text-gray-500 text-base blur-sm'
+                                    : 'text-gray-400 dark:text-gray-500 text-base'
+                            }`}
                           >
-                            {index === currentLyricIndex &&
-                              !isUserScrolling ? (
+                            {index === currentLyricIndex && !isUserScrolling ? (
                               // Current line with progress bar text mask
                               <>
                                 {/* Background text (gray) */}
@@ -706,11 +707,9 @@ export default function Music(props) {
               <b>
                 {
                   music[
-                    (music.findIndex(
-                      (item) => item.id === currentPlaying.id
-                    ) +
+                    (music.findIndex((item) => item.id === currentPlaying.id) +
                       1) %
-                    music.length
+                      music.length
                   ].attributes.name
                 }
               </b>{' '}
