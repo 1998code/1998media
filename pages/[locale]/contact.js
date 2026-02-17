@@ -126,18 +126,18 @@ export default function Contact(props) {
                 className="block w-full py-3 px-5 text-center bg-white dark:bg-black border border-transparent rounded-xl shadow-md text-base font-medium text-orange-700 dark:text-orange-300 hover:bg-gray-50 dark:hover:bg-gray-900 sm:inline-block sm:w-auto"
                 href="mailto:find@1998.media"
               >
-                {i18n('General Inquiry')}: Find@1998.media
+                {i18n('General Inquiry')}: <span>Find&#064;1998.media</span>
                 <i className="fa fa-envelope ml-2" />
               </a>
-              {/* <br /> */}
-              {/* <a
-                className="block w-full py-3 px-5 text-left bg-white dark:bg-green-800 border border-transparent rounded-xl shadow-md text-base font-medium text-orange-700 dark:text-orange-300 hover:bg-gray-50 dark:hover:bg-green-900 sm:inline-block sm:w-auto"
+              {/* <br />
+              <a
+                className="block w-full py-3 px-5 text-center md:text-left bg-white dark:bg-green-800 border border-transparent rounded-xl shadow-md text-base font-medium text-orange-700 dark:text-orange-300 hover:bg-gray-50 dark:hover:bg-green-900 sm:inline-block sm:w-auto"
                 href="mailto:safe@1998.media"
               >
-                {i18n('Security Issue')}: Safe@1998.media
+                {i18n('Security Issue')}: <span>Safe&#064;1998.media</span>
                 <i className="fa fa-shield-alt ml-2" />
                 <br />
-                <small>
+                <small className="opacity-80">
                   {i18n(
                     'Please encrypt your message with PGP. Unencrypted messages will be ignored.'
                   )}
@@ -150,7 +150,7 @@ export default function Contact(props) {
 
       {/* China Only */}
       {typeof window !== 'undefined' &&
-        document.location.href.includes('zh-CN') && (
+        window.location.href.includes('zh-CN') && (
           <a
             href="https://www.xiaohongshu.com/user/profile/6662438f00000000030300c4"
             target="_blank"

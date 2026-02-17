@@ -59,6 +59,12 @@ function MyApp({ Component, pageProps }) {
                 '<i class="fa fa-moon-over-sun text-orange-300 dark:text-orange-500" />',
               autoMatchOsTheme: true,
             };
+            // Prevent multiple widgets
+            if (document.querySelector('.darkmode-toggle')) {
+              window.dispatchEvent(new Event('darkmode-init'));
+              return;
+            }
+
             const darkmode = new Darkmode(options);
             // Add error handling for showWidget
             try {
