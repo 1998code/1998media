@@ -718,10 +718,11 @@ export default function Music(props) {
                       !parsedLyrics ||
                       parsedLyrics.length === 0
                     }
-                    className={`px-3 py-1 rounded-md text-[10px] md:text-xs font-bold transition-all ${isTranslated
+                    className={`px-3 py-1 rounded-md text-[10px] md:text-xs font-bold transition-all ${
+                      isTranslated
                         ? 'bg-blue-600 text-white shadow-sm'
                         : 'text-gray-500 dark:text-gray-400 hover:dark:text-white'
-                      } ${isTranslating || !parsedLyrics || parsedLyrics.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    } ${isTranslating || !parsedLyrics || parsedLyrics.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
                   >
                     {isTranslating ? (
                       <i className="fa fa-circle-notch fa-spin" />
@@ -800,8 +801,13 @@ export default function Music(props) {
                                 }
 
                                 return (
-                                  <span key={i} className="relative inline-block whitespace-pre">
-                                    <span className={inactiveClass}>{word}</span>
+                                  <span
+                                    key={i}
+                                    className="relative inline-block whitespace-pre"
+                                  >
+                                    <span className={inactiveClass}>
+                                      {word}
+                                    </span>
                                     <span
                                       className={`absolute top-0 left-0 overflow-hidden ${activeClass} whitespace-pre pointer-events-none`}
                                       style={{
@@ -839,8 +845,9 @@ export default function Music(props) {
                                 }
                               }
                             }}
-                            className={`transition-all duration-300 text-left pl-2 pr-4 py-1 relative break-words cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg ${index === currentLyricIndex ? 'font-bold' : ''
-                              }`}
+                            className={`transition-all duration-300 text-left pl-2 pr-4 py-1 relative break-words cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg ${
+                              index === currentLyricIndex ? 'font-bold' : ''
+                            }`}
                           >
                             {/* Translated lyrics (if available) - TOP and BIGGER */}
                             {isTranslated && translatedLine ? (
@@ -857,21 +864,23 @@ export default function Music(props) {
                                   'text-gray-400 dark:text-gray-500'
                                 )}
                               </div>
-                            ) : !isTranslated && (
-                              /* Original lyrics when no translation - WITH HIGHLIGHT */
-                              <div
-                                className={
-                                  index === currentLyricIndex
-                                    ? 'text-xl md:text-2xl'
-                                    : 'text-base md:text-lg'
-                                }
-                              >
-                                {renderKaraokeLine(
-                                  line.text,
-                                  'text-gray-900 dark:text-white',
-                                  'text-gray-400 dark:text-gray-500'
-                                )}
-                              </div>
+                            ) : (
+                              !isTranslated && (
+                                /* Original lyrics when no translation - WITH HIGHLIGHT */
+                                <div
+                                  className={
+                                    index === currentLyricIndex
+                                      ? 'text-xl md:text-2xl'
+                                      : 'text-base md:text-lg'
+                                  }
+                                >
+                                  {renderKaraokeLine(
+                                    line.text,
+                                    'text-gray-900 dark:text-white',
+                                    'text-gray-400 dark:text-gray-500'
+                                  )}
+                                </div>
+                              )
                             )}
 
                             {/* Original lyrics (if translation is enabled) - BOTTOM and SMALLER - WITH HIGHLIGHT */}
@@ -937,7 +946,7 @@ export default function Music(props) {
                   music[
                     (music.findIndex((item) => item.id === currentPlaying.id) +
                       1) %
-                    music.length
+                      music.length
                   ].attributes.name
                 }
               </b>{' '}
