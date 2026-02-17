@@ -770,6 +770,7 @@ export default function Music(props) {
                             return <span className={inactiveClass}>{text}</span>;
                           }
 
+                          // Split by words and spaces to preserve formatting
                           const words = text.split(/(\s+)/);
                           const totalChars = text.length || 1;
                           let charCount = 0;
@@ -789,10 +790,10 @@ export default function Music(props) {
                                 }
 
                                 return (
-                                  <span key={i} className="relative inline">
+                                  <span key={i} className="relative inline-block whitespace-pre">
                                     <span className={inactiveClass}>{word}</span>
                                     <span
-                                      className={`absolute top-0 left-0 overflow-hidden ${activeClass} whitespace-nowrap pointer-events-none`}
+                                      className={`absolute top-0 left-0 overflow-hidden ${activeClass} whitespace-pre pointer-events-none`}
                                       style={{
                                         width: `${wordProgress}%`,
                                         transition: 'width 0.05s linear',
@@ -836,13 +837,17 @@ export default function Music(props) {
                               <div
                                 className={
                                   index === currentLyricIndex
-                                    ? 'text-xl md:text-2xl font-bold text-gray-900 dark:text-white'
+                                    ? 'text-xl md:text-2xl font-bold'
                                     : 'text-base md:text-lg text-gray-500 dark:text-gray-400'
                                 }
                               >
-                                {translatedLine.text}
+                                {renderKaraokeLine(
+                                  translatedLine.text,
+                                  'text-gray-900 dark:text-white',
+                                  'text-gray-400 dark:text-gray-500'
+                                )}
                               </div>
-                            ) : (
+                            ) : !isTranslated && (
                               /* Original lyrics when no translation - WITH HIGHLIGHT */
                               <div className={index === currentLyricIndex ? 'text-xl md:text-2xl' : 'text-base md:text-lg'}>
                                 {renderKaraokeLine(
