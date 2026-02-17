@@ -281,6 +281,7 @@ export default function Home({
   }
 
   const scrollToNext = () => {
+    setInteracted(true);
     setIsReady(true);
     setHeaderCompleted(true);
     // Use a short delay to allow components to mount before scrolling
