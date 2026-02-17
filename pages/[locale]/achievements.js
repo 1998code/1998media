@@ -708,12 +708,13 @@ export default function Achievements(props) {
                           return (
                             <div
                               key={achievement.title + achievement.year + index}
-                              className={`flex-shrink-0 min-w-[200px] max-w-[300px] flex flex-col p-6 rounded-xl bg-white/50 dark:bg-black/50 backdrop-blur-md shadow-lg xl:rounded-[30px] transition-all duration-500 border-2 ${isHovered
+                              className={`flex-shrink-0 min-w-[200px] max-w-[300px] flex flex-col p-6 rounded-xl bg-white/50 dark:bg-black/50 backdrop-blur-md shadow-lg xl:rounded-[30px] transition-all duration-500 border-2 ${
+                                isHovered
                                   ? `${borderColorClass} opacity-100 scale-105`
                                   : isGrayedOut
                                     ? 'opacity-40 grayscale border-transparent'
                                     : 'border-transparent hover:border-black dark:hover:border-white hover:scale-105'
-                                }`}
+                              }`}
                               onMouseEnter={() => {
                                 setHoveredAchievement(achievement.title);
                               }}
