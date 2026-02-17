@@ -35,6 +35,7 @@ export default function Faq(props) {
           title="Sponsor 1998code"
           height="32"
           width="114"
+          className="rounded-lg border"
         />
       ),
     },
