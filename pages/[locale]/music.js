@@ -211,11 +211,7 @@ export default function Music(props) {
           // If autoplay fails, set to paused
           setIsPlaying(false);
         });
-    } else if (
-      audioRef.current &&
-      hasStarted &&
-      isPlaying
-    ) {
+    } else if (audioRef.current && hasStarted && isPlaying) {
       // When song changes, continue playing if user hasn't manually paused
       audioRef.current.play();
     }
@@ -351,7 +347,6 @@ export default function Music(props) {
 
   const currentLyricIndex = getCurrentLyricIndex();
 
-
   function searchSongMID(songName, singerName) {
     fetch(
       `/api/music?provider=qq&path=search&pageSize=3&key=${encodeURIComponent(songName + ' ' + singerName)}`
@@ -473,8 +468,6 @@ export default function Music(props) {
       setIsUserScrolling(false);
     }, 3000);
   };
-
-
 
   // Calculate progress percentage (0-100)
   const duration = currentPlaying.attributes?.durationInMillis / 1000 || 30;
@@ -656,10 +649,11 @@ export default function Music(props) {
                       !parsedLyrics ||
                       parsedLyrics.length === 0
                     }
-                    className={`px-3 py-1 rounded-md text-[10px] md:text-xs font-bold transition-all ${isTranslated
-                      ? 'bg-blue-600 text-white shadow-sm'
-                      : 'text-gray-500 dark:text-gray-400 hover:dark:text-white'
-                      } ${isTranslating || !parsedLyrics || parsedLyrics.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    className={`px-3 py-1 rounded-md text-[10px] md:text-xs font-bold transition-all ${
+                      isTranslated
+                        ? 'bg-blue-600 text-white shadow-sm'
+                        : 'text-gray-500 dark:text-gray-400 hover:dark:text-white'
+                    } ${isTranslating || !parsedLyrics || parsedLyrics.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
                   >
                     {isTranslating ? (
                       <i className="fa fa-circle-notch fa-spin" />
@@ -777,7 +771,7 @@ export default function Music(props) {
                   music[
                     (music.findIndex((item) => item.id === currentPlaying.id) +
                       1) %
-                    music.length
+                      music.length
                   ].attributes.name
                 }
               </b>{' '}
