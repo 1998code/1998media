@@ -8,7 +8,6 @@ export default function Document(props) {
         <link
           rel="stylesheet"
           href="https://cdn.1998.media/css/fontawesome.css"
-          crossOrigin="anonymous"
         />
         <link
           href="https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@100..1000&display=swap"
