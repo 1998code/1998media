@@ -40,22 +40,25 @@ export default async function handler(req) {
       return new Response(JSON.stringify(data), { status: 400 });
     }
 
-    // Redirect back to the music page with the tokens in the URL (handled by client)
-    // or set cookies. Since it's edge, we can set cookies easily.
-    const response = Response.redirect(`${origin}/music`, 302);
+    // Construct the redirect response manually to avoid immutable header error
+    const headers = new Headers();
+    headers.append('Location', `${origin}/music`);
 
     // Set cookies for access and refresh tokens
     // Max age for access token is usually 1 hour (3600s), refresh token is longer.
-    response.headers.append(
+    headers.append(
       'Set-Cookie',
       `spotify_personal_token=${data.access_token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=3600`
     );
-    response.headers.append(
+    headers.append(
       'Set-Cookie',
       `spotify_personal_refresh=${data.refresh_token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=2592000`
     );
 
-    return response;
+    return new Response(null, {
+      status: 302,
+      headers: headers,
+    });
   } catch (error) {
     console.error('Spotify callback error:', error);
     return new Response(JSON.stringify({ error: error.message }), {
