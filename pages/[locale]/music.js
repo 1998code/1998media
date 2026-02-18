@@ -38,21 +38,8 @@ export default function Music(props) {
 
     fetchMusicList();
 
-    // Spotify SDK Setup
-    if (!window.Spotify) {
-      const script = document.createElement('script');
-      script.src = 'https://sdk.scdn.co/spotify-player.js';
-      script.async = true;
-      document.body.appendChild(script);
-    }
-
-    window.onSpotifyWebPlaybackSDKReady = () => {
-      initializeSpotifySDK();
-    };
-
     return () => {
       window.removeEventListener('resize', checkMobile);
-      if (sdkPlayer) sdkPlayer.disconnect();
     };
   }, []);
 
@@ -210,18 +197,9 @@ export default function Music(props) {
 
   useEffect(() => {
     // Reset timer when song changes
-    if (musicSource !== 'spotify') {
-      setTimer(0);
-    }
+    setTimer(0);
 
-    if (musicSource === 'spotify' && deviceId && props.interacted) {
-      playSpotifyTrack(currentPlaying.id);
-      setIsPlaying(true);
-      setHasStarted(true);
-      return;
-    }
-
-    // Autoplay when component mounts or user interacts (for Apple/QQ/Charts)
+    // Autoplay when component mounts or user interacts
     if (audioRef.current && !hasStarted && props.interacted) {
       audioRef.current
         .play()
@@ -236,20 +214,14 @@ export default function Music(props) {
     } else if (
       audioRef.current &&
       hasStarted &&
-      isPlaying &&
-      musicSource !== 'spotify'
+      isPlaying
     ) {
       // When song changes, continue playing if user hasn't manually paused
       audioRef.current.play();
     }
-  }, [currentPlaying, props.interacted, deviceId]); // Added deviceId as dependency
+  }, [currentPlaying, props.interacted]);
 
   const togglePlayPause = (e) => {
-    e.preventDefault();
-    if (musicSource === 'spotify' && sdkPlayer) {
-      sdkPlayer.togglePlay();
-      return;
-    }
     if (audioRef.current) {
       if (isPlaying) {
         audioRef.current.pause();
@@ -280,11 +252,10 @@ export default function Music(props) {
     );
   };
 
-  // Switch to next song per 30 sec (only if playing and not spotify)
+  // Switch to next song per 30 sec (only if playing)
   useEffect(() => {
     const timeInSeconds = Math.floor(timer);
     if (
-      musicSource !== 'spotify' &&
       timeInSeconds > 0 &&
       timeInSeconds % 30 === 0 &&
       music.length > 0 &&
@@ -299,7 +270,9 @@ export default function Music(props) {
         const nextIndex =
           currentIndex + 1 === music.length ? 0 : currentIndex + 1;
         setCurrentPlaying(music[nextIndex]);
-        audioRef.current.play();
+        if (audioRef.current) {
+          audioRef.current.play();
+        }
         setIsPlaying(true);
       }
     }
@@ -366,7 +339,7 @@ export default function Music(props) {
   const getCurrentLyricIndex = () => {
     if (parsedLyrics.length === 0) return -1;
 
-    const currentTime = musicSource === 'spotify' ? timer : timer % 30;
+    const currentTime = timer % 30;
 
     for (let i = parsedLyrics.length - 1; i >= 0; i--) {
       if (currentTime >= parsedLyrics[i].time) {
@@ -378,23 +351,7 @@ export default function Music(props) {
 
   const currentLyricIndex = getCurrentLyricIndex();
 
-  // Calculate progress within current lyric line (0-100%)
-  const getCurrentLyricProgress = () => {
-    if (currentLyricIndex === -1 || parsedLyrics.length === 0) return 0;
 
-    const currentTime = musicSource === 'spotify' ? timer : timer % 30;
-    const currentLyric = parsedLyrics[currentLyricIndex];
-    const nextLyric = parsedLyrics[currentLyricIndex + 1];
-
-    if (!nextLyric) return 100; // Last lyric, show fully filled
-
-    const duration = nextLyric.time - currentLyric.time;
-    const elapsed = currentTime - currentLyric.time;
-
-    return Math.min(100, Math.max(0, (elapsed / duration) * 100));
-  };
-
-  const lyricProgress = getCurrentLyricProgress();
   function searchSongMID(songName, singerName) {
     fetch(
       `/api/music?provider=qq&path=search&pageSize=3&key=${encodeURIComponent(songName + ' ' + singerName)}`
@@ -517,28 +474,11 @@ export default function Music(props) {
     }, 3000);
   };
 
-  // Auto-scroll to current lyric (only if user is not scrolling)
-  useEffect(() => {
-    if (
-      currentLyricIndex >= 0 &&
-      lyricsContainerRef.current &&
-      !isUserScrolling
-    ) {
-      const activeElement = lyricsContainerRef.current.querySelector(
-        `[data-lyric-index="${currentLyricIndex}"]`
-      );
-      if (activeElement) {
-        activeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-    }
-  }, [currentLyricIndex, isUserScrolling, parsedLyrics]);
+
 
   // Calculate progress percentage (0-100)
   const duration = currentPlaying.attributes?.durationInMillis / 1000 || 30;
-  const progress =
-    musicSource === 'spotify'
-      ? (timer / duration) * 100
-      : ((timer % 30) / 30) * 100;
+  const progress = ((timer % 30) / 30) * 100;
 
   if (!music || music.length === 0 || !currentPlaying) return null;
 
@@ -608,12 +548,10 @@ export default function Music(props) {
                           } else {
                             // Switch to new song
                             setCurrentPlaying(item);
-                            if (musicSource !== 'spotify') {
-                              setTimer(0);
-                              if (audioRef.current) {
-                                audioRef.current.play();
-                                setIsPlaying(true);
-                              }
+                            setTimer(0);
+                            if (audioRef.current) {
+                              audioRef.current.play();
+                              setIsPlaying(true);
                             }
                           }
                         }}
@@ -718,11 +656,10 @@ export default function Music(props) {
                       !parsedLyrics ||
                       parsedLyrics.length === 0
                     }
-                    className={`px-3 py-1 rounded-md text-[10px] md:text-xs font-bold transition-all ${
-                      isTranslated
-                        ? 'bg-blue-600 text-white shadow-sm'
-                        : 'text-gray-500 dark:text-gray-400 hover:dark:text-white'
-                    } ${isTranslating || !parsedLyrics || parsedLyrics.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    className={`px-3 py-1 rounded-md text-[10px] md:text-xs font-bold transition-all ${isTranslated
+                      ? 'bg-blue-600 text-white shadow-sm'
+                      : 'text-gray-500 dark:text-gray-400 hover:dark:text-white'
+                      } ${isTranslating || !parsedLyrics || parsedLyrics.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
                   >
                     {isTranslating ? (
                       <i className="fa fa-circle-notch fa-spin" />
@@ -765,134 +702,28 @@ export default function Music(props) {
                           ? translatedLyrics[index]
                           : null;
 
-                        // Helper function for word-by-word highlighting
-                        const renderKaraokeLine = (
-                          text,
-                          activeClass,
-                          inactiveClass
-                        ) => {
-                          if (index !== currentLyricIndex) {
-                            return (
-                              <span className={inactiveClass}>{text}</span>
-                            );
-                          }
-
-                          // Split by words and spaces to preserve formatting
-                          const words = text.split(/(\s+)/);
-                          const totalChars = text.length || 1;
-                          let charCount = 0;
-
-                          return (
-                            <div className="inline">
-                              {words.map((word, i) => {
-                                const wordLen = word.length;
-                                const startPct = (charCount / totalChars) * 100;
-                                const endPct =
-                                  ((charCount + wordLen) / totalChars) * 100;
-                                charCount += wordLen;
-
-                                let wordProgress = 0;
-                                if (lyricProgress >= endPct) wordProgress = 100;
-                                else if (lyricProgress > startPct) {
-                                  wordProgress =
-                                    ((lyricProgress - startPct) /
-                                      (endPct - startPct)) *
-                                    100;
-                                }
-
-                                return (
-                                  <span
-                                    key={i}
-                                    className="relative inline-block whitespace-pre"
-                                  >
-                                    <span className={inactiveClass}>
-                                      {word}
-                                    </span>
-                                    <span
-                                      className={`absolute top-0 left-0 overflow-hidden ${activeClass} whitespace-pre pointer-events-none`}
-                                      style={{
-                                        width: `${wordProgress}%`,
-                                        transition: 'width 0.05s linear',
-                                      }}
-                                    >
-                                      {word}
-                                    </span>
-                                  </span>
-                                );
-                              })}
-                            </div>
-                          );
-                        };
-
                         return (
                           <div
                             key={index}
-                            data-lyric-index={index}
-                            onClick={() => {
-                              // Jump to this timestamp when clicked
-                              if (musicSource === 'spotify' && sdkPlayer) {
-                                sdkPlayer.seek(line.time * 1000);
-                                if (!isPlaying) {
-                                  sdkPlayer.togglePlay();
-                                  setIsPlaying(true);
-                                }
-                              } else if (audioRef.current) {
-                                audioRef.current.currentTime = line.time;
-                                setTimer(line.time);
-                                if (!isPlaying) {
-                                  audioRef.current.play();
-                                  setIsPlaying(true);
-                                }
-                              }
-                            }}
-                            className={`transition-all duration-300 text-left pl-2 pr-4 py-1 relative break-words cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg ${
-                              index === currentLyricIndex ? 'font-bold' : ''
-                            }`}
+                            className="transition-all duration-300 text-left pl-2 pr-4 py-1 relative break-words dark:text-gray-300"
                           >
                             {/* Translated lyrics (if available) - TOP and BIGGER */}
                             {isTranslated && translatedLine ? (
-                              <div
-                                className={
-                                  index === currentLyricIndex
-                                    ? 'text-xl md:text-2xl font-bold'
-                                    : 'text-base md:text-lg text-gray-500 dark:text-gray-400'
-                                }
-                              >
-                                {renderKaraokeLine(
-                                  translatedLine.text,
-                                  'text-gray-900 dark:text-white',
-                                  'text-gray-400 dark:text-gray-500'
-                                )}
+                              <div className="text-xl md:text-2xl font-bold dark:text-white">
+                                {translatedLine.text}
                               </div>
                             ) : (
                               !isTranslated && (
-                                /* Original lyrics when no translation - WITH HIGHLIGHT */
-                                <div
-                                  className={
-                                    index === currentLyricIndex
-                                      ? 'text-xl md:text-2xl'
-                                      : 'text-base md:text-lg'
-                                  }
-                                >
-                                  {renderKaraokeLine(
-                                    line.text,
-                                    'text-gray-900 dark:text-white',
-                                    'text-gray-400 dark:text-gray-500'
-                                  )}
+                                <div className="text-xl md:text-2xl dark:text-white">
+                                  {line.text}
                                 </div>
                               )
                             )}
 
-                            {/* Original lyrics (if translation is enabled) - BOTTOM and SMALLER - WITH HIGHLIGHT */}
+                            {/* Original lyrics (if translation is enabled) - BOTTOM and SMALLER */}
                             {isTranslated && translatedLine && (
-                              <div
-                                className={`mt-1 ${index === currentLyricIndex ? 'text-base md:text-lg' : 'text-sm md:text-base'}`}
-                              >
-                                {renderKaraokeLine(
-                                  line.text,
-                                  'text-gray-600 dark:text-gray-400',
-                                  'text-gray-400 dark:text-gray-500'
-                                )}
+                              <div className="mt-1 text-base md:text-lg text-gray-500 dark:text-gray-400">
+                                {line.text}
                               </div>
                             )}
                           </div>
@@ -946,7 +777,7 @@ export default function Music(props) {
                   music[
                     (music.findIndex((item) => item.id === currentPlaying.id) +
                       1) %
-                      music.length
+                    music.length
                   ].attributes.name
                 }
               </b>{' '}
