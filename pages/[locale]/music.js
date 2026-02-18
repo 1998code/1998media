@@ -11,6 +11,7 @@ export default function Music(props) {
   const [deviceId, setDeviceId] = useState(null);
   const [sdkPlayer, setSdkPlayer] = useState(null);
   const [isSdkReady, setIsSdkReady] = useState(false);
+  const [isPersonalSpotify, setIsPersonalSpotify] = useState(false);
 
   function i18n(key) {
     if (props.i18n && props.i18n['music'] && !props.i18n['music'][key]) {
@@ -38,8 +39,30 @@ export default function Music(props) {
 
     fetchMusicList();
 
+    // Check if personal Spotify is available
+    fetch('/api/music?provider=spotify&path=token')
+      .then(res => res.json())
+      .then(data => {
+        if (data.isPersonal) {
+          setIsPersonalSpotify(true);
+          // Load Spotify SDK if not already there
+          if (!window.Spotify) {
+            const script = document.createElement('script');
+            script.src = 'https://sdk.scdn.co/spotify-player.js';
+            script.async = true;
+            document.body.appendChild(script);
+            window.onSpotifyWebPlaybackSDKReady = () => {
+              initializeSpotifySDK();
+            };
+          } else {
+            initializeSpotifySDK();
+          }
+        }
+      });
+
     return () => {
       window.removeEventListener('resize', checkMobile);
+      if (sdkPlayer) sdkPlayer.disconnect();
     };
   }, []);
 
@@ -72,7 +95,9 @@ export default function Music(props) {
       // Update current playing if it changed from Spotify side
       const currentTrack = state.track_window.current_track;
       if (currentTrack && currentTrack.id !== currentPlaying.id) {
-        // Optionally sync state back, but we usually control from here
+        // Sync track metadata if it changed (e.g. user skipped in Spotify app)
+        const found = music.find(m => m.id === currentTrack.id);
+        if (found) setCurrentPlaying(found);
       }
     });
 
@@ -185,19 +210,27 @@ export default function Music(props) {
   const [isUserScrolling, setIsUserScrolling] = useState(false);
   const scrollTimeoutRef = useRef();
 
-  // Timer should only run when music is playing
+  // Timer should only run when music is playing (and only manual timer if not using personal Spotify SDK)
   useEffect(() => {
-    if (!isPlaying) return;
+    if (!isPlaying || isPersonalSpotify) return;
 
     const interval = setInterval(() => {
       setTimer((prevTimer) => prevTimer + 0.05);
     }, 50);
     return () => clearInterval(interval);
-  }, [isPlaying]);
+  }, [isPlaying, isPersonalSpotify]);
 
   useEffect(() => {
     // Reset timer when song changes
-    setTimer(0);
+    if (!isPersonalSpotify) setTimer(0);
+
+    // If using personal Spotify, play full song via SDK
+    if (isPersonalSpotify && musicSource === 'spotify' && deviceId && props.interacted) {
+      playSpotifyTrack(currentPlaying.id);
+      setIsPlaying(true);
+      setHasStarted(true);
+      return;
+    }
 
     // Autoplay when component mounts or user interacts
     if (audioRef.current && !hasStarted && props.interacted) {
@@ -215,9 +248,14 @@ export default function Music(props) {
       // When song changes, continue playing if user hasn't manually paused
       audioRef.current.play();
     }
-  }, [currentPlaying, props.interacted]);
+  }, [currentPlaying, props.interacted, isPersonalSpotify, deviceId]);
 
   const togglePlayPause = (e) => {
+    e.preventDefault();
+    if (isPersonalSpotify && sdkPlayer) {
+      sdkPlayer.togglePlay();
+      return;
+    }
     if (audioRef.current) {
       if (isPlaying) {
         audioRef.current.pause();
@@ -248,8 +286,10 @@ export default function Music(props) {
     );
   };
 
-  // Switch to next song per 30 sec (only if playing)
+  // Switch to next song per 30 sec (only if playing and not personal spotify)
   useEffect(() => {
+    if (isPersonalSpotify) return;
+
     const timeInSeconds = Math.floor(timer);
     if (
       timeInSeconds > 0 &&
@@ -272,7 +312,7 @@ export default function Music(props) {
         setIsPlaying(true);
       }
     }
-  }, [timer]);
+  }, [timer, isPersonalSpotify]);
 
   // Get Lyrics
   // Need to search /api/music?provider=qq&path=search/quick&key={songName} to get songmid
@@ -335,7 +375,8 @@ export default function Music(props) {
   const getCurrentLyricIndex = () => {
     if (parsedLyrics.length === 0) return -1;
 
-    const currentTime = timer % 30;
+    // Use full timer for personal spotify, modulo for preview
+    const currentTime = isPersonalSpotify ? timer : timer % 30;
 
     for (let i = parsedLyrics.length - 1; i >= 0; i--) {
       if (currentTime >= parsedLyrics[i].time) {
@@ -347,6 +388,23 @@ export default function Music(props) {
 
   const currentLyricIndex = getCurrentLyricIndex();
 
+  // Calculate progress within current lyric line (0-100%) - Only for personal spotify
+  const getCurrentLyricProgress = () => {
+    if (!isPersonalSpotify || currentLyricIndex === -1 || parsedLyrics.length === 0) return 0;
+
+    const currentTime = timer;
+    const currentLyric = parsedLyrics[currentLyricIndex];
+    const nextLyric = parsedLyrics[currentLyricIndex + 1];
+
+    if (!nextLyric) return 100;
+
+    const duration = nextLyric.time - currentLyric.time;
+    const elapsed = currentTime - currentLyric.time;
+
+    return Math.min(100, Math.max(0, (elapsed / duration) * 100));
+  };
+
+  const lyricProgress = getCurrentLyricProgress();
   function searchSongMID(songName, singerName) {
     fetch(
       `/api/music?provider=qq&path=search&pageSize=3&key=${encodeURIComponent(songName + ' ' + singerName)}`
@@ -469,9 +527,27 @@ export default function Music(props) {
     }, 3000);
   };
 
+  // Auto-scroll to current lyric (only for personal spotify)
+  useEffect(() => {
+    if (
+      isPersonalSpotify &&
+      currentLyricIndex >= 0 &&
+      lyricsContainerRef.current &&
+      !isUserScrolling
+    ) {
+      const activeElement = lyricsContainerRef.current.querySelector(
+        `[data-lyric-index="${currentLyricIndex}"]`
+      );
+      if (activeElement) {
+        activeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  }, [currentLyricIndex, isUserScrolling, parsedLyrics, isPersonalSpotify]);
   // Calculate progress percentage (0-100)
   const duration = currentPlaying.attributes?.durationInMillis / 1000 || 30;
-  const progress = ((timer % 30) / 30) * 100;
+  const progress = isPersonalSpotify
+    ? (timer / duration) * 100
+    : ((timer % 30) / 30) * 100;
 
   if (!music || music.length === 0 || !currentPlaying) return null;
 
@@ -642,25 +718,33 @@ export default function Music(props) {
               <div className="flex flex-col max-w-[450px] max-h-[40vh]">
                 <div className="sticky top-0 z-10 flex items-center justify-between text-sm md:text-xl font-bold dark:text-white p-2 bg-white/95 dark:bg-black/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 rounded-t-xl md:rounded-t-2xl">
                   <span>{i18n('Lyrics')}</span>
-                  <button
-                    onClick={toggleTranslation}
-                    disabled={
-                      isTranslating ||
-                      !parsedLyrics ||
-                      parsedLyrics.length === 0
-                    }
-                    className={`px-3 py-1 rounded-md text-[10px] md:text-xs font-bold transition-all ${
-                      isTranslated
+                  <div className="flex items-center gap-2">
+                    <a
+                      href="/api/spotify/login"
+                      className={`flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold transition-all ${isPersonalSpotify ? 'bg-green-600/20 text-green-600 border border-green-600/30' : 'bg-green-600 text-white hover:bg-green-700 shadow-sm'}`}
+                    >
+                      <i className="fab fa-spotify"></i>
+                      {isPersonalSpotify ? 'Logged in' : 'Login'}
+                    </a>
+                    <button
+                      onClick={toggleTranslation}
+                      disabled={
+                        isTranslating ||
+                        !parsedLyrics ||
+                        parsedLyrics.length === 0
+                      }
+                      className={`px-3 py-1 rounded-md text-[10px] md:text-xs font-bold transition-all ${isTranslated
                         ? 'bg-blue-600 text-white shadow-sm'
                         : 'text-gray-500 dark:text-gray-400 hover:dark:text-white'
-                    } ${isTranslating || !parsedLyrics || parsedLyrics.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
-                  >
-                    {isTranslating ? (
-                      <i className="fa fa-circle-notch fa-spin" />
-                    ) : (
-                      <i className="fa fa-language" />
-                    )}
-                  </button>
+                        } ${isTranslating || !parsedLyrics || parsedLyrics.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    >
+                      {isTranslating ? (
+                        <i className="fa fa-circle-notch fa-spin" />
+                      ) : (
+                        <i className="fa fa-language" />
+                      )}
+                    </button>
+                  </div>
                 </div>
                 {/* Lyrics Content */}
                 <div
@@ -696,28 +780,129 @@ export default function Music(props) {
                           ? translatedLyrics[index]
                           : null;
 
+                        // Helper function for word-by-word highlighting (Personal Spotify only)
+                        const renderKaraokeLine = (
+                          text,
+                          activeClass,
+                          inactiveClass
+                        ) => {
+                          if (!isPersonalSpotify || index !== currentLyricIndex) {
+                            return (
+                              <span className={inactiveClass}>{text}</span>
+                            );
+                          }
+
+                          // Split by words and spaces to preserve formatting
+                          const words = text.split(/(\s+)/);
+                          const totalChars = text.length || 1;
+                          let charCount = 0;
+
+                          return (
+                            <div className="inline">
+                              {words.map((word, i) => {
+                                const wordLen = word.length;
+                                const startPct = (charCount / totalChars) * 100;
+                                const endPct =
+                                  ((charCount + wordLen) / totalChars) * 100;
+                                charCount += wordLen;
+
+                                let wordProgress = 0;
+                                if (lyricProgress >= endPct) wordProgress = 100;
+                                else if (lyricProgress > startPct) {
+                                  wordProgress =
+                                    ((lyricProgress - startPct) /
+                                      (endPct - startPct)) *
+                                    100;
+                                }
+
+                                return (
+                                  <span
+                                    key={i}
+                                    className="relative inline-block whitespace-pre"
+                                  >
+                                    <span className={inactiveClass}>
+                                      {word}
+                                    </span>
+                                    <span
+                                      className={`absolute top-0 left-0 overflow-hidden ${activeClass} whitespace-pre pointer-events-none`}
+                                      style={{
+                                        width: `${wordProgress}%`,
+                                        transition: 'width 0.05s linear',
+                                      }}
+                                    >
+                                      {word}
+                                    </span>
+                                  </span>
+                                );
+                              })}
+                            </div>
+                          );
+                        };
+
                         return (
                           <div
                             key={index}
-                            className="transition-all duration-300 text-left pl-2 pr-4 py-1 relative break-words dark:text-gray-300"
+                            data-lyric-index={index}
+                            onClick={() => {
+                              // Jump to this timestamp when clicked
+                              if (isPersonalSpotify && sdkPlayer) {
+                                sdkPlayer.seek(line.time * 1000);
+                                if (!isPlaying) {
+                                  sdkPlayer.togglePlay();
+                                  setIsPlaying(true);
+                                }
+                              } else if (audioRef.current) {
+                                audioRef.current.currentTime = line.time;
+                                setTimer(line.time);
+                                if (!isPlaying) {
+                                  audioRef.current.play();
+                                  setIsPlaying(true);
+                                }
+                              }
+                            }}
+                            className={`transition-all duration-300 text-left pl-2 pr-4 py-1 relative break-words cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg ${isPersonalSpotify && index === currentLyricIndex ? 'font-bold' : ''}`}
                           >
                             {/* Translated lyrics (if available) - TOP and BIGGER */}
                             {isTranslated && translatedLine ? (
-                              <div className="text-xl md:text-2xl font-bold dark:text-white">
-                                {translatedLine.text}
+                              <div className={`${isPersonalSpotify && index === currentLyricIndex ? 'text-xl md:text-2xl font-bold' : 'text-base md:text-lg text-gray-500 dark:text-gray-400'}`}>
+                                {isPersonalSpotify ? (
+                                  renderKaraokeLine(
+                                    translatedLine.text,
+                                    'text-gray-900 dark:text-white',
+                                    'text-gray-400 dark:text-gray-500'
+                                  )
+                                ) : (
+                                  translatedLine.text
+                                )}
                               </div>
                             ) : (
                               !isTranslated && (
-                                <div className="text-xl md:text-2xl dark:text-white">
-                                  {line.text}
+                                <div className={`${isPersonalSpotify && index === currentLyricIndex ? 'text-xl md:text-2xl font-bold' : 'text-base md:text-lg dark:text-white'}`}>
+                                  {isPersonalSpotify ? (
+                                    renderKaraokeLine(
+                                      line.text,
+                                      'text-gray-900 dark:text-white',
+                                      'text-gray-400 dark:text-gray-500'
+                                    )
+                                  ) : (
+                                    line.text
+                                  )}
                                 </div>
                               )
                             )}
 
                             {/* Original lyrics (if translation is enabled) - BOTTOM and SMALLER */}
                             {isTranslated && translatedLine && (
-                              <div className="mt-1 text-base md:text-lg text-gray-500 dark:text-gray-400">
-                                {line.text}
+                              <div className={`mt-1 ${isPersonalSpotify && index === currentLyricIndex ? 'text-base md:text-lg' : 'text-sm md:text-base text-gray-500 dark:text-gray-400'}`}>
+                                {isPersonalSpotify ? (
+                                  renderKaraokeLine(
+                                    line.text,
+                                    'text-gray-600 dark:text-gray-400',
+                                    'text-gray-400 dark:text-gray-500'
+                                  )
+                                ) : (
+                                  line.text
+                                )}
                               </div>
                             )}
                           </div>
@@ -764,19 +949,21 @@ export default function Music(props) {
                 {i18n('Your browser does not support the audio element.')}
               </audio>
             )}
-            <div className="hidden md:group-hover:block absolute -bottom-3.5 right-5 text-[10px] text-gray-400 dark:text-gray-600 z-[1] whitespace-nowrap animate-pulse transition-all">
-              {i18n('Next')}:{' '}
-              <b>
-                {
-                  music[
-                    (music.findIndex((item) => item.id === currentPlaying.id) +
-                      1) %
+            {!isPersonalSpotify && (
+              <div className="hidden md:group-hover:block absolute -bottom-3.5 right-5 text-[10px] text-gray-400 dark:text-gray-600 z-[1] whitespace-nowrap animate-pulse transition-all">
+                {i18n('Next')}:{' '}
+                <b>
+                  {
+                    music[
+                      (music.findIndex((item) => item.id === currentPlaying.id) +
+                        1) %
                       music.length
-                  ].attributes.name
-                }
-              </b>{' '}
-              in {30 - (timer % 30)}s
-            </div>
+                    ].attributes.name
+                  }
+                </b>{' '}
+                in {30 - (timer % 30)}s
+              </div>
+            )}
           </div>
         </div>
       </div>

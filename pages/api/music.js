@@ -7,7 +7,7 @@ export default async function handler(req) {
 
   // Spotify API - direct calls to Spotify endpoints
   if (provider === 'spotify') {
-    return handleSpotify(url);
+    return handleSpotify(req, url);
   }
 
   // QQ Music API - direct calls to QQ Music endpoints
@@ -71,18 +71,24 @@ export default async function handler(req) {
 }
 
 // Spotify API handler - direct HTTP calls (edge-compatible)
-async function handleSpotify(url) {
+async function handleSpotify(req, url) {
   const path = url.searchParams.get('path');
-  let spotifyToken = process.env.SPOTIFY_TOKEN;
 
-  // If no manually configured token, try to get one using client credentials
+  // Try to get personal token from cookie first
+  const cookieHeader = req.headers.get('cookie') || '';
+  const personalToken = cookieHeader.match(/spotify_personal_token=([^;]+)/)?.[1];
+  const personalRefresh = cookieHeader.match(/spotify_personal_refresh=([^;]+)/)?.[1];
+
+  let spotifyToken = personalToken || process.env.SPOTIFY_TOKEN;
+
+  // If no manually configured token, try to get one using client credentials or refresh personal token
   if (
     !spotifyToken &&
     process.env.SPOTIFY_Client_ID &&
     process.env.SPOTIFY_Client_Secret
   ) {
     try {
-      spotifyToken = await getSpotifyToken();
+      spotifyToken = await getSpotifyToken(personalRefresh);
     } catch (error) {
       console.error('Failed to get Spotify token:', error);
     }
@@ -143,7 +149,10 @@ async function handleSpotify(url) {
 
       case 'token':
         // Return token for Web Playback SDK
-        return new Response(JSON.stringify({ access_token: spotifyToken }), {
+        return new Response(JSON.stringify({
+          access_token: spotifyToken,
+          isPersonal: !!personalToken || !!personalRefresh
+        }), {
           status: 200,
           headers: { 'Content-Type': 'application/json' },
         });
@@ -527,10 +536,10 @@ async function createAppleMusicJWT(privateKeyPem, teamId, keyId) {
   return `${headerB64}.${payloadB64}.${signatureB64}`;
 }
 
-async function getSpotifyToken() {
+async function getSpotifyToken(personalRefresh) {
   const clientId = process.env.SPOTIFY_Client_ID;
   const clientSecret = process.env.SPOTIFY_Client_Secret;
-  const refreshToken = process.env.SPOTIFY_REFRESH_TOKEN;
+  const refreshToken = personalRefresh || process.env.SPOTIFY_REFRESH_TOKEN;
 
   if (!clientId || !clientSecret) return null;
 
