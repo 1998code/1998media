@@ -76,8 +76,12 @@ async function handleSpotify(req, url) {
 
   // Try to get personal token from cookie first
   const cookieHeader = req.headers.get('cookie') || '';
-  const personalToken = cookieHeader.match(/spotify_personal_token=([^;]+)/)?.[1];
-  const personalRefresh = cookieHeader.match(/spotify_personal_refresh=([^;]+)/)?.[1];
+  const personalToken = cookieHeader.match(
+    /spotify_personal_token=([^;]+)/
+  )?.[1];
+  const personalRefresh = cookieHeader.match(
+    /spotify_personal_refresh=([^;]+)/
+  )?.[1];
 
   let spotifyToken = personalToken || process.env.SPOTIFY_TOKEN;
 
@@ -149,13 +153,16 @@ async function handleSpotify(req, url) {
 
       case 'token':
         // Return token for Web Playback SDK
-        return new Response(JSON.stringify({
-          access_token: spotifyToken,
-          isPersonal: !!personalToken || !!personalRefresh
-        }), {
-          status: 200,
-          headers: { 'Content-Type': 'application/json' },
-        });
+        return new Response(
+          JSON.stringify({
+            access_token: spotifyToken,
+            isPersonal: !!personalToken || !!personalRefresh,
+          }),
+          {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' },
+          }
+        );
 
       default:
         return new Response(

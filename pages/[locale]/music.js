@@ -41,8 +41,8 @@ export default function Music(props) {
 
     // Check if personal Spotify is available
     fetch('/api/music?provider=spotify&path=token')
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         if (data.isPersonal) {
           setIsPersonalSpotify(true);
           // Load Spotify SDK if not already there
@@ -96,7 +96,7 @@ export default function Music(props) {
       const currentTrack = state.track_window.current_track;
       if (currentTrack && currentTrack.id !== currentPlaying.id) {
         // Sync track metadata if it changed (e.g. user skipped in Spotify app)
-        const found = music.find(m => m.id === currentTrack.id);
+        const found = music.find((m) => m.id === currentTrack.id);
         if (found) setCurrentPlaying(found);
       }
     });
@@ -225,7 +225,12 @@ export default function Music(props) {
     if (!isPersonalSpotify) setTimer(0);
 
     // If using personal Spotify, play full song via SDK
-    if (isPersonalSpotify && musicSource === 'spotify' && deviceId && props.interacted) {
+    if (
+      isPersonalSpotify &&
+      musicSource === 'spotify' &&
+      deviceId &&
+      props.interacted
+    ) {
       playSpotifyTrack(currentPlaying.id);
       setIsPlaying(true);
       setHasStarted(true);
@@ -390,7 +395,12 @@ export default function Music(props) {
 
   // Calculate progress within current lyric line (0-100%) - Only for personal spotify
   const getCurrentLyricProgress = () => {
-    if (!isPersonalSpotify || currentLyricIndex === -1 || parsedLyrics.length === 0) return 0;
+    if (
+      !isPersonalSpotify ||
+      currentLyricIndex === -1 ||
+      parsedLyrics.length === 0
+    )
+      return 0;
 
     const currentTime = timer;
     const currentLyric = parsedLyrics[currentLyricIndex];
@@ -733,10 +743,11 @@ export default function Music(props) {
                         !parsedLyrics ||
                         parsedLyrics.length === 0
                       }
-                      className={`px-3 py-1 rounded-md text-[10px] md:text-xs font-bold transition-all ${isTranslated
-                        ? 'bg-blue-600 text-white shadow-sm'
-                        : 'text-gray-500 dark:text-gray-400 hover:dark:text-white'
-                        } ${isTranslating || !parsedLyrics || parsedLyrics.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                      className={`px-3 py-1 rounded-md text-[10px] md:text-xs font-bold transition-all ${
+                        isTranslated
+                          ? 'bg-blue-600 text-white shadow-sm'
+                          : 'text-gray-500 dark:text-gray-400 hover:dark:text-white'
+                      } ${isTranslating || !parsedLyrics || parsedLyrics.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
                       {isTranslating ? (
                         <i className="fa fa-circle-notch fa-spin" />
@@ -786,7 +797,10 @@ export default function Music(props) {
                           activeClass,
                           inactiveClass
                         ) => {
-                          if (!isPersonalSpotify || index !== currentLyricIndex) {
+                          if (
+                            !isPersonalSpotify ||
+                            index !== currentLyricIndex
+                          ) {
                             return (
                               <span className={inactiveClass}>{text}</span>
                             );
@@ -864,45 +878,45 @@ export default function Music(props) {
                           >
                             {/* Translated lyrics (if available) - TOP and BIGGER */}
                             {isTranslated && translatedLine ? (
-                              <div className={`${isPersonalSpotify && index === currentLyricIndex ? 'text-xl md:text-2xl font-bold' : 'text-base md:text-lg text-gray-500 dark:text-gray-400'}`}>
-                                {isPersonalSpotify ? (
-                                  renderKaraokeLine(
-                                    translatedLine.text,
-                                    'text-gray-900 dark:text-white',
-                                    'text-gray-400 dark:text-gray-500'
-                                  )
-                                ) : (
-                                  translatedLine.text
-                                )}
-                              </div>
-                            ) : (
-                              !isTranslated && (
-                                <div className={`${isPersonalSpotify && index === currentLyricIndex ? 'text-xl md:text-2xl font-bold' : 'text-base md:text-lg dark:text-white'}`}>
-                                  {isPersonalSpotify ? (
-                                    renderKaraokeLine(
-                                      line.text,
+                              <div
+                                className={`${isPersonalSpotify && index === currentLyricIndex ? 'text-xl md:text-2xl font-bold' : 'text-base md:text-lg text-gray-500 dark:text-gray-400'}`}
+                              >
+                                {isPersonalSpotify
+                                  ? renderKaraokeLine(
+                                      translatedLine.text,
                                       'text-gray-900 dark:text-white',
                                       'text-gray-400 dark:text-gray-500'
                                     )
-                                  ) : (
-                                    line.text
-                                  )}
+                                  : translatedLine.text}
+                              </div>
+                            ) : (
+                              !isTranslated && (
+                                <div
+                                  className={`${isPersonalSpotify && index === currentLyricIndex ? 'text-xl md:text-2xl font-bold' : 'text-base md:text-lg dark:text-white'}`}
+                                >
+                                  {isPersonalSpotify
+                                    ? renderKaraokeLine(
+                                        line.text,
+                                        'text-gray-900 dark:text-white',
+                                        'text-gray-400 dark:text-gray-500'
+                                      )
+                                    : line.text}
                                 </div>
                               )
                             )}
 
                             {/* Original lyrics (if translation is enabled) - BOTTOM and SMALLER */}
                             {isTranslated && translatedLine && (
-                              <div className={`mt-1 ${isPersonalSpotify && index === currentLyricIndex ? 'text-base md:text-lg' : 'text-sm md:text-base text-gray-500 dark:text-gray-400'}`}>
-                                {isPersonalSpotify ? (
-                                  renderKaraokeLine(
-                                    line.text,
-                                    'text-gray-600 dark:text-gray-400',
-                                    'text-gray-400 dark:text-gray-500'
-                                  )
-                                ) : (
-                                  line.text
-                                )}
+                              <div
+                                className={`mt-1 ${isPersonalSpotify && index === currentLyricIndex ? 'text-base md:text-lg' : 'text-sm md:text-base text-gray-500 dark:text-gray-400'}`}
+                              >
+                                {isPersonalSpotify
+                                  ? renderKaraokeLine(
+                                      line.text,
+                                      'text-gray-600 dark:text-gray-400',
+                                      'text-gray-400 dark:text-gray-500'
+                                    )
+                                  : line.text}
                               </div>
                             )}
                           </div>
@@ -955,9 +969,11 @@ export default function Music(props) {
                 <b>
                   {
                     music[
-                      (music.findIndex((item) => item.id === currentPlaying.id) +
+                      (music.findIndex(
+                        (item) => item.id === currentPlaying.id
+                      ) +
                         1) %
-                      music.length
+                        music.length
                     ].attributes.name
                   }
                 </b>{' '}
