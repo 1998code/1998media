@@ -42,7 +42,7 @@ export default async function handler(req) {
 
     // Construct the redirect response manually to avoid immutable header error
     const headers = new Headers();
-    headers.append('Location', `${origin}/music`);
+    headers.append('Location', `${origin}/`);
 
     // Set cookies for access and refresh tokens
     // Max age for access token is usually 1 hour (3600s), refresh token is longer.
