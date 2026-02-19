@@ -12,8 +12,24 @@ export default function Music(props) {
   const [sdkPlayer, setSdkPlayer] = useState(null);
   const [isSdkReady, setIsSdkReady] = useState(false);
   const [isPersonalSpotify, setIsPersonalSpotify] = useState(false);
+  const [timer, setTimer] = useState(0);
+  const [music, setMusic] = useState([]);
+  const [currentPlaying, setCurrentPlaying] = useState({});
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [hasStarted, setHasStarted] = useState(false);
+  const [isUserScrolling, setIsUserScrolling] = useState(false);
+  const [lyrics, setLyrics] = useState(null); // null = loading, '' = no lyrics, string = lyrics
+  const [parsedLyrics, setParsedLyrics] = useState([]);
+  const [isTranslated, setIsTranslated] = useState(false);
+  const [isTranslating, setIsTranslating] = useState(false);
+  const [translatedLyrics, setTranslatedLyrics] = useState([]);
+
   const musicRef = useRef([]);
   const currentPlayingRef = useRef({});
+  const isSdkAction = useRef(false);
+  const audioRef = useRef();
+  const lyricsContainerRef = useRef();
+  const scrollTimeoutRef = useRef();
 
   useEffect(() => {
     musicRef.current = music;
@@ -107,7 +123,10 @@ export default function Music(props) {
       if (currentTrack && currentTrack.id !== currentPlayingRef.current.id) {
         // Sync track metadata if it changed (e.g. user skipped in Spotify app)
         const found = musicRef.current.find((m) => m.id === currentTrack.id);
-        if (found) setCurrentPlaying(found);
+        if (found) {
+          isSdkAction.current = true;
+          setCurrentPlaying(found);
+        }
       }
     });
 
@@ -115,9 +134,6 @@ export default function Music(props) {
     setSdkPlayer(player);
   };
 
-  const [timer, setTimer] = useState(0);
-  const [music, setMusic] = useState([]);
-  const [currentPlaying, setCurrentPlaying] = useState({});
   function fetchMusicList() {
     fetch(`/api/music?path=me/recent/played/tracks`)
       .then((response) => {
@@ -212,13 +228,6 @@ export default function Music(props) {
       });
   }
 
-  const audioRef = useRef();
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [hasStarted, setHasStarted] = useState(false);
-
-  const lyricsContainerRef = useRef();
-  const [isUserScrolling, setIsUserScrolling] = useState(false);
-  const scrollTimeoutRef = useRef();
 
   // Timer should only run when music is playing (and only manual timer if not using personal Spotify SDK)
   useEffect(() => {
@@ -231,15 +240,22 @@ export default function Music(props) {
   }, [isPlaying]);
 
   useEffect(() => {
-    // Reset timer when song changes
-    if (!isPersonalSpotify) setTimer(0);
+    // If change was triggered by SDK, don't re-trigger play and don't reset timer
+    if (isSdkAction.current) {
+      isSdkAction.current = false;
+      return;
+    }
+
+    // Reset timer when song changes manually
+    setTimer(0);
 
     // If using personal Spotify, play full song via SDK
     if (
       isPersonalSpotify &&
       musicSource === 'spotify' &&
       deviceId &&
-      props.interacted
+      props.interacted &&
+      currentPlaying?.id
     ) {
       playSpotifyTrack(currentPlaying.id);
       setIsPlaying(true);
@@ -332,11 +348,6 @@ export default function Music(props) {
   // Get Lyrics
   // Need to search /api/music?provider=qq&path=search/quick&key={songName} to get songmid
   // Then get lyrics via /api/music?provider=qq&path=lyric&songmid=001IhSxX225n1g
-  const [lyrics, setLyrics] = useState(null); // null = loading, '' = no lyrics, string = lyrics
-  const [parsedLyrics, setParsedLyrics] = useState([]);
-  const [isTranslated, setIsTranslated] = useState(false);
-  const [isTranslating, setIsTranslating] = useState(false);
-  const [translatedLyrics, setTranslatedLyrics] = useState([]);
 
   // Parse lyrics with timestamps
   const parseLyricsWithTimestamps = (lyricsText) => {
@@ -569,7 +580,7 @@ export default function Music(props) {
     ? (timer / duration) * 100
     : ((timer % 30) / 30) * 100;
 
-  if (!music || music.length === 0 || !currentPlaying) return null;
+  if (!music || music.length === 0 || !currentPlaying?.attributes) return null;
 
   return (
     <div
@@ -753,11 +764,10 @@ export default function Music(props) {
                         !parsedLyrics ||
                         parsedLyrics.length === 0
                       }
-                      className={`px-3 py-1 rounded-md text-[10px] md:text-xs font-bold transition-all ${
-                        isTranslated
-                          ? 'bg-blue-600 text-white shadow-sm'
-                          : 'text-gray-500 dark:text-gray-400 hover:dark:text-white'
-                      } ${isTranslating || !parsedLyrics || parsedLyrics.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                      className={`px-3 py-1 rounded-md text-[10px] md:text-xs font-bold transition-all ${isTranslated
+                        ? 'bg-blue-600 text-white shadow-sm'
+                        : 'text-gray-500 dark:text-gray-400 hover:dark:text-white'
+                        } ${isTranslating || !parsedLyrics || parsedLyrics.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
                       {isTranslating ? (
                         <i className="fa fa-circle-notch fa-spin" />
@@ -893,10 +903,10 @@ export default function Music(props) {
                               >
                                 {isPersonalSpotify
                                   ? renderKaraokeLine(
-                                      translatedLine.text,
-                                      'text-gray-900 dark:text-white',
-                                      'text-gray-400 dark:text-gray-500'
-                                    )
+                                    translatedLine.text,
+                                    'text-gray-900 dark:text-white',
+                                    'text-gray-400 dark:text-gray-500'
+                                  )
                                   : translatedLine.text}
                               </div>
                             ) : (
@@ -906,10 +916,10 @@ export default function Music(props) {
                                 >
                                   {isPersonalSpotify
                                     ? renderKaraokeLine(
-                                        line.text,
-                                        'text-gray-900 dark:text-white',
-                                        'text-gray-400 dark:text-gray-500'
-                                      )
+                                      line.text,
+                                      'text-gray-900 dark:text-white',
+                                      'text-gray-400 dark:text-gray-500'
+                                    )
                                     : line.text}
                                 </div>
                               )
@@ -922,10 +932,10 @@ export default function Music(props) {
                               >
                                 {isPersonalSpotify
                                   ? renderKaraokeLine(
-                                      line.text,
-                                      'text-gray-600 dark:text-gray-400',
-                                      'text-gray-400 dark:text-gray-500'
-                                    )
+                                    line.text,
+                                    'text-gray-600 dark:text-gray-400',
+                                    'text-gray-400 dark:text-gray-500'
+                                  )
                                   : line.text}
                               </div>
                             )}
@@ -983,7 +993,7 @@ export default function Music(props) {
                         (item) => item.id === currentPlaying.id
                       ) +
                         1) %
-                        music.length
+                      music.length
                     ].attributes.name
                   }
                 </b>{' '}
