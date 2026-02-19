@@ -12,6 +12,16 @@ export default function Music(props) {
   const [sdkPlayer, setSdkPlayer] = useState(null);
   const [isSdkReady, setIsSdkReady] = useState(false);
   const [isPersonalSpotify, setIsPersonalSpotify] = useState(false);
+  const musicRef = useRef([]);
+  const currentPlayingRef = useRef({});
+
+  useEffect(() => {
+    musicRef.current = music;
+  }, [music]);
+
+  useEffect(() => {
+    currentPlayingRef.current = currentPlaying;
+  }, [currentPlaying]);
 
   function i18n(key) {
     if (props.i18n && props.i18n['music'] && !props.i18n['music'][key]) {
@@ -94,9 +104,9 @@ export default function Music(props) {
 
       // Update current playing if it changed from Spotify side
       const currentTrack = state.track_window.current_track;
-      if (currentTrack && currentTrack.id !== currentPlaying.id) {
+      if (currentTrack && currentTrack.id !== currentPlayingRef.current.id) {
         // Sync track metadata if it changed (e.g. user skipped in Spotify app)
-        const found = music.find((m) => m.id === currentTrack.id);
+        const found = musicRef.current.find((m) => m.id === currentTrack.id);
         if (found) setCurrentPlaying(found);
       }
     });
@@ -212,13 +222,13 @@ export default function Music(props) {
 
   // Timer should only run when music is playing (and only manual timer if not using personal Spotify SDK)
   useEffect(() => {
-    if (!isPlaying || isPersonalSpotify) return;
+    if (!isPlaying) return;
 
     const interval = setInterval(() => {
       setTimer((prevTimer) => prevTimer + 0.05);
     }, 50);
     return () => clearInterval(interval);
-  }, [isPlaying, isPersonalSpotify]);
+  }, [isPlaying]);
 
   useEffect(() => {
     // Reset timer when song changes
@@ -743,11 +753,10 @@ export default function Music(props) {
                         !parsedLyrics ||
                         parsedLyrics.length === 0
                       }
-                      className={`px-3 py-1 rounded-md text-[10px] md:text-xs font-bold transition-all ${
-                        isTranslated
+                      className={`px-3 py-1 rounded-md text-[10px] md:text-xs font-bold transition-all ${isTranslated
                           ? 'bg-blue-600 text-white shadow-sm'
                           : 'text-gray-500 dark:text-gray-400 hover:dark:text-white'
-                      } ${isTranslating || !parsedLyrics || parsedLyrics.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        } ${isTranslating || !parsedLyrics || parsedLyrics.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
                       {isTranslating ? (
                         <i className="fa fa-circle-notch fa-spin" />
@@ -883,10 +892,10 @@ export default function Music(props) {
                               >
                                 {isPersonalSpotify
                                   ? renderKaraokeLine(
-                                      translatedLine.text,
-                                      'text-gray-900 dark:text-white',
-                                      'text-gray-400 dark:text-gray-500'
-                                    )
+                                    translatedLine.text,
+                                    'text-gray-900 dark:text-white',
+                                    'text-gray-400 dark:text-gray-500'
+                                  )
                                   : translatedLine.text}
                               </div>
                             ) : (
@@ -896,10 +905,10 @@ export default function Music(props) {
                                 >
                                   {isPersonalSpotify
                                     ? renderKaraokeLine(
-                                        line.text,
-                                        'text-gray-900 dark:text-white',
-                                        'text-gray-400 dark:text-gray-500'
-                                      )
+                                      line.text,
+                                      'text-gray-900 dark:text-white',
+                                      'text-gray-400 dark:text-gray-500'
+                                    )
                                     : line.text}
                                 </div>
                               )
@@ -912,10 +921,10 @@ export default function Music(props) {
                               >
                                 {isPersonalSpotify
                                   ? renderKaraokeLine(
-                                      line.text,
-                                      'text-gray-600 dark:text-gray-400',
-                                      'text-gray-400 dark:text-gray-500'
-                                    )
+                                    line.text,
+                                    'text-gray-600 dark:text-gray-400',
+                                    'text-gray-400 dark:text-gray-500'
+                                  )
                                   : line.text}
                               </div>
                             )}
@@ -973,7 +982,7 @@ export default function Music(props) {
                         (item) => item.id === currentPlaying.id
                       ) +
                         1) %
-                        music.length
+                      music.length
                     ].attributes.name
                   }
                 </b>{' '}
