@@ -228,7 +228,6 @@ export default function Music(props) {
       });
   }
 
-
   // Timer should only run when music is playing (and only manual timer if not using personal Spotify SDK)
   useEffect(() => {
     if (!isPlaying) return;
@@ -764,10 +763,11 @@ export default function Music(props) {
                         !parsedLyrics ||
                         parsedLyrics.length === 0
                       }
-                      className={`px-3 py-1 rounded-md text-[10px] md:text-xs font-bold transition-all ${isTranslated
-                        ? 'bg-blue-600 text-white shadow-sm'
-                        : 'text-gray-500 dark:text-gray-400 hover:dark:text-white'
-                        } ${isTranslating || !parsedLyrics || parsedLyrics.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                      className={`px-3 py-1 rounded-md text-[10px] md:text-xs font-bold transition-all ${
+                        isTranslated
+                          ? 'bg-blue-600 text-white shadow-sm'
+                          : 'text-gray-500 dark:text-gray-400 hover:dark:text-white'
+                      } ${isTranslating || !parsedLyrics || parsedLyrics.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
                       {isTranslating ? (
                         <i className="fa fa-circle-notch fa-spin" />
@@ -903,10 +903,10 @@ export default function Music(props) {
                               >
                                 {isPersonalSpotify
                                   ? renderKaraokeLine(
-                                    translatedLine.text,
-                                    'text-gray-900 dark:text-white',
-                                    'text-gray-400 dark:text-gray-500'
-                                  )
+                                      translatedLine.text,
+                                      'text-gray-900 dark:text-white',
+                                      'text-gray-400 dark:text-gray-500'
+                                    )
                                   : translatedLine.text}
                               </div>
                             ) : (
@@ -916,10 +916,10 @@ export default function Music(props) {
                                 >
                                   {isPersonalSpotify
                                     ? renderKaraokeLine(
-                                      line.text,
-                                      'text-gray-900 dark:text-white',
-                                      'text-gray-400 dark:text-gray-500'
-                                    )
+                                        line.text,
+                                        'text-gray-900 dark:text-white',
+                                        'text-gray-400 dark:text-gray-500'
+                                      )
                                     : line.text}
                                 </div>
                               )
@@ -932,10 +932,10 @@ export default function Music(props) {
                               >
                                 {isPersonalSpotify
                                   ? renderKaraokeLine(
-                                    line.text,
-                                    'text-gray-600 dark:text-gray-400',
-                                    'text-gray-400 dark:text-gray-500'
-                                  )
+                                      line.text,
+                                      'text-gray-600 dark:text-gray-400',
+                                      'text-gray-400 dark:text-gray-500'
+                                    )
                                   : line.text}
                               </div>
                             )}
@@ -993,7 +993,7 @@ export default function Music(props) {
                         (item) => item.id === currentPlaying.id
                       ) +
                         1) %
-                      music.length
+                        music.length
                     ].attributes.name
                   }
                 </b>{' '}
