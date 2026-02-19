@@ -1,7 +1,5 @@
-import tailwindcssAspectRatio from '@tailwindcss/aspect-ratio';
-
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
   darkMode: ['class', '[class="darkmode--activated"]'],
   content: [
     './pages/**/*.{js,ts,jsx,tsx}',
@@ -17,5 +15,5 @@ export default {
       },
     },
   },
-  plugins: [tailwindcssAspectRatio],
+  plugins: [require('@tailwindcss/aspect-ratio')],
 };

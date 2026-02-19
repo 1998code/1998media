@@ -1,7 +1,6 @@
 {
   "name": "1998media",
   "version": "2026.2",
-  "type": "module",
   "private": true,
   "scripts": {
     "dev": "next dev",
