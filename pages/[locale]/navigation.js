@@ -106,14 +106,14 @@ export default function Navigation(props) {
   // Convert sections to StaggeredMenu items
   const menuItems = props.sections
     ? props.sections.map((section) => ({
-      label: i18n(
-        section.charAt(0).toUpperCase() +
-        section.replace(/ai/g, 'AI').slice(1).replace(/-/g, ' ')
-      ),
-      link: `#${section}`,
-      ariaLabel: `Go to ${section}`,
-      icon: <i className={`fad fa-${sectionIconMap[section]}`}></i>,
-    }))
+        label: i18n(
+          section.charAt(0).toUpperCase() +
+            section.replace(/ai/g, 'AI').slice(1).replace(/-/g, ' ')
+        ),
+        link: `#${section}`,
+        ariaLabel: `Go to ${section}`,
+        icon: <i className={`fad fa-${sectionIconMap[section]}`}></i>,
+      }))
     : [];
 
   return (
@@ -172,7 +172,7 @@ export default function Navigation(props) {
                   >
                     {i18n(
                       section.charAt(0).toUpperCase() +
-                      section.replace(/ai/g, 'AI').slice(1).replace(/-/g, ' ')
+                        section.replace(/ai/g, 'AI').slice(1).replace(/-/g, ' ')
                     )}
                   </span>
                 </div>
