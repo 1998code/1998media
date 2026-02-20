@@ -47,11 +47,6 @@ export default function Footer(props) {
         icon: (props) => <i className="fab fa-behance fa-xl" />,
       },
       {
-        name: 'Instagram',
-        href: 'https://instagram.com/1998trip',
-        icon: (props) => <i className="fab fa-instagram fa-xl" />,
-      },
-      {
         name: 'YouTube',
         href: 'https://www.youtube.com/@MingsExplorer',
         icon: (props) => <i className="fab fa-youtube fa-xl" />,
