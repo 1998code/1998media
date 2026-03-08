@@ -13,6 +13,7 @@ import {
   fetchTripMoments,
   fetchGithubProjects,
   fetchStocks,
+  MY_PORTFOLIO,
 } from '../../lib/fetchData';
 
 // Critical components - load with SSR
@@ -550,9 +551,9 @@ export async function getServerSideProps(context) {
       fetchTripMedals(locale),
       fetchTripMoments(locale),
       fetchGithubProjects(),
-      fetchStocks('AAPL,NVDA,MC.PA,3033.HK'),
-      fetchStocks('MA'),
-      fetchStocks('MSFT,AMZN'),
+      fetchStocks(MY_PORTFOLIO.current),
+      fetchStocks(MY_PORTFOLIO.future),
+      fetchStocks(MY_PORTFOLIO.previous),
       fetchDalleData(),
       fetchUnsplashData(),
       fetchIPData(locale, req),

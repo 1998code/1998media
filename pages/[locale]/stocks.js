@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { fetchI18nData, fetchStocks } from '../../lib/fetchData';
+import { fetchI18nData, fetchStocks, MY_PORTFOLIO } from '../../lib/fetchData';
 
 export const runtime = 'experimental-edge';
 
@@ -46,11 +46,10 @@ function StockCard({ stock, i18n, locale }) {
               {stock.currency} {stock.price?.toFixed(2) || 'N/A'}
             </div>
             <div
-              className={`text-sm font-semibold mt-1 ${
-                stock.change >= 0
-                  ? 'text-green-600 dark:text-green-400'
-                  : 'text-red-600 dark:text-red-400'
-              }`}
+              className={`text-sm font-semibold mt-1 ${stock.change >= 0
+                ? 'text-green-600 dark:text-green-400'
+                : 'text-red-600 dark:text-red-400'
+                }`}
             >
               {stock.change >= 0 ? '+' : ''}
               {stock.change?.toFixed(2) || '0.00'} (
@@ -199,19 +198,18 @@ function StockCard({ stock, i18n, locale }) {
               : stock.price?.toFixed(2) || 'N/A'}
           </div>
           <div
-            className={`text-sm font-semibold mt-1 ${
-              (() => {
-                if (hoveredPoint) {
-                  const hoveredChange =
-                    hoveredPoint.price -
-                    (stock.chartPreviousClose || stock.price);
-                  return hoveredChange >= 0;
-                }
-                return stock.change >= 0;
-              })()
-                ? 'text-green-600 dark:text-green-400'
-                : 'text-red-600 dark:text-red-400'
-            }`}
+            className={`text-sm font-semibold mt-1 ${(() => {
+              if (hoveredPoint) {
+                const hoveredChange =
+                  hoveredPoint.price -
+                  (stock.chartPreviousClose || stock.price);
+                return hoveredChange >= 0;
+              }
+              return stock.change >= 0;
+            })()
+              ? 'text-green-600 dark:text-green-400'
+              : 'text-red-600 dark:text-red-400'
+              }`}
           >
             {(() => {
               if (hoveredPoint) {
@@ -583,9 +581,9 @@ export async function getServerSideProps(context) {
     const [i18nData, currentStocks, futureStocks, previousStocks] =
       await Promise.all([
         fetchI18nData(locale),
-        fetchStocks('AAPL,NVDA,MC.PA,3033.HK'),
-        fetchStocks('MA'),
-        fetchStocks('MSFT,AMZN'),
+        fetchStocks(MY_PORTFOLIO.current),
+        fetchStocks(MY_PORTFOLIO.future),
+        fetchStocks(MY_PORTFOLIO.previous),
       ]);
 
     return {
