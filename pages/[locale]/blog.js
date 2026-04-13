@@ -289,6 +289,11 @@ export default function Blog(props) {
         </div>
         <div className="flex flex-wrap justify-between items-center gap-3">
           <div className="flex">
+            {props.isLoading && medals.length === 0 && (
+              [...Array(6)].map((_, i) => (
+                <div key={i} className="h-10 w-10 rounded-full bg-gray-200 dark:bg-gray-700 animate-pulse mr-1" />
+              ))
+            )}
             {medals.map((medal) => (
               <Tooltip
                 key={medal.medalStageId || medal.medalStageName}
@@ -314,6 +319,22 @@ export default function Blog(props) {
             {i18n('View all on Trip.com')}
           </a>
         </div>
+        {props.isLoading && moments.length === 0 && (
+          <div className="overflow-x-hidden my-5">
+            <div className="flex gap-5">
+              {[...Array(4)].map((_, i) => (
+                <div key={i} className="flex-shrink-0 w-[350px] rounded-xl overflow-hidden bg-white dark:bg-black border border-gray-100 dark:border-gray-800 animate-pulse">
+                  <div className="h-64 w-full bg-gray-200 dark:bg-gray-800" />
+                  <div className="p-6 space-y-3">
+                    <div className="h-3 w-24 bg-gray-200 dark:bg-gray-700 rounded" />
+                    <div className="h-5 w-full bg-gray-200 dark:bg-gray-700 rounded" />
+                    <div className="h-5 w-3/4 bg-gray-200 dark:bg-gray-700 rounded" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
         <div
           className="overflow-x-auto my-5 scrollbar-hide"
           ref={tripScrollRef}
