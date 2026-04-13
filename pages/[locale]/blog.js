@@ -210,7 +210,7 @@ export default function Blog(props) {
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           <div className="flex gap-5">
-            {[...filteredBlogs, ...filteredBlogs, ...filteredBlogs].map(
+            {(filteredBlogs.length >= 5 ? [...filteredBlogs, ...filteredBlogs, ...filteredBlogs] : filteredBlogs).map(
               (post, index) => (
                 <a
                   key={`${post.title}-${index}`}
@@ -341,7 +341,7 @@ export default function Blog(props) {
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           <div className="flex gap-5">
-            {[tripPromo, ...moments, ...moments, ...moments].map(
+            {(moments.length >= 4 ? [tripPromo, ...moments, ...moments, ...moments] : [tripPromo, ...moments]).map(
               (post, index) => (
                 <a
                   href={post.shareURL}
