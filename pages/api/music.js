@@ -25,21 +25,38 @@ export default async function handler(req) {
         { headers: { 'User-Agent': '1998media/1.0' } }
       );
       if (!res.ok) {
-        return new Response(JSON.stringify({ syncedLyrics: null, plainLyrics: null }), {
-          status: 200,
-          headers: { 'Content-Type': 'application/json' },
-        });
+        return new Response(
+          JSON.stringify({ syncedLyrics: null, plainLyrics: null }),
+          {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' },
+          }
+        );
       }
       const data = await res.json();
-      return new Response(JSON.stringify({ syncedLyrics: data.syncedLyrics || null, plainLyrics: data.plainLyrics || null, instrumental: data.instrumental || false }), {
-        status: 200,
-        headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400' },
-      });
+      return new Response(
+        JSON.stringify({
+          syncedLyrics: data.syncedLyrics || null,
+          plainLyrics: data.plainLyrics || null,
+          instrumental: data.instrumental || false,
+        }),
+        {
+          status: 200,
+          headers: {
+            'Content-Type': 'application/json',
+            'Cache-Control':
+              'public, s-maxage=3600, stale-while-revalidate=86400',
+          },
+        }
+      );
     } catch {
-      return new Response(JSON.stringify({ syncedLyrics: null, plainLyrics: null }), {
-        status: 200,
-        headers: { 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({ syncedLyrics: null, plainLyrics: null }),
+        {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
     }
   }
 

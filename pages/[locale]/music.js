@@ -161,15 +161,19 @@ export default function Music(props) {
       // Sync play state from MusicKit events
       music.addEventListener('playbackStateDidChange', ({ state }) => {
         const playing = state === window.MusicKit.PlaybackStates.playing;
-        const paused = state === window.MusicKit.PlaybackStates.paused ||
-                       state === window.MusicKit.PlaybackStates.stopped;
+        const paused =
+          state === window.MusicKit.PlaybackStates.paused ||
+          state === window.MusicKit.PlaybackStates.stopped;
         if (playing) setIsPlaying(true);
         else if (paused) setIsPlaying(false);
       });
       // Sync timer to actual playback position
-      music.addEventListener('playbackTimeDidChange', ({ currentPlaybackTime }) => {
-        setTimer(currentPlaybackTime);
-      });
+      music.addEventListener(
+        'playbackTimeDidChange',
+        ({ currentPlaybackTime }) => {
+          setTimer(currentPlaybackTime);
+        }
+      );
     } catch (err) {
       console.error('MusicKit init error:', err);
     }
@@ -319,7 +323,12 @@ export default function Music(props) {
     setTimer(0);
 
     // If using personal Apple Music, play full song via MusicKit
-    if (isPersonalApple && musicSource !== 'spotify' && props.interacted && currentPlaying?.id) {
+    if (
+      isPersonalApple &&
+      musicSource !== 'spotify' &&
+      props.interacted &&
+      currentPlaying?.id
+    ) {
       playAppleTrack(currentPlaying.id);
       setIsPlaying(true);
       setHasStarted(true);
@@ -488,7 +497,8 @@ export default function Music(props) {
     if (parsedLyrics.length === 0) return -1;
 
     // Use full timer for personal spotify, modulo for preview
-    const currentTime = (isPersonalSpotify || isPersonalApple) ? timer : timer % 30;
+    const currentTime =
+      isPersonalSpotify || isPersonalApple ? timer : timer % 30;
 
     for (let i = parsedLyrics.length - 1; i >= 0; i--) {
       if (currentTime >= parsedLyrics[i].time) {
@@ -631,9 +641,10 @@ export default function Music(props) {
   }, [currentLyricIndex, isUserScrolling, parsedLyrics, isPersonalSpotify]);
   // Calculate progress percentage (0-100)
   const duration = currentPlaying.attributes?.durationInMillis / 1000 || 30;
-  const progress = (isPersonalSpotify || isPersonalApple)
-    ? (timer / duration) * 100
-    : ((timer % 30) / 30) * 100;
+  const progress =
+    isPersonalSpotify || isPersonalApple
+      ? (timer / duration) * 100
+      : ((timer % 30) / 30) * 100;
 
   if (!music || music.length === 0 || !currentPlaying?.attributes) return null;
 
