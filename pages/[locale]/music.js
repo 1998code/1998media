@@ -442,7 +442,10 @@ export default function Music(props) {
     )
       .then((response) => response.text())
       .then((text) => {
-        if (!text) { setLyrics(''); return; }
+        if (!text) {
+          setLyrics('');
+          return;
+        }
         const data = JSON.parse(text);
         // QQ Music API returns data nested under data.song.list
         const songList = data?.data?.song?.list || [];
@@ -640,8 +643,12 @@ export default function Music(props) {
                 {showSpotifyView ? (
                   <div className="flex flex-col items-center justify-center py-12 gap-3 px-4">
                     <i className="fab fa-spotify text-5xl text-green-600" />
-                    <div className="text-sm font-bold dark:text-white">Connect Spotify</div>
-                    <div className="text-xs text-gray-500 text-center">Login to see your personal top tracks</div>
+                    <div className="text-sm font-bold dark:text-white">
+                      Connect Spotify
+                    </div>
+                    <div className="text-xs text-gray-500 text-center">
+                      Login to see your personal top tracks
+                    </div>
                     <a
                       href="/api/spotify/login"
                       className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-bold bg-green-600 text-white hover:bg-green-700 transition-all"
@@ -649,79 +656,82 @@ export default function Music(props) {
                       <i className="fab fa-spotify mr-1" /> Login with Spotify
                     </a>
                   </div>
-                ) : music.map((item, index) => (
-                  <a
-                    key={index}
-                    href={item.attributes.url}
-                    target="_blank"
-                    className={`p-3 flex items-center justify-between gap-4 ${index === music.findIndex((music) => music.id === currentPlaying.id) ? (musicSource === 'spotify' ? 'bg-green-600 text-white animate-pulse' : 'bg-red-600 text-white animate-pulse') : 'hover:bg-black/10 dark:text-white dark:hover:bg-white/10'}`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <div
-                        className="relative group/playlistitem w-10 h-10 cursor-pointer"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          const isCurrentSong = item.id === currentPlaying.id;
-                          if (isCurrentSong) {
-                            togglePlayPause(e);
-                          } else {
-                            // Switch to new song
-                            setCurrentPlaying(item);
-                            setTimer(0);
-                            if (audioRef.current) {
-                              audioRef.current.play();
-                              setIsPlaying(true);
-                            }
-                          }
-                        }}
-                      >
-                        <img
-                          alt={item.attributes.name}
-                          loading="lazy"
-                          src={item.attributes.artwork.url
-                            .replace('{w}', '50')
-                            .replace('{h}', '50')}
-                          className="w-10 h-10 rounded-xl shadow-lg"
-                        />
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-xl opacity-0 group-hover/playlistitem:opacity-100 transition-opacity">
-                          <i
-                            className={`fa ${item.id === currentPlaying.id && isPlaying ? 'fa-pause' : 'fa-play'} text-white text-sm`}
-                          />
-                        </div>
-                      </div>
-                      <div className="flex flex-col">
-                        <div className="text-xs font-bold whitespace-nowrap">
-                          {item.attributes.name}
-                        </div>
-                        <div
-                          className={`text-[10px]  ${index === music.findIndex((music) => music.id === currentPlaying.id) ? 'text-gray-100' : 'text-gray-500'} whitespace-nowrap`}
-                        >
-                          {item.attributes.artistName}
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      className={`text-[10px] ${index === music.findIndex((music) => music.id === currentPlaying.id) ? 'text-gray-100' : 'text-gray-500'} text-right`}
+                ) : (
+                  music.map((item, index) => (
+                    <a
+                      key={index}
+                      href={item.attributes.url}
+                      target="_blank"
+                      className={`p-3 flex items-center justify-between gap-4 ${index === music.findIndex((music) => music.id === currentPlaying.id) ? (musicSource === 'spotify' ? 'bg-green-600 text-white animate-pulse' : 'bg-red-600 text-white animate-pulse') : 'hover:bg-black/10 dark:text-white dark:hover:bg-white/10'}`}
                     >
-                      <span>
-                        {index ===
-                          music.findIndex(
-                            (music) => music.id === currentPlaying.id
-                          ) && i18n('Now Playing')}
-                      </span>
-                      <br />
-                      <span>
-                        {Math.floor(item.attributes.durationInMillis / 60000)}:
-                        {(
-                          '0' +
-                          Math.floor(
-                            (item.attributes.durationInMillis % 60000) / 1000
-                          )
-                        ).slice(-2)}
-                      </span>
-                    </div>
-                  </a>
-                ))}
+                      <div className="flex items-center gap-3">
+                        <div
+                          className="relative group/playlistitem w-10 h-10 cursor-pointer"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            const isCurrentSong = item.id === currentPlaying.id;
+                            if (isCurrentSong) {
+                              togglePlayPause(e);
+                            } else {
+                              // Switch to new song
+                              setCurrentPlaying(item);
+                              setTimer(0);
+                              if (audioRef.current) {
+                                audioRef.current.play();
+                                setIsPlaying(true);
+                              }
+                            }
+                          }}
+                        >
+                          <img
+                            alt={item.attributes.name}
+                            loading="lazy"
+                            src={item.attributes.artwork.url
+                              .replace('{w}', '50')
+                              .replace('{h}', '50')}
+                            className="w-10 h-10 rounded-xl shadow-lg"
+                          />
+                          <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-xl opacity-0 group-hover/playlistitem:opacity-100 transition-opacity">
+                            <i
+                              className={`fa ${item.id === currentPlaying.id && isPlaying ? 'fa-pause' : 'fa-play'} text-white text-sm`}
+                            />
+                          </div>
+                        </div>
+                        <div className="flex flex-col">
+                          <div className="text-xs font-bold whitespace-nowrap">
+                            {item.attributes.name}
+                          </div>
+                          <div
+                            className={`text-[10px]  ${index === music.findIndex((music) => music.id === currentPlaying.id) ? 'text-gray-100' : 'text-gray-500'} whitespace-nowrap`}
+                          >
+                            {item.attributes.artistName}
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        className={`text-[10px] ${index === music.findIndex((music) => music.id === currentPlaying.id) ? 'text-gray-100' : 'text-gray-500'} text-right`}
+                      >
+                        <span>
+                          {index ===
+                            music.findIndex(
+                              (music) => music.id === currentPlaying.id
+                            ) && i18n('Now Playing')}
+                        </span>
+                        <br />
+                        <span>
+                          {Math.floor(item.attributes.durationInMillis / 60000)}
+                          :
+                          {(
+                            '0' +
+                            Math.floor(
+                              (item.attributes.durationInMillis % 60000) / 1000
+                            )
+                          ).slice(-2)}
+                        </span>
+                      </div>
+                    </a>
+                  ))
+                )}
               </div>
             </div>
           }
@@ -807,7 +817,9 @@ export default function Music(props) {
                     // No lyrics found
                     <div className="text-gray-400 dark:text-gray-500 text-center py-8 flex flex-col items-center gap-2">
                       <i className="fa fa-music-slash text-3xl" />
-                      <div className="text-base">{i18n('No lyrics available')}</div>
+                      <div className="text-base">
+                        {i18n('No lyrics available')}
+                      </div>
                     </div>
                   ) : isInstrumental(lyrics) ? (
                     // Show instrumental message
