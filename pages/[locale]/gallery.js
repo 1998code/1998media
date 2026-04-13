@@ -1153,14 +1153,20 @@ export default function Gallery(props) {
                   <div className="overflow-x-hidden">
                     <div className="flex gap-5">
                       {[...Array(5)].map((_, i) => (
-                        <div key={i} className="flex-shrink-0 w-[350px] h-[25vh] rounded-xl bg-gray-200 dark:bg-gray-800" />
+                        <div
+                          key={i}
+                          className="flex-shrink-0 w-[350px] h-[25vh] rounded-xl bg-gray-200 dark:bg-gray-800"
+                        />
                       ))}
                     </div>
                   </div>
                   <div className="overflow-x-hidden">
                     <div className="flex gap-5">
                       {[...Array(5)].map((_, i) => (
-                        <div key={i} className="flex-shrink-0 w-[350px] h-[25vh] rounded-xl bg-gray-200 dark:bg-gray-800" />
+                        <div
+                          key={i}
+                          className="flex-shrink-0 w-[350px] h-[25vh] rounded-xl bg-gray-200 dark:bg-gray-800"
+                        />
                       ))}
                     </div>
                   </div>

@@ -189,7 +189,10 @@ export default function Blog(props) {
           <div className="overflow-x-hidden my-5">
             <div className="flex gap-5">
               {[...Array(4)].map((_, i) => (
-                <div key={i} className="flex-shrink-0 w-[350px] rounded-xl overflow-hidden bg-white dark:bg-black border border-gray-100 dark:border-gray-800 animate-pulse">
+                <div
+                  key={i}
+                  className="flex-shrink-0 w-[350px] rounded-xl overflow-hidden bg-white dark:bg-black border border-gray-100 dark:border-gray-800 animate-pulse"
+                >
                   <div className="h-64 w-full bg-gray-200 dark:bg-gray-800" />
                   <div className="p-6 space-y-3">
                     <div className="h-3 w-24 bg-gray-200 dark:bg-gray-700 rounded" />

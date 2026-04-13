@@ -1,6 +1,10 @@
 export const runtime = 'edge';
 
-import { fetchBlogPosts, fetchTripMedals, fetchTripMoments } from '../../lib/fetchData';
+import {
+  fetchBlogPosts,
+  fetchTripMedals,
+  fetchTripMoments,
+} from '../../lib/fetchData';
 
 const CID = '09031029418990699836';
 const PROD_API = 'https://www.1998.media/api/trip';

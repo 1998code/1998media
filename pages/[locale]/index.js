@@ -518,7 +518,11 @@ export default function Home({ i18nData, ipData, locale }) {
                     id="stocks"
                     className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0 overflow-x-hidden"
                   >
-                    <Stocks i18n={I18n} stocksData={deferredData.stocksData} isLoading={deferredLoading} />
+                    <Stocks
+                      i18n={I18n}
+                      stocksData={deferredData.stocksData}
+                      isLoading={deferredLoading}
+                    />
                   </section>
 
                   <section
