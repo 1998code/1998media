@@ -12,6 +12,7 @@ export default function Music(props) {
   const [sdkPlayer, setSdkPlayer] = useState(null);
   const [isSdkReady, setIsSdkReady] = useState(false);
   const [isPersonalSpotify, setIsPersonalSpotify] = useState(false);
+  const [showSpotifyView, setShowSpotifyView] = useState(false);
   const [timer, setTimer] = useState(0);
   const [music, setMusic] = useState([]);
   const [currentPlaying, setCurrentPlaying] = useState({});
@@ -439,8 +440,10 @@ export default function Music(props) {
     fetch(
       `/api/music?provider=qq&path=search&pageSize=3&key=${encodeURIComponent(songName + ' ' + singerName)}`
     )
-      .then((response) => response.json())
-      .then((data) => {
+      .then((response) => response.text())
+      .then((text) => {
+        if (!text) { setLyrics(''); return; }
+        const data = JSON.parse(text);
         // QQ Music API returns data nested under data.song.list
         const songList = data?.data?.song?.list || [];
         if (songList.length === 0) {
@@ -614,22 +617,39 @@ export default function Music(props) {
           isDisabled={isMobile}
           content={
             <div className="flex flex-col max-h-[50vh]">
-              <div className="sticky top-0 z-10 flex items-start justify-between text-sm md:text-2xl font-bold dark:text-white p-2 bg-white/95 dark:bg-black/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 rounded-t-xl md:rounded-t-2xl">
-                {i18n('My Recent Playlist')}
-                <span
-                  className={`text-sm ml-3 ${musicSource === 'spotify' ? 'text-green-600' : 'text-red-600'}`}
-                >
-                  {musicSource === 'spotify' ? (
-                    <>
-                      <i className="fab fa-spotify mr-1"></i>Spotify
-                    </>
-                  ) : (
-                    i18n(' Music')
-                  )}
-                </span>
+              <div className="sticky top-0 z-10 flex items-center justify-between text-sm md:text-2xl font-bold dark:text-white p-2 bg-white/95 dark:bg-black/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 rounded-t-xl md:rounded-t-2xl">
+                {showSpotifyView ? 'Spotify' : i18n('My Recent Playlist')}
+                {/* Vertical Apple Music / Spotify toggle */}
+                <div className="ml-6 flex flex-row text-[10px] font-bold rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 shrink-0">
+                  <button
+                    onClick={() => setShowSpotifyView(false)}
+                    className={`flex items-center gap-1 px-1.5 py-px transition-all ${!showSpotifyView ? 'bg-red-600 text-white' : 'text-gray-400 dark:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800'}`}
+                  >
+                    {i18n(' Music')}
+                  </button>
+                  <div className="border-l border-gray-200 dark:border-gray-700" />
+                  <button
+                    onClick={() => setShowSpotifyView(true)}
+                    className={`flex items-center gap-1 px-1.5 py-px transition-all ${showSpotifyView ? 'bg-green-600 text-white' : 'text-gray-400 dark:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800'}`}
+                  >
+                    <i className="fab fa-spotify"></i>Spotify
+                  </button>
+                </div>
               </div>
               <div className="overflow-auto">
-                {music.map((item, index) => (
+                {showSpotifyView ? (
+                  <div className="flex flex-col items-center justify-center py-12 gap-3 px-4">
+                    <i className="fab fa-spotify text-5xl text-green-600" />
+                    <div className="text-sm font-bold dark:text-white">Connect Spotify</div>
+                    <div className="text-xs text-gray-500 text-center">Login to see your personal top tracks</div>
+                    <a
+                      href="/api/spotify/login"
+                      className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-bold bg-green-600 text-white hover:bg-green-700 transition-all"
+                    >
+                      <i className="fab fa-spotify mr-1" /> Login with Spotify
+                    </a>
+                  </div>
+                ) : music.map((item, index) => (
                   <a
                     key={index}
                     href={item.attributes.url}
@@ -745,17 +765,10 @@ export default function Music(props) {
           <Tooltip
             isDisabled={isMobile}
             content={
-              <div className="flex flex-col max-w-[450px] max-h-[40vh]">
+              <div className="flex flex-col max-w-[600px] max-h-[40vh]">
                 <div className="sticky top-0 z-10 flex items-center justify-between text-sm md:text-xl font-bold dark:text-white p-2 bg-white/95 dark:bg-black/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 rounded-t-xl md:rounded-t-2xl">
                   <span>{i18n('Lyrics')}</span>
                   <div className="flex items-center gap-2">
-                    <a
-                      href="/api/spotify/login"
-                      className={`flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold transition-all ${isPersonalSpotify ? 'bg-green-600/20 text-green-600 border border-green-600/30' : 'bg-green-600 text-white hover:bg-green-700 shadow-sm'}`}
-                    >
-                      <i className="fab fa-spotify"></i>
-                      {isPersonalSpotify ? 'Logged in' : 'Login'}
-                    </a>
                     <button
                       onClick={toggleTranslation}
                       disabled={
@@ -794,14 +807,14 @@ export default function Music(props) {
                     // No lyrics found
                     <div className="text-gray-400 dark:text-gray-500 text-center py-8 flex flex-col items-center gap-2">
                       <i className="fa fa-music-slash text-3xl" />
-                      <div className="text-base">No lyrics available</div>
+                      <div className="text-base">{i18n('No lyrics available')}</div>
                     </div>
                   ) : isInstrumental(lyrics) ? (
                     // Show instrumental message
                     <div className="text-gray-400 dark:text-gray-500 text-center py-8 flex flex-col items-center gap-2">
                       <i className="fa fa-music text-3xl" />
-                      <div className="text-base">Pure Music</div>
-                      <div className="text-sm">No lyrics</div>
+                      <div className="text-base">{i18n('Pure Music')}</div>
+                      <div className="text-sm">{i18n('No lyrics')}</div>
                     </div>
                   ) : parsedLyrics.length > 0 ? (
                     // Karaoke-style view with timestamps and auto-scroll
@@ -945,7 +958,7 @@ export default function Music(props) {
                     </div>
                   ) : (
                     <div className="text-gray-400 dark:text-gray-500 text-center">
-                      No synced lyrics available
+                      {i18n('No synced lyrics available')}
                     </div>
                   )}
                 </div>

@@ -352,6 +352,10 @@
         "My Recent Playlist": "我的最近播放列表",
         "Next": "下一首",
         "Your browser does not support the audio element.": "您的瀏覽器不支援音訊元素。",
-        " Music": " 音樂"
+        " Music": " 音樂",
+        "No lyrics available": "沒有歌詞",
+        "Pure Music": "純音樂",
+        "No lyrics": "沒有歌詞",
+        "No synced lyrics available": "沒有同步歌詞"
     }
 }

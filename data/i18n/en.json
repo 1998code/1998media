@@ -351,6 +351,10 @@
         "My Recent Playlist": "My Recent Playlist",
         "Next": "Next",
         "Your browser does not support the audio element.": "Your browser does not support the audio element.",
-        " Music": " Music"
+        " Music": " Music",
+        "No lyrics available": "No lyrics available",
+        "Pure Music": "Pure Music",
+        "No lyrics": "No lyrics",
+        "No synced lyrics available": "No synced lyrics available"
     }
 }

@@ -33,7 +33,7 @@ const Credits = dynamic(() => import('./credits'));
 const Footer = dynamic(() => import('./footer'));
 
 // Music player - keep client-side only (requires user interaction)
-// const Music = dynamic(() => import('./music'), { ssr: false });
+const Music = dynamic(() => import('./music'), { ssr: false });
 
 export default function Home({ i18nData, ipData, locale }) {
   const [loading, setLoading] = useState(true);
@@ -538,7 +538,7 @@ export default function Home({ i18nData, ipData, locale }) {
                     />
                   </section>
 
-                  {/* <Music i18n={I18n} interacted={interacted} locale={locale} /> */}
+                  <Music i18n={I18n} interacted={interacted} locale={locale} />
                 </>
               )}
             </div>
