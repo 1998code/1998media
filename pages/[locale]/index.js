@@ -201,7 +201,6 @@ export default function Home({ i18nData, ipData, locale }) {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-
   // Fetch non-critical data in background after hero is ready
   useEffect(() => {
     if (!headerCompleted) return;
