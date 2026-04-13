@@ -201,30 +201,6 @@ export default function Home({ i18nData, ipData, locale }) {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-  // Pre-load section JS chunks in background after hero is ready
-  useEffect(() => {
-    if (!headerCompleted) return;
-    const preload = () => {
-      import('./about');
-      import('./achievements');
-      import('./gallery');
-      import('./experience');
-      import('./skills');
-      import('./projects');
-      import('./ai');
-      import('./blog');
-      import('./stocks');
-      import('./faq');
-      import('./contact');
-      import('./credits');
-      import('./footer');
-    };
-    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
-      requestIdleCallback(preload, { timeout: 2000 });
-    } else {
-      setTimeout(preload, 100);
-    }
-  }, [headerCompleted]);
 
   // Fetch non-critical data in background after hero is ready
   useEffect(() => {
