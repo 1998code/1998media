@@ -310,14 +310,16 @@ export default function Blog(props) {
               </Tooltip>
             ))}
           </div>
-          <a
-            href="https://hk.trip.com/travel-guide/personal-home/E1B9A703A2E3FEF984D86D1D507FB324B4A7CBA7500F0E62A0BFA68DCC95C09E"
-            className="flex-1 md:flex-none block text-sm font-semibold text-white whitespace-nowrap bg-sky-600 hover:bg-sky-500 px-4 py-2 rounded-xl transition-all"
-            target="_blank"
-          >
-            <i className="fa fa-suitcase-rolling mr-2"></i>
-            {i18n('View all on Trip.com')}
-          </a>
+          {(!props.isLoading || medals.length > 0) && (
+            <a
+              href="https://hk.trip.com/travel-guide/personal-home/E1B9A703A2E3FEF984D86D1D507FB324B4A7CBA7500F0E62A0BFA68DCC95C09E"
+              className="flex-1 md:flex-none block text-sm font-semibold text-white whitespace-nowrap bg-sky-600 hover:bg-sky-500 px-4 py-2 rounded-xl transition-all"
+              target="_blank"
+            >
+              <i className="fa fa-suitcase-rolling mr-2"></i>
+              {i18n('View all on Trip.com')}
+            </a>
+          )}
         </div>
         {props.isLoading && moments.length === 0 && (
           <div className="overflow-x-hidden my-5">
