@@ -1,15 +1,19 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import ColorBends from '../../components/HeroAnimations/ColorBends';
-import Aurora from '../../components/HeroAnimations/Aurora';
-import DotGrid from '../../components/HeroAnimations/DotGrid';
-import Galaxy from '../../components/HeroAnimations/Galaxy';
-import GridScan from '../../components/HeroAnimations/GridScan';
-import LightRays from '../../components/HeroAnimations/LightRays';
-import Iridescence from '../../components/HeroAnimations/Iridescence';
-import Orb from '../../components/HeroAnimations/Orb';
-import Prism from '../../components/HeroAnimations/Prism';
-import PrismaticBurst from '../../components/HeroAnimations/PrismaticBurst';
+import dynamic from 'next/dynamic';
+
+const heroAnimations = {
+  colorbends: dynamic(() => import('../../components/HeroAnimations/ColorBends'), { ssr: false }),
+  aurora: dynamic(() => import('../../components/HeroAnimations/Aurora'), { ssr: false }),
+  dotgrid: dynamic(() => import('../../components/HeroAnimations/DotGrid'), { ssr: false }),
+  galaxy: dynamic(() => import('../../components/HeroAnimations/Galaxy'), { ssr: false }),
+  gridscan: dynamic(() => import('../../components/HeroAnimations/GridScan'), { ssr: false }),
+  lightrays: dynamic(() => import('../../components/HeroAnimations/LightRays'), { ssr: false }),
+  iridescence: dynamic(() => import('../../components/HeroAnimations/Iridescence'), { ssr: false }),
+  orb: dynamic(() => import('../../components/HeroAnimations/Orb'), { ssr: false }),
+  prism: dynamic(() => import('../../components/HeroAnimations/Prism'), { ssr: false }),
+  prismaticburst: dynamic(() => import('../../components/HeroAnimations/PrismaticBurst'), { ssr: false }),
+};
 
 export default function Header(props) {
   const [bannerVisible, setBannerVisible] = useState(false);
@@ -17,6 +21,17 @@ export default function Header(props) {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const bgType = props.bgType || 'colorbends';
   const direction = props.direction || 0;
+
+  const Aurora = heroAnimations.aurora;
+  const Galaxy = heroAnimations.galaxy;
+  const GridScan = heroAnimations.gridscan;
+  const LightRays = heroAnimations.lightrays;
+  const Orb = heroAnimations.orb;
+  const Prism = heroAnimations.prism;
+  const PrismaticBurst = heroAnimations.prismaticburst;
+  const ColorBends = heroAnimations.colorbends;
+  const Iridescence = heroAnimations.iridescence;
+  const DotGrid = heroAnimations.dotgrid;
 
   useEffect(() => {
     // Detect dark mode from darkmode-js class

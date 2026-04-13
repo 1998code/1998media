@@ -220,8 +220,9 @@ export default function WhatsAppChat({ i18n: i18nData }) {
                   className="flex-1 px-3 py-2.5 bg-transparent focus:outline-none text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 resize-none text-[15px]"
                   style={{ minHeight: '42px', maxHeight: '120px' }}
                   onInput={(e) => {
-                    e.target.style.height = 'auto';
-                    e.target.style.height = e.target.scrollHeight + 'px';
+                    const el = e.target;
+                    el.style.height = '42px';
+                    el.style.height = Math.min(el.scrollHeight, 120) + 'px';
                   }}
                 />
                 <button

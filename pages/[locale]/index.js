@@ -6,15 +6,8 @@ import LocaleSwitcher from '../../components/LocaleSwitcher';
 
 export const runtime = 'experimental-edge';
 import WhatsAppChat from '../../components/WhatsAppChat';
-import {
-  fetchI18nData,
-  fetchBlogPosts,
-  fetchTripMedals,
-  fetchTripMoments,
-  fetchGithubProjects,
-  fetchStocks,
-  MY_PORTFOLIO,
-} from '../../lib/fetchData';
+import { fetchI18nData } from '../../lib/fetchData';
+import aiData from '../../data/ai.json';
 
 // Critical components - load with SSR
 const Loading = dynamic(() => import('./loading'));
@@ -42,16 +35,7 @@ const Footer = dynamic(() => import('./footer'));
 // Music player - keep client-side only (requires user interaction)
 // const Music = dynamic(() => import('./music'), { ssr: false });
 
-export default function Home({
-  i18nData,
-  blogData,
-  stocksData,
-  projectsData,
-  dalleData,
-  unsplashData,
-  ipData,
-  locale,
-}) {
+export default function Home({ i18nData, ipData, locale }) {
   const [loading, setLoading] = useState(true);
   const [activeSection, setActiveSection] = useState('header');
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -62,6 +46,13 @@ export default function Home({
   const [isScrollingToTop, setIsScrollingToTop] = useState(false);
   const [bgType, setBgType] = useState('colorbends');
   const [bgDirection, setBgDirection] = useState(0);
+  const [deferredData, setDeferredData] = useState({
+    blogData: { posts: [], medals: [], moments: [] },
+    stocksData: { current: [], future: [], previous: [] },
+    projectsData: [],
+    unsplashData: { stats: null, photos: [] },
+  });
+  const [deferredLoading, setDeferredLoading] = useState(false);
 
   const changeBg = (type, dir) => {
     setBgDirection(dir);
@@ -200,13 +191,41 @@ export default function Home({
 
   // Watch hash changed, set the active section
   useEffect(() => {
-    window.addEventListener('hashchange', () => {
+    const handleHashChange = () => {
       const hash = window.location.hash.replace('#', '');
       if (sections.includes(hash)) {
         setActiveSection(hash);
       }
-    });
-  });
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  // Fetch non-critical data in background after hero is ready
+  useEffect(() => {
+    if (!headerCompleted) return;
+    const run = async () => {
+      setDeferredLoading(true);
+      const [blogRes, stocksRes, githubRes, unsplashRes] = await Promise.allSettled([
+        fetch(`/api/blog?locale=${locale}`).then((r) => r.json()),
+        fetch('/api/stocks-portfolio').then((r) => r.json()),
+        fetch('/api/github').then((r) => r.json()),
+        fetch('/api/unsplash').then((r) => r.json()),
+      ]);
+      setDeferredData({
+        blogData: blogRes.status === 'fulfilled' ? blogRes.value : { posts: [], medals: [], moments: [] },
+        stocksData: stocksRes.status === 'fulfilled' ? stocksRes.value : { current: [], future: [], previous: [] },
+        projectsData: githubRes.status === 'fulfilled' ? (githubRes.value.items ?? []) : [],
+        unsplashData: unsplashRes.status === 'fulfilled' ? unsplashRes.value : { stats: null, photos: [] },
+      });
+      setDeferredLoading(false);
+    };
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+      requestIdleCallback(run, { timeout: 3000 });
+    } else {
+      setTimeout(run, 200);
+    }
+  }, [headerCompleted]);
 
   // IntersectionObserver to watch the section, set the active section
   useEffect(() => {
@@ -409,7 +428,7 @@ export default function Home({
                   >
                     <Gallery
                       i18n={I18n}
-                      unsplashData={unsplashData}
+                      unsplashData={deferredData.unsplashData}
                       locale={locale}
                     />
                   </section>
@@ -432,28 +451,28 @@ export default function Home({
                     id="projects"
                     className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0 overflow-x-hidden"
                   >
-                    <Projects i18n={I18n} projectsData={projectsData} />
+                    <Projects i18n={I18n} projectsData={deferredData.projectsData} />
                   </section>
 
                   <section
                     id="ai"
                     className="snap-start lg:h-dvh lg:min-h-dvh w-full flex-shrink-0 overflow-x-hidden"
                   >
-                    <AI i18n={I18n} dalle={dalleData} />
+                    <AI i18n={I18n} dalle={aiData} />
                   </section>
 
                   <section
                     id="blog"
                     className="snap-start lg:h-dvh lg:min-h-dvh w-full flex-shrink-0 overflow-x-hidden"
                   >
-                    <Blog i18n={I18n} blogData={blogData} locale={locale} />
+                    <Blog i18n={I18n} blogData={deferredData.blogData} locale={locale} />
                   </section>
 
                   <section
                     id="stocks"
                     className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0 overflow-x-hidden"
                   >
-                    <Stocks i18n={I18n} stocksData={stocksData} />
+                    <Stocks i18n={I18n} stocksData={deferredData.stocksData} />
                   </section>
 
                   <section
@@ -532,49 +551,14 @@ export async function getServerSideProps(context) {
   }
 
   try {
-    // Fetch all data in parallel for better performance
-    const [
-      i18nData,
-      blogPosts,
-      medals,
-      moments,
-      githubProjects,
-      currentStocks,
-      futureStocks,
-      previousStocks,
-      dalleData,
-      unsplashData,
-      ipData,
-    ] = await Promise.all([
+    const [i18nData, ipData] = await Promise.all([
       fetchI18nData(locale),
-      fetchBlogPosts(),
-      fetchTripMedals(locale),
-      fetchTripMoments(locale),
-      fetchGithubProjects(),
-      fetchStocks(MY_PORTFOLIO.current),
-      fetchStocks(MY_PORTFOLIO.future),
-      fetchStocks(MY_PORTFOLIO.previous),
-      fetchDalleData(),
-      fetchUnsplashData(),
       fetchIPData(locale, req),
     ]);
 
     return {
       props: {
         i18nData,
-        blogData: {
-          posts: blogPosts,
-          medals,
-          moments,
-        },
-        stocksData: {
-          current: currentStocks,
-          future: futureStocks,
-          previous: previousStocks,
-        },
-        projectsData: githubProjects,
-        dalleData,
-        unsplashData,
         ipData,
         locale,
       },
@@ -584,15 +568,6 @@ export async function getServerSideProps(context) {
     return {
       props: {
         i18nData: {},
-        blogData: {
-          posts: [],
-          medals: [],
-          moments: [],
-        },
-        stocksData: [],
-        projectsData: [],
-        dalleData: [],
-        unsplashData: { stats: null, photos: [] },
         ipData: {
           ip: null,
           geo: 'Unknown',
@@ -602,31 +577,6 @@ export async function getServerSideProps(context) {
         locale: 'en',
       },
     };
-  }
-}
-
-async function fetchUnsplashData() {
-  try {
-    const unsplashPublicKey = 'hjm0tzh_dDQx2REubp1NiT1P4jxE5wmnCbKQLbD-BZ8';
-    const [statsResponse, photosResponse] = await Promise.all([
-      fetch(
-        `https://api.unsplash.com/users/1998media/statistics?client_id=${unsplashPublicKey}`
-      ),
-      fetch(
-        `https://api.unsplash.com/users/1998media/photos?client_id=${unsplashPublicKey}`
-      ),
-    ]);
-
-    const stats = statsResponse.ok ? await statsResponse.json() : null;
-    const photos = photosResponse.ok ? await photosResponse.json() : [];
-
-    return {
-      stats: stats ? { totalViews: stats.views?.total || 0 } : null,
-      photos,
-    };
-  } catch (error) {
-    console.error('Error fetching Unsplash data:', error);
-    return { stats: null, photos: [] };
   }
 }
 
@@ -707,13 +657,4 @@ async function fetchIPData(locale, req) {
   }
 }
 
-async function fetchDalleData() {
-  try {
-    // Import JSON directly - Next.js will bundle this
-    const aiData = (await import('../../data/ai.json')).default;
-    return aiData;
-  } catch (error) {
-    console.error('Error fetching AI data:', error);
-    return [];
-  }
-}
+

@@ -59,7 +59,10 @@ export default async function handler(req) {
     const data = await response.json();
     return new Response(JSON.stringify(data), {
       status: 200,
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Cache-Control': 'public, s-maxage=30, stale-while-revalidate=60',
+      },
     });
   } catch (error) {
     console.error('Error:', error);
@@ -242,7 +245,10 @@ async function handleSpotify(req, url) {
 
       return new Response(JSON.stringify({ data: transformedItems }), {
         status: 200,
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600',
+        },
       });
     }
 
