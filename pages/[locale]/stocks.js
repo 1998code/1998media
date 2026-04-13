@@ -379,7 +379,24 @@ export default function Stocks(props) {
           </div>
         </div>
 
-        {currentStocks.length === 0 && previousStocks.length === 0 && (
+        {props.isLoading && currentStocks.length === 0 && previousStocks.length === 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 animate-pulse">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="rounded-xl bg-white dark:bg-black border border-gray-200 dark:border-gray-800 p-6 space-y-4">
+                <div className="flex justify-between">
+                  <div className="space-y-2">
+                    <div className="h-5 w-16 bg-gray-200 dark:bg-gray-700 rounded" />
+                    <div className="h-3 w-28 bg-gray-200 dark:bg-gray-700 rounded" />
+                  </div>
+                  <div className="h-3 w-10 bg-gray-200 dark:bg-gray-700 rounded" />
+                </div>
+                <div className="h-8 w-24 bg-gray-200 dark:bg-gray-700 rounded" />
+                <div className="h-16 w-full bg-gray-200 dark:bg-gray-700 rounded" />
+              </div>
+            ))}
+          </div>
+        )}
+        {!props.isLoading && currentStocks.length === 0 && previousStocks.length === 0 && (
           <div className="col-span-full text-center text-gray-500 dark:text-gray-400 py-8">
             {i18n('No stock data available.')}
           </div>

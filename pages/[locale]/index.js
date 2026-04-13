@@ -201,6 +201,31 @@ export default function Home({ i18nData, ipData, locale }) {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
+  // Pre-load section JS chunks in background after hero is ready
+  useEffect(() => {
+    if (!headerCompleted) return;
+    const preload = () => {
+      import('./about');
+      import('./achievements');
+      import('./gallery');
+      import('./experience');
+      import('./skills');
+      import('./projects');
+      import('./ai');
+      import('./blog');
+      import('./stocks');
+      import('./faq');
+      import('./contact');
+      import('./credits');
+      import('./footer');
+    };
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+      requestIdleCallback(preload, { timeout: 2000 });
+    } else {
+      setTimeout(preload, 100);
+    }
+  }, [headerCompleted]);
+
   // Fetch non-critical data in background after hero is ready
   useEffect(() => {
     if (!headerCompleted) return;
@@ -441,6 +466,7 @@ export default function Home({ i18nData, ipData, locale }) {
                       i18n={I18n}
                       unsplashData={deferredData.unsplashData}
                       locale={locale}
+                      isLoading={deferredLoading}
                     />
                   </section>
 
@@ -465,6 +491,7 @@ export default function Home({ i18nData, ipData, locale }) {
                     <Projects
                       i18n={I18n}
                       projectsData={deferredData.projectsData}
+                      isLoading={deferredLoading}
                     />
                   </section>
 
@@ -483,6 +510,7 @@ export default function Home({ i18nData, ipData, locale }) {
                       i18n={I18n}
                       blogData={deferredData.blogData}
                       locale={locale}
+                      isLoading={deferredLoading}
                     />
                   </section>
 
@@ -490,7 +518,7 @@ export default function Home({ i18nData, ipData, locale }) {
                     id="stocks"
                     className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0 overflow-x-hidden"
                   >
-                    <Stocks i18n={I18n} stocksData={deferredData.stocksData} />
+                    <Stocks i18n={I18n} stocksData={deferredData.stocksData} isLoading={deferredLoading} />
                   </section>
 
                   <section

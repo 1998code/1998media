@@ -80,6 +80,15 @@ export default function Gallery(props) {
     unsplashData.stats?.totalViews || 0
   );
   const [photos, setPhotos] = useState(unsplashData.photos || []);
+
+  useEffect(() => {
+    if (unsplashData.stats?.totalViews) {
+      setTotalViews(unsplashData.stats.totalViews);
+    }
+    if (unsplashData.photos?.length) {
+      setPhotos(unsplashData.photos);
+    }
+  }, [unsplashData]);
   const [isSafari, setIsSafari] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -1137,6 +1146,26 @@ export default function Gallery(props) {
                   </div>
                 ))}
               </dl>
+
+              {/* Unsplash skeleton */}
+              {props.isLoading && photos.length === 0 && (
+                <div className="space-y-4 my-4 animate-pulse">
+                  <div className="overflow-x-hidden">
+                    <div className="flex gap-5">
+                      {[...Array(5)].map((_, i) => (
+                        <div key={i} className="flex-shrink-0 w-[350px] h-[25vh] rounded-xl bg-gray-200 dark:bg-gray-800" />
+                      ))}
+                    </div>
+                  </div>
+                  <div className="overflow-x-hidden">
+                    <div className="flex gap-5">
+                      {[...Array(5)].map((_, i) => (
+                        <div key={i} className="flex-shrink-0 w-[350px] h-[25vh] rounded-xl bg-gray-200 dark:bg-gray-800" />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* Unsplash Row 1 (Left to Right) */}
               <div
