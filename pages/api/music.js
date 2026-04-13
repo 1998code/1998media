@@ -15,6 +15,34 @@ export default async function handler(req) {
     return handleQQMusic(url);
   }
 
+  // lrclib lyrics proxy
+  if (provider === 'lrclib') {
+    const track = url.searchParams.get('track') || '';
+    const artist = url.searchParams.get('artist') || '';
+    try {
+      const res = await fetch(
+        `https://lrclib.net/api/get?track_name=${encodeURIComponent(track)}&artist_name=${encodeURIComponent(artist)}`,
+        { headers: { 'User-Agent': '1998media/1.0' } }
+      );
+      if (!res.ok) {
+        return new Response(JSON.stringify({ syncedLyrics: null, plainLyrics: null }), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        });
+      }
+      const data = await res.json();
+      return new Response(JSON.stringify({ syncedLyrics: data.syncedLyrics || null, plainLyrics: data.plainLyrics || null, instrumental: data.instrumental || false }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400' },
+      });
+    } catch {
+      return new Response(JSON.stringify({ syncedLyrics: null, plainLyrics: null }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+  }
+
   const origin = req.headers.get('referer');
 
   if (
@@ -47,6 +75,14 @@ export default async function handler(req) {
 
     // Create JWT using Web Crypto API
     const token = await createAppleMusicJWT(p8, teamId, keyId);
+
+    // Return just the developer token for MusicKit JS setup
+    if (path === 'developer-token') {
+      return new Response(JSON.stringify({ token }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
 
     const response = await fetch(`https://api.music.apple.com/v1/${path}`, {
       method: 'GET',

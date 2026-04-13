@@ -13,6 +13,8 @@ export default function Music(props) {
   const [isSdkReady, setIsSdkReady] = useState(false);
   const [isPersonalSpotify, setIsPersonalSpotify] = useState(false);
   const [showSpotifyView, setShowSpotifyView] = useState(false);
+  const [isPersonalApple, setIsPersonalApple] = useState(false);
+  const appleMusicRef = useRef(null);
   const [timer, setTimer] = useState(0);
   const [music, setMusic] = useState([]);
   const [currentPlaying, setCurrentPlaying] = useState({});
@@ -65,6 +67,17 @@ export default function Music(props) {
     window.addEventListener('resize', checkMobile);
 
     fetchMusicList();
+
+    // Load MusicKit JS for Apple Music login
+    if (!window.MusicKit) {
+      const script = document.createElement('script');
+      script.src = 'https://js-cdn.music.apple.com/musickit/v3/musickit.js';
+      script.async = true;
+      script.onload = initializeMusicKit;
+      document.head.appendChild(script);
+    } else {
+      initializeMusicKit();
+    }
 
     // Check if personal Spotify is available
     fetch('/api/music?provider=spotify&path=token')
@@ -133,6 +146,62 @@ export default function Music(props) {
 
     player.connect();
     setSdkPlayer(player);
+  };
+
+  const initializeMusicKit = async () => {
+    try {
+      const res = await fetch('/api/music?path=developer-token');
+      const { token } = await res.json();
+      const music = await window.MusicKit.configure({
+        developerToken: token,
+        app: { name: '1998 MEDIA', build: '1.0' },
+      });
+      appleMusicRef.current = music;
+      if (music.isAuthorized) setIsPersonalApple(true);
+      // Sync play state from MusicKit events
+      music.addEventListener('playbackStateDidChange', ({ state }) => {
+        const playing = state === window.MusicKit.PlaybackStates.playing;
+        const paused = state === window.MusicKit.PlaybackStates.paused ||
+                       state === window.MusicKit.PlaybackStates.stopped;
+        if (playing) setIsPlaying(true);
+        else if (paused) setIsPlaying(false);
+      });
+      // Sync timer to actual playback position
+      music.addEventListener('playbackTimeDidChange', ({ currentPlaybackTime }) => {
+        setTimer(currentPlaybackTime);
+      });
+    } catch (err) {
+      console.error('MusicKit init error:', err);
+    }
+  };
+
+  const loginAppleMusic = async () => {
+    try {
+      const music = appleMusicRef.current;
+      if (!music) return;
+      await music.authorize();
+      setIsPersonalApple(true);
+      // Stop preview audio and trigger MusicKit playback
+      if (audioRef.current) audioRef.current.pause();
+      if (currentPlayingRef.current?.id) {
+        await playAppleTrack(currentPlayingRef.current.id);
+        setIsPlaying(true);
+        setHasStarted(true);
+      }
+    } catch (err) {
+      console.error('Apple Music login error:', err);
+    }
+  };
+
+  const playAppleTrack = async (trackId) => {
+    const music = appleMusicRef.current;
+    if (!music || !music.isAuthorized) return;
+    try {
+      await music.setQueue({ song: trackId });
+      await music.play();
+    } catch (err) {
+      console.error('Apple Music play error:', err);
+    }
   };
 
   function fetchMusicList() {
@@ -249,6 +318,14 @@ export default function Music(props) {
     // Reset timer when song changes manually
     setTimer(0);
 
+    // If using personal Apple Music, play full song via MusicKit
+    if (isPersonalApple && musicSource !== 'spotify' && props.interacted && currentPlaying?.id) {
+      playAppleTrack(currentPlaying.id);
+      setIsPlaying(true);
+      setHasStarted(true);
+      return;
+    }
+
     // If using personal Spotify, play full song via SDK
     if (
       isPersonalSpotify &&
@@ -283,6 +360,15 @@ export default function Music(props) {
 
   const togglePlayPause = (e) => {
     e.preventDefault();
+    if (isPersonalApple && appleMusicRef.current) {
+      const music = appleMusicRef.current;
+      if (music.playbackState === window.MusicKit.PlaybackStates.playing) {
+        music.pause();
+      } else {
+        music.play();
+      }
+      return;
+    }
     if (isPersonalSpotify && sdkPlayer) {
       sdkPlayer.togglePlay();
       return;
@@ -319,7 +405,7 @@ export default function Music(props) {
 
   // Switch to next song per 30 sec (only if playing and not personal spotify)
   useEffect(() => {
-    if (isPersonalSpotify) return;
+    if (isPersonalSpotify || isPersonalApple) return;
 
     const timeInSeconds = Math.floor(timer);
     if (
@@ -402,7 +488,7 @@ export default function Music(props) {
     if (parsedLyrics.length === 0) return -1;
 
     // Use full timer for personal spotify, modulo for preview
-    const currentTime = isPersonalSpotify ? timer : timer % 30;
+    const currentTime = (isPersonalSpotify || isPersonalApple) ? timer : timer % 30;
 
     for (let i = parsedLyrics.length - 1; i >= 0; i--) {
       if (currentTime >= parsedLyrics[i].time) {
@@ -436,63 +522,27 @@ export default function Music(props) {
   };
 
   const lyricProgress = getCurrentLyricProgress();
-  function searchSongMID(songName, singerName) {
+  function fetchLyrics(songName, singerName) {
     fetch(
-      `/api/music?provider=qq&path=search&pageSize=3&key=${encodeURIComponent(songName + ' ' + singerName)}`
+      `/api/music?provider=lrclib&track=${encodeURIComponent(songName)}&artist=${encodeURIComponent(singerName)}`
     )
-      .then((response) => response.text())
-      .then((text) => {
-        if (!text) {
-          setLyrics('');
-          return;
-        }
-        const data = JSON.parse(text);
-        // QQ Music API returns data nested under data.song.list
-        const songList = data?.data?.song?.list || [];
-        if (songList.length === 0) {
-          setLyrics('');
-          return;
-        }
-        fetchLyrics(songList[0].songmid);
-      })
-      .catch((err) => {
-        console.error('Search error:', err);
-        setLyrics('');
-      });
-  }
-  // Decode HTML entities in lyrics
-  function decodeHtmlEntities(text) {
-    const textarea = document.createElement('textarea');
-    textarea.innerHTML = text;
-    return textarea.value;
-  }
-
-  function fetchLyrics(songmid) {
-    fetch(`/api/music?provider=qq&path=lyric&songmid=${songmid}`)
-      .then((response) => response.json())
+      .then((res) => res.json())
       .then((data) => {
-        // QQ Music returns base64 encoded lyrics
-        if (data.lyric) {
-          try {
-            let decodedLyrics = atob(data.lyric);
-            // Decode HTML entities like &apos; to '
-            decodedLyrics = decodeHtmlEntities(decodedLyrics);
-            setLyrics(decodedLyrics);
-            setParsedLyrics(parseLyricsWithTimestamps(decodedLyrics));
-          } catch (e) {
-            // If not base64, decode HTML entities and use as-is
-            const decodedLyrics = decodeHtmlEntities(data.lyric);
-            setLyrics(decodedLyrics);
-            setParsedLyrics(parseLyricsWithTimestamps(decodedLyrics));
-          }
+        if (data.instrumental) {
+          setLyrics('純音樂');
+          return;
+        }
+        if (data.syncedLyrics) {
+          setLyrics(data.syncedLyrics);
+          setParsedLyrics(parseLyricsWithTimestamps(data.syncedLyrics));
+        } else if (data.plainLyrics) {
+          setLyrics(data.plainLyrics);
+          setParsedLyrics([]);
         } else {
           setLyrics('');
         }
       })
-      .catch((err) => {
-        console.error('Lyrics error:', err);
-        setLyrics('');
-      });
+      .catch(() => setLyrics(''));
   }
 
   // Translate lyrics function
@@ -547,7 +597,7 @@ export default function Music(props) {
       setParsedLyrics([]);
       setIsTranslated(false);
       setTranslatedLyrics([]);
-      searchSongMID(
+      fetchLyrics(
         currentPlaying.attributes.name,
         currentPlaying.attributes.artistName
       );
@@ -581,7 +631,7 @@ export default function Music(props) {
   }, [currentLyricIndex, isUserScrolling, parsedLyrics, isPersonalSpotify]);
   // Calculate progress percentage (0-100)
   const duration = currentPlaying.attributes?.durationInMillis / 1000 || 30;
-  const progress = isPersonalSpotify
+  const progress = (isPersonalSpotify || isPersonalApple)
     ? (timer / duration) * 100
     : ((timer % 30) / 30) * 100;
 
@@ -779,6 +829,23 @@ export default function Music(props) {
                 <div className="sticky top-0 z-10 flex items-center justify-between text-sm md:text-xl font-bold dark:text-white p-2 bg-white/95 dark:bg-black/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 rounded-t-xl md:rounded-t-2xl">
                   <span>{i18n('Lyrics')}</span>
                   <div className="flex items-center gap-2">
+                    {musicSource !== 'spotify' && (
+                      <button
+                        onClick={async () => {
+                          if (isPersonalApple) {
+                            await appleMusicRef.current?.unauthorize();
+                            setIsPersonalApple(false);
+                            setIsPlaying(false);
+                          } else {
+                            loginAppleMusic();
+                          }
+                        }}
+                        className={`ml-2 flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold transition-all ${isPersonalApple ? 'bg-red-600/20 text-red-600 border border-red-600/30 hover:bg-red-100 dark:hover:bg-red-950' : 'bg-red-600 text-white hover:bg-red-700 shadow-sm'}`}
+                      >
+                        <i className="fab fa-apple"></i>
+                        {isPersonalApple ? 'Logout' : 'Login'}
+                      </button>
+                    )}
                     <button
                       onClick={toggleTranslation}
                       disabled={
