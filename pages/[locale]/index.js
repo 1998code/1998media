@@ -206,17 +206,28 @@ export default function Home({ i18nData, ipData, locale }) {
     if (!headerCompleted) return;
     const run = async () => {
       setDeferredLoading(true);
-      const [blogRes, stocksRes, githubRes, unsplashRes] = await Promise.allSettled([
-        fetch(`/api/blog?locale=${locale}`).then((r) => r.json()),
-        fetch('/api/stocks-portfolio').then((r) => r.json()),
-        fetch('/api/github').then((r) => r.json()),
-        fetch('/api/unsplash').then((r) => r.json()),
-      ]);
+      const [blogRes, stocksRes, githubRes, unsplashRes] =
+        await Promise.allSettled([
+          fetch(`/api/blog?locale=${locale}`).then((r) => r.json()),
+          fetch('/api/stocks-portfolio').then((r) => r.json()),
+          fetch('/api/github').then((r) => r.json()),
+          fetch('/api/unsplash').then((r) => r.json()),
+        ]);
       setDeferredData({
-        blogData: blogRes.status === 'fulfilled' ? blogRes.value : { posts: [], medals: [], moments: [] },
-        stocksData: stocksRes.status === 'fulfilled' ? stocksRes.value : { current: [], future: [], previous: [] },
-        projectsData: githubRes.status === 'fulfilled' ? (githubRes.value.items ?? []) : [],
-        unsplashData: unsplashRes.status === 'fulfilled' ? unsplashRes.value : { stats: null, photos: [] },
+        blogData:
+          blogRes.status === 'fulfilled'
+            ? blogRes.value
+            : { posts: [], medals: [], moments: [] },
+        stocksData:
+          stocksRes.status === 'fulfilled'
+            ? stocksRes.value
+            : { current: [], future: [], previous: [] },
+        projectsData:
+          githubRes.status === 'fulfilled' ? githubRes.value.items ?? [] : [],
+        unsplashData:
+          unsplashRes.status === 'fulfilled'
+            ? unsplashRes.value
+            : { stats: null, photos: [] },
       });
       setDeferredLoading(false);
     };
@@ -451,7 +462,10 @@ export default function Home({ i18nData, ipData, locale }) {
                     id="projects"
                     className="snap-start lg:h-dvh min-h-dvh w-full flex-shrink-0 overflow-x-hidden"
                   >
-                    <Projects i18n={I18n} projectsData={deferredData.projectsData} />
+                    <Projects
+                      i18n={I18n}
+                      projectsData={deferredData.projectsData}
+                    />
                   </section>
 
                   <section
@@ -465,7 +479,11 @@ export default function Home({ i18nData, ipData, locale }) {
                     id="blog"
                     className="snap-start lg:h-dvh lg:min-h-dvh w-full flex-shrink-0 overflow-x-hidden"
                   >
-                    <Blog i18n={I18n} blogData={deferredData.blogData} locale={locale} />
+                    <Blog
+                      i18n={I18n}
+                      blogData={deferredData.blogData}
+                      locale={locale}
+                    />
                   </section>
 
                   <section
@@ -656,5 +674,3 @@ async function fetchIPData(locale, req) {
     };
   }
 }
-
-

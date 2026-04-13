@@ -5,7 +5,10 @@ const PREVIOUS = 'MSFT,AMZN';
 
 async function fetchStocks(symbols) {
   if (!symbols) return [];
-  const symbolList = symbols.split(',').map((s) => s.trim()).filter(Boolean);
+  const symbolList = symbols
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean);
   if (symbolList.length === 0) return [];
 
   const results = await Promise.all(
@@ -50,7 +53,8 @@ async function fetchStocks(symbols) {
           now <= tradingPeriod.end;
 
         const chartData =
-          quote.close?.filter((p, i) => p != null && timestamps[i] != null) || [];
+          quote.close?.filter((p, i) => p != null && timestamps[i] != null) ||
+          [];
         const chartTimestamps =
           timestamps.filter((_, i) => quote.close?.[i] != null) || [];
 

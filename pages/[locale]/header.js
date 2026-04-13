@@ -3,16 +3,40 @@ import { motion, AnimatePresence } from 'framer-motion';
 import dynamic from 'next/dynamic';
 
 const heroAnimations = {
-  colorbends: dynamic(() => import('../../components/HeroAnimations/ColorBends'), { ssr: false }),
-  aurora: dynamic(() => import('../../components/HeroAnimations/Aurora'), { ssr: false }),
-  dotgrid: dynamic(() => import('../../components/HeroAnimations/DotGrid'), { ssr: false }),
-  galaxy: dynamic(() => import('../../components/HeroAnimations/Galaxy'), { ssr: false }),
-  gridscan: dynamic(() => import('../../components/HeroAnimations/GridScan'), { ssr: false }),
-  lightrays: dynamic(() => import('../../components/HeroAnimations/LightRays'), { ssr: false }),
-  iridescence: dynamic(() => import('../../components/HeroAnimations/Iridescence'), { ssr: false }),
-  orb: dynamic(() => import('../../components/HeroAnimations/Orb'), { ssr: false }),
-  prism: dynamic(() => import('../../components/HeroAnimations/Prism'), { ssr: false }),
-  prismaticburst: dynamic(() => import('../../components/HeroAnimations/PrismaticBurst'), { ssr: false }),
+  colorbends: dynamic(
+    () => import('../../components/HeroAnimations/ColorBends'),
+    { ssr: false }
+  ),
+  aurora: dynamic(() => import('../../components/HeroAnimations/Aurora'), {
+    ssr: false,
+  }),
+  dotgrid: dynamic(() => import('../../components/HeroAnimations/DotGrid'), {
+    ssr: false,
+  }),
+  galaxy: dynamic(() => import('../../components/HeroAnimations/Galaxy'), {
+    ssr: false,
+  }),
+  gridscan: dynamic(() => import('../../components/HeroAnimations/GridScan'), {
+    ssr: false,
+  }),
+  lightrays: dynamic(
+    () => import('../../components/HeroAnimations/LightRays'),
+    { ssr: false }
+  ),
+  iridescence: dynamic(
+    () => import('../../components/HeroAnimations/Iridescence'),
+    { ssr: false }
+  ),
+  orb: dynamic(() => import('../../components/HeroAnimations/Orb'), {
+    ssr: false,
+  }),
+  prism: dynamic(() => import('../../components/HeroAnimations/Prism'), {
+    ssr: false,
+  }),
+  prismaticburst: dynamic(
+    () => import('../../components/HeroAnimations/PrismaticBurst'),
+    { ssr: false }
+  ),
 };
 
 export default function Header(props) {

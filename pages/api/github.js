@@ -7,8 +7,9 @@ export default async function handler() {
       { headers: { 'User-Agent': '1998media/1.0' } }
     );
     const data = await response.json();
-    const items =
-      data.documentation_url?.includes('rate-limiting') ? [] : data.items || [];
+    const items = data.documentation_url?.includes('rate-limiting')
+      ? []
+      : data.items || [];
 
     return new Response(JSON.stringify({ items }), {
       status: 200,
