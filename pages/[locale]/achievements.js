@@ -726,12 +726,13 @@ export default function Achievements(props) {
                           return (
                             <div
                               key={achievement.title + achievement.year + index}
-                              className={`flex-shrink-0 min-w-[200px] max-w-[300px] flex flex-col p-6 rounded-xl bg-white/50 dark:bg-black/50 backdrop-blur-md shadow-lg xl:rounded-[30px] transition-all duration-500 border-2 ${isHovered
+                              className={`flex-shrink-0 min-w-[200px] max-w-[300px] flex flex-col p-6 rounded-xl bg-white/50 dark:bg-black/50 backdrop-blur-md shadow-lg xl:rounded-[30px] transition-all duration-500 border-2 ${
+                                isHovered
                                   ? `${borderColorClass} opacity-100 scale-105`
                                   : isGrayedOut
                                     ? 'opacity-40 grayscale border-transparent'
                                     : 'border-transparent hover:border-black dark:hover:border-white hover:scale-105'
-                                }`}
+                              }`}
                               onMouseEnter={() => {
                                 setHoveredAchievement(achievement.title);
                               }}
@@ -763,7 +764,9 @@ export default function Achievements(props) {
                       className="w-full h-[450px] rounded-3xl overflow-hidden shadow-lg [&_.maplibregl-ctrl-attrib]:hidden"
                     />
                     <p className="mt-3 text-xs text-gray-400 dark:text-gray-500 text-right">
-                      {i18n('Rank records updated to April 2026 (Missing 2025).')}
+                      {i18n(
+                        'Rank records updated to April 2026 (Missing 2025).'
+                      )}
                     </p>
                   </div>
                 </div>
