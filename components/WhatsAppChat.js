@@ -167,7 +167,9 @@ export default function WhatsAppChat({ i18n: i18nData }) {
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-white font-bold text-lg">{i18n('MING')}</h3>
+                  <h3 className="text-white font-bold text-lg">
+                    {i18n('MING')}
+                  </h3>
                   <p className="text-white/90 text-sm font-medium">
                     {i18n('Product UI Lead')}
                   </p>
