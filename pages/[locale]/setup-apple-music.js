@@ -1,3 +1,5 @@
+export const runtime = 'experimental-edge';
+
 import { useEffect, useState } from 'react';
 
 export async function getServerSideProps() {
