@@ -93,7 +93,7 @@ function MyApp({ Component, pageProps }) {
   }, []);
 
   return (
-    <div className="w-full max-w-[1920px] mx-auto relative min-h-screen">
+    <div className="w-full mx-auto relative min-h-screen">
       <Head>
         <meta
           name="theme-color"
