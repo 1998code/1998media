@@ -43,7 +43,6 @@ export default function Home({ i18nData, ipData, locale }) {
   const [isReady, setIsReady] = useState(false);
   const [darkmodeReady, setDarkmodeReady] = useState(false);
   const [interacted, setInteracted] = useState(false);
-  const [isScrollingToTop, setIsScrollingToTop] = useState(false);
   const [bgType, setBgType] = useState('colorbends');
   const [bgDirection, setBgDirection] = useState(0);
   const [deferredData, setDeferredData] = useState({
@@ -58,20 +57,6 @@ export default function Home({ i18nData, ipData, locale }) {
     setBgDirection(dir);
     setBgType(type);
   };
-
-  useEffect(() => {
-    const types = [
-      'aurora',
-      'colorbends',
-      'galaxy',
-      'gridscan',
-      'orb',
-      'prism',
-      'prismaticburst',
-      'iridescence',
-    ];
-    setBgType(types[Math.floor(Math.random() * types.length)]);
-  }, []);
 
   const containerRef = useRef(null);
   const loggedMissingKeys = useRef(new Set());
@@ -331,8 +316,10 @@ export default function Home({ i18nData, ipData, locale }) {
       setHeaderCompleted(true);
     }
 
-    // Infinite scroll: seamlessly loop from footer back to header
-    if (!isScrollingToTop && containerRef.current) {
+    // Treat the loop header as the active header without jumping between
+    // separate Header instances. Jumping causes visible jitter because the
+    // animated canvases are not frame-synchronized.
+    if (containerRef.current) {
       const container = containerRef.current;
       const headerLoopElement = document.getElementById('header-loop');
 
@@ -340,25 +327,17 @@ export default function Home({ i18nData, ipData, locale }) {
         const rect = headerLoopElement.getBoundingClientRect();
         const containerRect = container.getBoundingClientRect();
 
-        // Check if the duplicate header is in view (scrolled to it)
         if (
           rect.top <= containerRect.top + 100 &&
           rect.bottom >= containerRect.top
         ) {
-          setIsScrollingToTop(true);
-
-          // Instantly jump back to the real header
-          const headerElement = document.getElementById('header');
-          if (headerElement && container) {
-            // Disable smooth scrolling for instant jump
-            container.style.scrollBehavior = 'auto';
-            headerElement.scrollIntoView({ behavior: 'auto', block: 'start' });
-
-            // Re-enable smooth scrolling
-            setTimeout(() => {
-              container.style.scrollBehavior = 'smooth';
-              setIsScrollingToTop(false);
-            }, 50);
+          setActiveSection('header');
+          if (window.location.hash !== '#header') {
+            window.history.replaceState(
+              '',
+              '',
+              window.location.pathname + '#header'
+            );
           }
         }
       }

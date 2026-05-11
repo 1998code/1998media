@@ -60,7 +60,14 @@ export default function Header(props) {
   useEffect(() => {
     // Detect dark mode from darkmode-js class
     const checkDarkMode = () => {
-      setIsDarkMode(document.body.classList.contains('darkmode--activated'));
+      const nextIsDarkMode = document.body.classList.contains(
+        'darkmode--activated'
+      );
+      setIsDarkMode((currentIsDarkMode) =>
+        currentIsDarkMode === nextIsDarkMode
+          ? currentIsDarkMode
+          : nextIsDarkMode
+      );
     };
 
     // Initial check
@@ -181,14 +188,13 @@ export default function Header(props) {
 
   return (
     <div
-      id="header"
       onClick={() => props.onComplete && props.onComplete()}
       className={`relative h-full w-full flex flex-col items-center justify-center bg-transparent dark:text-[var(--arc-palette-foregroundPrimary)] cursor-pointer`}
     >
       <div className="absolute inset-0 -z-10 overflow-hidden bg-[#fff6eb] dark:bg-[#000914]">
         <AnimatePresence initial={false} custom={direction} mode="popLayout">
           <motion.div
-            key={bgType + (isDarkMode ? 'dark' : 'light')}
+            key={bgType}
             custom={direction}
             variants={slideVariants}
             initial="enter"
