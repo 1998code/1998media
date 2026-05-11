@@ -629,6 +629,7 @@ export default function Home({ i18nData, ipData, locale }) {
                     <Stocks
                       i18n={I18n}
                       stocksData={deferredData.stocksData}
+                      locale={locale}
                       isLoading={deferredLoading}
                     />
                   </section>

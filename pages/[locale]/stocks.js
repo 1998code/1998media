@@ -1,7 +1,9 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import { fetchI18nData, fetchStocks, MY_PORTFOLIO } from '../../lib/fetchData';
 
 export const runtime = 'experimental-edge';
+
+const EMPTY_STOCKS = [];
 
 // Interactive Stock Card Component
 function StockCard({ stock, i18n, locale }) {
@@ -9,6 +11,9 @@ function StockCard({ stock, i18n, locale }) {
   const chartData = stock.chartData || [];
   const chartTimestamps = stock.chartTimestamps || [];
   const isPositive = stock.change >= 0;
+  const exchangeName = stock.exchange
+    ? i18n(`Exchange ${stock.exchange}`)
+    : '';
 
   // Map locale to proper locale string for date formatting
   const dateLocale =
@@ -37,7 +42,7 @@ function StockCard({ stock, i18n, locale }) {
             </div>
             {stock.exchange && (
               <span className="text-xs text-gray-400 dark:text-gray-500 flex-shrink-0 whitespace-nowrap">
-                {stock.exchange}
+                {exchangeName}
               </span>
             )}
           </div>
@@ -187,7 +192,7 @@ function StockCard({ stock, i18n, locale }) {
           </div>
           {stock.exchange && (
             <span className="text-xs text-gray-400 dark:text-gray-500 flex-shrink-0 whitespace-nowrap">
-              {stock.exchange}
+              {exchangeName}
             </span>
           )}
         </div>
@@ -273,20 +278,107 @@ function StockCard({ stock, i18n, locale }) {
 export default function Stocks(props) {
   const [selectedStock, setSelectedStock] = useState(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [translatedCompanyNames, setTranslatedCompanyNames] = useState({});
 
   const loggedMissingKeys = useRef(new Set());
+  const stockI18n = props.i18n || props.i18nData;
 
   function i18n(key) {
-    if (props.i18n && props.i18n['stocks'] && !props.i18n['stocks'][key]) {
+    if (stockI18n && stockI18n['stocks'] && !stockI18n['stocks'][key]) {
       if (!loggedMissingKeys.current.has(key)) {
         console.log('Stocks Missing Translation: ' + key);
         loggedMissingKeys.current.add(key);
       }
     }
-    return props.i18n && props.i18n['stocks'] && props.i18n['stocks'][key]
-      ? props.i18n['stocks'][key]
+    return stockI18n && stockI18n['stocks'] && stockI18n['stocks'][key]
+      ? stockI18n['stocks'][key]
       : key;
   }
+
+  const rawCurrentStocks = props.stocksData?.current || EMPTY_STOCKS;
+  const rawFutureStocks = props.stocksData?.future || EMPTY_STOCKS;
+  const rawPreviousStocks = props.stocksData?.previous || EMPTY_STOCKS;
+  const targetLocale = props.locale || 'en';
+
+  const uniqueCompanyNames = useMemo(() => {
+    return [
+      ...new Set(
+        [...rawCurrentStocks, ...rawFutureStocks, ...rawPreviousStocks]
+          .map((stock) => stock.name)
+          .filter(Boolean)
+      ),
+    ];
+  }, [rawCurrentStocks, rawFutureStocks, rawPreviousStocks]);
+
+  useEffect(() => {
+    if (
+      !targetLocale ||
+      targetLocale === 'en' ||
+      uniqueCompanyNames.length === 0
+    ) {
+      setTranslatedCompanyNames({});
+      return;
+    }
+
+    const controller = new AbortController();
+
+    async function translateCompanyNames() {
+      try {
+        const combinedNames = uniqueCompanyNames.join('\n');
+        const response = await fetch(
+          `/api/translate?text=${encodeURIComponent(combinedNames)}&from=auto&to=${targetLocale}`,
+          { signal: controller.signal }
+        );
+
+        if (!response.ok) return;
+
+        const data = await response.json();
+        const translatedNames = (data.output || combinedNames).split('\n');
+        const translations = uniqueCompanyNames.reduce((result, name, index) => {
+          result[name] = translatedNames[index] || name;
+          return result;
+        }, {});
+
+        setTranslatedCompanyNames(translations);
+      } catch (error) {
+        if (error.name !== 'AbortError') {
+          console.error('Company name translation error:', error);
+        }
+      }
+    }
+
+    translateCompanyNames();
+
+    return () => controller.abort();
+  }, [targetLocale, uniqueCompanyNames]);
+
+  const currentStocks = useMemo(
+    () =>
+      rawCurrentStocks.map((stock) => ({
+        ...stock,
+        originalName: stock.originalName || stock.name,
+        name: translatedCompanyNames[stock.name] || stock.name,
+      })),
+    [rawCurrentStocks, translatedCompanyNames]
+  );
+  const futureStocks = useMemo(
+    () =>
+      rawFutureStocks.map((stock) => ({
+        ...stock,
+        originalName: stock.originalName || stock.name,
+        name: translatedCompanyNames[stock.name] || stock.name,
+      })),
+    [rawFutureStocks, translatedCompanyNames]
+  );
+  const previousStocks = useMemo(
+    () =>
+      rawPreviousStocks.map((stock) => ({
+        ...stock,
+        originalName: stock.originalName || stock.name,
+        name: translatedCompanyNames[stock.name] || stock.name,
+      })),
+    [rawPreviousStocks, translatedCompanyNames]
+  );
 
   const handleStockClick = (stock) => {
     setSelectedStock(stock);
@@ -297,10 +389,6 @@ export default function Stocks(props) {
     setIsDialogOpen(false);
     setSelectedStock(null);
   };
-
-  const currentStocks = props.stocksData?.current || [];
-  const futureStocks = props.stocksData?.future || [];
-  const previousStocks = props.stocksData?.previous || [];
 
   return (
     <div className="relative h-full w-full max-w-7xl mx-auto flex flex-col items-start px-4 sm:px-6 lg:px-8 pt-24 overflow-y-auto scrollbar-hide">
@@ -318,7 +406,7 @@ export default function Stocks(props) {
               {i18n('My Stock Portfolio - Real-time Market Data.')}
             </p>
             <p className="text-sm text-gray-400 dark:text-gray-500">
-              {i18n('Shareholding quantity not disclosed.')}
+              {i18n('Holdings undisclosed.')}
             </p>
           </div>
         </div>
@@ -434,7 +522,9 @@ export default function Stocks(props) {
                       {selectedStock.name}
                     </h2>
                     <p className="text-xl text-gray-500 dark:text-gray-400">
-                      {selectedStock.symbol} • {selectedStock.exchange}
+                      {selectedStock.symbol}
+                      {selectedStock.exchange &&
+                        ` • ${i18n(`Exchange ${selectedStock.exchange}`)}`}
                     </p>
                   </div>
                   <button
@@ -462,17 +552,19 @@ export default function Stocks(props) {
 
                   <div className="flex flex-col justify-end space-y-2">
                     <div className="flex justify-between border-b border-gray-100 dark:border-gray-800 pb-2">
-                      <span className="text-gray-500">Market State</span>
+                      <span className="text-gray-500">
+                        {i18n('Market State')}
+                      </span>
                       <span
                         className={`font-semibold ${selectedStock.marketState === 'REGULAR' ? 'text-green-500' : 'text-gray-500'}`}
                       >
                         {selectedStock.marketState === 'REGULAR'
-                          ? 'Open'
-                          : 'Closed'}
+                          ? i18n('Open')
+                          : i18n('Closed')}
                       </span>
                     </div>
                     <div className="flex justify-between border-b border-gray-100 dark:border-gray-800 pb-2">
-                      <span className="text-gray-500">Currency</span>
+                      <span className="text-gray-500">{i18n('Currency')}</span>
                       <span className="text-gray-900 dark:text-white font-semibold">
                         {selectedStock.currency}
                       </span>
