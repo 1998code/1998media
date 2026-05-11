@@ -247,7 +247,7 @@ export default function Experience(props) {
       : positions.filter(
           (p) =>
             p.type.toLowerCase().replaceAll(' ', '-') ===
-            activeTab.toLowerCase(),
+            activeTab.toLowerCase()
         );
 
   // Tab configuration with colors matching position types
