@@ -11,9 +11,7 @@ function StockCard({ stock, i18n, locale }) {
   const chartData = stock.chartData || [];
   const chartTimestamps = stock.chartTimestamps || [];
   const isPositive = stock.change >= 0;
-  const exchangeName = stock.exchange
-    ? i18n(`Exchange ${stock.exchange}`)
-    : '';
+  const exchangeName = stock.exchange ? i18n(`Exchange ${stock.exchange}`) : '';
 
   // Map locale to proper locale string for date formatting
   const dateLocale =
@@ -334,10 +332,13 @@ export default function Stocks(props) {
 
         const data = await response.json();
         const translatedNames = (data.output || combinedNames).split('\n');
-        const translations = uniqueCompanyNames.reduce((result, name, index) => {
-          result[name] = translatedNames[index] || name;
-          return result;
-        }, {});
+        const translations = uniqueCompanyNames.reduce(
+          (result, name, index) => {
+            result[name] = translatedNames[index] || name;
+            return result;
+          },
+          {}
+        );
 
         setTranslatedCompanyNames(translations);
       } catch (error) {
