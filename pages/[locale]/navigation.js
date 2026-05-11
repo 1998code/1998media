@@ -103,6 +103,12 @@ export default function Navigation(props) {
     contact: 'envelope',
   };
 
+  const handleSectionNavigate = (event, section) => {
+    if (!props.onNavigate) return;
+    event.preventDefault();
+    props.onNavigate(section);
+  };
+
   // Convert sections to StaggeredMenu items
   const menuItems = props.sections
     ? props.sections.map((section) => ({
@@ -113,6 +119,7 @@ export default function Navigation(props) {
         link: `#${section}`,
         ariaLabel: `Go to ${section}`,
         icon: <i className={`fad fa-${sectionIconMap[section]}`}></i>,
+        onClick: (event) => handleSectionNavigate(event, section),
       }))
     : [];
 
@@ -160,6 +167,7 @@ export default function Navigation(props) {
             <a
               key={section}
               href={`#${section}`}
+              onClick={(event) => handleSectionNavigate(event, section)}
               className={`px-2 text-sm font-semibold ${props.activeSection === section ? 'opacity-100 bg-white text-orange-600 dark:text-orange-400 dark:bg-white/10 shadow-inner dark:shadow-gray-900/50' : 'opacity-50'} hidden lg:inline py-1 rounded-full hover:opacity-80 transition-all`}
             >
               {

@@ -1,622 +1,510 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from "react";
 
 export default function Skills(props) {
-  const [activeTab, setActiveTab] = useState('all');
-  const [tabStyles, setTabStyles] = useState({ left: '4px', width: '62px' });
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const desktopTabRefs = useRef({});
-  const mobileTabRefs = useRef({});
+  const [showFullToolset, setShowFullToolset] = useState(false);
 
   const loggedMissingKeys = useRef(new Set());
 
   function i18n(key) {
-    if (props.i18n && props.i18n['skills'] && !props.i18n['skills'][key]) {
+    if (props.i18n && props.i18n["skills"] && !props.i18n["skills"][key]) {
       if (!loggedMissingKeys.current.has(key)) {
-        console.log('Skills Missing Translation: ' + key);
+        console.log("Skills Missing Translation: " + key);
         loggedMissingKeys.current.add(key);
       }
     }
-    return props.i18n && props.i18n['skills'] && props.i18n['skills'][key]
-      ? props.i18n['skills'][key]
+    return props.i18n && props.i18n["skills"] && props.i18n["skills"][key]
+      ? props.i18n["skills"][key]
       : key;
   }
   const certs = [
     {
-      name: 'User Experience Design',
-      icons: 'fa-google',
-      href: 'https://coursera.org/verify/KDTDPH6RCXZD',
-      bgColor: 'bg-blue-600',
-      fromColor: 'from-blue-600',
+      name: "User Experience Design",
+      icons: "fa-google",
+      href: "https://coursera.org/verify/KDTDPH6RCXZD",
+      bgColor: "bg-blue-600",
+      fromColor: "from-blue-600",
     },
     {
-      name: 'AI Fluency for nonprofits',
-      icons: 'Claude',
-      href: 'http://verify.skilljar.com/c/i9sa4ijatjzj',
-      bgColor: 'bg-orange-600',
-      fromColor: 'from-orange-600',
+      name: "AI Fluency for nonprofits",
+      icons: "Claude",
+      iconImage:
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Claude_AI_symbol.svg/3840px-Claude_AI_symbol.svg.png",
+      href: "http://verify.skilljar.com/c/i9sa4ijatjzj",
+      bgColor: "bg-orange-600",
+      fromColor: "from-orange-600",
     },
   ];
 
   const softwareGroups = {
-    'Design & Productivity': [
+    "Design & Productivity": [
       {
-        name: 'Adobe Creative Cloud',
-        icons: 'CC',
-        href: 'https://adobe.com',
-        bgColor: 'bg-red-600',
-        fromColor: 'from-red-600',
+        name: "Adobe Creative Cloud",
+        icons: "CC",
+        href: "https://adobe.com",
+        bgColor: "bg-red-600",
+        fromColor: "from-red-600",
       },
       {
-        name: 'Figma',
-        icons: 'fa-figma',
-        href: 'https://figma.com',
-        bgColor: 'bg-purple-600',
-        fromColor: 'from-purple-600',
+        name: "Figma",
+        icons: "fa-figma",
+        href: "https://figma.com",
+        bgColor: "bg-purple-600",
+        fromColor: "from-purple-600",
       },
       {
-        name: 'Framer',
-        icons: 'F',
-        href: 'https://www.framer.com/',
-        bgColor: 'bg-sky-500',
-        fromColor: 'from-sky-500',
+        name: "Framer",
+        icons: "F",
+        href: "https://www.framer.com/",
+        bgColor: "bg-sky-500",
+        fromColor: "from-sky-500",
       },
       {
-        name: 'Sketch',
-        icons: 'fa-sketch',
-        href: 'https://www.sketch.com/',
-        bgColor: 'bg-orange-400',
-        fromColor: 'from-orange-400',
+        name: "Sketch",
+        icons: "fa-sketch",
+        href: "https://www.sketch.com/",
+        bgColor: "bg-orange-400",
+        fromColor: "from-orange-400",
       },
       {
-        name: 'AutoCAD',
-        icons: 'AC',
-        href: 'https://www.autodesk.com/products/autocad/',
-        bgColor: 'bg-red-700',
-        fromColor: 'from-red-700',
+        name: "AutoCAD",
+        icons: "AC",
+        href: "https://www.autodesk.com/products/autocad/",
+        bgColor: "bg-red-700",
+        fromColor: "from-red-700",
       },
       {
-        name: 'Google Worksuite',
-        icons: 'fa-google',
-        href: 'https://workspace.google.com/',
-        bgColor: 'bg-blue-500',
-        fromColor: 'from-blue-500',
+        name: "Google Worksuite",
+        icons: "fa-google",
+        href: "https://workspace.google.com/",
+        bgColor: "bg-blue-500",
+        fromColor: "from-blue-500",
       },
       {
-        name: 'Microsoft Office',
-        icons: 'fa-microsoft',
-        href: 'https://www.microsoft.com/microsoft-365',
-        bgColor: 'bg-teal-500',
-        fromColor: 'from-teal-500',
-      },
-    ],
-    'Development Tools': [
-      {
-        name: 'Apple Xcode',
-        icons: 'fa-apple',
-        href: 'https://developer.apple.com/xcode/',
-        bgColor: 'bg-blue-600',
-        fromColor: 'from-blue-600',
-      },
-      {
-        name: 'Apple iWork',
-        icons: 'fa-apple',
-        href: 'https://www.apple.com/iwork/',
-        bgColor: 'bg-blue-600',
-        fromColor: 'from-blue-600',
-      },
-      {
-        name: 'Apple Final Cut Pro',
-        icons: 'fa-apple',
-        href: 'https://www.apple.com/final-cut-pro/',
-        bgColor: 'bg-blue-600',
-        fromColor: 'from-blue-600',
-      },
-      {
-        name: 'Unity',
-        icons: 'fa-unity',
-        href: 'https://unity.com/',
-        bgColor: 'bg-gray-700',
-        fromColor: 'from-gray-700',
+        name: "Microsoft Office",
+        icons: "fa-microsoft",
+        href: "https://www.microsoft.com/microsoft-365",
+        bgColor: "bg-teal-500",
+        fromColor: "from-teal-500",
       },
     ],
-    '3D & Multimedia': [
+    "Development Tools": [
       {
-        name: 'Cinema 4D',
-        icons: 'C4D',
-        href: 'https://www.maxon.net/en/cinema-4d',
-        bgColor: 'bg-purple-500',
-        fromColor: 'from-purple-500',
+        name: "Apple Xcode",
+        icons: "fa-apple",
+        href: "https://developer.apple.com/xcode/",
+        bgColor: "bg-blue-600",
+        fromColor: "from-blue-600",
       },
       {
-        name: 'Shapr3D',
-        icons: 'S3D',
-        href: 'https://www.shapr3d.com/',
-        bgColor: 'bg-orange-500',
-        fromColor: 'from-orange-500',
+        name: "Apple iWork",
+        icons: "fa-apple",
+        href: "https://www.apple.com/iwork/",
+        bgColor: "bg-blue-600",
+        fromColor: "from-blue-600",
+      },
+      {
+        name: "Apple Final Cut Pro",
+        icons: "fa-apple",
+        href: "https://www.apple.com/final-cut-pro/",
+        bgColor: "bg-blue-600",
+        fromColor: "from-blue-600",
+      },
+      {
+        name: "Unity",
+        icons: "fa-unity",
+        href: "https://unity.com/",
+        bgColor: "bg-gray-700",
+        fromColor: "from-gray-700",
       },
     ],
-    'Data & Database': [
+    "3D & Multimedia": [
       {
-        name: 'Microsoft PowerBI',
-        icons: 'fa-microsoft',
-        href: 'https://powerbi.microsoft.com/',
-        bgColor: 'bg-teal-500',
-        fromColor: 'from-teal-500',
+        name: "Cinema 4D",
+        icons: "C4D",
+        href: "https://www.maxon.net/en/cinema-4d",
+        bgColor: "bg-purple-500",
+        fromColor: "from-purple-500",
       },
       {
-        name: 'MS SQL Server',
-        icons: 'fa-microsoft',
-        href: 'https://www.microsoft.com/sql-server',
-        bgColor: 'bg-red-600',
-        fromColor: 'from-red-600',
+        name: "Shapr3D",
+        icons: "S3D",
+        href: "https://www.shapr3d.com/",
+        bgColor: "bg-orange-500",
+        fromColor: "from-orange-500",
+      },
+    ],
+    "Data & Database": [
+      {
+        name: "Microsoft PowerBI",
+        icons: "fa-microsoft",
+        href: "https://powerbi.microsoft.com/",
+        bgColor: "bg-teal-500",
+        fromColor: "from-teal-500",
       },
       {
-        name: 'MySQLWorkbench',
-        icons: 'MSW',
-        href: 'https://www.mysql.com/products/workbench/',
-        bgColor: 'bg-blue-600',
-        fromColor: 'from-blue-600',
+        name: "MS SQL Server",
+        icons: "fa-microsoft",
+        href: "https://www.microsoft.com/sql-server",
+        bgColor: "bg-red-600",
+        fromColor: "from-red-600",
       },
       {
-        name: 'Table Plus',
-        icons: 'TP',
-        href: 'https://tableplus.com/',
-        bgColor: 'bg-indigo-600',
-        fromColor: 'from-indigo-600',
+        name: "MySQLWorkbench",
+        icons: "MSW",
+        href: "https://www.mysql.com/products/workbench/",
+        bgColor: "bg-blue-600",
+        fromColor: "from-blue-600",
+      },
+      {
+        name: "Table Plus",
+        icons: "TP",
+        href: "https://tableplus.com/",
+        bgColor: "bg-indigo-600",
+        fromColor: "from-indigo-600",
       },
     ],
   };
 
   const languages = [
     {
-      name: 'SwiftUI',
-      icons: 'fa-swift',
-      href: 'https://developer.apple.com/xcode/swiftui/',
-      bgColor: 'bg-orange-600',
-      fromColor: 'from-orange-600',
+      name: "SwiftUI",
+      icons: "fa-swift",
+      href: "https://developer.apple.com/xcode/swiftui/",
+      bgColor: "bg-orange-600",
+      fromColor: "from-orange-600",
     },
     {
-      name: 'CoreData',
-      icons: 'fa-apple',
-      href: 'https://developer.apple.com/documentation/coredata/',
-      bgColor: 'bg-orange-600',
-      fromColor: 'from-orange-600',
+      name: "CoreData",
+      icons: "fa-apple",
+      href: "https://developer.apple.com/documentation/coredata/",
+      bgColor: "bg-orange-600",
+      fromColor: "from-orange-600",
     },
     {
-      name: 'CloudKit/JS',
-      icons: 'fa-apple',
-      href: 'https://developer.apple.com/icloud/cloudkit/',
-      bgColor: 'bg-orange-600',
-      fromColor: 'from-orange-600',
-    },
-
-    {
-      name: 'NextJS',
-      icons: 'fa-react',
-      href: 'https://nextjs.org/',
-      bgColor: 'bg-sky-600',
-      fromColor: 'from-sky-600',
+      name: "CloudKit/JS",
+      icons: "fa-apple",
+      href: "https://developer.apple.com/icloud/cloudkit/",
+      bgColor: "bg-orange-600",
+      fromColor: "from-orange-600",
     },
 
     {
-      name: 'TailwindCSS',
-      icons: 'fa-css3',
-      href: 'https://tailwindcss.com/',
-      bgColor: 'bg-indigo-600',
-      fromColor: 'from-indigo-600',
-    },
-    {
-      name: 'Bootstrap 5',
-      icons: 'fa-bootstrap',
-      href: 'https://getbootstrap.com/',
-      bgColor: 'bg-indigo-600',
-      fromColor: 'from-indigo-600',
+      name: "NextJS",
+      icons: "fa-react",
+      href: "https://nextjs.org/",
+      bgColor: "bg-sky-600",
+      fromColor: "from-sky-600",
     },
 
     {
-      name: 'NuxtJS',
-      icons: 'fa-vuejs',
-      href: 'https://nuxt.com/',
-      bgColor: 'bg-teal-600',
-      fromColor: 'from-teal-600',
+      name: "TailwindCSS",
+      icons: "fa-css3",
+      href: "https://tailwindcss.com/",
+      bgColor: "bg-indigo-600",
+      fromColor: "from-indigo-600",
     },
     {
-      name: 'VuetifyJS',
-      icons: 'fa-vuejs',
-      href: 'https://vuetifyjs.com/en/',
-      bgColor: 'bg-blue-600',
-      fromColor: 'from-blue-600',
+      name: "Bootstrap 5",
+      icons: "fa-bootstrap",
+      href: "https://getbootstrap.com/",
+      bgColor: "bg-indigo-600",
+      fromColor: "from-indigo-600",
     },
 
     {
-      name: 'OpenAI GPT',
-      icons: 'AI',
-      href: 'https://openai.com/',
-      bgColor: 'bg-teal-600',
-      fromColor: 'from-teal-600',
+      name: "NuxtJS",
+      icons: "fa-vuejs",
+      href: "https://nuxt.com/",
+      bgColor: "bg-teal-600",
+      fromColor: "from-teal-600",
+    },
+    {
+      name: "VuetifyJS",
+      icons: "fa-vuejs",
+      href: "https://vuetifyjs.com/en/",
+      bgColor: "bg-blue-600",
+      fromColor: "from-blue-600",
+    },
+
+    {
+      name: "OpenAI GPT",
+      icons: "AI",
+      href: "https://openai.com/",
+      bgColor: "bg-teal-600",
+      fromColor: "from-teal-600",
     },
   ];
   const speakWrites = [
     {
-      name: 'Cantonese (Chinese Traditional)',
-      icons: 'Proficient',
-      href: 'https://www.hkeaa.edu.hk/en/hkdse/',
-      bgColor: 'bg-green-600',
-      fromColor: 'from-green-600',
+      name: "Cantonese (Chinese Traditional)",
+      icons: "Proficient",
+      href: "https://www.hkeaa.edu.hk/en/hkdse/",
+      bgColor: "bg-green-600",
+      fromColor: "from-green-600",
     },
     {
-      name: 'English',
-      icons: 'Proficient',
-      href: 'https://www.hkeaa.edu.hk/en/hkdse/',
-      bgColor: 'bg-green-600',
-      fromColor: 'from-green-600',
-    },
-
-    {
-      name: 'Mandarin (Chinese Simplified)',
-      icons: 'Fluent',
-      href: 'https://www.hkeaa.edu.hk/en/hkdse/',
-      bgColor: 'bg-blue-600',
-      fromColor: 'from-blue-600',
+      name: "English",
+      icons: "Proficient",
+      href: "https://www.hkeaa.edu.hk/en/hkdse/",
+      bgColor: "bg-green-600",
+      fromColor: "from-green-600",
     },
 
     {
-      name: 'Korean (Passed the Test of Proficiency in Korean in 2018)',
-      icons: 'Intermediate',
-      href: 'https://www.topik-hk.org/eng/index.asp',
-      bgColor: 'bg-sky-600',
-      fromColor: 'from-sky-600',
+      name: "Mandarin (Chinese Simplified)",
+      icons: "Fluent",
+      href: "https://www.hkeaa.edu.hk/en/hkdse/",
+      bgColor: "bg-blue-600",
+      fromColor: "from-blue-600",
+    },
+
+    {
+      name: "Korean (Passed the Test of Proficiency in Korean in 2018)",
+      icons: "Intermediate",
+      href: "https://www.topik-hk.org/eng/index.asp",
+      bgColor: "bg-sky-600",
+      fromColor: "from-sky-600",
     },
   ];
   function classNames(...classes) {
-    return classes.filter(Boolean).join(' ');
+    return classes.filter(Boolean).join(" ");
   }
 
-  // Tab configuration
-  const tabs = [
-    { id: 'all', label: 'All', icon: 'fa-th', color: 'bg-orange-600' },
+  const colorMap = {
+    "from-blue-600": "#2563eb",
+    "from-orange-600": "#ea580c",
+    "from-red-600": "#dc2626",
+    "from-purple-600": "#9333ea",
+    "from-sky-500": "#0ea5e9",
+    "from-orange-400": "#fb923c",
+    "from-red-700": "#b91c1c",
+    "from-blue-500": "#3b82f6",
+    "from-teal-500": "#14b8a6",
+    "from-gray-700": "#374151",
+    "from-purple-500": "#a855f7",
+    "from-orange-500": "#f97316",
+    "from-indigo-600": "#4f46e5",
+    "from-sky-600": "#0284c7",
+    "from-teal-600": "#0d9488",
+    "from-green-600": "#16a34a",
+  };
+
+  const skillPillars = [
     {
-      id: 'certified',
-      label: 'Certified',
-      icon: 'fa-certificate',
-      color: 'bg-blue-600',
+      title: "Product & UX Design",
+      summary: "Design systems, product thinking, and polished interfaces.",
+      icon: "fa-pen-nib",
+      accent: "text-orange-600 dark:text-orange-300",
+      tools: ["Figma", "Adobe Creative Cloud", "Sketch"],
     },
     {
-      id: 'softwares',
-      label: 'Softwares',
-      icon: 'fa-desktop',
-      color: 'bg-purple-600',
+      title: "Frontend Development",
+      summary: "Responsive web experiences built with modern frameworks.",
+      icon: "fa-code",
+      accent: "text-sky-600 dark:text-sky-300",
+      tools: ["NextJS", "TailwindCSS", "SwiftUI"],
     },
     {
-      id: 'languages',
-      label: 'Languages & Technologies',
-      icon: 'fa-code',
-      color: 'bg-indigo-600',
+      title: "AI & Automation",
+      summary: "Practical AI workflows, data tools, and smarter operations.",
+      icon: "fa-sparkles",
+      accent: "text-teal-600 dark:text-teal-300",
+      tools: ["OpenAI GPT", "PowerBI", "SQL"],
     },
     {
-      id: 'speak-write',
-      label: 'Speak & Write',
-      icon: 'fa-language',
-      color: 'bg-green-600',
+      title: "Language & Communication",
+      summary: "Clear multilingual communication for regional audiences.",
+      icon: "fa-language",
+      accent: "text-green-600 dark:text-green-300",
+      tools: [
+        { name: "Cantonese", level: "Proficient" },
+        { name: "English", level: "Proficient" },
+        { name: "Mandarin", level: "Fluent" },
+        { name: "Korean", level: "Intermediate" },
+      ],
     },
   ];
 
-  // Get active tab color
-  const getActiveTabColor = () => {
-    const activeTabData = tabs.find((tab) => tab.id === activeTab);
-    return activeTabData?.color || 'bg-gray-600';
-  };
+  const getPillarToolName = (tool) =>
+    typeof tool === "string" ? tool : tool.name;
 
-  // Handle tab change with animation
-  const handleTabChange = (newTab) => {
-    if (newTab === activeTab) return;
-
-    setIsTransitioning(true);
-    setTimeout(() => {
-      setActiveTab(newTab);
-      setTimeout(() => setIsTransitioning(false), 50);
-    }, 250);
-  };
-
-  // Update tab styles when active tab changes
-  useEffect(() => {
-    const updateTabStyles = () => {
-      const desktopEl = desktopTabRefs.current[activeTab];
-      const mobileEl = mobileTabRefs.current[activeTab];
-
-      const activeTabElement =
-        desktopEl && desktopEl.offsetParent !== null
-          ? desktopEl
-          : mobileEl && mobileEl.offsetParent !== null
-            ? mobileEl
-            : null;
-
-      if (activeTabElement) {
-        const parent = activeTabElement.parentElement;
-        const parentRect = parent.getBoundingClientRect();
-        const activeRect = activeTabElement.getBoundingClientRect();
-
-        setTabStyles({
-          left: `${activeRect.left - parentRect.left}px`,
-          width: `${activeRect.width}px`,
-        });
-      }
-    };
-
-    updateTabStyles();
-    const timeoutId = setTimeout(updateTabStyles, 50);
-    return () => clearTimeout(timeoutId);
-  }, [activeTab, props.i18n]);
-
-  const colorMap = {
-    'from-blue-600': '#2563eb',
-    'from-orange-600': '#ea580c',
-    'from-red-600': '#dc2626',
-    'from-purple-600': '#9333ea',
-    'from-sky-500': '#0ea5e9',
-    'from-orange-400': '#fb923c',
-    'from-red-700': '#b91c1c',
-    'from-blue-500': '#3b82f6',
-    'from-teal-500': '#14b8a6',
-    'from-gray-700': '#374151',
-    'from-purple-500': '#a855f7',
-    'from-orange-500': '#f97316',
-    'from-indigo-600': '#4f46e5',
-    'from-sky-600': '#0284c7',
-    'from-teal-600': '#0d9488',
-    'from-green-600': '#16a34a',
+  const renderCompactItem = (item) => {
+    const hexColor = colorMap[item.fromColor] || "#666";
+    return (
+      <li key={item.name} className="min-w-0">
+        <a
+          href={item.href}
+          target="_blank"
+          className="group flex min-h-12 items-center gap-3 rounded-lg border bg-white/50 px-3 py-2.5 text-sm transition-all active:scale-[0.99] dark:bg-black/30"
+          style={{
+            borderColor: `${hexColor}66`,
+            color: hexColor,
+          }}
+        >
+          <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-md bg-current/10 text-xs font-semibold">
+            <i className={classNames("fab", item.icons)}>
+              {item.icons.includes("fa") ? "" : i18n(item.icons)}
+            </i>
+          </span>
+          <span className="min-w-0 flex-1 break-words font-semibold leading-snug text-gray-900 dark:text-gray-100">
+            {i18n(item.name)}
+          </span>
+        </a>
+      </li>
+    );
   };
 
   return (
     <div
       id="skills"
-      className="relative h-full w-full max-w-7xl mx-auto flex flex-col items-start px-4 sm:px-6 lg:px-8 pt-24 overflow-y-auto scrollbar-hide"
+      className="relative h-full w-full max-w-7xl mx-auto flex flex-col items-start px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 pb-12 overflow-y-auto scrollbar-hide"
     >
-      <div className="relative w-full">
-        <div className="text-left">
-          <div className="flex items-center justify-between flex-wrap gap-4">
-            <a
-              className="text-3xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl"
-              href="#skills"
-            >
-              {i18n('Skills & Languages')}
-              <i className="far fa-language ml-2"></i>
-            </a>
+      <div className="relative w-full space-y-8">
+        <div className="max-w-3xl">
+          <a
+            className="inline-flex items-center text-3xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl"
+            href="#skills"
+          >
+            {i18n("Skills")}
+            <i className="far fa-language ml-2 text-2xl text-orange-600 dark:text-orange-300"></i>
+          </a>
+          <p className="mt-3 max-w-2xl text-base leading-7 text-gray-600 dark:text-gray-300 sm:text-lg">
+            {i18n(
+              "Design systems, web apps, AI tools, and multilingual communication.",
+            )}
+          </p>
+        </div>
 
-            {/* Tab Switcher - Desktop only */}
-            <div className="hidden lg:block">
-              <div className="relative flex bg-white/50 dark:bg-black/50 backdrop-blur-md rounded-2xl p-1 border border-gray-200 dark:border-gray-700 xl:rounded-[20px]">
-                {/* Sliding Background */}
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:gap-4">
+          {skillPillars.map((pillar) => (
+            <article
+              key={pillar.title}
+              className="group rounded-xl border border-gray-200 bg-white/50 p-4 backdrop-blur-sm transition duration-300 hover:scale-[0.98] hover:border-gray-900 dark:border-gray-800 dark:bg-black/30 dark:hover:border-white xl:rounded-[20px]"
+            >
+              <div className="flex items-start gap-3">
                 <div
-                  className={`absolute top-1 bottom-1 ${getActiveTabColor()} rounded-xl transition-all duration-300 ease-out shadow-sm pointer-events-none`}
-                  style={tabStyles}
-                />
-                {tabs.map((tab) => (
-                  <button
-                    key={tab.id}
-                    ref={(el) => (desktopTabRefs.current[tab.id] = el)}
-                    onClick={() => handleTabChange(tab.id)}
-                    className={`relative z-10 px-3 py-2 text-xs font-medium rounded-xl transition-all duration-300 ${
-                      activeTab === tab.id
-                        ? 'text-white'
-                        : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
-                    }`}
+                  className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border border-current/20 bg-white/60 text-sm ${pillar.accent} dark:bg-white/5`}
+                >
+                  <i className={`far ${pillar.icon}`}></i>
+                </div>
+                <div className="min-w-0">
+                  <h2 className="text-base font-bold leading-6 text-gray-950 dark:text-gray-50">
+                    {i18n(pillar.title)}
+                  </h2>
+                  <p className="mt-1 text-sm leading-6 text-gray-600 dark:text-gray-300">
+                    {i18n(pillar.summary)}
+                  </p>
+                  <div className="mt-3 flex flex-wrap gap-1.5">
+                    {pillar.tools.map((tool) => (
+                      <span
+                        key={getPillarToolName(tool)}
+                        className="rounded-md bg-gray-100/80 px-2 py-1 text-xs font-medium text-gray-600 dark:bg-white/10 dark:text-gray-300"
+                      >
+                        {i18n(getPillarToolName(tool))}
+                        {typeof tool !== "string" && tool.level && (
+                          <span className="ml-1 text-gray-400 dark:text-gray-500">
+                            / {i18n(tool.level)}
+                          </span>
+                        )}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <section className="rounded-lg border border-gray-200 bg-white/50 p-4 dark:border-gray-800 dark:bg-black/30">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                {i18n("Certifications")}
+              </h2>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {certs.map((cert) => (
+                  <a
+                    key={cert.name}
+                    href={cert.href}
+                    target="_blank"
+                    className="inline-flex min-h-10 items-center gap-2 rounded-lg border border-gray-200 bg-white/70 px-3 py-2 text-sm font-semibold text-gray-800 transition-colors hover:border-orange-300 hover:text-orange-700 dark:border-gray-700 dark:bg-white/5 dark:text-gray-100 dark:hover:border-orange-400 dark:hover:text-orange-300"
                   >
-                    <i className={`far ${tab.icon} mr-1`}></i>
-                    {i18n(tab.label)}
-                  </button>
+                    {cert.iconImage ? (
+                      <img
+                        src={cert.iconImage}
+                        alt=""
+                        loading="lazy"
+                        className="h-5 w-5 object-contain"
+                      />
+                    ) : (
+                      <i className={classNames("fab", cert.icons)}>
+                        {cert.icons.includes("fa") ? "" : cert.icons}
+                      </i>
+                    )}
+                    {i18n(cert.name)}
+                  </a>
                 ))}
               </div>
             </div>
+            <button
+              type="button"
+              onClick={() => setShowFullToolset(!showFullToolset)}
+              className="inline-flex min-h-11 items-center justify-center rounded-lg border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-800 transition-colors hover:border-gray-500 active:scale-[0.99] dark:border-gray-700 dark:text-gray-100 dark:hover:border-gray-500"
+              aria-expanded={showFullToolset}
+            >
+              {showFullToolset
+                ? i18n("Hide full toolset")
+                : i18n("View full toolset")}
+              <i
+                className={`far ${showFullToolset ? "fa-minus" : "fa-plus"} ml-2`}
+              ></i>
+            </button>
           </div>
+        </section>
 
-          {/* Tab Switcher - Mobile & Tablet */}
-          <div className="flex justify-start mt-6 lg:hidden">
-            <div className="relative flex bg-white/50 dark:bg-black/50 backdrop-blur-md rounded-2xl p-1 border border-gray-200 dark:border-gray-700 xl:rounded-[20px]">
-              {/* Sliding Background */}
-              <div
-                className={`absolute top-1 bottom-1 ${getActiveTabColor()} rounded-xl transition-all duration-300 ease-out shadow-sm pointer-events-none`}
-                style={tabStyles}
-              />
-              {tabs.map((tab) => (
-                <button
-                  key={tab.id}
-                  ref={(el) => (mobileTabRefs.current[tab.id] = el)}
-                  onClick={() => handleTabChange(tab.id)}
-                  className={`relative z-10 px-3 py-2 text-xs font-medium rounded-xl transition-all duration-300 ${
-                    activeTab === tab.id
-                      ? 'text-white'
-                      : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
-                  }`}
-                >
-                  <i className={`far ${tab.icon} mr-1`}></i>
-                  {i18n(tab.label)}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-        <div
-          className="transition-all duration-500 ease-in-out mt-8"
-          style={{
-            transform: isTransitioning ? 'translateX(20px)' : 'translateX(0)',
-            opacity: isTransitioning ? 0 : 1,
-          }}
-        >
-          {/* Certified */}
-          {(activeTab === 'all' || activeTab === 'certified') && (
-            <div className="mt-10">
-              <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
-                {i18n('Certified')}
-              </h2>
-              <ul
-                role="list"
-                className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4"
-              >
-                {certs.map((cert) => {
-                  const fromClass = cert.fromColor;
-                  const hexColor = colorMap[fromClass] || '#666';
-                  return (
-                    <li key={cert.name} className="col-span-1">
-                      <a
-                        href={cert.href}
-                        target="_blank"
-                        className="flex shadow-sm rounded-xl overflow-hidden hover:animate-pulse transition-all border-2 bg-transparent"
-                        style={{
-                          borderColor: hexColor,
-                          color: hexColor,
-                        }}
-                      >
-                        <div className="flex-shrink-0 flex items-center justify-center w-12 text-current text-sm font-medium ml-4">
-                          <i className={classNames('fab', cert.icons)}>
-                            {cert.icons.includes('fa') ? '' : cert.icons}
-                          </i>
-                        </div>
-                        <div className="flex-1 flex items-center justify-between bg-transparent truncate">
-                          <div className="flex-1 px-4 py-2 text-sm truncate font-bold">
-                            {i18n(cert.name)}
-                          </div>
-                        </div>
-                      </a>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          )}
-
-          {/* Softwares */}
-          {(activeTab === 'all' || activeTab === 'softwares') && (
-            <div className="mt-10 space-y-10">
+        {showFullToolset && (
+          <div className="space-y-8">
+            <section className="space-y-6">
               {Object.entries(softwareGroups).map(([groupName, items]) => (
                 <div key={groupName}>
-                  <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
+                  <h2 className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
                     {i18n(groupName)}
                   </h2>
                   <ul
                     role="list"
-                    className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5"
+                    className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4"
                   >
-                    {items.map((software) => {
-                      const hexColor = colorMap[software.fromColor] || '#666';
-                      return (
-                        <li key={software.name} className="col-span-1">
-                          <a
-                            href={software.href}
-                            target="_blank"
-                            className="flex shadow-sm rounded-xl overflow-hidden hover:animate-pulse transition-all border-2 bg-transparent"
-                            style={{
-                              borderColor: hexColor,
-                              color: hexColor,
-                            }}
-                          >
-                            <div className="flex-shrink-0 flex items-center justify-center w-12 text-current text-sm font-medium ml-4">
-                              <i className={classNames('fab', software.icons)}>
-                                {software.icons.includes('fa')
-                                  ? ''
-                                  : software.icons}
-                              </i>
-                            </div>
-                            <div className="flex-1 flex items-center justify-between border-gray-200 bg-transparent truncate">
-                              <div className="flex-1 px-4 py-2 text-sm truncate font-bold">
-                                {i18n(software.name)}
-                              </div>
-                            </div>
-                          </a>
-                        </li>
-                      );
-                    })}
+                    {items.map(renderCompactItem)}
                   </ul>
                 </div>
               ))}
-            </div>
-          )}
+            </section>
 
-          {/* Languages & Technologies */}
-          {(activeTab === 'all' || activeTab === 'languages') && (
-            <div className="mt-10">
-              <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
-                {i18n('Languages & Technologies')}
+            <section>
+              <h2 className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                {i18n("Languages & Technologies")}
               </h2>
               <ul
                 role="list"
-                className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5"
+                className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4"
               >
-                {languages.map((language) => {
-                  const hexColor = colorMap[language.fromColor] || '#666';
-                  return (
-                    <li key={language.name} className="col-span-1">
-                      <a
-                        href={language.href}
-                        target="_blank"
-                        className="flex shadow-sm rounded-xl overflow-hidden hover:animate-pulse transition-all border-2 bg-transparent"
-                        style={{
-                          borderColor: hexColor,
-                          color: hexColor,
-                        }}
-                      >
-                        <div className="flex-shrink-0 flex items-center justify-center w-12 text-current text-sm font-medium ml-4">
-                          <i className={classNames('fab', language.icons)}>
-                            {language.icons.includes('fa')
-                              ? ''
-                              : language.icons}
-                          </i>
-                        </div>
-                        <div className="flex-1 flex items-center justify-between bg-transparent truncate">
-                          <div className="flex-1 px-4 py-2 text-sm truncate font-bold">
-                            {i18n(language.name)}
-                          </div>
-                        </div>
-                      </a>
-                    </li>
-                  );
-                })}
+                {languages.map(renderCompactItem)}
               </ul>
-            </div>
-          )}
+            </section>
 
-          {/* Speak & Write */}
-          {(activeTab === 'all' || activeTab === 'speak-write') && (
-            <div className="mt-10">
-              <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
-                {i18n('Speak & Write')}
+            <section>
+              <h2 className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                {i18n("Speak & Write")}
               </h2>
               <ul
                 role="list"
-                className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2 2xl:grid-cols-4"
+                className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4"
               >
-                {speakWrites.map((speakWrite) => {
-                  const hexColor = colorMap[speakWrite.fromColor] || '#666';
-                  return (
-                    <li key={speakWrite.name} className="col-span-1">
-                      <a
-                        href={speakWrite.href}
-                        target="_blank"
-                        className="flex shadow-sm rounded-xl overflow-hidden hover:animate-pulse transition-all border-2 bg-transparent"
-                        style={{
-                          borderColor: hexColor,
-                          color: hexColor,
-                        }}
-                      >
-                        <div className="flex-shrink-0 flex items-center justify-center w-12 text-current text-xs font-medium ml-4">
-                          {i18n(speakWrite.icons)}
-                        </div>
-                        <div className="flex-1 flex items-center justify-between bg-transparent truncate">
-                          <div className="flex-1 px-4 py-2 text-sm truncate font-bold">
-                            {i18n(speakWrite.name)}
-                          </div>
-                        </div>
-                      </a>
-                    </li>
-                  );
-                })}
+                {speakWrites.map(renderCompactItem)}
               </ul>
-            </div>
-          )}
-        </div>
-        <p className="mt-6 text-sm text-gray-500">
-          {i18n('*Random sort - does not mean the order of proficient level')}
-        </p>
+            </section>
+          </div>
+        )}
       </div>
     </div>
   );

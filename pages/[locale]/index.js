@@ -59,6 +59,11 @@ export default function Home({ i18nData, ipData, locale }) {
   };
 
   const containerRef = useRef(null);
+  const touchStartY = useRef(null);
+  const scrollWrapLockedUntil = useRef(0);
+  const contactWrapArmed = useRef(false);
+  const contactWrapArmTimer = useRef(null);
+  const contactWasActive = useRef(false);
   const loggedMissingKeys = useRef(new Set());
 
   const I18n = i18nData;
@@ -298,6 +303,162 @@ export default function Home({ i18nData, ipData, locale }) {
     setSidebarOpen(!sidebarOpen);
   }
 
+  const isScrollWrapLocked = () => Date.now() < scrollWrapLockedUntil.current;
+
+  const clearContactWrapArm = () => {
+    contactWrapArmed.current = false;
+    clearTimeout(contactWrapArmTimer.current);
+    contactWrapArmTimer.current = null;
+  };
+
+  const armContactWrapAfterIdle = () => {
+    clearTimeout(contactWrapArmTimer.current);
+    contactWrapArmTimer.current = setTimeout(() => {
+      contactWrapArmTimer.current = null;
+      if (isContactViewportActive()) {
+        contactWrapArmed.current = true;
+      }
+    }, 350);
+  };
+
+  const isContactViewportActive = () => {
+    const container = containerRef.current;
+    const contactElement = document.getElementById('contact');
+
+    if (!container || !contactElement) return false;
+
+    const contactRect = contactElement.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+
+    return (
+      contactRect.top <= containerRect.top + 120 &&
+      contactRect.bottom >= containerRect.bottom - 120
+    );
+  };
+
+  const isContactScrolledToEnd = () => {
+    const contactElement = document.getElementById('contact');
+    if (!contactElement) return false;
+
+    return (
+      contactElement.scrollTop + contactElement.clientHeight >=
+      contactElement.scrollHeight - 4
+    );
+  };
+
+  const wrapContactToHeader = () => {
+    const container = containerRef.current;
+    const headerElement = document.getElementById('header');
+
+    if (!container || !headerElement) return false;
+
+    scrollWrapLockedUntil.current = Date.now() + 650;
+    contactWasActive.current = false;
+    clearContactWrapArm();
+    container.style.scrollBehavior = 'auto';
+    headerElement.scrollIntoView({ behavior: 'auto', block: 'start' });
+    setActiveSection('header');
+
+    if (window.location.hash !== '#header') {
+      window.history.replaceState('', '', `${window.location.pathname}#header`);
+    }
+
+    requestAnimationFrame(() => {
+      if (containerRef.current) {
+        containerRef.current.style.scrollBehavior = 'smooth';
+      }
+
+      setTimeout(() => {
+        scrollWrapLockedUntil.current = 0;
+      }, 650);
+    });
+
+    return true;
+  };
+
+  const navigateToSection = (section) => {
+    const container = containerRef.current;
+    const targetElement = document.getElementById(section);
+
+    if (!container || !targetElement) return;
+
+    const updateUrl = () => {
+      if (window.location.hash !== `#${section}`) {
+        window.history.pushState(
+          '',
+          '',
+          `${window.location.pathname}#${section}`
+        );
+      }
+      setActiveSection(section);
+    };
+
+    const scrollToTarget = () => {
+      const target = document.getElementById(section);
+      if (!target) return;
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      updateUrl();
+    };
+
+    scrollToTarget();
+  };
+
+  const shouldWrapContactToHeader = () =>
+    isContactViewportActive() && isContactScrolledToEnd();
+
+  const handleWheel = (event) => {
+    if (isScrollWrapLocked()) {
+      event.preventDefault();
+      return;
+    }
+
+    if (isContactViewportActive()) {
+      const canWrap = contactWrapArmed.current;
+      clearContactWrapArm();
+      armContactWrapAfterIdle();
+
+      if (event.deltaY > 0 && shouldWrapContactToHeader()) {
+        event.preventDefault();
+        if (canWrap) {
+          wrapContactToHeader();
+        }
+      }
+
+      return;
+    }
+
+    if (event.deltaY > 0 && shouldWrapContactToHeader()) {
+      event.preventDefault();
+      wrapContactToHeader();
+    }
+  };
+
+  const handleTouchStart = (event) => {
+    touchStartY.current = event.touches?.[0]?.clientY ?? null;
+  };
+
+  const handleTouchMove = (event) => {
+    if (isScrollWrapLocked()) {
+      event.preventDefault();
+    }
+  };
+
+  const handleTouchEnd = (event) => {
+    if (touchStartY.current == null || isScrollWrapLocked()) return;
+
+    const touchEndY = event.changedTouches?.[0]?.clientY ?? touchStartY.current;
+    const swipedUp = touchStartY.current - touchEndY > 30;
+    touchStartY.current = null;
+
+    if (swipedUp && shouldWrapContactToHeader()) {
+      if (contactWrapArmed.current) {
+        wrapContactToHeader();
+      } else {
+        armContactWrapAfterIdle();
+      }
+    }
+  };
+
   const scrollToNext = () => {
     setInteracted(true);
     setIsReady(true);
@@ -316,31 +477,17 @@ export default function Home({ i18nData, ipData, locale }) {
       setHeaderCompleted(true);
     }
 
-    // Treat the loop header as the active header without jumping between
-    // separate Header instances. Jumping causes visible jitter because the
-    // animated canvases are not frame-synchronized.
-    if (containerRef.current) {
-      const container = containerRef.current;
-      const headerLoopElement = document.getElementById('header-loop');
-
-      if (headerLoopElement) {
-        const rect = headerLoopElement.getBoundingClientRect();
-        const containerRect = container.getBoundingClientRect();
-
-        if (
-          rect.top <= containerRect.top + 100 &&
-          rect.bottom >= containerRect.top
-        ) {
-          setActiveSection('header');
-          if (window.location.hash !== '#header') {
-            window.history.replaceState(
-              '',
-              '',
-              window.location.pathname + '#header'
-            );
-          }
-        }
-      }
+    // Footer-to-header wrapping is handled by wheel/touch handlers at the end
+    // of the contact section. Keeping it out of onScroll avoids fighting native
+    // scroll snap and trackpad momentum.
+    const contactActive = isContactViewportActive();
+    if (contactActive && !contactWasActive.current) {
+      contactWasActive.current = true;
+      clearContactWrapArm();
+      armContactWrapAfterIdle();
+    } else if (!contactActive && contactWasActive.current) {
+      contactWasActive.current = false;
+      clearContactWrapArm();
     }
   };
 
@@ -375,12 +522,17 @@ export default function Home({ i18nData, ipData, locale }) {
                 activeSection={activeSection}
                 sidebarOpen={sidebarOpen}
                 toggleSidebar={toggleSidebar}
+                onNavigate={navigateToSection}
               />
             )}
 
             <div
               ref={containerRef}
               onScroll={handleScroll}
+              onWheel={handleWheel}
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
               className={`${sidebarOpen && 'pl-6 lg:pl-0'} h-full w-full overflow-x-hidden ${isReady || headerCompleted ? 'overflow-y-auto' : 'overflow-hidden'} lg:snap-y lg:snap-mandatory scroll-smooth`}
             >
               <section
@@ -501,22 +653,6 @@ export default function Home({ i18nData, ipData, locale }) {
 
                       <Footer i18n={I18n} ipData={ipData} />
                     </div>
-                  </section>
-
-                  {/* Duplicate header for infinite scroll effect */}
-                  <section
-                    id="header-loop"
-                    className="snap-start h-dvh w-full flex-shrink-0 overflow-x-hidden"
-                  >
-                    <Header
-                      i18n={I18n}
-                      onComplete={scrollToNext}
-                      onReady={() => setIsReady(true)}
-                      darkmodeReady={darkmodeReady}
-                      bgType={bgType}
-                      direction={bgDirection}
-                      setBg={changeBg}
-                    />
                   </section>
 
                   <Music i18n={I18n} interacted={interacted} locale={locale} />

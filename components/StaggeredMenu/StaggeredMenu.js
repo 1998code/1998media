@@ -457,6 +457,12 @@ export const StaggeredMenu = ({
                   className="sm-panel-item group/item block text-[1.8rem] font-bold uppercase tracking-tighter hover:text-[var(--sm-accent)] transition-all no-underline flex items-center gap-4 py-1"
                   href={it.link}
                   onClick={(e) => {
+                    if (it.onClick) {
+                      it.onClick(e);
+                      closeMenu();
+                      return;
+                    }
+
                     if (it.link.startsWith('#')) {
                       e.preventDefault();
                       const el = document.getElementById(it.link.substring(1));
