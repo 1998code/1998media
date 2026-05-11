@@ -209,7 +209,9 @@ export default function Home({ i18nData, ipData, locale }) {
       const [blogRes, stocksRes, githubRes, unsplashRes] =
         await Promise.allSettled([
           fetch(`/api/blog?locale=${locale}`).then((r) => r.json()),
-          fetch('/api/stocks-portfolio').then((r) => r.json()),
+          fetch('/api/stocks-portfolio', { cache: 'no-store' }).then((r) =>
+            r.json()
+          ),
           fetch('/api/github').then((r) => r.json()),
           fetch('/api/unsplash').then((r) => r.json()),
         ]);

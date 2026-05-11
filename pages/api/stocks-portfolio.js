@@ -1,6 +1,6 @@
 export const runtime = 'edge';
 
-const CURRENT = 'AAPL,NVDA,MC.PA,3033.HK,MA';
+const CURRENT = 'AAPL,NVDA,MC.PA,3033.HK,MA,JD';
 const PREVIOUS = 'MSFT,AMZN';
 
 async function fetchStocks(symbols) {
@@ -96,7 +96,7 @@ export default async function handler() {
       status: 200,
       headers: {
         'Content-Type': 'application/json',
-        'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+        'Cache-Control': 'no-store',
       },
     }
   );
