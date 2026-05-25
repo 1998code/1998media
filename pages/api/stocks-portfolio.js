@@ -1,6 +1,6 @@
 export const runtime = 'edge';
 
-const CURRENT = 'AAPL,NVDA,MC.PA,3033.HK,MA,JD,0P0001GZ0U.HK';
+const CURRENT = 'AAPL,NVDA,GOOGL,MC.PA,3033.HK,MA,JD,0P0001GZ0U.HK';
 const PREVIOUS = 'MSFT,AMZN';
 
 async function fetchStocks(symbols) {
