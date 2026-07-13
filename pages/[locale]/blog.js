@@ -125,10 +125,7 @@ export default function Blog(props) {
       .slice(0, 6);
   }, [props.blogData?.posts, props.locale]);
 
-  const blogRows = useMemo(
-    () => splitIntoRows(filteredBlogs),
-    [filteredBlogs]
-  );
+  const blogRows = useMemo(() => splitIntoRows(filteredBlogs), [filteredBlogs]);
   const tripRows = splitIntoRows([tripPromo, ...moments]);
 
   // Auto-scroll for Blog posts
@@ -205,10 +202,7 @@ export default function Blog(props) {
             >
               <div className="flex">
                 {[...Array(CAROUSEL_ROW_REPEAT_COUNT)].map((_, groupIndex) => (
-                  <div
-                    key={groupIndex}
-                    className="flex flex-none gap-5 pr-5"
-                  >
+                  <div key={groupIndex} className="flex flex-none gap-5 pr-5">
                     {row.map((post, index) => (
                       <a
                         key={`${post.link || post.title}-${rowIndex}-${groupIndex}-${index}`}
@@ -367,64 +361,58 @@ export default function Blog(props) {
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
               <div className="flex">
-                {[...Array(CAROUSEL_ROW_REPEAT_COUNT)].map(
-                  (_, groupIndex) => (
-                    <div
-                      key={groupIndex}
-                      className="flex flex-none gap-5 pr-5"
-                    >
-                      {row.map((post, index) => (
-                        <a
-                          href={post.shareURL}
-                          target="_blank"
-                          key={`${post.shareURL || post.title}-${rowIndex}-${groupIndex}-${index}`}
-                          className="flex-shrink-0 w-[350px] flex flex-col rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white xl:rounded-[25px]"
-                        >
-                          <div className="flex-shrink-0">
-                            <img
-                              loading="lazy"
-                              className="h-64 w-[350px] object-cover"
-                              src={post.coverURL}
-                              alt={post.translateTitle || post.title}
-                            />
-                            <div className="invisible dark:visible absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black h-64"></div>
+                {[...Array(CAROUSEL_ROW_REPEAT_COUNT)].map((_, groupIndex) => (
+                  <div key={groupIndex} className="flex flex-none gap-5 pr-5">
+                    {row.map((post, index) => (
+                      <a
+                        href={post.shareURL}
+                        target="_blank"
+                        key={`${post.shareURL || post.title}-${rowIndex}-${groupIndex}-${index}`}
+                        className="flex-shrink-0 w-[350px] flex flex-col rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white xl:rounded-[25px]"
+                      >
+                        <div className="flex-shrink-0">
+                          <img
+                            loading="lazy"
+                            className="h-64 w-[350px] object-cover"
+                            src={post.coverURL}
+                            alt={post.translateTitle || post.title}
+                          />
+                          <div className="invisible dark:visible absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black h-64"></div>
+                        </div>
+                        <div className="flex-1 p-6 flex flex-col justify-between">
+                          <div className=" text-gray-400 text-xs">
+                            <i className="far fa-calendar mr-1"></i>
+                            <time
+                              dateTime={
+                                new Date(post.publishTime)
+                                  .toISOString()
+                                  .split('T')[0]
+                              }
+                            >
+                              {
+                                new Date(post.publishTime)
+                                  .toISOString()
+                                  .split('T')[0]
+                              }
+                            </time>
+                            {!post.translateTitle && (
+                              <span>
+                                <i className="far fa-map-marker-alt ml-2 mr-1"></i>
+                                {post.title.split('「')[1] &&
+                                  post.title.split('「')[1].split('」')[0]}
+                              </span>
+                            )}
                           </div>
-                          <div className="flex-1 p-6 flex flex-col justify-between">
-                            <div className=" text-gray-400 text-xs">
-                              <i className="far fa-calendar mr-1"></i>
-                              <time
-                                dateTime={
-                                  new Date(post.publishTime)
-                                    .toISOString()
-                                    .split('T')[0]
-                                }
-                              >
-                                {
-                                  new Date(post.publishTime)
-                                    .toISOString()
-                                    .split('T')[0]
-                                }
-                              </time>
-                              {!post.translateTitle && (
-                                <span>
-                                  <i className="far fa-map-marker-alt ml-2 mr-1"></i>
-                                  {post.title.split('「')[1] &&
-                                    post.title.split('「')[1].split('」')[0]}
-                                </span>
-                              )}
-                            </div>
-                            <div className="flex-1">
-                              <div className="mt-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
-                                {post.translateTitle ||
-                                  post.title.split('」')[1]}
-                              </div>
+                          <div className="flex-1">
+                            <div className="mt-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
+                              {post.translateTitle || post.title.split('」')[1]}
                             </div>
                           </div>
-                        </a>
-                      ))}
-                    </div>
-                  )
-                )}
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                ))}
               </div>
             </div>
           ))}
