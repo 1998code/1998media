@@ -1,10 +1,83 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { franc } from 'franc-min';
 import { Tooltip } from '@nextui-org/tooltip';
 
+const CAROUSEL_ROW_REPEAT_COUNT = 6;
+
+function languageCheck(text) {
+  const hasChineseChars = /[\u4e00-\u9fff]/.test(text);
+  if (hasChineseChars) {
+    return 'zh';
+  }
+
+  const lang = franc(text);
+  return ['cmn', 'yue', 'wuu', 'nan'].includes(lang) ? 'zh' : 'en';
+}
+
+function splitIntoRows(items) {
+  const rows = [[], []];
+  items.forEach((item, index) => rows[index % 2].push(item));
+
+  if (rows[1].length === 0 && rows[0].length > 0) {
+    rows[1] = [...rows[0]];
+  }
+
+  return rows;
+}
+
+function setupAutoScroll(container, direction) {
+  if (!container) return () => {};
+
+  let isUserScrolling = false;
+  let scrollTimeout;
+  let animationFrame;
+  const rowWidth = container.scrollWidth / CAROUSEL_ROW_REPEAT_COUNT;
+
+  container.scrollLeft = direction > 0 ? rowWidth : rowWidth * 2;
+
+  const handleInteraction = () => {
+    isUserScrolling = true;
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+      isUserScrolling = false;
+    }, 3000);
+  };
+
+  const autoScroll = () => {
+    if (!isUserScrolling && rowWidth > 0) {
+      container.scrollLeft += direction * 0.5;
+
+      if (direction > 0 && container.scrollLeft >= rowWidth * 2) {
+        container.scrollLeft -= rowWidth;
+      } else if (direction < 0 && container.scrollLeft <= rowWidth) {
+        container.scrollLeft += rowWidth;
+      }
+    }
+    animationFrame = requestAnimationFrame(autoScroll);
+  };
+
+  container.addEventListener('wheel', handleInteraction, { passive: true });
+  container.addEventListener('touchstart', handleInteraction);
+  container.addEventListener('touchmove', handleInteraction);
+  container.addEventListener('mousedown', handleInteraction);
+
+  animationFrame = requestAnimationFrame(autoScroll);
+
+  return () => {
+    container.removeEventListener('wheel', handleInteraction);
+    container.removeEventListener('touchstart', handleInteraction);
+    container.removeEventListener('touchmove', handleInteraction);
+    container.removeEventListener('mousedown', handleInteraction);
+    cancelAnimationFrame(animationFrame);
+    clearTimeout(scrollTimeout);
+  };
+}
+
 export default function Blog(props) {
   const blogScrollRef = useRef(null);
+  const blogReverseScrollRef = useRef(null);
   const tripScrollRef = useRef(null);
+  const tripReverseScrollRef = useRef(null);
 
   const loggedMissingKeys = useRef(new Set());
 
@@ -20,24 +93,6 @@ export default function Blog(props) {
       : key;
   }
 
-  const blogs = props.blogData?.posts || [];
-
-  function languageCheck(text) {
-    // First check if text contains Chinese characters
-    const hasChineseChars = /[\u4e00-\u9fff]/.test(text);
-    if (hasChineseChars) {
-      return 'zh';
-    }
-
-    // Fall back to franc for other languages
-    const lang = franc(text);
-    if (lang === 'cmn' || lang === 'yue' || lang === 'wuu' || lang === 'nan') {
-      return 'zh';
-    } else {
-      return 'en';
-    }
-  }
-
   const medals = props.blogData?.medals || [];
 
   const tripPromo = {
@@ -50,129 +105,61 @@ export default function Blog(props) {
     publishTime: '2025-01-01T00:00:00.000Z', // Static date to avoid hydration mismatch
   };
 
-  const moments = (props.blogData?.moments || []).slice(0, 5);
-  const moment = [tripPromo, ...moments];
+  const moments = useMemo(
+    () => (props.blogData?.moments || []).slice(0, 5),
+    [props.blogData?.moments]
+  );
 
   // Filtered blogs for display
-  const filteredBlogs = blogs
-    .filter((post) => {
-      const userLanguage = props.locale || 'en';
-      const postLanguage = languageCheck(post.title);
-      if (userLanguage.includes('zh')) {
-        return postLanguage === 'zh';
-      } else {
-        return postLanguage === 'en';
-      }
-    })
-    .slice(0, 6);
+  const filteredBlogs = useMemo(() => {
+    const blogs = props.blogData?.posts || [];
+    const userLanguage = props.locale || 'en';
+
+    return blogs
+      .filter((post) => {
+        const postLanguage = languageCheck(post.title);
+        return userLanguage.includes('zh')
+          ? postLanguage === 'zh'
+          : postLanguage === 'en';
+      })
+      .slice(0, 6);
+  }, [props.blogData?.posts, props.locale]);
+
+  const blogRows = useMemo(
+    () => splitIntoRows(filteredBlogs),
+    [filteredBlogs]
+  );
+  const tripRows = splitIntoRows([tripPromo, ...moments]);
 
   // Auto-scroll for Blog posts
   useEffect(() => {
-    const blogContainer = blogScrollRef.current;
-    if (!blogContainer || filteredBlogs.length === 0) return;
+    if (filteredBlogs.length === 0) return;
 
-    let isUserScrolling = false;
-    let scrollTimeout;
-    let animationFrame;
+    const cleanups = [
+      setupAutoScroll(blogScrollRef.current, 1),
+      setupAutoScroll(blogReverseScrollRef.current, -1),
+    ];
 
-    const handleInteraction = () => {
-      isUserScrolling = true;
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(() => {
-        isUserScrolling = false;
-      }, 3000);
-    };
-
-    const autoScroll = () => {
-      if (!isUserScrolling && blogContainer) {
-        blogContainer.scrollLeft += 0.5;
-
-        // Reset when we've scrolled past the first set (one third of total scroll width since we have 3 sets)
-        const scrollWidth = blogContainer.scrollWidth;
-        const firstSetWidth = scrollWidth / 3;
-
-        if (blogContainer.scrollLeft >= firstSetWidth) {
-          blogContainer.scrollLeft = blogContainer.scrollLeft - firstSetWidth;
-        }
-      }
-      animationFrame = requestAnimationFrame(autoScroll);
-    };
-
-    blogContainer.addEventListener('wheel', handleInteraction, {
-      passive: true,
-    });
-    blogContainer.addEventListener('touchstart', handleInteraction);
-    blogContainer.addEventListener('touchmove', handleInteraction);
-    blogContainer.addEventListener('mousedown', handleInteraction);
-
-    animationFrame = requestAnimationFrame(autoScroll);
-
-    return () => {
-      blogContainer.removeEventListener('wheel', handleInteraction);
-      blogContainer.removeEventListener('touchstart', handleInteraction);
-      blogContainer.removeEventListener('touchmove', handleInteraction);
-      blogContainer.removeEventListener('mousedown', handleInteraction);
-      cancelAnimationFrame(animationFrame);
-      clearTimeout(scrollTimeout);
-    };
+    return () => cleanups.forEach((cleanup) => cleanup());
   }, [filteredBlogs]);
 
-  // Auto-scroll for Trip moments (reverse direction)
+  // Auto-scroll for Trip moments in opposite directions
   useEffect(() => {
-    const tripContainer = tripScrollRef.current;
-    if (!tripContainer || moment.length === 0) return;
+    const cleanups = [
+      setupAutoScroll(tripScrollRef.current, 1),
+      setupAutoScroll(tripReverseScrollRef.current, -1),
+    ];
 
-    setTimeout(() => {
-      if (tripContainer) {
-        tripContainer.scrollLeft = tripContainer.scrollWidth / 2;
-      }
-    }, 100);
-
-    let isUserScrolling = false;
-    let scrollTimeout;
-    let animationFrame;
-
-    const handleInteraction = () => {
-      isUserScrolling = true;
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(() => {
-        isUserScrolling = false;
-      }, 3000);
-    };
-
-    const autoScroll = () => {
-      if (!isUserScrolling && tripContainer) {
-        tripContainer.scrollLeft -= 0.5;
-        if (tripContainer.scrollLeft <= 0) {
-          tripContainer.scrollLeft = tripContainer.scrollWidth / 2;
-        }
-      }
-      animationFrame = requestAnimationFrame(autoScroll);
-    };
-
-    tripContainer.addEventListener('wheel', handleInteraction, {
-      passive: true,
-    });
-    tripContainer.addEventListener('touchstart', handleInteraction);
-    tripContainer.addEventListener('touchmove', handleInteraction);
-    tripContainer.addEventListener('mousedown', handleInteraction);
-
-    animationFrame = requestAnimationFrame(autoScroll);
-
-    return () => {
-      tripContainer.removeEventListener('wheel', handleInteraction);
-      tripContainer.removeEventListener('touchstart', handleInteraction);
-      tripContainer.removeEventListener('touchmove', handleInteraction);
-      tripContainer.removeEventListener('mousedown', handleInteraction);
-      cancelAnimationFrame(animationFrame);
-      clearTimeout(scrollTimeout);
-    };
-  }, [moment]);
+    return () => cleanups.forEach((cleanup) => cleanup());
+  }, [moments]);
 
   return (
-    <div className="relative h-full w-full max-w-7xl mx-auto flex flex-col items-start px-4 sm:px-6 lg:px-8 pt-24 overflow-y-auto scrollbar-hide space-y-8 md:space-y-16">
+    <>
       {/* Blog */}
-      <div id="blog" className="relative w-full space-y-8">
+      <section
+        id="blog"
+        className="relative snap-start min-h-dvh flex flex-col w-full max-w-7xl mx-auto flex-shrink-0 px-4 sm:px-6 lg:px-8 pt-24 pb-12 overflow-x-hidden space-y-8"
+      >
         <div className="text-left flex flex-wrap">
           <a
             className="text-3xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl grow"
@@ -186,96 +173,119 @@ export default function Blog(props) {
           </p>
         </div>
         {props.isLoading && filteredBlogs.length === 0 && (
-          <div className="overflow-x-hidden my-5">
-            <div className="flex gap-5">
-              {[...Array(4)].map((_, i) => (
-                <div
-                  key={i}
-                  className="flex-shrink-0 w-[350px] rounded-xl overflow-hidden bg-white dark:bg-black border border-gray-100 dark:border-gray-800 animate-pulse"
-                >
-                  <div className="h-64 w-full bg-gray-200 dark:bg-gray-800" />
-                  <div className="p-6 space-y-3">
-                    <div className="h-3 w-24 bg-gray-200 dark:bg-gray-700 rounded" />
-                    <div className="h-5 w-full bg-gray-200 dark:bg-gray-700 rounded" />
-                    <div className="h-5 w-3/4 bg-gray-200 dark:bg-gray-700 rounded" />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-        <div
-          className="overflow-x-auto my-5 scrollbar-hide"
-          ref={blogScrollRef}
-          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-        >
-          <div className="flex gap-5">
-            {(filteredBlogs.length >= 5
-              ? [...filteredBlogs, ...filteredBlogs, ...filteredBlogs]
-              : filteredBlogs
-            ).map((post, index) => (
-              <a
-                key={`${post.title}-${index}`}
-                href={post.link}
-                target="_blank"
-                className="flex-shrink-0 w-[350px] flex flex-col rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white xl:rounded-[25px]"
-              >
-                <div className="flex-shrink-0">
-                  <img
-                    loading="lazy"
-                    className="h-64 w-[350px] object-cover"
-                    src={post.enclosure.link}
-                    alt={post.title}
-                  />
-                  <div className="invisible dark:visible absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black h-64"></div>
-                </div>
-                <div className="flex-1 p-6 flex flex-col justify-between">
-                  <div className=" text-gray-400 text-xs">
-                    <i className="far fa-calendar mr-1"></i>
-                    <time
-                      dateTime={
-                        new Date(post.pubDate).toISOString().split('T')[0]
-                      }
+          <div className="space-y-5 my-5">
+            {[...Array(2)].map((_, rowIndex) => (
+              <div key={rowIndex} className="overflow-x-hidden">
+                <div className="flex gap-5">
+                  {[...Array(4)].map((_, cardIndex) => (
+                    <div
+                      key={cardIndex}
+                      className="flex-shrink-0 w-[350px] rounded-xl overflow-hidden bg-white dark:bg-black border border-gray-100 dark:border-gray-800 animate-pulse"
                     >
-                      {new Date(post.pubDate).toISOString().split('T')[0]}
-                    </time>
-                  </div>
-                  <div className="flex-1 mt-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
-                    {post.title}
-                  </div>
-                  {/* <span className="text-sm font-medium text-orange-600 space-x-2 mt-3">
-                    {post.categories.map((category, index) => {
-                      let level = 1;
-                      for (let i = 0; i < index; i++) {
-                        level -= 0.1;
-                      }
-                      level = Math.round(level * 10) / 10;
-                      return (
-                        <a
-                          href={
-                            'https://medium.com/search?q=' +
-                            category.charAt(0).toUpperCase() +
-                            category.slice(1)
-                          }
-                          style={{ opacity: level }} // Use inline styles for dynamic opacity (as TailwindCSS cannot handle this correctly)
-                          className={`hover:underline`}
-                          target="_blank"
-                        >
-                          #
-                          {category.charAt(0).toUpperCase() + category.slice(1)}
-                        </a>
-                      );
-                    })}
-                  </span> */}
+                      <div className="h-64 w-full bg-gray-200 dark:bg-gray-800" />
+                      <div className="p-6 space-y-3">
+                        <div className="h-3 w-24 bg-gray-200 dark:bg-gray-700 rounded" />
+                        <div className="h-5 w-full bg-gray-200 dark:bg-gray-700 rounded" />
+                        <div className="h-5 w-3/4 bg-gray-200 dark:bg-gray-700 rounded" />
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              </a>
+              </div>
             ))}
           </div>
+        )}
+        <div className="w-full min-w-0 space-y-5 my-5">
+          {blogRows.map((row, rowIndex) => (
+            <div
+              key={rowIndex}
+              ref={rowIndex === 0 ? blogScrollRef : blogReverseScrollRef}
+              className="w-full min-w-0 overflow-x-auto scrollbar-hide"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
+              <div className="flex">
+                {[...Array(CAROUSEL_ROW_REPEAT_COUNT)].map((_, groupIndex) => (
+                  <div
+                    key={groupIndex}
+                    className="flex flex-none gap-5 pr-5"
+                  >
+                    {row.map((post, index) => (
+                      <a
+                        key={`${post.link || post.title}-${rowIndex}-${groupIndex}-${index}`}
+                        href={post.link}
+                        target="_blank"
+                        className="flex-shrink-0 w-[350px] flex flex-col rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white xl:rounded-[25px]"
+                      >
+                        <div className="flex-shrink-0">
+                          <img
+                            loading="lazy"
+                            className="h-64 w-[350px] object-cover"
+                            src={post.enclosure.link}
+                            alt={post.title}
+                          />
+                          <div className="invisible dark:visible absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black h-64"></div>
+                        </div>
+                        <div className="flex-1 p-6 flex flex-col justify-between">
+                          <div className=" text-gray-400 text-xs">
+                            <i className="far fa-calendar mr-1"></i>
+                            <time
+                              dateTime={
+                                new Date(post.pubDate)
+                                  .toISOString()
+                                  .split('T')[0]
+                              }
+                            >
+                              {
+                                new Date(post.pubDate)
+                                  .toISOString()
+                                  .split('T')[0]
+                              }
+                            </time>
+                          </div>
+                          <div className="flex-1 mt-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
+                            {post.title}
+                          </div>
+                          {/* <span className="text-sm font-medium text-orange-600 space-x-2 mt-3">
+                            {post.categories.map((category, categoryIndex) => {
+                              let level = 1;
+                              for (let i = 0; i < categoryIndex; i++) {
+                                level -= 0.1;
+                              }
+                              level = Math.round(level * 10) / 10;
+                              return (
+                                <a
+                                  href={
+                                    'https://medium.com/search?q=' +
+                                    category.charAt(0).toUpperCase() +
+                                    category.slice(1)
+                                  }
+                                  style={{ opacity: level }}
+                                  className="hover:underline"
+                                  target="_blank"
+                                >
+                                  #
+                                  {category.charAt(0).toUpperCase() +
+                                    category.slice(1)}
+                                </a>
+                              );
+                            })}
+                          </span> */}
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
-      </div>
+      </section>
 
       {/* Moments */}
-      <div id="trip" className="relative w-full space-y-8">
+      <section
+        id="trip"
+        className="relative snap-start min-h-dvh flex flex-col w-full max-w-7xl mx-auto flex-shrink-0 px-4 sm:px-6 lg:px-8 pt-24 pb-12 overflow-x-hidden space-y-8"
+      >
         <div className="text-left flex flex-wrap">
           <a
             className="text-3xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl grow"
@@ -326,78 +336,100 @@ export default function Blog(props) {
           )}
         </div>
         {props.isLoading && moments.length === 0 && (
-          <div className="overflow-x-hidden my-5">
-            <div className="flex gap-5">
-              {[...Array(4)].map((_, i) => (
-                <div
-                  key={i}
-                  className="flex-shrink-0 w-[350px] rounded-xl overflow-hidden bg-white dark:bg-black border border-gray-100 dark:border-gray-800 animate-pulse"
-                >
-                  <div className="h-64 w-full bg-gray-200 dark:bg-gray-800" />
-                  <div className="p-6 space-y-3">
-                    <div className="h-3 w-24 bg-gray-200 dark:bg-gray-700 rounded" />
-                    <div className="h-5 w-full bg-gray-200 dark:bg-gray-700 rounded" />
-                    <div className="h-5 w-3/4 bg-gray-200 dark:bg-gray-700 rounded" />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-        <div
-          className="overflow-x-auto my-5 scrollbar-hide"
-          ref={tripScrollRef}
-          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-        >
-          <div className="flex gap-5">
-            {(moments.length >= 4
-              ? [tripPromo, ...moments, ...moments, ...moments]
-              : [tripPromo, ...moments]
-            ).map((post, index) => (
-              <a
-                href={post.shareURL}
-                target="_blank"
-                key={`${post.translateTitle || post.title}-${index}`}
-                className="flex-shrink-0 w-[350px] flex flex-col rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white xl:rounded-[25px]"
-              >
-                <div className="flex-shrink-0">
-                  <img
-                    loading="lazy"
-                    className="h-64 w-[350px] object-cover"
-                    src={post.coverURL}
-                    alt={post.translateTitle || post.title}
-                  />
-                  <div className="invisible dark:visible absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black h-64"></div>
-                </div>
-                <div className="flex-1 p-6 flex flex-col justify-between">
-                  <div className=" text-gray-400 text-xs">
-                    <i className="far fa-calendar mr-1"></i>
-                    <time
-                      dateTime={
-                        new Date(post.publishTime).toISOString().split('T')[0]
-                      }
+          <div className="space-y-5 my-5">
+            {[...Array(2)].map((_, rowIndex) => (
+              <div key={rowIndex} className="overflow-x-hidden">
+                <div className="flex gap-5">
+                  {[...Array(4)].map((_, cardIndex) => (
+                    <div
+                      key={cardIndex}
+                      className="flex-shrink-0 w-[350px] rounded-xl overflow-hidden bg-white dark:bg-black border border-gray-100 dark:border-gray-800 animate-pulse"
                     >
-                      {new Date(post.publishTime).toISOString().split('T')[0]}
-                    </time>
-                    {!post.translateTitle && (
-                      <span>
-                        <i className="far fa-map-marker-alt ml-2 mr-1"></i>
-                        {post.title.split('「')[1] &&
-                          post.title.split('「')[1].split('」')[0]}
-                      </span>
-                    )}
-                  </div>
-                  <div className="flex-1">
-                    <div className="mt-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
-                      {post.translateTitle || post.title.split('」')[1]}
+                      <div className="h-64 w-full bg-gray-200 dark:bg-gray-800" />
+                      <div className="p-6 space-y-3">
+                        <div className="h-3 w-24 bg-gray-200 dark:bg-gray-700 rounded" />
+                        <div className="h-5 w-full bg-gray-200 dark:bg-gray-700 rounded" />
+                        <div className="h-5 w-3/4 bg-gray-200 dark:bg-gray-700 rounded" />
+                      </div>
                     </div>
-                  </div>
+                  ))}
                 </div>
-              </a>
+              </div>
             ))}
           </div>
+        )}
+        <div className="w-full min-w-0 space-y-5 my-5">
+          {tripRows.map((row, rowIndex) => (
+            <div
+              key={rowIndex}
+              ref={rowIndex === 0 ? tripScrollRef : tripReverseScrollRef}
+              className="w-full min-w-0 overflow-x-auto scrollbar-hide"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
+              <div className="flex">
+                {[...Array(CAROUSEL_ROW_REPEAT_COUNT)].map(
+                  (_, groupIndex) => (
+                    <div
+                      key={groupIndex}
+                      className="flex flex-none gap-5 pr-5"
+                    >
+                      {row.map((post, index) => (
+                        <a
+                          href={post.shareURL}
+                          target="_blank"
+                          key={`${post.shareURL || post.title}-${rowIndex}-${groupIndex}-${index}`}
+                          className="flex-shrink-0 w-[350px] flex flex-col rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white xl:rounded-[25px]"
+                        >
+                          <div className="flex-shrink-0">
+                            <img
+                              loading="lazy"
+                              className="h-64 w-[350px] object-cover"
+                              src={post.coverURL}
+                              alt={post.translateTitle || post.title}
+                            />
+                            <div className="invisible dark:visible absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black h-64"></div>
+                          </div>
+                          <div className="flex-1 p-6 flex flex-col justify-between">
+                            <div className=" text-gray-400 text-xs">
+                              <i className="far fa-calendar mr-1"></i>
+                              <time
+                                dateTime={
+                                  new Date(post.publishTime)
+                                    .toISOString()
+                                    .split('T')[0]
+                                }
+                              >
+                                {
+                                  new Date(post.publishTime)
+                                    .toISOString()
+                                    .split('T')[0]
+                                }
+                              </time>
+                              {!post.translateTitle && (
+                                <span>
+                                  <i className="far fa-map-marker-alt ml-2 mr-1"></i>
+                                  {post.title.split('「')[1] &&
+                                    post.title.split('「')[1].split('」')[0]}
+                                </span>
+                              )}
+                            </div>
+                            <div className="flex-1">
+                              <div className="mt-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
+                                {post.translateTitle ||
+                                  post.title.split('」')[1]}
+                              </div>
+                            </div>
+                          </div>
+                        </a>
+                      ))}
+                    </div>
+                  )
+                )}
+              </div>
+            </div>
+          ))}
         </div>
-      </div>
-    </div>
+      </section>
+    </>
   );
 }

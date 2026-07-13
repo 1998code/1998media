@@ -610,17 +610,12 @@ export default function Home({ i18nData, ipData, locale }) {
                     <AI i18n={I18n} dalle={aiData} />
                   </section>
 
-                  <section
-                    id="blog"
-                    className="snap-start lg:h-dvh lg:min-h-dvh w-full flex-shrink-0 overflow-x-hidden"
-                  >
-                    <Blog
-                      i18n={I18n}
-                      blogData={deferredData.blogData}
-                      locale={locale}
-                      isLoading={deferredLoading}
-                    />
-                  </section>
+                  <Blog
+                    i18n={I18n}
+                    blogData={deferredData.blogData}
+                    locale={locale}
+                    isLoading={deferredLoading}
+                  />
 
                   <section
                     id="stocks"

@@ -1,7 +1,11 @@
-import { useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 export default function Skills(props) {
   const [showFullToolset, setShowFullToolset] = useState(false);
+
+  useEffect(() => {
+    setShowFullToolset(window.matchMedia('(min-width: 1024px)').matches);
+  }, []);
 
   const loggedMissingKeys = useRef(new Set());
 
