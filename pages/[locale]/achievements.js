@@ -665,7 +665,7 @@ export default function Achievements(props) {
 
   return (
     <>
-      <div className="relative h-full w-full flex flex-col justify-center pt-24 pb-4">
+      <div className="relative h-full w-full flex flex-col justify-center pt-24 pb-4 overflow-hidden">
         <img
           alt=""
           loading="lazy"
