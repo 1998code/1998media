@@ -83,6 +83,28 @@ export default function Credits(props) {
             />
           </a>
         </Tooltip>
+        <Tooltip
+          content="Anthropic"
+          placement="bottom"
+          className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-xl"
+        >
+          <a href="https://www.anthropic.com/?ref=1998.media" target="_blank">
+            <Image
+              className="h-10 rounded-xl bg-white p-2 dark:hidden border border-black"
+              src="/assets/logos/anthropic.svg"
+              alt="Anthropic"
+              width={40}
+              height={40}
+            />
+            <Image
+              className="h-10 rounded-xl hidden p-2 dark:bg-black dark:block border border-white"
+              src="/assets/logos/anthropic-white.svg"
+              alt="Anthropic"
+              width={40}
+              height={40}
+            />
+          </a>
+        </Tooltip>
       </div>
     </div>
   );

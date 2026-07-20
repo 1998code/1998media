@@ -10,7 +10,8 @@ export const config = {
     // - ads.txt (AdSense ads.txt file)
     // - robots.txt (robots.txt file)
     // - sitemap.xml (sitemap file)
-    '/((?!api|_next/static|_next/image|favicon.ico|ads.txt|robots.txt|sitemap.xml).*)',
+    // - assets (public static assets)
+    '/((?!api|_next/static|_next/image|favicon.ico|ads.txt|robots.txt|sitemap.xml|assets).*)',
   ],
 }
 
