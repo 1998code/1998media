@@ -32,8 +32,15 @@ export default function Credits(props) {
         >
           <a href="https://betteruptime.com/?ref=i41" target="_blank">
             <Image
-              className="h-10 rounded-xl p-2 border border-black dark:border-white dark:bg-white"
+              className="h-10 rounded-xl bg-white p-2 dark:hidden border border-black"
               src="https://cdn.1998.media/logos/BetterUptime.png"
+              alt="BetterUptime"
+              width={40}
+              height={40}
+            />
+            <Image
+              className="h-10 rounded-xl hidden p-2 dark:bg-black dark:block border border-white"
+              src="/assets/logos/betteruptime-white.png"
               alt="BetterUptime"
               width={40}
               height={40}
@@ -75,8 +82,15 @@ export default function Credits(props) {
             target="_blank"
           >
             <Image
-              className="h-10 rounded-xl bg-white p-2 border border-black"
+              className="h-10 rounded-xl bg-white p-2 dark:hidden border border-black"
               src="https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/SVG/DO_Logo_icon_blue.svg"
+              alt="DigitalOcean"
+              width={40}
+              height={40}
+            />
+            <Image
+              className="h-10 rounded-xl hidden p-2 dark:bg-black dark:block border border-white"
+              src="https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/SVG/DO_Logo_icon_white.svg"
               alt="DigitalOcean"
               width={40}
               height={40}
@@ -89,20 +103,38 @@ export default function Credits(props) {
           className="p-1 border text-xs dark:text-white bg-white dark:bg-black rounded-xl"
         >
           <a href="https://www.anthropic.com/?ref=1998.media" target="_blank">
-            <Image
-              className="h-10 rounded-xl bg-white p-2 dark:hidden border border-black"
-              src="/assets/logos/anthropic.svg"
-              alt="Anthropic"
-              width={40}
-              height={40}
-            />
-            <Image
-              className="h-10 rounded-xl hidden p-2 dark:bg-black dark:block border border-white"
-              src="/assets/logos/anthropic-white.svg"
-              alt="Anthropic"
-              width={40}
-              height={40}
-            />
+            <span className="md:hidden">
+              <Image
+                className="h-10 rounded-xl bg-white p-2 dark:hidden border border-black"
+                src="/assets/logos/anthropic.svg"
+                alt="Anthropic"
+                width={40}
+                height={40}
+              />
+              <Image
+                className="h-10 rounded-xl hidden p-2 dark:bg-black dark:block border border-white"
+                src="/assets/logos/anthropic-white.svg"
+                alt="Anthropic"
+                width={40}
+                height={40}
+              />
+            </span>
+            <span className="hidden md:block">
+              <Image
+                className="h-10 rounded-xl bg-white p-2 dark:hidden border border-black"
+                src="/assets/logos/anthropic-wordmark.svg"
+                alt="Anthropic"
+                width={230}
+                height={40}
+              />
+              <Image
+                className="h-10 rounded-xl hidden p-2 dark:bg-black dark:block border border-white"
+                src="/assets/logos/anthropic-wordmark-white.svg"
+                alt="Anthropic"
+                width={230}
+                height={40}
+              />
+            </span>
           </a>
         </Tooltip>
       </div>

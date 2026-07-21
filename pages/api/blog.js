@@ -10,7 +10,15 @@ const CID = '09031029418990699836';
 const PROD_API = 'https://www.1998.media/api/trip';
 
 function tripLocale(locale) {
-  const map = { ja: 'ja-JP', ko: 'ko-KR', zh: 'zh-CN', 'zh-HK': 'zh-TW' };
+  const map = {
+    ja: 'ja-JP',
+    ko: 'ko-KR',
+    zh: 'zh-CN',
+    'zh-HK': 'zh-TW',
+    ru: 'ru-RU',
+    fr: 'fr-FR',
+    es: 'es-ES',
+  };
   return map[locale] || 'en-US';
 }
 

@@ -16,9 +16,6 @@ const heroAnimations = {
   galaxy: dynamic(() => import('../../components/HeroAnimations/Galaxy'), {
     ssr: false,
   }),
-  gridscan: dynamic(() => import('../../components/HeroAnimations/GridScan'), {
-    ssr: false,
-  }),
   lightrays: dynamic(
     () => import('../../components/HeroAnimations/LightRays'),
     { ssr: false }
@@ -48,7 +45,6 @@ export default function Header(props) {
 
   const Aurora = heroAnimations.aurora;
   const Galaxy = heroAnimations.galaxy;
-  const GridScan = heroAnimations.gridscan;
   const LightRays = heroAnimations.lightrays;
   const Orb = heroAnimations.orb;
   const Prism = heroAnimations.prism;
@@ -107,7 +103,6 @@ export default function Header(props) {
     'aurora',
     'colorbends',
     'galaxy',
-    'gridscan',
     'orb',
     'prism',
     'prismaticburst',
@@ -228,19 +223,6 @@ export default function Header(props) {
                   autoCenterRepulsion={0}
                   starSpeed={0.5}
                   speed={1}
-                />
-              ) : bgType === 'gridscan' ? (
-                <GridScan
-                  sensitivity={0.55}
-                  lineThickness={1}
-                  linesColor="#4a2b10"
-                  gridScale={0.1}
-                  scanColor="#ffaa40"
-                  scanOpacity={0.4}
-                  enablePost
-                  bloomIntensity={0.6}
-                  chromaticAberration={0.002}
-                  noiseIntensity={0.01}
                 />
               ) : bgType === 'lightrays' ? (
                 <LightRays

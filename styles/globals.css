@@ -46,6 +46,11 @@ a {
   height: 35vh !important;
 }
 
+.darkmode--activated #projectFlattenDataTable {
+  filter: contrast(90%) invert(90%) hue-rotate(180deg);
+  -webkit-filter: contrast(90%) invert(90%) hue-rotate(180deg);
+}
+
 .DocSearch-Button {
   _position: fixed;
   _top: 30px;

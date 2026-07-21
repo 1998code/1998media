@@ -181,7 +181,7 @@ export default function Projects(props) {
         </div>
         <div
           id="projectFlattenDataTable"
-          className="rounded-xl overflow-hidden dark:hidden"
+          className="rounded-xl overflow-hidden"
         >
           <Grid data={githubRaw} canDownload={false} />
         </div>

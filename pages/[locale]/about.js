@@ -173,6 +173,18 @@ export default function About(props) {
                 src="https://cdn.1998.media/logos/Google_dark.png"
                 alt="Google"
               />
+              <img
+                loading="lazy"
+                className="h-24 p-6 dark:hidden"
+                src="/assets/logos/anthropic.svg"
+                alt="Anthropic"
+              />
+              <img
+                loading="lazy"
+                className="h-24 lg:h-32 p-6 lg:p-8 hidden dark:block"
+                src="/assets/logos/anthropic-white.svg"
+                alt="Anthropic"
+              />
             </div>
             <img
               alt=""

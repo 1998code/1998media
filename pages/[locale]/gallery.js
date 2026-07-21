@@ -1286,7 +1286,7 @@ export async function getServerSideProps(context) {
   let { locale } = context.params;
 
   // Fallback to English if locale is not supported
-  const supportedLocales = ['en', 'zh', 'zh-HK', 'ko', 'ja'];
+  const supportedLocales = ['en', 'zh', 'zh-HK', 'ko', 'ja', 'ru', 'fr', 'es'];
   const normalizedLocale = locale?.includes('en')
     ? 'en'
     : locale?.includes('ja') || locale?.includes('jp')
@@ -1297,7 +1297,13 @@ export async function getServerSideProps(context) {
           ? 'zh-HK'
           : locale?.includes('zh-CN')
             ? 'zh'
-            : locale;
+            : locale?.includes('ru')
+              ? 'ru'
+              : locale?.includes('fr')
+                ? 'fr'
+                : locale?.includes('es')
+                  ? 'es'
+                  : locale;
 
   if (!supportedLocales.includes(normalizedLocale)) {
     locale = 'en'; // Fallback to English

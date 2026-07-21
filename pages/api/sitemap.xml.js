@@ -2,7 +2,7 @@ export const runtime = 'edge';
 
 export default async function handler(req) {
   const baseUrl = 'https://www.1998.media';
-  const supportedLocales = ['en', 'zh', 'zh-HK', 'ko', 'ja'];
+  const supportedLocales = ['en', 'zh', 'zh-HK', 'ko', 'ja', 'ru', 'fr', 'es'];
 
   // Main pages with priorities and change frequencies
   const pages = [
@@ -54,7 +54,13 @@ ${Array.from(urlMap.values())
                   ? 'ja'
                   : altUrl.locale === 'ko'
                     ? 'ko'
-                    : 'en';
+                    : altUrl.locale === 'ru'
+                      ? 'ru'
+                      : altUrl.locale === 'fr'
+                        ? 'fr'
+                        : altUrl.locale === 'es'
+                          ? 'es'
+                          : 'en';
           return `    <xhtml:link rel="alternate" hreflang="${langCode}" href="${altUrl.loc}" />`;
         })
         .join('\n');

@@ -353,6 +353,9 @@ export default function Achievements(props) {
         }
         if (browserLang.startsWith('ja')) return 'ja';
         if (browserLang.startsWith('ko')) return 'ko';
+        if (browserLang.startsWith('ru')) return 'ru';
+        if (browserLang.startsWith('fr')) return 'fr';
+        if (browserLang.startsWith('es')) return 'es';
         return 'en';
       }
       return 'en';

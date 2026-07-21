@@ -48,34 +48,22 @@ export default function Skills(props) {
         bgColor: 'bg-red-600',
         fromColor: 'from-red-600',
       },
-      {
-        name: 'Figma',
-        icons: 'fa-figma',
-        href: 'https://figma.com',
-        bgColor: 'bg-purple-600',
-        fromColor: 'from-purple-600',
-      },
-      {
-        name: 'Framer',
-        icons: 'F',
-        href: 'https://www.framer.com/',
-        bgColor: 'bg-sky-500',
-        fromColor: 'from-sky-500',
-      },
-      {
-        name: 'Sketch',
-        icons: 'fa-sketch',
-        href: 'https://www.sketch.com/',
-        bgColor: 'bg-orange-400',
-        fromColor: 'from-orange-400',
-      },
-      {
-        name: 'AutoCAD',
-        icons: 'AC',
-        href: 'https://www.autodesk.com/products/autocad/',
-        bgColor: 'bg-red-700',
-        fromColor: 'from-red-700',
-      },
+      [
+        {
+          name: 'Figma',
+          icons: 'fa-figma',
+          href: 'https://figma.com',
+          bgColor: 'bg-purple-600',
+          fromColor: 'from-purple-600',
+        },
+        {
+          name: 'Sketch',
+          icons: 'fa-sketch',
+          href: 'https://www.sketch.com/',
+          bgColor: 'bg-orange-400',
+          fromColor: 'from-orange-400',
+        },
+      ],
       {
         name: 'Google Worksuite',
         icons: 'fa-google',
@@ -113,29 +101,6 @@ export default function Skills(props) {
         bgColor: 'bg-blue-600',
         fromColor: 'from-blue-600',
       },
-      {
-        name: 'Unity',
-        icons: 'fa-unity',
-        href: 'https://unity.com/',
-        bgColor: 'bg-gray-700',
-        fromColor: 'from-gray-700',
-      },
-    ],
-    '3D & Multimedia': [
-      {
-        name: 'Cinema 4D',
-        icons: 'C4D',
-        href: 'https://www.maxon.net/en/cinema-4d',
-        bgColor: 'bg-purple-500',
-        fromColor: 'from-purple-500',
-      },
-      {
-        name: 'Shapr3D',
-        icons: 'S3D',
-        href: 'https://www.shapr3d.com/',
-        bgColor: 'bg-orange-500',
-        fromColor: 'from-orange-500',
-      },
     ],
     'Data & Database': [
       {
@@ -158,13 +123,6 @@ export default function Skills(props) {
         href: 'https://www.mysql.com/products/workbench/',
         bgColor: 'bg-blue-600',
         fromColor: 'from-blue-600',
-      },
-      {
-        name: 'Table Plus',
-        icons: 'TP',
-        href: 'https://tableplus.com/',
-        bgColor: 'bg-indigo-600',
-        fromColor: 'from-indigo-600',
       },
     ],
   };
@@ -208,14 +166,6 @@ export default function Skills(props) {
       fromColor: 'from-indigo-600',
     },
     {
-      name: 'Bootstrap 5',
-      icons: 'fa-bootstrap',
-      href: 'https://getbootstrap.com/',
-      bgColor: 'bg-indigo-600',
-      fromColor: 'from-indigo-600',
-    },
-
-    {
       name: 'NuxtJS',
       icons: 'fa-vuejs',
       href: 'https://nuxt.com/',
@@ -228,14 +178,6 @@ export default function Skills(props) {
       href: 'https://vuetifyjs.com/en/',
       bgColor: 'bg-blue-600',
       fromColor: 'from-blue-600',
-    },
-
-    {
-      name: 'OpenAI GPT',
-      icons: 'AI',
-      href: 'https://openai.com/',
-      bgColor: 'bg-teal-600',
-      fromColor: 'from-teal-600',
     },
   ];
   const speakWrites = [
@@ -295,7 +237,7 @@ export default function Skills(props) {
 
   const skillPillars = [
     {
-      title: 'Product & UX Design',
+      title: 'Product & UI Design',
       summary: 'Design systems, product thinking, and polished interfaces.',
       icon: 'fa-pen-nib',
       accent: 'text-orange-600 dark:text-orange-300',
@@ -313,7 +255,7 @@ export default function Skills(props) {
       summary: 'Practical AI workflows, data tools, and smarter operations.',
       icon: 'fa-sparkles',
       accent: 'text-teal-600 dark:text-teal-300',
-      tools: ['OpenAI GPT', 'PowerBI', 'SQL'],
+      tools: ['PowerBI', 'SQL'],
     },
     {
       title: 'Language & Communication',
@@ -332,31 +274,49 @@ export default function Skills(props) {
   const getPillarToolName = (tool) =>
     typeof tool === 'string' ? tool : tool.name;
 
-  const renderCompactItem = (item) => {
+  const renderCompactLink = (item) => {
     const hexColor = colorMap[item.fromColor] || '#666';
     return (
-      <li key={item.name} className="min-w-0">
-        <a
-          href={item.href}
-          target="_blank"
-          className="group flex min-h-12 items-center gap-3 rounded-lg border bg-white/50 px-3 py-2.5 text-sm transition-all active:scale-[0.99] dark:bg-black/30"
-          style={{
-            borderColor: `${hexColor}66`,
-            color: hexColor,
-          }}
-        >
-          <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-md bg-current/10 text-xs font-semibold">
-            <i className={classNames('fab', item.icons)}>
-              {item.icons.includes('fa') ? '' : i18n(item.icons)}
-            </i>
-          </span>
-          <span className="min-w-0 flex-1 break-words font-semibold leading-snug text-gray-900 dark:text-gray-100">
-            {i18n(item.name)}
-          </span>
-        </a>
-      </li>
+      <a
+        key={item.name}
+        href={item.href}
+        target="_blank"
+        className="group flex min-h-12 items-center gap-3 rounded-lg border bg-white/50 px-3 py-2.5 text-sm transition-all active:scale-[0.99] dark:bg-black/30"
+        style={{
+          borderColor: `${hexColor}66`,
+          color: hexColor,
+        }}
+      >
+        <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-md bg-current/10 text-xs font-semibold">
+          <i className={classNames('fab', item.icons)}>
+            {item.icons.includes('fa') ? '' : i18n(item.icons)}
+          </i>
+        </span>
+        <span className="min-w-0 flex-1 break-words font-semibold leading-snug text-gray-900 dark:text-gray-100">
+          {i18n(item.name)}
+        </span>
+      </a>
     );
   };
+
+  // An array entry renders as a 50/50 side-by-side pair sharing one grid cell
+  const renderCompactItem = (item) =>
+    Array.isArray(item) ? (
+      <li
+        key={item.map((sub) => sub.name).join('-')}
+        className="flex min-w-0 gap-2"
+      >
+        {item.map((sub) => (
+          <span key={sub.name} className="min-w-0 flex-1">
+            {renderCompactLink(sub)}
+          </span>
+        ))}
+      </li>
+    ) : (
+      <li key={item.name} className="min-w-0">
+        {renderCompactLink(item)}
+      </li>
+    );
 
   return (
     <div

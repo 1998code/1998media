@@ -48,6 +48,32 @@ export default function LocaleSwitcher() {
       message: '다른 언어 또는 지역을 선호하실 수 있습니다.',
       continueText: '계속',
     },
+    {
+      code: 'ru',
+      name: 'Русский',
+      path: '/ru',
+      aliases: ['ru', 'ru-RU'],
+      message:
+        'Мы заметили, что вы, возможно, предпочитаете другой язык или регион.',
+      continueText: 'Продолжить',
+    },
+    {
+      code: 'fr',
+      name: 'Français',
+      path: '/fr',
+      aliases: ['fr', 'fr-FR', 'fr-CA'],
+      message:
+        'Nous avons remarqué que vous pourriez préférer une autre langue ou région.',
+      continueText: 'Continuer',
+    },
+    {
+      code: 'es',
+      name: 'Español',
+      path: '/es',
+      aliases: ['es', 'es-ES', 'es-MX', 'es-419'],
+      message: 'Hemos notado que podrías preferir otro idioma o región.',
+      continueText: 'Continuar',
+    },
   ];
 
   useEffect(() => {

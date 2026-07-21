@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server';
 
 export const config = {
   matcher: [
@@ -13,50 +13,72 @@ export const config = {
     // - assets (public static assets)
     '/((?!api|_next/static|_next/image|favicon.ico|ads.txt|robots.txt|sitemap.xml|assets).*)',
   ],
-}
+};
 
 export async function middleware(req: NextRequest) {
-  const { pathname } = req.nextUrl
-  
+  const { pathname } = req.nextUrl;
+
   // Supported locales
-  const supportedLocales = ['en', 'en-US', 'en-GB', 'zh', 'zh-HK', 'zh-CN', 'zh-TW', 'ko', 'ko-KR', 'ja', 'ja-JP']
-  
+  const supportedLocales = [
+    'en',
+    'en-US',
+    'en-GB',
+    'zh',
+    'zh-HK',
+    'zh-CN',
+    'zh-TW',
+    'ko',
+    'ko-KR',
+    'ja',
+    'ja-JP',
+    'ru',
+    'ru-RU',
+    'fr',
+    'fr-FR',
+    'es',
+    'es-ES',
+  ];
+
   // Extract locale from pathname if present
-  const pathParts = pathname.split('/').filter(Boolean)
-  const firstPart = pathParts[0] || ''
-  
+  const pathParts = pathname.split('/').filter(Boolean);
+  const firstPart = pathParts[0] || '';
+
   // Check if first part is a locale
-  const isLocale = supportedLocales.includes(firstPart)
-  
+  const isLocale = supportedLocales.includes(firstPart);
+
   if (isLocale) {
     // Valid locale, let it through
-    return
+    return;
   }
-  
+
   // Check if it looks like a locale but isn't supported (e.g., /fr, /de, etc.)
   // If pathname starts with / and has a 2-5 character code, it might be an unsupported locale
-  const looksLikeLocale = /^\/[a-z]{2}(-[A-Z]{2})?(\/|$)/i.test(pathname)
-  
+  const looksLikeLocale = /^\/[a-z]{2}(-[A-Z]{2})?(\/|$)/i.test(pathname);
+
   if (looksLikeLocale && firstPart.length >= 2 && firstPart.length <= 5) {
     // Unsupported locale detected, redirect to English
-    const restOfPath = pathname.replace(`/${firstPart}`, '') || '/'
-    req.nextUrl.pathname = `/en${restOfPath}`
-    return NextResponse.redirect(req.nextUrl)
+    const restOfPath = pathname.replace(`/${firstPart}`, '') || '/';
+    req.nextUrl.pathname = `/en${restOfPath}`;
+    return NextResponse.redirect(req.nextUrl);
   }
 
   // No locale in path, detect from header and redirect
-  const acceptLanguage = req.headers.get('accept-language')
-  const locale = acceptLanguage?.split(',')?.[0]?.toLowerCase()
+  const acceptLanguage = req.headers.get('accept-language');
+  const locale = acceptLanguage?.split(',')?.[0]?.toLowerCase();
 
-  let targetLocale = 'en' // Default
+  let targetLocale = 'en'; // Default
   if (locale) {
-    if (locale.startsWith('zh-hk') || locale.startsWith('zh-tw')) targetLocale = 'zh-HK'
-    else if (locale.startsWith('zh')) targetLocale = 'zh'
-    else if (locale.startsWith('ko')) targetLocale = 'ko'
-    else if (locale.startsWith('ja')) targetLocale = 'ja'
+    if (locale.startsWith('zh-hk') || locale.startsWith('zh-tw'))
+      targetLocale = 'zh-HK';
+    else if (locale.startsWith('zh')) targetLocale = 'zh';
+    else if (locale.startsWith('ko')) targetLocale = 'ko';
+    else if (locale.startsWith('ja')) targetLocale = 'ja';
+    else if (locale.startsWith('ru')) targetLocale = 'ru';
+    else if (locale.startsWith('fr')) targetLocale = 'fr';
+    else if (locale.startsWith('es')) targetLocale = 'es';
   }
 
   // Redirect to localized path
-  req.nextUrl.pathname = `/${targetLocale}${pathname}`
-  return NextResponse.redirect(req.nextUrl)
+  req.nextUrl.pathname = `/${targetLocale}${pathname}`;
+  return NextResponse.redirect(req.nextUrl);
 }
