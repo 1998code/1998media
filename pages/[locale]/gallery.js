@@ -4,28 +4,10 @@ import { fetchI18nData } from '../../lib/fetchData';
 
 export const runtime = 'experimental-edge';
 
-// Compact number, localized. Western: 1.2K / 1.5M. CJK: 萬/億 (万/亿), 만/억.
-const CJK_UNITS = {
-  zh: ['万', '亿'],
-  'zh-HK': ['萬', '億'],
-  ja: ['万', '億'],
-  ko: ['만', '억'],
-};
-function ytFormatCount(n, locale) {
-  const num = Number(n || 0);
-  const cjk = CJK_UNITS[locale];
-  if (cjk) {
-    const [wan, yi] = cjk;
-    if (num >= 100_000_000)
-      return (num / 100_000_000).toFixed(num >= 1_000_000_000 ? 0 : 1) + yi;
-    if (num >= 10_000)
-      return (num / 10_000).toFixed(num >= 1_000_000 ? 0 : 1) + wan;
-    return String(num);
-  }
-  if (num >= 1_000_000)
-    return (num / 1_000_000).toFixed(num >= 10_000_000 ? 0 : 1) + 'M';
-  if (num >= 1_000) return (num / 1_000).toFixed(num >= 10_000 ? 0 : 1) + 'K';
-  return String(num);
+// Full number with thousands separators (e.g. 1234567 -> "1,234,567"),
+// matching the Unsplash / Xiaohongshu tabs.
+function ytFormatCount(n) {
+  return String(Number(n || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
 function ytFormatDuration(seconds) {
@@ -1301,7 +1283,7 @@ export default function Gallery(props) {
                       </div>
                     </dt>
                     <dd className="mt-1 flex items-baseline gap-1 text-2xl font-semibold text-red-500">
-                      {ytFormatCount(s.value, locale)}
+                      {ytFormatCount(s.value)}
                       {s.suffix && (
                         <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
                           {s.suffix}
