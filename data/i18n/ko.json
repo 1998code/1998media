@@ -109,7 +109,13 @@
         "Developer Tools in the United States": "미국의 개발자 도구",
         "Developer Tools in the United Kingdom": "영국의 개발자 도구",
         "Developer Tools in Maldives": "몰디브의 개발자 도구",
-        "Rank records updated to April 2026 (Missing 2025).": "순위 기록이 2026년 4월까지 업데이트되었습니다(2025년 데이터 누락)."
+        "Rank records updated to April 2026 (Missing 2025).": "순위 기록이 2026년 4월까지 업데이트되었습니다(2025년 데이터 누락).",
+        "2026": "2026",
+        "2024": "2024",
+        "2023": "2023",
+        "2022": "2022",
+        "2021": "2021",
+        "Since 2020": "2020년부터"
     },
     "navigation": {
         "Header": "홈",
@@ -142,6 +148,12 @@
         "Gallery": "갤러리",
         "Spatial Video": "공간 비디오",
         "Total Views": "전체 조회수",
+        "Watch Time": "시청 시간",
+        "mins": "분",
+        "Videos": "동영상",
+        "Long Videos": "롱폼",
+        "Shorts": "쇼츠",
+        "No videos yet": "동영상 없음",
         "Spatial": "공간",
         "Only Safari is supported for Spatial content.": "공간 콘텐츠는 Safari만 지원됩니다.",
         "Only Safari is supported.": "Safari만 지원됩니다.",

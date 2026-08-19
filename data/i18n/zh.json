@@ -109,7 +109,13 @@
         "Developer Tools in the United States": "美国 开发者工具",
         "Developer Tools in the United Kingdom": "英国 开发者工具",
         "Developer Tools in Maldives": "马尔代夫 开发者工具",
-        "Rank records updated to April 2026 (Missing 2025).": "排名记录更新至 2026 年 4 月（缺失 2025 年数据）。"
+        "Rank records updated to April 2026 (Missing 2025).": "排名记录更新至 2026 年 4 月（缺失 2025 年数据）。",
+        "2026": "2026",
+        "2024": "2024",
+        "2023": "2023",
+        "2022": "2022",
+        "2021": "2021",
+        "Since 2020": "自 2020 年起"
     },
     "navigation": {
         "Header": "主页",
@@ -142,6 +148,12 @@
         "Gallery": "艺廊",
         "Spatial Video": "空间视频",
         "Total Views": "总浏览量",
+        "Watch Time": "观看时长",
+        "mins": "分钟",
+        "Videos": "视频",
+        "Long Videos": "长视频",
+        "Shorts": "短视频",
+        "No videos yet": "暂无视频",
         "Spatial": "空间",
         "Only Safari is supported for Spatial content.": "仅 Safari 支持空间内容。",
         "Only Safari is supported.": "仅支持 Safari。",

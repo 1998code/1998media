@@ -109,7 +109,13 @@
         "Developer Tools in the United States": "Инструменты разработчика в США",
         "Developer Tools in the United Kingdom": "Инструменты разработчика в Великобритании",
         "Developer Tools in Maldives": "Инструменты разработчика на Мальдивах",
-        "Rank records updated to April 2026 (Missing 2025).": "Данные рейтингов обновлены по апрель 2026 г. (нет данных за 2025)."
+        "Rank records updated to April 2026 (Missing 2025).": "Данные рейтингов обновлены по апрель 2026 г. (нет данных за 2025).",
+        "2026": "2026",
+        "2024": "2024",
+        "2023": "2023",
+        "2022": "2022",
+        "2021": "2021",
+        "Since 2020": "С 2020 года"
     },
     "navigation": {
         "Header": "Главная",
@@ -142,6 +148,12 @@
         "Gallery": "Галерея",
         "Spatial Video": "Пространственное видео",
         "Total Views": "Всего просмотров",
+        "Watch Time": "Время просмотра",
+        "mins": "мин",
+        "Videos": "Видео",
+        "Long Videos": "Длинные видео",
+        "Shorts": "Shorts",
+        "No videos yet": "Пока нет видео",
         "Spatial": "Пространственное",
         "Only Safari is supported for Spatial content.": "Пространственный контент поддерживается только в Safari.",
         "Only Safari is supported.": "Поддерживается только Safari.",

@@ -50,6 +50,7 @@ export default function Home({ i18nData, ipData, locale }) {
     stocksData: { current: [], future: [], previous: [] },
     projectsData: [],
     unsplashData: { stats: null, photos: [] },
+    youtubeData: { channel: null, longVideos: [], shorts: [] },
   });
   const [deferredLoading, setDeferredLoading] = useState(false);
 
@@ -196,7 +197,7 @@ export default function Home({ i18nData, ipData, locale }) {
     if (!headerCompleted) return;
     const run = async () => {
       setDeferredLoading(true);
-      const [blogRes, stocksRes, githubRes, unsplashRes] =
+      const [blogRes, stocksRes, githubRes, unsplashRes, youtubeRes] =
         await Promise.allSettled([
           fetch(`/api/blog?locale=${locale}`).then((r) => r.json()),
           fetch('/api/stocks-portfolio', { cache: 'no-store' }).then((r) =>
@@ -204,6 +205,7 @@ export default function Home({ i18nData, ipData, locale }) {
           ),
           fetch('/api/github').then((r) => r.json()),
           fetch('/api/unsplash').then((r) => r.json()),
+          fetch('/api/youtube').then((r) => r.json()),
         ]);
       setDeferredData({
         blogData:
@@ -220,6 +222,10 @@ export default function Home({ i18nData, ipData, locale }) {
           unsplashRes.status === 'fulfilled'
             ? unsplashRes.value
             : { stats: null, photos: [] },
+        youtubeData:
+          youtubeRes.status === 'fulfilled'
+            ? youtubeRes.value
+            : { channel: null, longVideos: [], shorts: [] },
       });
       setDeferredLoading(false);
     };
@@ -573,6 +579,7 @@ export default function Home({ i18nData, ipData, locale }) {
                     <Gallery
                       i18n={I18n}
                       unsplashData={deferredData.unsplashData}
+                      youtubeData={deferredData.youtubeData}
                       locale={locale}
                       isLoading={deferredLoading}
                     />

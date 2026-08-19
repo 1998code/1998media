@@ -109,7 +109,13 @@
         "Developer Tools in the United States": "米国の開発者ツール",
         "Developer Tools in the United Kingdom": "英国の開発者ツール",
         "Developer Tools in Maldives": "モルディブの開発者ツール",
-        "Rank records updated to April 2026 (Missing 2025).": "ランキング記録は2026年4月まで更新されました（2025年のデータは欠落しています）。"
+        "Rank records updated to April 2026 (Missing 2025).": "ランキング記録は2026年4月まで更新されました（2025年のデータは欠落しています）。",
+        "2026": "2026",
+        "2024": "2024",
+        "2023": "2023",
+        "2022": "2022",
+        "2021": "2021",
+        "Since 2020": "2020年より"
     },
     "navigation": {
         "Header": "ホーム",
@@ -142,6 +148,12 @@
         "Gallery": "ギャラリー",
         "Spatial Video": "空間動画",
         "Total Views": "合計視聴回数",
+        "Watch Time": "視聴時間",
+        "mins": "分",
+        "Videos": "動画",
+        "Long Videos": "長編動画",
+        "Shorts": "ショート",
+        "No videos yet": "動画がありません",
         "Spatial": "空間",
         "Only Safari is supported for Spatial content.": "空間コンテンツはSafariのみ対応しています。",
         "Only Safari is supported.": "Safariのみ対応しています。",

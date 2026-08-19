@@ -596,7 +596,7 @@ export default function Achievements(props) {
 
       // Add count number inside marker if count > 1
       if (count > 1 && el) {
-        el.textContent = count.toString();
+        el.textContent = `${count}x`;
       }
 
       // Add marker to map
@@ -617,58 +617,9 @@ export default function Achievements(props) {
     }
   }, [hoveredAchievement, updateMarkers]);
 
-  // Achievements scroll ref
-  const achievementScrollRef = useRef(null);
-
-  // Auto-scroll for achievements
-  useEffect(() => {
-    const scrollContainer = achievementScrollRef.current;
-    if (!scrollContainer || achievements.length === 0) return;
-
-    let isUserScrolling = false;
-    let scrollTimeout;
-    let animationFrame;
-
-    const handleInteraction = () => {
-      isUserScrolling = true;
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(() => {
-        isUserScrolling = false;
-      }, 3000);
-    };
-
-    const autoScroll = () => {
-      if (!isUserScrolling && scrollContainer) {
-        scrollContainer.scrollLeft += 0.5;
-        if (scrollContainer.scrollLeft >= scrollContainer.scrollWidth / 2) {
-          scrollContainer.scrollLeft = 0;
-        }
-      }
-      animationFrame = requestAnimationFrame(autoScroll);
-    };
-
-    scrollContainer.addEventListener('wheel', handleInteraction, {
-      passive: true,
-    });
-    scrollContainer.addEventListener('touchstart', handleInteraction);
-    scrollContainer.addEventListener('touchmove', handleInteraction);
-    scrollContainer.addEventListener('mousedown', handleInteraction);
-
-    animationFrame = requestAnimationFrame(autoScroll);
-
-    return () => {
-      scrollContainer.removeEventListener('wheel', handleInteraction);
-      scrollContainer.removeEventListener('touchstart', handleInteraction);
-      scrollContainer.removeEventListener('touchmove', handleInteraction);
-      scrollContainer.removeEventListener('mousedown', handleInteraction);
-      cancelAnimationFrame(animationFrame);
-      clearTimeout(scrollTimeout);
-    };
-  }, []);
-
   return (
     <>
-      <div className="relative h-full w-full flex flex-col justify-center pt-24 pb-4 overflow-hidden">
+      <div className="relative h-full w-full flex flex-col justify-start pt-24 pb-4 overflow-y-auto overflow-x-hidden">
         <img
           alt=""
           loading="lazy"
@@ -701,64 +652,63 @@ export default function Achievements(props) {
                     )}
                     <i className="fab fa-app-store ml-2"></i>
                   </h3>
-                  <div
-                    ref={achievementScrollRef}
-                    className="overflow-x-auto py-6 scrollbar-hide"
-                    style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-                  >
-                    <div className="flex gap-5">
-                      {[...achievements, ...achievements].map(
-                        (achievement, index) => {
-                          const isHovered =
-                            hoveredAchievement === achievement.title;
-                          const isGrayedOut = hoveredAchievement && !isHovered;
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 sm:gap-3 py-4 sm:py-6 content-start auto-rows-min">
+                    {achievements.map((achievement, index) => {
+                      const isHovered =
+                        hoveredAchievement === achievement.title;
+                      const isGrayedOut = hoveredAchievement && !isHovered;
 
-                          // Extract color class for border - simplified mapping
-                          let borderColorClass = 'border-orange-500';
-                          if (achievement.color.includes('blue'))
-                            borderColorClass = 'border-blue-500';
-                          if (achievement.color.includes('teal'))
-                            borderColorClass = 'border-teal-500';
-                          if (achievement.color.includes('sky'))
-                            borderColorClass = 'border-sky-500';
-                          if (achievement.color.includes('green'))
-                            borderColorClass = 'border-green-500';
-                          if (achievement.color.includes('red'))
-                            borderColorClass = 'border-red-500';
+                      // Extract color class for border - simplified mapping
+                      let borderColorClass = 'border-orange-500';
+                      if (achievement.color.includes('blue'))
+                        borderColorClass = 'border-blue-500';
+                      if (achievement.color.includes('teal'))
+                        borderColorClass = 'border-teal-500';
+                      if (achievement.color.includes('sky'))
+                        borderColorClass = 'border-sky-500';
+                      if (achievement.color.includes('green'))
+                        borderColorClass = 'border-green-500';
+                      if (achievement.color.includes('red'))
+                        borderColorClass = 'border-red-500';
 
-                          return (
-                            <div
-                              key={achievement.title + achievement.year + index}
-                              className={`flex-shrink-0 min-w-[200px] max-w-[300px] flex flex-col p-6 rounded-xl bg-white/50 dark:bg-black/50 backdrop-blur-md shadow-lg xl:rounded-[30px] transition-all duration-500 border-2 ${
-                                isHovered
-                                  ? `${borderColorClass} opacity-100 scale-105`
-                                  : isGrayedOut
-                                    ? 'opacity-40 grayscale border-transparent'
-                                    : 'border-transparent hover:border-black dark:hover:border-white hover:scale-105'
-                              }`}
-                              onMouseEnter={() => {
-                                setHoveredAchievement(achievement.title);
-                              }}
-                              onMouseLeave={() => {
-                                setHoveredAchievement(null);
-                              }}
+                      return (
+                        <div
+                          key={achievement.title + achievement.year + index}
+                          className={`flex flex-col p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-white/50 dark:bg-black/50 backdrop-blur-md shadow-md transition-all duration-300 border-2 ${
+                            isHovered
+                              ? `${borderColorClass} opacity-100 scale-[1.03]`
+                              : isGrayedOut
+                                ? 'opacity-40 grayscale border-transparent'
+                                : 'border-transparent hover:border-black dark:hover:border-white hover:scale-[1.03]'
+                          }`}
+                          onMouseEnter={() => {
+                            setHoveredAchievement(achievement.title);
+                          }}
+                          onMouseLeave={() => {
+                            setHoveredAchievement(null);
+                          }}
+                        >
+                          <div className="flex items-start justify-between gap-2">
+                            <span
+                              className={`text-xl sm:text-2xl font-extrabold leading-none ${achievement.color}`}
                             >
-                              <div className="order-3 mt-1 text-md leading-6 font-medium text-gray-400">
-                                {achievement.year}
-                              </div>
-                              <div className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500 line-clamp-2 min-h-[3.5rem]">
-                                {i18n(achievement.title)} {achievement.flag}
-                              </div>
-                              <div
-                                className={`order-1 text-4xl font-extrabold ${achievement.color}`}
-                              >
-                                {i18n(achievement.rank)}
-                              </div>
-                            </div>
-                          );
-                        }
-                      )}
-                    </div>
+                              {i18n(achievement.rank)}
+                            </span>
+                            {achievement.flag && (
+                              <span className="text-lg sm:text-xl leading-none">
+                                {achievement.flag}
+                              </span>
+                            )}
+                          </div>
+                          <div className="mt-1.5 sm:mt-2 text-xs sm:text-sm leading-snug font-medium text-gray-600 dark:text-gray-300 line-clamp-2 min-h-[2rem] sm:min-h-[2.5rem]">
+                            {i18n(achievement.title)}
+                          </div>
+                          <div className="mt-1 text-[11px] sm:text-xs font-medium text-gray-400">
+                            {i18n(achievement.year)}
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                   <div className="relative">
                     {/* Interactive MapLibre map with Carto basemaps (OpenStreetMap-based) */}

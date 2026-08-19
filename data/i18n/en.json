@@ -109,7 +109,13 @@
         "Developer Tools in the United States": "Developer Tools in the United States",
         "Developer Tools in the United Kingdom": "Developer Tools in the United Kingdom",
         "Developer Tools in Maldives": "Developer Tools in Maldives",
-        "Rank records updated to April 2026 (Missing 2025).": "Rank records updated to April 2026 (Missing 2025)."
+        "Rank records updated to April 2026 (Missing 2025).": "Rank records updated to April 2026 (Missing 2025).",
+        "2026": "2026",
+        "2024": "2024",
+        "2023": "2023",
+        "2022": "2022",
+        "2021": "2021",
+        "Since 2020": "Since 2020"
     },
     "navigation": {
         "Header": "Home",
@@ -142,6 +148,12 @@
         "Gallery": "Gallery",
         "Spatial Video": "Spatial Video",
         "Total Views": "Total Views",
+        "Watch Time": "Watch Time",
+        "mins": "mins",
+        "Videos": "Videos",
+        "Long Videos": "Long Videos",
+        "Shorts": "Shorts",
+        "No videos yet": "No videos yet",
         "Spatial": "Spatial",
         "Only Safari is supported for Spatial content.": "Only Safari is supported for Spatial content.",
         "Only Safari is supported.": "Only Safari is supported.",

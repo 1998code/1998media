@@ -4,6 +4,24 @@ import { fetchI18nData } from '../../lib/fetchData';
 
 export const runtime = 'experimental-edge';
 
+// Compact number: 1234 -> 1.2K, 1500000 -> 1.5M
+function ytFormatCount(n) {
+  const num = Number(n || 0);
+  if (num >= 1_000_000)
+    return (num / 1_000_000).toFixed(num >= 10_000_000 ? 0 : 1) + 'M';
+  if (num >= 1_000) return (num / 1_000).toFixed(num >= 10_000 ? 0 : 1) + 'K';
+  return String(num);
+}
+
+function ytFormatDuration(seconds) {
+  const s = Number(seconds || 0);
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  const sec = s % 60;
+  const pad = (x) => String(x).padStart(2, '0');
+  return h > 0 ? `${h}:${pad(m)}:${pad(sec)}` : `${m}:${pad(sec)}`;
+}
+
 export default function Gallery(props) {
   function i18n(key) {
     if (props.i18n && props.i18n['gallery'] && !props.i18n['gallery'][key]) {
@@ -25,6 +43,17 @@ export default function Gallery(props) {
   const [spatialFilter, setSpatialFilter] = useState('all');
   const [isTransitioning, setIsTransitioning] = useState(false);
   const unsplashData = props.unsplashData || { stats: null, photos: [] };
+
+  // YouTube (@MingsExplorer) data - fetched from /api/youtube via deferred load
+  const youtubeData = props.youtubeData || {
+    channel: null,
+    longVideos: [],
+    shorts: [],
+  };
+  const ytChannel = youtubeData.channel;
+  const ytLong = youtubeData.longVideos || [];
+  const ytShorts = youtubeData.shorts || [];
+  const [ytVideo, setYtVideo] = useState(null);
 
   // Xiaohongshu (小紅書) data - static stats
   const xiaohongshuData = {
@@ -110,6 +139,8 @@ export default function Gallery(props) {
   const unsplashScrollRef = useRef(null);
   const xhsScrollRef = useRef(null);
   const xhsScrollRef2 = useRef(null);
+  const ytScrollRef = useRef(null);
+  const ytScrollRef2 = useRef(null);
   const [isPausedUnsplash, setIsPausedUnsplash] = useState(false);
 
   // Initialize client-side state and Safari detection
@@ -329,6 +360,98 @@ export default function Gallery(props) {
       clearTimeout(scrollTimeout);
     };
   }, [activeTab, xiaohongshuData]);
+
+  // Auto-scroll for YouTube Long Videos - Row 1 (Left to Right)
+  useEffect(() => {
+    const container = ytScrollRef.current;
+    if (!container || activeTab !== 'youtube' || ytLong.length === 0) return;
+
+    let isUserScrolling = false;
+    let scrollTimeout;
+    let animationFrame;
+
+    const handleInteraction = () => {
+      isUserScrolling = true;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        isUserScrolling = false;
+      }, 3000);
+    };
+
+    const autoScroll = () => {
+      if (!isUserScrolling && container) {
+        container.scrollLeft += 0.5;
+        if (container.scrollLeft >= container.scrollWidth / 2) {
+          container.scrollLeft = 0;
+        }
+      }
+      animationFrame = requestAnimationFrame(autoScroll);
+    };
+
+    container.addEventListener('wheel', handleInteraction, { passive: true });
+    container.addEventListener('touchstart', handleInteraction);
+    container.addEventListener('touchmove', handleInteraction);
+    container.addEventListener('mousedown', handleInteraction);
+
+    animationFrame = requestAnimationFrame(autoScroll);
+
+    return () => {
+      container.removeEventListener('wheel', handleInteraction);
+      container.removeEventListener('touchstart', handleInteraction);
+      container.removeEventListener('touchmove', handleInteraction);
+      container.removeEventListener('mousedown', handleInteraction);
+      cancelAnimationFrame(animationFrame);
+      clearTimeout(scrollTimeout);
+    };
+  }, [activeTab, ytLong]);
+
+  // Auto-scroll for YouTube Shorts - Row 2 (Right to Left)
+  useEffect(() => {
+    const container = ytScrollRef2.current;
+    if (!container || activeTab !== 'youtube' || ytShorts.length === 0) return;
+
+    let isUserScrolling = false;
+    let scrollTimeout;
+    let animationFrame;
+
+    const handleInteraction = () => {
+      isUserScrolling = true;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        isUserScrolling = false;
+      }, 3000);
+    };
+
+    const autoScroll = () => {
+      if (!isUserScrolling && container) {
+        container.scrollLeft -= 0.5;
+        if (container.scrollLeft <= 0) {
+          container.scrollLeft = container.scrollWidth / 2;
+        }
+      }
+      animationFrame = requestAnimationFrame(autoScroll);
+    };
+
+    if (container.scrollLeft === 0) {
+      container.scrollLeft = container.scrollWidth / 2;
+    }
+
+    container.addEventListener('wheel', handleInteraction, { passive: true });
+    container.addEventListener('touchstart', handleInteraction);
+    container.addEventListener('touchmove', handleInteraction);
+    container.addEventListener('mousedown', handleInteraction);
+
+    animationFrame = requestAnimationFrame(autoScroll);
+
+    return () => {
+      container.removeEventListener('wheel', handleInteraction);
+      container.removeEventListener('touchstart', handleInteraction);
+      container.removeEventListener('touchmove', handleInteraction);
+      container.removeEventListener('mousedown', handleInteraction);
+      cancelAnimationFrame(animationFrame);
+      clearTimeout(scrollTimeout);
+    };
+  }, [activeTab, ytShorts]);
 
   // Data is now fetched server-side via SSR
   // Removed client-side fetching functions
@@ -870,7 +993,11 @@ export default function Gallery(props) {
               {/* Sliding Background for Main Tabs */}
               <div
                 className={`absolute top-1 bottom-1 rounded-xl transition-all duration-300 ease-out shadow-sm pointer-events-none ${
-                  activeTab === 'xiaohongshu' ? 'bg-red-500' : 'bg-emerald-600'
+                  activeTab === 'xiaohongshu'
+                    ? 'bg-red-500'
+                    : activeTab === 'youtube'
+                      ? 'bg-red-600'
+                      : 'bg-emerald-600'
                 }`}
                 style={mainTabStyles}
               />
@@ -900,6 +1027,18 @@ export default function Gallery(props) {
               >
                 <i className="fab fa-unsplash mr-1"></i>
                 Unsplash
+              </button>
+              <button
+                ref={(el) => (mainTabRefs.current['youtube'] = el)}
+                onClick={() => setActiveTab('youtube')}
+                className={`relative z-10 p-2 text-sm font-medium rounded-xl transition-all duration-300 ${
+                  activeTab === 'youtube'
+                    ? 'text-white'
+                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
+                }`}
+              >
+                <i className="fab fa-youtube mr-1"></i>
+                YouTube
               </button>
               <button
                 ref={(el) => (mainTabRefs.current['spatial'] = el)}
@@ -1118,6 +1257,142 @@ export default function Gallery(props) {
                 </div>
               </div>
             )}
+            {/* YouTube Tab */}
+            <div
+              className={`w-full px-1 transition-all duration-500 ease-in-out ${
+                activeTab === 'youtube'
+                  ? 'relative translate-x-0 opacity-100'
+                  : 'absolute top-0 left-0 translate-x-full opacity-0 pointer-events-none'
+              }`}
+            >
+              {/* Channel stats */}
+              <dl className="bg-white/50 dark:bg-black/50 backdrop-blur-md grid grid-cols-1 overflow-hidden rounded-xl shadow md:grid-cols-3 divide-y divide-gray-200 dark:divide-gray-800 md:divide-y-0 md:divide-x xl:rounded-[25px]">
+                {[
+                  { label: i18n('Total Views'), value: ytChannel?.viewCount },
+                  {
+                    label: i18n('Watch Time'),
+                    value: ytChannel?.watchTimeMinutes,
+                    suffix: i18n('mins'),
+                  },
+                  { label: i18n('Videos'), value: ytChannel?.videoCount },
+                ].map((s) => (
+                  <div key={s.label} className="px-4 py-5 sm:p-6">
+                    <dt className="flex items-baseline justify-between gap-1">
+                      <div className="text-base font-normal text-gray-900 dark:text-gray-100">
+                        {s.label}
+                      </div>
+                      <div className="bg-red-600 text-red-100 inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium md:mt-2 lg:mt-0">
+                        <i className="flex-shrink-0 self-center fa fa-arrow-up-right" />
+                      </div>
+                    </dt>
+                    <dd className="mt-1 flex items-baseline gap-1 text-2xl font-semibold text-red-500">
+                      {ytFormatCount(s.value)}
+                      {s.suffix && (
+                        <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
+                          {s.suffix}
+                        </span>
+                      )}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+
+              {!ytChannel ? (
+                <div className="text-center text-gray-500 dark:text-gray-400 py-10">
+                  {youtubeData.error
+                    ? String(youtubeData.error)
+                    : i18n('No videos yet')}
+                </div>
+              ) : (
+                <>
+                  {/* Row 1: Long Videos (Left to Right) */}
+                  {ytLong.length > 0 && (
+                    <>
+                      <div
+                        ref={ytScrollRef}
+                        className="mt-4 overflow-x-auto scrollbar-hide"
+                      >
+                        <div className="flex gap-5">
+                          {[...ytLong.slice(0, 24), ...ytLong.slice(0, 24)].map(
+                            (v, index) => (
+                              <a
+                                key={`${v.id}-long-${index}`}
+                                href={v.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  setYtVideo(v);
+                                }}
+                                className="group flex-shrink-0 w-[280px] rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-[0.98] border border-transparent hover:border-red-500 dark:hover:border-red-400 xl:rounded-[20px]"
+                              >
+                                <div className="relative aspect-video w-full">
+                                  <img
+                                    loading="lazy"
+                                    src={v.thumbnail}
+                                    alt={v.title}
+                                    className="w-full h-full object-cover cursor-pointer"
+                                  />
+                                  {v.durationSeconds > 0 && (
+                                    <span className="absolute bottom-1.5 left-1.5 px-1.5 py-0.5 rounded bg-black/80 text-white text-[11px] font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                                      {ytFormatDuration(v.durationSeconds)}
+                                    </span>
+                                  )}
+                                </div>
+                              </a>
+                            )
+                          )}
+                        </div>
+                      </div>
+                    </>
+                  )}
+
+                  {/* Row 2: Shorts (Right to Left) */}
+                  {ytShorts.length > 0 && (
+                    <>
+                      <div
+                        ref={ytScrollRef2}
+                        className="mt-4 overflow-x-auto scrollbar-hide"
+                      >
+                        <div className="flex gap-5">
+                          {[
+                            ...ytShorts.slice(0, 24),
+                            ...ytShorts.slice(0, 24),
+                          ].map((v, index) => (
+                            <a
+                              key={`${v.id}-short-${index}`}
+                              href={v.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                setYtVideo(v);
+                              }}
+                              className="group flex-shrink-0 w-[150px] rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-[0.98] border border-transparent hover:border-red-500 dark:hover:border-red-400 xl:rounded-[20px]"
+                            >
+                              <div className="relative aspect-[9/16] w-full">
+                                <img
+                                  loading="lazy"
+                                  src={v.thumbnail}
+                                  alt={v.title}
+                                  className="w-full h-full object-cover cursor-pointer"
+                                />
+                                {v.durationSeconds > 0 && (
+                                  <span className="absolute bottom-1.5 left-1.5 px-1.5 py-0.5 rounded bg-black/80 text-white text-[11px] font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                                    {ytFormatDuration(v.durationSeconds)}
+                                  </span>
+                                )}
+                              </div>
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </>
+              )}
+            </div>
+
             {/* Unsplash Tab */}
             <div
               ref={unsplashTabRef}
@@ -1276,6 +1551,39 @@ export default function Gallery(props) {
               />
             )}
           </a>
+        </div>
+      </div>
+      {/* YouTube video dialog */}
+      <div
+        className={`fixed z-[101] inset-0 overflow-y-auto transition-all ease-out duration-500 ${ytVideo ? 'opacity-100 bg-gray-300/80 dark:bg-gray-800/80 backdrop-blur-lg' : 'opacity-0 pointer-events-none'}`}
+      >
+        <div className="flex items-center justify-center min-h-screen p-4">
+          <div
+            className="fixed inset-0 cursor-alias transition-all"
+            aria-hidden="true"
+            onClick={() => setYtVideo(null)}
+          />
+          {ytVideo && (
+            <div
+              className={`relative z-10 ${ytVideo.isShort ? 'w-[calc(80vh*9/16)] max-w-[92vw] aspect-[9/16]' : 'w-[90vw] max-w-5xl aspect-video'}`}
+            >
+              <button
+                onClick={() => setYtVideo(null)}
+                aria-label="Close"
+                className="absolute -top-10 right-0 text-white/90 hover:text-white text-2xl"
+              >
+                <i className="far fa-times" />
+              </button>
+              <iframe
+                src={`https://www.youtube.com/embed/${ytVideo.id}?autoplay=1&rel=0`}
+                title={ytVideo.title}
+                className="w-full h-full rounded-3xl shadow-2xl"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                frameBorder="0"
+              />
+            </div>
+          )}
         </div>
       </div>
     </>

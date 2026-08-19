@@ -109,7 +109,13 @@
         "Developer Tools in the United States": "美國 開發者工具",
         "Developer Tools in the United Kingdom": "英國 開發者工具",
         "Developer Tools in Maldives": "馬爾代夫 開發者工具",
-        "Rank records updated to April 2026 (Missing 2025).": "排名記錄更新至 2026 年 4 月（缺失 2025 年數據）。"
+        "Rank records updated to April 2026 (Missing 2025).": "排名記錄更新至 2026 年 4 月（缺失 2025 年數據）。",
+        "2026": "2026",
+        "2024": "2024",
+        "2023": "2023",
+        "2022": "2022",
+        "2021": "2021",
+        "Since 2020": "自 2020 年起"
     },
     "navigation": {
         "Header": "主頁",
@@ -142,6 +148,12 @@
         "Gallery": "藝廊",
         "Spatial Video": "空間影片",
         "Total Views": "總瀏覽量",
+        "Watch Time": "觀看時長",
+        "mins": "分鐘",
+        "Videos": "影片",
+        "Long Videos": "長片",
+        "Shorts": "短片",
+        "No videos yet": "暫無影片",
         "Spatial": "空間",
         "Only Safari is supported for Spatial content.": "僅 Safari 支援空間內容。",
         "Only Safari is supported.": "僅支援 Safari。",
