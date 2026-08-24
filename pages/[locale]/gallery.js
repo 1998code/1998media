@@ -1321,9 +1321,9 @@ export default function Gallery(props) {
                                   e.preventDefault();
                                   setYtVideo(v);
                                 }}
-                                className="group flex-shrink-0 w-[280px] rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-[0.98] border border-transparent hover:border-red-500 dark:hover:border-red-400 xl:rounded-[20px]"
+                                className="group flex-shrink-0 w-[400px] rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-[0.98] border border-transparent hover:border-red-500 dark:hover:border-red-400 xl:rounded-[20px]"
                               >
-                                <div className="relative aspect-video w-full">
+                                <div className="relative aspect-[16/9] w-full">
                                   <img
                                     loading="lazy"
                                     src={v.thumbnail}
@@ -1562,7 +1562,7 @@ export default function Gallery(props) {
           />
           {ytVideo && (
             <div
-              className={`relative z-10 ${ytVideo.isShort ? 'w-[calc(80vh*9/16)] max-w-[92vw] aspect-[9/16]' : 'w-[90vw] max-w-5xl aspect-video'}`}
+              className={`relative z-10 ${ytVideo.isShort ? 'w-[calc(80vh*9/16)] max-w-[92vw] aspect-[9/16]' : 'w-[90vw] max-w-5xl aspect-[16/9]'}`}
             >
               <button
                 onClick={() => setYtVideo(null)}
