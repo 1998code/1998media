@@ -4,6 +4,11 @@ import { Tooltip } from '@nextui-org/tooltip';
 
 const CAROUSEL_ROW_REPEAT_COUNT = 6;
 
+// A carousel only auto-scrolls — and therefore repeats its cards to loop
+// seamlessly — when it has enough distinct posts to fill it. With fewer posts
+// we show each one exactly once instead of cloning it across the row.
+const MIN_POSTS_FOR_CAROUSEL = 6;
+
 function languageCheck(text) {
   const hasChineseChars = /[\u4e00-\u9fff]/.test(text);
   if (hasChineseChars) {
@@ -17,11 +22,6 @@ function languageCheck(text) {
 function splitIntoRows(items) {
   const rows = [[], []];
   items.forEach((item, index) => rows[index % 2].push(item));
-
-  if (rows[1].length === 0 && rows[0].length > 0) {
-    rows[1] = [...rows[0]];
-  }
-
   return rows;
 }
 
@@ -126,11 +126,19 @@ export default function Blog(props) {
   }, [props.blogData?.posts, props.locale]);
 
   const blogRows = useMemo(() => splitIntoRows(filteredBlogs), [filteredBlogs]);
-  const tripRows = splitIntoRows([tripPromo, ...moments]);
+  const tripItems = [tripPromo, ...moments];
+  const tripRows = splitIntoRows(tripItems);
+
+  // Only loop (and thus repeat cards) when there are enough posts to fill the
+  // carousel; otherwise render each post once so nothing is duplicated.
+  const blogShouldLoop = filteredBlogs.length >= MIN_POSTS_FOR_CAROUSEL;
+  const tripShouldLoop = tripItems.length >= MIN_POSTS_FOR_CAROUSEL;
+  const blogRepeatCount = blogShouldLoop ? CAROUSEL_ROW_REPEAT_COUNT : 1;
+  const tripRepeatCount = tripShouldLoop ? CAROUSEL_ROW_REPEAT_COUNT : 1;
 
   // Auto-scroll for Blog posts
   useEffect(() => {
-    if (filteredBlogs.length === 0) return;
+    if (!blogShouldLoop) return;
 
     const cleanups = [
       setupAutoScroll(blogScrollRef.current, 1),
@@ -138,17 +146,19 @@ export default function Blog(props) {
     ];
 
     return () => cleanups.forEach((cleanup) => cleanup());
-  }, [filteredBlogs]);
+  }, [filteredBlogs, blogShouldLoop]);
 
   // Auto-scroll for Trip moments in opposite directions
   useEffect(() => {
+    if (!tripShouldLoop) return;
+
     const cleanups = [
       setupAutoScroll(tripScrollRef.current, 1),
       setupAutoScroll(tripReverseScrollRef.current, -1),
     ];
 
     return () => cleanups.forEach((cleanup) => cleanup());
-  }, [moments]);
+  }, [moments, tripShouldLoop]);
 
   return (
     <>
@@ -201,7 +211,7 @@ export default function Blog(props) {
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
               <div className="flex">
-                {[...Array(CAROUSEL_ROW_REPEAT_COUNT)].map((_, groupIndex) => (
+                {[...Array(blogRepeatCount)].map((_, groupIndex) => (
                   <div key={groupIndex} className="flex flex-none gap-5 pr-5">
                     {row.map((post, index) => (
                       <a
@@ -361,7 +371,7 @@ export default function Blog(props) {
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
               <div className="flex">
-                {[...Array(CAROUSEL_ROW_REPEAT_COUNT)].map((_, groupIndex) => (
+                {[...Array(tripRepeatCount)].map((_, groupIndex) => (
                   <div key={groupIndex} className="flex flex-none gap-5 pr-5">
                     {row.map((post, index) => (
                       <a
