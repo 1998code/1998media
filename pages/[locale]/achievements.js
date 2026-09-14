@@ -2,6 +2,12 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
+// Carto vector GL basemap styles (OpenStreetMap-based)
+const CARTO_STYLE_LIGHT =
+  'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json';
+const CARTO_STYLE_DARK =
+  'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json';
+
 export default function Achievements(props) {
   const [hoveredAchievement, setHoveredAchievement] = useState(null);
 
@@ -63,9 +69,20 @@ export default function Achievements(props) {
       coords: [21.8243, 39.0742],
       color: '005bae',
     },
+    'Developer Tools in Malaysia': {
+      coords: [101.9758, 4.2105],
+      color: 'cc0001',
+    },
   };
 
   const achievements = [
+    {
+      year: '2026',
+      title: 'Developer Tools in Malaysia',
+      rank: '#1',
+      flag: '🇲🇾',
+      color: 'text-blue-600', // Red, white, blue, yellow flag
+    },
     {
       year: '2026',
       title: 'Developer Tools in Hong Kong',
@@ -188,7 +205,7 @@ export default function Achievements(props) {
       return;
     }
 
-    const newStyle = isDark ? 'dark_all' : 'light_all';
+    const newStyle = isDark ? CARTO_STYLE_DARK : CARTO_STYLE_LIGHT;
 
     // Prevent unnecessary updates if style hasn't changed
     if (currentMapStyleRef.current === newStyle) {
@@ -197,32 +214,8 @@ export default function Achievements(props) {
 
     currentMapStyleRef.current = newStyle;
 
-    // Remove existing source and layer
-    if (map.current.getLayer('carto-basemap-layer')) {
-      map.current.removeLayer('carto-basemap-layer');
-    }
-    if (map.current.getSource('carto-basemap')) {
-      map.current.removeSource('carto-basemap');
-    }
-
-    // Add new source with updated style
-    map.current.addSource('carto-basemap', {
-      type: 'raster',
-      tiles: [
-        `https://a.basemaps.cartocdn.com/${newStyle}/{z}/{x}/{y}.png`,
-        `https://b.basemaps.cartocdn.com/${newStyle}/{z}/{x}/{y}.png`,
-        `https://c.basemaps.cartocdn.com/${newStyle}/{z}/{x}/{y}.png`,
-      ],
-      tileSize: 256,
-      attribution: '',
-    });
-
-    // Add layer back
-    map.current.addLayer({
-      id: 'carto-basemap-layer',
-      type: 'raster',
-      source: 'carto-basemap',
-    });
+    // Swap the whole vector GL style. DOM markers persist across setStyle.
+    map.current.setStyle(newStyle);
   }, []);
 
   useEffect(() => {
@@ -311,7 +304,7 @@ export default function Achievements(props) {
       const intervalId = setInterval(() => {
         const isDark = checkDarkMode();
         if (map.current && map.current.loaded()) {
-          const expectedStyle = isDark ? 'dark_all' : 'light_all';
+          const expectedStyle = isDark ? CARTO_STYLE_DARK : CARTO_STYLE_LIGHT;
           if (currentMapStyleRef.current !== expectedStyle) {
             updateMapStyle(isDark);
           }
@@ -404,34 +397,13 @@ export default function Achievements(props) {
       return false;
     };
     const isDarkInitially = checkDarkMode();
-    const initialStyle = isDarkInitially ? 'dark_all' : 'light_all';
+    const initialStyle = isDarkInitially ? CARTO_STYLE_DARK : CARTO_STYLE_LIGHT;
     currentMapStyleRef.current = initialStyle;
 
-    // Initialize MapLibre with Carto basemap (OpenStreetMap-based)
+    // Initialize MapLibre with Carto vector GL basemap (OpenStreetMap-based)
     map.current = new maplibregl.Map({
       container: mapContainer.current,
-      style: {
-        version: 8,
-        sources: {
-          'carto-basemap': {
-            type: 'raster',
-            tiles: [
-              `https://a.basemaps.cartocdn.com/${initialStyle}/{z}/{x}/{y}.png`,
-              `https://b.basemaps.cartocdn.com/${initialStyle}/{z}/{x}/{y}.png`,
-              `https://c.basemaps.cartocdn.com/${initialStyle}/{z}/{x}/{y}.png`,
-            ],
-            tileSize: 256,
-            attribution: '', // Remove attribution
-          },
-        },
-        layers: [
-          {
-            id: 'carto-basemap-layer',
-            type: 'raster',
-            source: 'carto-basemap',
-          },
-        ],
-      },
+      style: initialStyle,
       center: [centerLon, centerLat],
       zoom: 1, // Zoom out most by default
       minZoom: 1,
