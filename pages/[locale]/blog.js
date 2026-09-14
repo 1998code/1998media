@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { franc } from 'franc-min';
 import { Tooltip } from '@nextui-org/tooltip';
 
@@ -33,7 +33,11 @@ function setupAutoScroll(container, direction) {
   let animationFrame;
   const rowWidth = container.scrollWidth / CAROUSEL_ROW_REPEAT_COUNT;
 
-  container.scrollLeft = direction > 0 ? rowWidth : rowWidth * 2;
+  // Track position in a float accumulator; reading back scrollLeft floors the
+  // value, which swallows the +0.5 step and stalls the forward (direction > 0)
+  // rows while the reverse rows appear to work.
+  let pos = direction > 0 ? rowWidth : rowWidth * 2;
+  container.scrollLeft = pos;
 
   const handleInteraction = () => {
     isUserScrolling = true;
@@ -45,13 +49,18 @@ function setupAutoScroll(container, direction) {
 
   const autoScroll = () => {
     if (!isUserScrolling && rowWidth > 0) {
-      container.scrollLeft += direction * 0.5;
+      pos += direction * 0.5;
 
-      if (direction > 0 && container.scrollLeft >= rowWidth * 2) {
-        container.scrollLeft -= rowWidth;
-      } else if (direction < 0 && container.scrollLeft <= rowWidth) {
-        container.scrollLeft += rowWidth;
+      if (direction > 0 && pos >= rowWidth * 2) {
+        pos -= rowWidth;
+      } else if (direction < 0 && pos <= rowWidth) {
+        pos += rowWidth;
       }
+
+      container.scrollLeft = pos;
+    } else {
+      // Resync after manual scrolling so we resume without jumping
+      pos = container.scrollLeft;
     }
     animationFrame = requestAnimationFrame(autoScroll);
   };
@@ -115,18 +124,57 @@ export default function Blog(props) {
     const blogs = props.blogData?.posts || [];
     const userLanguage = props.locale || 'en';
 
-    return blogs
-      .filter((post) => {
-        const postLanguage = languageCheck(post.title);
-        return userLanguage.includes('zh')
-          ? postLanguage === 'zh'
-          : postLanguage === 'en';
-      })
-      .slice(0, 6);
+    return blogs.filter((post) => {
+      const postLanguage = languageCheck(post.title);
+      return userLanguage.includes('zh')
+        ? postLanguage === 'zh'
+        : postLanguage === 'en';
+    });
   }, [props.blogData?.posts, props.locale]);
 
-  const blogRows = useMemo(() => splitIntoRows(filteredBlogs), [filteredBlogs]);
-  const tripItems = [tripPromo, ...moments];
+  // The Chinese blog feed and the Trip.com moments (fetched from the zh-TW feed
+  // for the Simplified locale, since zh-CN returns none) are both Traditional.
+  // For the Simplified locale ('zh') convert their titles to Simplified;
+  // 'zh-HK' keeps the original Traditional text.
+  const [converted, setConverted] = useState(null);
+
+  useEffect(() => {
+    if (
+      props.locale !== 'zh' ||
+      (filteredBlogs.length === 0 && moments.length === 0)
+    ) {
+      setConverted(null);
+      return;
+    }
+
+    let cancelled = false;
+    (async () => {
+      const OpenCC = await import('opencc-js/t2cn');
+      const convert = OpenCC.Converter({ from: 'hk', to: 'cn' });
+      const blogs = filteredBlogs.map((post) => ({
+        ...post,
+        title: convert(post.title),
+      }));
+      const convertedMoments = moments.map((moment) => ({
+        ...moment,
+        title: moment.title ? convert(moment.title) : moment.title,
+        translateTitle: moment.translateTitle
+          ? convert(moment.translateTitle)
+          : moment.translateTitle,
+      }));
+      if (!cancelled) setConverted({ blogs, moments: convertedMoments });
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [props.locale, filteredBlogs, moments]);
+
+  const displayBlogs = converted?.blogs || filteredBlogs;
+  const displayMoments = converted?.moments || moments;
+
+  const blogRows = useMemo(() => splitIntoRows(displayBlogs), [displayBlogs]);
+  const tripItems = [tripPromo, ...displayMoments];
   const tripRows = splitIntoRows(tripItems);
 
   // Only loop (and thus repeat cards) when there are enough posts to fill the

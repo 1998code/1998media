@@ -43,13 +43,20 @@ export default function AI(props) {
       }, 3000);
     };
 
+    // Track position in a float accumulator; reading back scrollLeft floors
+    // the value, which would swallow the +0.5 step and stall the scroll.
+    let pos = featuredContainer.scrollLeft;
     const autoScroll = () => {
       if (!isUserScrolling && featuredContainer) {
-        featuredContainer.scrollLeft += 0.5;
+        pos += 0.5;
         // Reset to start when reaching the end (seamless loop)
-        if (featuredContainer.scrollLeft >= featuredContainer.scrollWidth / 2) {
-          featuredContainer.scrollLeft = 0;
+        if (pos >= featuredContainer.scrollWidth / 2) {
+          pos = 0;
         }
+        featuredContainer.scrollLeft = pos;
+      } else if (featuredContainer) {
+        // Resync after manual scrolling so we resume without jumping
+        pos = featuredContainer.scrollLeft;
       }
       animationFrame = requestAnimationFrame(autoScroll);
     };
@@ -132,9 +139,9 @@ export default function AI(props) {
   return (
     <div
       id="ai"
-      className="relative h-full w-full max-w-7xl mx-auto flex flex-col items-start px-4 sm:px-6 lg:px-8 pt-24 overflow-y-auto scrollbar-hide"
+      className="relative h-full w-full max-w-7xl mx-auto flex flex-col items-start px-4 sm:px-6 lg:px-8 pt-24 pb-6 overflow-y-auto scrollbar-hide"
     >
-      <div className="relative w-full">
+      <div className="relative w-full flex-1 min-h-0 flex flex-col gap-5">
         <div className="text-left flex flex-wrap">
           <a
             className="text-3xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl grow"
@@ -149,11 +156,11 @@ export default function AI(props) {
         </div>
         {/* Featured */}
         <div
-          className="overflow-x-auto my-5 scrollbar-hide"
+          className="overflow-x-auto flex-1 min-h-[220px] max-h-[340px] scrollbar-hide"
           ref={featuredScrollRef}
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
-          <div className="flex gap-6">
+          <div className="flex gap-6 h-full">
             {[
               ...dalle.filter((item) => item.featured === '🏆 Hall of Fame'),
               ...dalle.filter((item) => item.featured === '🏆 Hall of Fame'),
@@ -162,15 +169,15 @@ export default function AI(props) {
                 href={item.sourceURL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex-shrink-0 min-w-[300px] flex flex-col rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white transition-all xl:rounded-[25px]"
+                className="group flex-shrink-0 h-full flex flex-col rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white transition-all xl:rounded-[25px]"
                 key={`featured-${index}`}
               >
-                <div className="relative">
+                <div className="relative h-full">
                   <img
                     alt={item.prompt}
                     loading="lazy"
                     src={item.output}
-                    className="w-[300px] h-[300px] object-cover"
+                    className="h-full w-auto aspect-square object-cover"
                   />
                   {/* Hover Overlay */}
                   <div className="absolute inset-0 bg-black/80 dark:bg-black/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl xl:rounded-t-[25px] flex flex-col justify-center items-center p-4">
@@ -199,11 +206,11 @@ export default function AI(props) {
         </div>
         {/* Other */}
         <div
-          className="overflow-x-auto my-5 scrollbar-hide"
+          className="overflow-x-auto flex-1 min-h-[220px] max-h-[340px] scrollbar-hide"
           ref={otherScrollRef}
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
-          <div className="flex gap-6">
+          <div className="flex gap-6 h-full">
             {[
               ...dalle.filter((item) => item.featured !== '🏆 Hall of Fame'),
               ...dalle.filter((item) => item.featured !== '🏆 Hall of Fame'),
@@ -212,15 +219,15 @@ export default function AI(props) {
                 href={item.sourceURL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex-shrink-0 min-w-[250px] flex flex-col rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white xl:rounded-[25px]"
+                className="group flex-shrink-0 h-full flex flex-col rounded-xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-95 border border-transparent hover:border-black dark:hover:border-white xl:rounded-[25px]"
                 key={`other-${index}`}
               >
-                <div className="relative">
+                <div className="relative h-full">
                   <img
                     alt={item.prompt}
                     loading="lazy"
                     src={item.output}
-                    className="w-[250px] h-[250px] object-cover"
+                    className="h-full w-auto aspect-square object-cover"
                   />
                   {/* Hover Overlay */}
                   <div className="absolute inset-0 bg-black/80 dark:bg-black/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl xl:rounded-t-[25px] flex flex-col justify-center items-center p-4">

@@ -229,13 +229,20 @@ export default function Gallery(props) {
       }, 3000);
     };
 
+    // Track position in a float accumulator; reading back scrollLeft floors
+    // the value, which would swallow the +0.5 step and stall the scroll.
+    let pos = unsplashContainer.scrollLeft;
     const autoScroll = () => {
       if (!isUserScrolling && unsplashContainer) {
-        unsplashContainer.scrollLeft += 0.5;
+        pos += 0.5;
         // Reset to start when reaching the end (seamless loop)
-        if (unsplashContainer.scrollLeft >= unsplashContainer.scrollWidth / 2) {
-          unsplashContainer.scrollLeft = 0;
+        if (pos >= unsplashContainer.scrollWidth / 2) {
+          pos = 0;
         }
+        unsplashContainer.scrollLeft = pos;
+      } else if (unsplashContainer) {
+        // Resync after manual scrolling so we resume without jumping
+        pos = unsplashContainer.scrollLeft;
       }
       animationFrame = requestAnimationFrame(autoScroll);
     };
@@ -276,13 +283,20 @@ export default function Gallery(props) {
       }, 3000);
     };
 
+    // Track position in a float accumulator; reading back scrollLeft floors
+    // the value, which would swallow the +0.5 step and stall the scroll.
+    let pos = xhsContainer.scrollLeft;
     const autoScroll = () => {
       if (!isUserScrolling && xhsContainer) {
-        xhsContainer.scrollLeft += 0.5;
+        pos += 0.5;
         // Reset to start when reaching the end (seamless loop)
-        if (xhsContainer.scrollLeft >= xhsContainer.scrollWidth / 2) {
-          xhsContainer.scrollLeft = 0;
+        if (pos >= xhsContainer.scrollWidth / 2) {
+          pos = 0;
         }
+        xhsContainer.scrollLeft = pos;
+      } else if (xhsContainer) {
+        // Resync after manual scrolling so we resume without jumping
+        pos = xhsContainer.scrollLeft;
       }
       animationFrame = requestAnimationFrame(autoScroll);
     };
@@ -375,12 +389,19 @@ export default function Gallery(props) {
       }, 3000);
     };
 
+    // Track position in a float accumulator; reading back scrollLeft floors
+    // the value, which would swallow the +0.5 step and stall the scroll.
+    let pos = container.scrollLeft;
     const autoScroll = () => {
       if (!isUserScrolling && container) {
-        container.scrollLeft += 0.5;
-        if (container.scrollLeft >= container.scrollWidth / 2) {
-          container.scrollLeft = 0;
+        pos += 0.5;
+        if (pos >= container.scrollWidth / 2) {
+          pos = 0;
         }
+        container.scrollLeft = pos;
+      } else if (container) {
+        // Resync after manual scrolling so we resume without jumping
+        pos = container.scrollLeft;
       }
       animationFrame = requestAnimationFrame(autoScroll);
     };

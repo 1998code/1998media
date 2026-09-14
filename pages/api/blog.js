@@ -9,11 +9,15 @@ import {
 const CID = '09031029418990699836';
 const PROD_API = 'https://www.1998.media/api/trip';
 
-function tripLocale(locale) {
+function tripLocale(locale, type) {
+  // Trip.com returns no moments for zh-CN, so Simplified ('zh') moments use the
+  // zh-TW feed (converted to Simplified on the client). Medals still work for
+  // zh-CN, so leave those on zh-CN.
+  const zh = type === 'moment' ? 'zh-TW' : 'zh-CN';
   const map = {
     ja: 'ja-JP',
     ko: 'ko-KR',
-    zh: 'zh-CN',
+    zh,
     'zh-HK': 'zh-TW',
     ru: 'ru-RU',
     fr: 'fr-FR',
@@ -24,7 +28,7 @@ function tripLocale(locale) {
 
 async function fetchMedalsViaProxy(locale) {
   const res = await fetch(
-    `${PROD_API}?type=medal&cid=${CID}&locale=${tripLocale(locale)}`
+    `${PROD_API}?type=medal&cid=${CID}&locale=${tripLocale(locale, 'medal')}`
   );
   const data = await res.json();
   return data.medalList || [];
@@ -32,7 +36,7 @@ async function fetchMedalsViaProxy(locale) {
 
 async function fetchMomentsViaProxy(locale) {
   const res = await fetch(
-    `${PROD_API}?type=moment&cid=${CID}&locale=${tripLocale(locale)}`
+    `${PROD_API}?type=moment&cid=${CID}&locale=${tripLocale(locale, 'moment')}`
   );
   const data = await res.json();
   return data.resourceBlockList || [];

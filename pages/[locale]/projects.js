@@ -39,12 +39,19 @@ export default function Projects(props) {
       }, 3000);
     };
 
+    // Track position in a float accumulator; reading back scrollLeft floors
+    // the value, which would swallow the +0.5 step and stall the scroll.
+    let pos = projectContainer.scrollLeft;
     const autoScroll = () => {
       if (!isUserScrolling && projectContainer) {
-        projectContainer.scrollLeft += 0.5;
-        if (projectContainer.scrollLeft >= projectContainer.scrollWidth / 2) {
-          projectContainer.scrollLeft = 0;
+        pos += 0.5;
+        if (pos >= projectContainer.scrollWidth / 2) {
+          pos = 0;
         }
+        projectContainer.scrollLeft = pos;
+      } else if (projectContainer) {
+        // Resync after manual scrolling so we resume without jumping
+        pos = projectContainer.scrollLeft;
       }
       animationFrame = requestAnimationFrame(autoScroll);
     };
