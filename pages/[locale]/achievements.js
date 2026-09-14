@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import maplibregl from "maplibre-gl";
-import "maplibre-gl/dist/maplibre-gl.css";
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import maplibregl from 'maplibre-gl';
+import 'maplibre-gl/dist/maplibre-gl.css';
 
 // Carto vector GL basemap styles (OpenStreetMap-based)
 const CARTO_STYLE_LIGHT =
-  "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json";
+  'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json';
 const CARTO_STYLE_DARK =
-  "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json";
+  'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json';
 
 export default function Achievements(props) {
   const [hoveredAchievement, setHoveredAchievement] = useState(null);
@@ -16,189 +16,189 @@ export default function Achievements(props) {
   function i18n(key) {
     if (
       props.i18n &&
-      props.i18n["achievements"] &&
-      !props.i18n["achievements"][key]
+      props.i18n['achievements'] &&
+      !props.i18n['achievements'][key]
     ) {
       if (!loggedMissingKeys.current.has(key)) {
-        console.log("Achievements Missing Translation: " + key);
+        console.log('Achievements Missing Translation: ' + key);
         loggedMissingKeys.current.add(key);
       }
     }
     return props.i18n &&
-      props.i18n["achievements"] &&
-      props.i18n["achievements"][key]
-      ? props.i18n["achievements"][key]
+      props.i18n['achievements'] &&
+      props.i18n['achievements'][key]
+      ? props.i18n['achievements'][key]
       : key;
   }
 
   // Map achievements to their map coordinates and colors
   const achievementMapData = {
-    "Paid Developer Tools in Hong Kong": {
+    'Paid Developer Tools in Hong Kong': {
       coords: [113.9745954, 22.3526409],
-      color: "b8172a",
+      color: 'b8172a',
     },
-    "Paid Developer Tools in Maldives": {
+    'Paid Developer Tools in Maldives': {
       coords: [73.5089, 4.1755],
-      color: "dc143c",
+      color: 'dc143c',
     },
-    "Paid Developer Tools in Taiwan": {
+    'Paid Developer Tools in Taiwan': {
       coords: [121.1945767, 25.0169013],
-      color: "1f89e3",
+      color: '1f89e3',
     },
-    "Paid Developer Tools in the United Kingdom": {
+    'Paid Developer Tools in the United Kingdom': {
       coords: [-9.7459993, 54.4364324],
-      color: "0b236f",
+      color: '0b236f',
     },
-    "Paid Developer Tools in the United States": {
+    'Paid Developer Tools in the United States': {
       coords: [-95.7129, 37.0902],
-      color: "0033a0",
+      color: '0033a0',
     },
-    "Paid Developer Tools in Canada": {
+    'Paid Developer Tools in Canada': {
       coords: [-106.3468, 56.1304],
-      color: "ff0000",
+      color: 'ff0000',
     },
-    "Graphics & Design App in Uzbekistan": {
+    'Graphics & Design App in Uzbekistan': {
       coords: [64.5853, 41.3775],
-      color: "0099b5",
+      color: '0099b5',
     },
-    "Paid Developer Tools in Kuwait": {
+    'Paid Developer Tools in Kuwait': {
       coords: [47.4818, 29.3117],
-      color: "007a3d",
+      color: '007a3d',
     },
-    "Paid Developer Tools in Greece": {
+    'Paid Developer Tools in Greece': {
       coords: [21.8243, 39.0742],
-      color: "005bae",
+      color: '005bae',
     },
-    "Paid Developer Tools in Malaysia": {
+    'Paid Developer Tools in Malaysia': {
       coords: [101.9758, 4.2105],
-      color: "2563eb", // blue-600, matches the tile color
+      color: '2563eb', // blue-600, matches the tile color
     },
   };
 
   const achievements = [
     {
-      year: "2026",
-      title: "Paid Developer Tools in Malaysia",
-      rank: "#1",
-      flag: "🇲🇾",
-      color: "text-blue-600", // Red, white, blue, yellow flag
+      year: '2026',
+      title: 'Paid Developer Tools in Malaysia',
+      rank: '#1',
+      flag: '🇲🇾',
+      color: 'text-blue-600', // Red, white, blue, yellow flag
     },
     {
-      year: "2026",
-      title: "Paid Developer Tools in Hong Kong",
-      rank: "#1",
-      flag: "🇭🇰",
-      color: "text-red-600", // Red and white flag
+      year: '2026',
+      title: 'Paid Developer Tools in Hong Kong',
+      rank: '#1',
+      flag: '🇭🇰',
+      color: 'text-red-600', // Red and white flag
     },
     {
-      year: "2026",
-      title: "Paid Developer Tools in Greece",
-      rank: "#1",
-      flag: "🇬🇷",
-      color: "text-blue-600", // Blue and white flag
+      year: '2026',
+      title: 'Paid Developer Tools in Greece',
+      rank: '#1',
+      flag: '🇬🇷',
+      color: 'text-blue-600', // Blue and white flag
     },
     {
-      year: "2024",
-      title: "Paid Developer Tools in Maldives",
-      rank: "#1",
-      flag: "🇲🇻",
-      color: "text-red-600", // Red and green flag
+      year: '2024',
+      title: 'Paid Developer Tools in Maldives',
+      rank: '#1',
+      flag: '🇲🇻',
+      color: 'text-red-600', // Red and green flag
     },
     {
-      year: "2024",
-      title: "Paid Developer Tools in Taiwan",
-      rank: "#1",
-      flag: "🇹🇼",
-      color: "text-blue-600", // Blue and red flag
+      year: '2024',
+      title: 'Paid Developer Tools in Taiwan',
+      rank: '#1',
+      flag: '🇹🇼',
+      color: 'text-blue-600', // Blue and red flag
     },
     {
-      year: "2024",
-      title: "Paid Developer Tools in Hong Kong",
-      rank: "#1",
-      flag: "🇭🇰",
-      color: "text-red-600", // Red and white flag
+      year: '2024',
+      title: 'Paid Developer Tools in Hong Kong',
+      rank: '#1',
+      flag: '🇭🇰',
+      color: 'text-red-600', // Red and white flag
     },
     {
-      year: "2023",
-      title: "Paid Developer Tools in the United Kingdom",
-      rank: "#1",
-      flag: "🇬🇧",
-      color: "text-blue-600", // Red, white, blue flag
+      year: '2023',
+      title: 'Paid Developer Tools in the United Kingdom',
+      rank: '#1',
+      flag: '🇬🇧',
+      color: 'text-blue-600', // Red, white, blue flag
     },
     {
-      year: "2023",
-      title: "Paid Developer Tools in the United States",
-      rank: "#1",
-      flag: "🇺🇸",
-      color: "text-blue-600", // Red, white, blue flag
+      year: '2023',
+      title: 'Paid Developer Tools in the United States',
+      rank: '#1',
+      flag: '🇺🇸',
+      color: 'text-blue-600', // Red, white, blue flag
     },
     {
-      year: "2023",
-      title: "Paid Developer Tools in Canada",
-      rank: "#1",
-      flag: "🇨🇦",
-      color: "text-red-600", // Red and white flag
+      year: '2023',
+      title: 'Paid Developer Tools in Canada',
+      rank: '#1',
+      flag: '🇨🇦',
+      color: 'text-red-600', // Red and white flag
     },
     {
-      year: "2022",
-      title: "Graphics & Design App in Uzbekistan",
-      rank: "#1",
-      flag: "🇺🇿",
-      color: "text-sky-500", // Blue, white, green flag
+      year: '2022',
+      title: 'Graphics & Design App in Uzbekistan',
+      rank: '#1',
+      flag: '🇺🇿',
+      color: 'text-sky-500', // Blue, white, green flag
     },
     {
-      year: "2022",
-      title: "Paid Developer Tools in Kuwait",
-      rank: "#1",
-      flag: "🇰🇼",
-      color: "text-green-600", // Green, white, red flag
+      year: '2022',
+      title: 'Paid Developer Tools in Kuwait',
+      rank: '#1',
+      flag: '🇰🇼',
+      color: 'text-green-600', // Green, white, red flag
     },
     {
-      year: "2022",
-      title: "Paid Developer Tools in Taiwan",
-      rank: "#1",
-      flag: "🇹🇼",
-      color: "text-blue-600", // Blue and red flag
+      year: '2022',
+      title: 'Paid Developer Tools in Taiwan',
+      rank: '#1',
+      flag: '🇹🇼',
+      color: 'text-blue-600', // Blue and red flag
     },
     {
-      year: "2022",
-      title: "Paid Developer Tools in Canada",
-      rank: "#1",
-      flag: "🇨🇦",
-      color: "text-red-600", // Red and white flag
+      year: '2022',
+      title: 'Paid Developer Tools in Canada',
+      rank: '#1',
+      flag: '🇨🇦',
+      color: 'text-red-600', // Red and white flag
     },
     {
-      year: "2021",
-      title: "Paid Developer Tools in the United States",
-      rank: "#1",
-      flag: "🇺🇸",
-      color: "text-blue-600", // Red, white, blue flag
+      year: '2021',
+      title: 'Paid Developer Tools in the United States',
+      rank: '#1',
+      flag: '🇺🇸',
+      color: 'text-blue-600', // Red, white, blue flag
     },
     {
-      year: "2021",
-      title: "Apple Worldwide Developers Conference (WWDC)",
-      rank: "Winner",
-      flag: "",
-      color: "text-orange-600 dark:text-orange-300",
+      year: '2021',
+      title: 'Apple Worldwide Developers Conference (WWDC)',
+      rank: 'Winner',
+      flag: '',
+      color: 'text-orange-600 dark:text-orange-300',
     },
     {
-      year: "Since 2020",
-      title: "Paid Apps in Different Categories Globally",
-      rank: "Top-100",
-      flag: "",
-      color: "text-teal-600",
+      year: 'Since 2020',
+      title: 'Paid Apps in Different Categories Globally',
+      rank: 'Top-100',
+      flag: '',
+      color: 'text-teal-600',
     },
   ];
 
   // The Top-100 "Since 2020" award is pinned into every year tab, so it
   // gets no tab of its own.
   const pinnedAchievements = achievements.filter(
-    (a) => a.year === "Since 2020",
+    (a) => a.year === 'Since 2020'
   );
 
   // Group the remaining achievements by year, preserving order (newest first)
   const achievementsByYear = achievements
-    .filter((a) => a.year !== "Since 2020")
+    .filter((a) => a.year !== 'Since 2020')
     .reduce((groups, achievement) => {
       const last = groups[groups.length - 1];
       if (last && last.year === achievement.year) {
@@ -247,18 +247,18 @@ export default function Achievements(props) {
     // Check for dark mode - darkmode-js adds 'darkmode--activated' class to body
     // Priority: explicit toggle (darkmode-js) > Tailwind dark class > system preference
     const checkDarkMode = () => {
-      if (typeof window !== "undefined") {
+      if (typeof window !== 'undefined') {
         const hasDarkmodeClass = document.body.classList.contains(
-          "darkmode--activated",
+          'darkmode--activated'
         );
         const hasDarkClass =
-          document.documentElement.classList.contains("dark");
+          document.documentElement.classList.contains('dark');
         const prefersDark = window.matchMedia(
-          "(prefers-color-scheme: dark)",
+          '(prefers-color-scheme: dark)'
         ).matches;
 
         // Check if darkmode-js widget exists (means user can toggle)
-        const darkmodeWidget = document.querySelector(".darkmode-toggle");
+        const darkmodeWidget = document.querySelector('.darkmode-toggle');
         const hasDarkmodeWidget = !!darkmodeWidget;
 
         // If darkmode-js widget exists, prioritize its class over system preference
@@ -285,7 +285,7 @@ export default function Achievements(props) {
       // Check if class actually changed
       const hasClassChange = mutations.some(
         (mutation) =>
-          mutation.type === "attributes" && mutation.attributeName === "class",
+          mutation.type === 'attributes' && mutation.attributeName === 'class'
       );
 
       if (hasClassChange) {
@@ -299,23 +299,23 @@ export default function Achievements(props) {
       }
     });
 
-    if (typeof window !== "undefined") {
+    if (typeof window !== 'undefined') {
       // Observe body for darkmode--activated class (darkmode-js)
       observer.observe(document.body, {
         attributes: true,
-        attributeFilter: ["class"],
+        attributeFilter: ['class'],
         subtree: false,
       });
 
       // Also observe html for dark class (Tailwind)
       observer.observe(document.documentElement, {
         attributes: true,
-        attributeFilter: ["class"],
+        attributeFilter: ['class'],
         subtree: false,
       });
 
-      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-      mediaQuery.addEventListener("change", () => {
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      mediaQuery.addEventListener('change', () => {
         setTimeout(() => {
           const isDark = checkDarkMode();
           if (map.current && map.current.loaded()) {
@@ -358,32 +358,32 @@ export default function Achievements(props) {
         return props.locale;
       }
       // Fall back to browser language
-      if (typeof window !== "undefined") {
+      if (typeof window !== 'undefined') {
         const browserLang =
-          navigator.language || navigator.userLanguage || "en";
+          navigator.language || navigator.userLanguage || 'en';
         // Extract language code (e.g., 'zh-HK' -> 'zh-HK', 'en-US' -> 'en')
-        if (browserLang.startsWith("zh")) {
-          return browserLang.includes("HK") ||
-            browserLang.includes("TW") ||
-            browserLang.includes("MO")
-            ? "zh-HK"
-            : "zh";
+        if (browserLang.startsWith('zh')) {
+          return browserLang.includes('HK') ||
+            browserLang.includes('TW') ||
+            browserLang.includes('MO')
+            ? 'zh-HK'
+            : 'zh';
         }
-        if (browserLang.startsWith("ja")) return "ja";
-        if (browserLang.startsWith("ko")) return "ko";
-        if (browserLang.startsWith("ru")) return "ru";
-        if (browserLang.startsWith("fr")) return "fr";
-        if (browserLang.startsWith("es")) return "es";
-        return "en";
+        if (browserLang.startsWith('ja')) return 'ja';
+        if (browserLang.startsWith('ko')) return 'ko';
+        if (browserLang.startsWith('ru')) return 'ru';
+        if (browserLang.startsWith('fr')) return 'fr';
+        if (browserLang.startsWith('es')) return 'es';
+        return 'en';
       }
-      return "en";
+      return 'en';
     };
 
     const locale = getLocale();
 
     // Calculate center from all achievement coordinates
     const allCoords = Object.values(achievementMapData).map(
-      (data) => data.coords,
+      (data) => data.coords
     );
     const allLats = allCoords.map((c) => c[1]);
     const allLons = allCoords.map((c) => c[0]);
@@ -393,18 +393,18 @@ export default function Achievements(props) {
     // Determine initial style based on dark mode (check directly)
     // Priority: explicit toggle (darkmode-js) > Tailwind dark class > system preference
     const checkDarkMode = () => {
-      if (typeof window !== "undefined") {
+      if (typeof window !== 'undefined') {
         const hasDarkmodeClass = document.body.classList.contains(
-          "darkmode--activated",
+          'darkmode--activated'
         );
         const hasDarkClass =
-          document.documentElement.classList.contains("dark");
+          document.documentElement.classList.contains('dark');
         const prefersDark = window.matchMedia(
-          "(prefers-color-scheme: dark)",
+          '(prefers-color-scheme: dark)'
         ).matches;
 
         // Check if darkmode-js widget exists (means user can toggle)
-        const darkmodeWidget = document.querySelector(".darkmode-toggle");
+        const darkmodeWidget = document.querySelector('.darkmode-toggle');
         const hasDarkmodeWidget = !!darkmodeWidget;
 
         // If darkmode-js widget exists, prioritize its class over system preference
@@ -446,31 +446,31 @@ export default function Achievements(props) {
     // Navigation controls removed
 
     // Add markers after map loads
-    map.current.on("load", () => {
+    map.current.on('load', () => {
       updateMarkers();
       // Hide attribution
       const attribution = mapContainer.current?.querySelector(
-        ".maplibregl-ctrl-attrib",
+        '.maplibregl-ctrl-attrib'
       );
       if (attribution) {
-        attribution.style.display = "none";
+        attribution.style.display = 'none';
       }
 
       // Check dark mode again after map loads and update if needed
       // Priority: explicit toggle (darkmode-js) > Tailwind dark class > system preference
       const checkDarkMode = () => {
-        if (typeof window !== "undefined") {
+        if (typeof window !== 'undefined') {
           const hasDarkmodeClass = document.body.classList.contains(
-            "darkmode--activated",
+            'darkmode--activated'
           );
           const hasDarkClass =
-            document.documentElement.classList.contains("dark");
+            document.documentElement.classList.contains('dark');
           const prefersDark = window.matchMedia(
-            "(prefers-color-scheme: dark)",
+            '(prefers-color-scheme: dark)'
           ).matches;
 
           // Check if darkmode-js widget exists (means user can toggle)
-          const darkmodeWidget = document.querySelector(".darkmode-toggle");
+          const darkmodeWidget = document.querySelector('.darkmode-toggle');
           const hasDarkmodeWidget = !!darkmodeWidget;
 
           // If darkmode-js widget exists, prioritize its class over system preference
@@ -485,7 +485,7 @@ export default function Achievements(props) {
         return false;
       };
       const isDark = checkDarkMode();
-      const expectedStyle = isDark ? "dark_all" : "light_all";
+      const expectedStyle = isDark ? 'dark_all' : 'light_all';
       if (currentMapStyleRef.current !== expectedStyle) {
         updateMapStyle(isDark);
       }
@@ -494,10 +494,10 @@ export default function Achievements(props) {
     // Also hide attribution immediately if it exists
     const hideAttribution = () => {
       const attribution = mapContainer.current?.querySelector(
-        ".maplibregl-ctrl-attrib",
+        '.maplibregl-ctrl-attrib'
       );
       if (attribution) {
-        attribution.style.display = "none";
+        attribution.style.display = 'none';
       }
     };
 
@@ -507,7 +507,7 @@ export default function Achievements(props) {
     // Clear interval after 5 seconds
     const timeoutId = setTimeout(
       () => clearInterval(attributionInterval),
-      5000,
+      5000
     );
 
     return () => {
@@ -530,7 +530,7 @@ export default function Achievements(props) {
 
     // Get all achievements that have map data
     const achievementsWithMap = achievements.filter(
-      (a) => achievementMapData[a.title],
+      (a) => achievementMapData[a.title]
     );
 
     // Group achievements by coordinates to count duplicates
@@ -558,7 +558,7 @@ export default function Achievements(props) {
 
       // Check if any achievement at this location is hovered
       const isHovered = locationAchievements.some(
-        (a) => hoveredAchievement === a.title,
+        (a) => hoveredAchievement === a.title
       );
 
       // Determine marker color and size
@@ -567,29 +567,29 @@ export default function Achievements(props) {
       const color = hoveredAchievement
         ? isHovered
           ? `#${mapData.color}`
-          : "#808080"
+          : '#808080'
         : `#${mapData.color}`;
       // All markers are large by default, only smaller when something else is hovered
       const size = hoveredAchievement ? (isHovered ? 20 : 12) : 20;
 
       // Create marker element
-      const el = document.createElement("div");
-      el.className = "marker";
+      const el = document.createElement('div');
+      el.className = 'marker';
       el.style.width = `${size}px`;
       el.style.height = `${size}px`;
-      el.style.borderRadius = "50%";
+      el.style.borderRadius = '50%';
       el.style.backgroundColor = color;
-      el.style.border = "1px solid #ffffff";
-      el.style.boxShadow = "0 2px 4px rgba(0,0,0,0.3)";
-      el.style.cursor = "pointer";
-      el.style.transition = "all 0.3s ease";
-      el.style.display = "flex";
-      el.style.alignItems = "center";
-      el.style.justifyContent = "center";
+      el.style.border = '1px solid #ffffff';
+      el.style.boxShadow = '0 2px 4px rgba(0,0,0,0.3)';
+      el.style.cursor = 'pointer';
+      el.style.transition = 'all 0.3s ease';
+      el.style.display = 'flex';
+      el.style.alignItems = 'center';
+      el.style.justifyContent = 'center';
       el.style.fontSize = `${Math.max(8, size * 0.4)}px`;
-      el.style.fontWeight = "bold";
-      el.style.color = "#ffffff";
-      el.style.textShadow = "0 1px 2px rgba(0,0,0,0.5)";
+      el.style.fontWeight = 'bold';
+      el.style.color = '#ffffff';
+      el.style.textShadow = '0 1px 2px rgba(0,0,0,0.5)';
 
       // Always show the count inside the marker (e.g. 1x, 2x)
       if (el) {
@@ -597,40 +597,40 @@ export default function Achievements(props) {
       }
 
       // Tooltip listing the achievement(s) at this pin, shown on hover
-      const tip = document.createElement("div");
+      const tip = document.createElement('div');
       tip.style.cssText = [
-        "position:absolute",
-        "bottom:calc(100% + 8px)",
-        "left:50%",
-        "transform:translateX(-50%)",
-        "padding:6px 10px",
-        "border-radius:8px",
-        "background:rgba(17,24,39,0.95)",
-        "color:#fff",
+        'position:absolute',
+        'bottom:calc(100% + 8px)',
+        'left:50%',
+        'transform:translateX(-50%)',
+        'padding:6px 10px',
+        'border-radius:8px',
+        'background:rgba(17,24,39,0.95)',
+        'color:#fff',
         'font:600 11px/1.35 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif',
-        "white-space:nowrap",
-        "text-align:center",
-        "box-shadow:0 4px 12px rgba(0,0,0,0.35)",
-        "opacity:0",
-        "pointer-events:none",
-        "transition:opacity 0.15s ease",
-        "z-index:10",
-      ].join(";");
+        'white-space:nowrap',
+        'text-align:center',
+        'box-shadow:0 4px 12px rgba(0,0,0,0.35)',
+        'opacity:0',
+        'pointer-events:none',
+        'transition:opacity 0.15s ease',
+        'z-index:10',
+      ].join(';');
       locationAchievements.forEach((a) => {
-        const row = document.createElement("div");
+        const row = document.createElement('div');
         row.textContent = `${i18n(a.rank)} · ${i18n(a.title)} (${i18n(
-          a.year,
+          a.year
         )})`;
         tip.appendChild(row);
       });
       el.appendChild(tip);
-      el.addEventListener("mouseenter", () => {
-        tip.style.opacity = "1";
-        el.style.zIndex = "20";
+      el.addEventListener('mouseenter', () => {
+        tip.style.opacity = '1';
+        el.style.zIndex = '20';
       });
-      el.addEventListener("mouseleave", () => {
-        tip.style.opacity = "0";
-        el.style.zIndex = "";
+      el.addEventListener('mouseleave', () => {
+        tip.style.opacity = '0';
+        el.style.zIndex = '';
       });
 
       // Add marker to map
@@ -668,12 +668,12 @@ export default function Achievements(props) {
                 href="#achievements"
               >
                 {i18n(
-                  "Trusted by customers from over 175 countries and regions",
+                  'Trusted by customers from over 175 countries and regions'
                 )}
                 <i className="far fa-earth-americas ml-2"></i>
               </a>
               <p className="mt-3 text-xl text-gray-500 sm:mt-4">
-                {i18n("People love my apps, and I'd believe you will, too.")}{" "}
+                {i18n("People love my apps, and I'd believe you will, too.")}{' '}
                 <i className="far fa-hand-holding-heart"></i>
               </p>
             </div>
@@ -682,7 +682,7 @@ export default function Achievements(props) {
                 <div className="cursor-default">
                   <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
                     <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-gray-100">
-                      {i18n("Apple App Store")}
+                      {i18n('Apple App Store')}
                       <i className="fab fa-app-store ml-2"></i>
                     </h3>
                     {/* Year tabs */}
@@ -696,8 +696,8 @@ export default function Achievements(props) {
                             onClick={() => setSelectedYear(group.year)}
                             className={`rounded-full px-3 py-1 text-xs sm:text-sm font-semibold transition-colors ${
                               isActive
-                                ? "bg-gray-900 text-white dark:bg-white dark:text-gray-900"
-                                : "bg-gray-100 text-gray-500 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700"
+                                ? 'bg-gray-900 text-white dark:bg-white dark:text-gray-900'
+                                : 'bg-gray-100 text-gray-500 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700'
                             }`}
                           >
                             {i18n(group.year)}
@@ -714,7 +714,7 @@ export default function Achievements(props) {
                       key={selectedGroup?.year}
                       style={{
                         animation:
-                          "achYearSlide 300ms cubic-bezier(0.22,1,0.36,1)",
+                          'achYearSlide 300ms cubic-bezier(0.22,1,0.36,1)',
                       }}
                       className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 sm:gap-3 content-start auto-rows-min"
                     >
@@ -727,17 +727,17 @@ export default function Achievements(props) {
                         const isGrayedOut = hoveredAchievement && !isHovered;
 
                         // Extract color class for border - simplified mapping
-                        let borderColorClass = "border-orange-500";
-                        if (achievement.color.includes("blue"))
-                          borderColorClass = "border-blue-500";
-                        if (achievement.color.includes("teal"))
-                          borderColorClass = "border-teal-500";
-                        if (achievement.color.includes("sky"))
-                          borderColorClass = "border-sky-500";
-                        if (achievement.color.includes("green"))
-                          borderColorClass = "border-green-500";
-                        if (achievement.color.includes("red"))
-                          borderColorClass = "border-red-500";
+                        let borderColorClass = 'border-orange-500';
+                        if (achievement.color.includes('blue'))
+                          borderColorClass = 'border-blue-500';
+                        if (achievement.color.includes('teal'))
+                          borderColorClass = 'border-teal-500';
+                        if (achievement.color.includes('sky'))
+                          borderColorClass = 'border-sky-500';
+                        if (achievement.color.includes('green'))
+                          borderColorClass = 'border-green-500';
+                        if (achievement.color.includes('red'))
+                          borderColorClass = 'border-red-500';
 
                         return (
                           <div
@@ -746,8 +746,8 @@ export default function Achievements(props) {
                               isHovered
                                 ? `${borderColorClass} opacity-100 scale-[1.03]`
                                 : isGrayedOut
-                                  ? "opacity-40 grayscale border-transparent"
-                                  : "border-transparent hover:border-black dark:hover:border-white hover:scale-[1.03]"
+                                  ? 'opacity-40 grayscale border-transparent'
+                                  : 'border-transparent hover:border-black dark:hover:border-white hover:scale-[1.03]'
                             }`}
                             onMouseEnter={() => {
                               setHoveredAchievement(achievement.title);
@@ -788,7 +788,7 @@ export default function Achievements(props) {
                       </span>
                       <span className="text-right">
                         {i18n(
-                          "Rank records updated to September 2026 (Missing 2025).",
+                          'Rank records updated to September 2026 (Missing 2025).'
                         )}
                       </span>
                     </div>
