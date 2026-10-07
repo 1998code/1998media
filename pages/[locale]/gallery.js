@@ -850,11 +850,11 @@ export default function Gallery(props) {
           url: 'https://cdn.1998.media/spatial/photo/NagoyaStationDay2.HEIC',
           type: 'photo',
         },
-        // Unknown location
+        // Airplane
         {
-          id: 'unknown-location-blue-light',
-          title: 'Blue Light (Unknown Location)',
-          url: 'https://cdn.1998.media/spatial/photo/UnknownLocationBlueLight.HEIC',
+          id: 'airplane-blue-light',
+          title: 'Blue Light from Airplane',
+          url: 'https://cdn.1998.media/spatial/photo/AirplaneBlueLight.HEIC',
           type: 'photo',
         },
       ]
