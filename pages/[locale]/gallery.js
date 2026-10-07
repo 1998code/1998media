@@ -477,6 +477,145 @@ export default function Gallery(props) {
   // Only initialize spatial photos data for Safari to save traffic - but ensure consistent SSR
   const spatialPhotos = spatialPhotosReady
     ? [
+        // Kaohsiung
+        {
+          id: 'kaohsiung-lotus-pond',
+          title: 'Kaohsiung Lotus Pond',
+          url: 'https://cdn.1998.media/spatial/photo/KaohsiungLotusPond.HEIC',
+          type: 'photo',
+        },
+        {
+          id: 'kaohsiung-lotus-pond-pavilion',
+          title: 'Kaohsiung Lotus Pond Pavilion',
+          url: 'https://cdn.1998.media/spatial/photo/KaohsiungLotusPondPavilion.HEIC',
+          type: 'photo',
+        },
+        {
+          id: 'kaohsiung-lotus-pond-beiji-pavilion',
+          title: 'Kaohsiung Lotus Pond Beiji Pavilion',
+          url: 'https://cdn.1998.media/spatial/photo/KaohsiungLotusPondBeijiPavilion.HEIC',
+          type: 'photo',
+        },
+        {
+          id: 'kaohsiung-spring-autumn-pavilions1',
+          title: 'Kaohsiung Spring and Autumn Pavilions',
+          url: 'https://cdn.1998.media/spatial/photo/KaohsiungSpringAutumnPavilions1.HEIC',
+          type: 'photo',
+        },
+        {
+          id: 'kaohsiung-spring-autumn-pavilions2',
+          title: 'Kaohsiung Spring and Autumn Pavilions',
+          url: 'https://cdn.1998.media/spatial/photo/KaohsiungSpringAutumnPavilions2.HEIC',
+          type: 'photo',
+        },
+        {
+          id: 'kaohsiung-dragon-tiger-pagodas',
+          title: 'Kaohsiung Dragon and Tiger Pagodas',
+          url: 'https://cdn.1998.media/spatial/photo/KaohsiungDragonTigerPagodas.HEIC',
+          type: 'photo',
+        },
+        {
+          id: 'kaohsiung-great-harbor-bridge-view-pano',
+          title: 'Kaohsiung Great Harbor Bridge Panorama',
+          url: 'https://cdn.1998.media/spatial/pano/KaohsiungGreatHarborBridgeView.HEIC',
+          type: 'photo',
+        },
+        {
+          id: 'kaohsiung-great-harbor-bridge-view1',
+          title: 'Kaohsiung Great Harbor Bridge View',
+          url: 'https://cdn.1998.media/spatial/photo/KaohsiungGreatHarborBridgeView1.HEIC',
+          type: 'photo',
+        },
+        {
+          id: 'kaohsiung-great-harbor-bridge-view2',
+          title: 'Kaohsiung Great Harbor Bridge View',
+          url: 'https://cdn.1998.media/spatial/photo/KaohsiungGreatHarborBridgeView2.HEIC',
+          type: 'photo',
+        },
+        {
+          id: 'kaohsiung-great-harbor-bridge-structure',
+          title: 'Kaohsiung Great Harbor Bridge Structure',
+          url: 'https://cdn.1998.media/spatial/photo/KaohsiungGreatHarborBridgeStructure.HEIC',
+          type: 'photo',
+        },
+        // Seoul (Conrad Seoul)
+        {
+          id: 'conrad-seoul-han-river-dawn',
+          title: 'Conrad Seoul Han River Dawn',
+          url: 'https://cdn.1998.media/spatial/photo/ConradSeoulHanRiverDawn.HEIC',
+          type: 'photo',
+        },
+        {
+          id: 'conrad-seoul-han-river-dawn1-video',
+          title: 'Conrad Seoul Han River Dawn',
+          url: 'https://cdn.1998.media/spatial/video/ConradSeoulHanRiverDawn1.MOV',
+          type: 'video',
+        },
+        {
+          id: 'conrad-seoul-han-river-dawn2-video',
+          title: 'Conrad Seoul Han River Dawn',
+          url: 'https://cdn.1998.media/spatial/video/ConradSeoulHanRiverDawn2.MOV',
+          type: 'video',
+        },
+        {
+          id: 'conrad-seoul-room-video',
+          title: 'Conrad Seoul Room',
+          url: 'https://cdn.1998.media/spatial/video/ConradSeoulRoom.MOV',
+          type: 'video',
+        },
+        {
+          id: 'conrad-seoul-minibar-video',
+          title: 'Conrad Seoul Minibar',
+          url: 'https://cdn.1998.media/spatial/video/ConradSeoulMinibar.MOV',
+          type: 'video',
+        },
+        // Kyoto
+        {
+          id: 'kyoto-national-museum',
+          title: 'Kyoto National Museum',
+          url: 'https://cdn.1998.media/spatial/photo/KyotoNationalMuseum.HEIC',
+          type: 'photo',
+        },
+        // Nara
+        {
+          id: 'nara-todaiji-great-buddha-hall',
+          title: 'Nara Todaiji Great Buddha Hall',
+          url: 'https://cdn.1998.media/spatial/photo/NaraTodaijiGreatBuddhaHall.HEIC',
+          type: 'photo',
+        },
+        // Las Vegas
+        {
+          id: 'las-vegas-strip',
+          title: 'Las Vegas Strip',
+          url: 'https://cdn.1998.media/spatial/photo/LasVegasStrip.HEIC',
+          type: 'photo',
+        },
+        {
+          id: 'las-vegas-strip-pano',
+          title: 'Las Vegas Strip Panorama',
+          url: 'https://cdn.1998.media/spatial/pano/LasVegasStrip.HEIC',
+          type: 'photo',
+        },
+        {
+          id: 'las-vegas-strip-video',
+          title: 'Las Vegas Strip',
+          url: 'https://cdn.1998.media/spatial/video/LasVegasStrip.MOV',
+          type: 'video',
+        },
+        // Shenzhen
+        {
+          id: 'shenzhen-bay-city-night-video',
+          title: 'Shenzhen Bay City Night',
+          url: 'https://cdn.1998.media/spatial/video/ShenzhenBayCityNight.MOV',
+          type: 'video',
+        },
+        // Guangzhou
+        {
+          id: 'guangzhou-city-view',
+          title: 'Guangzhou City View',
+          url: 'https://cdn.1998.media/spatial/photo/GuangzhouCityView.HEIC',
+          type: 'photo',
+        },
         // Beijing
         {
           id: 'summer-palace-pano-1',
@@ -488,6 +627,7 @@ export default function Gallery(props) {
           id: 'summer-palace-pano-2',
           title: 'Summer Palace Panorama',
           url: 'https://cdn.1998.media/spatial/pano/SummerPalace2.HEIC',
+          type: 'photo',
         },
         {
           id: 'summer-palace-pano-3',
@@ -513,7 +653,43 @@ export default function Gallery(props) {
           url: 'https://cdn.1998.media/spatial/pano/Shichahai2.HEIC',
           type: 'photo',
         },
-        // Osaka (Expo)
+        {
+          id: 'summer-palace-willows',
+          title: 'Summer Palace Willows',
+          url: 'https://cdn.1998.media/spatial/photo/SummerPalaceWillows.HEIC',
+          type: 'photo',
+        },
+        {
+          id: 'summer-palace-reeds',
+          title: 'Summer Palace Reeds',
+          url: 'https://cdn.1998.media/spatial/photo/SummerPalaceReeds.HEIC',
+          type: 'photo',
+        },
+        {
+          id: 'summer-palace-pavilion-video',
+          title: 'Summer Palace Pavilion',
+          url: 'https://cdn.1998.media/spatial/video/SummerPalacePavilion.MOV',
+          type: 'video',
+        },
+        {
+          id: 'summer-palace-willows1-video',
+          title: 'Summer Palace Willows',
+          url: 'https://cdn.1998.media/spatial/video/SummerPalaceWillows1.MOV',
+          type: 'video',
+        },
+        {
+          id: 'summer-palace-willows2-video',
+          title: 'Summer Palace Willows',
+          url: 'https://cdn.1998.media/spatial/video/SummerPalaceWillows2.MOV',
+          type: 'video',
+        },
+        {
+          id: 'summer-palace-reeds-video',
+          title: 'Summer Palace Reeds',
+          url: 'https://cdn.1998.media/spatial/video/SummerPalaceReeds.MOV',
+          type: 'video',
+        },
+        // Osaka
         {
           id: 'osaka-expo-pano',
           title: 'Osaka Expo Panorama',
@@ -530,6 +706,30 @@ export default function Gallery(props) {
           id: 'osaka-expo-water-plaza',
           title: 'Osaka Expo Water Plaza',
           url: 'https://cdn.1998.media/spatial/photo/OsakaExpoWaterPlaza.HEIC',
+          type: 'photo',
+        },
+        {
+          id: 'osaka-expo-east-gate2',
+          title: 'Osaka Expo East Gate',
+          url: 'https://cdn.1998.media/spatial/photo/OsakaExpoEastGate2.HEIC',
+          type: 'photo',
+        },
+        {
+          id: 'osaka-expo-water-plaza2',
+          title: 'Osaka Expo Water Plaza',
+          url: 'https://cdn.1998.media/spatial/photo/OsakaExpoWaterPlaza2.HEIC',
+          type: 'photo',
+        },
+        {
+          id: 'osaka-city-view',
+          title: 'Osaka City View',
+          url: 'https://cdn.1998.media/spatial/photo/OsakaCityView.HEIC',
+          type: 'photo',
+        },
+        {
+          id: 'osaka-umeda-sky-building-view',
+          title: 'Osaka Umeda Sky Building View',
+          url: 'https://cdn.1998.media/spatial/photo/OsakaUmedaSkyBuildingView.HEIC',
           type: 'photo',
         },
         // Changsha
@@ -549,6 +749,18 @@ export default function Gallery(props) {
           id: 'changsha-south-station',
           title: 'Changsha South Station',
           url: 'https://cdn.1998.media/spatial/photo/ChangshaSouthStation.HEIC',
+          type: 'photo',
+        },
+        {
+          id: 'juzizhou2',
+          title: 'Juzizhou',
+          url: 'https://cdn.1998.media/spatial/photo/Juzizhou2.HEIC',
+          type: 'photo',
+        },
+        {
+          id: 'changsha-south-station2',
+          title: 'Changsha South Station',
+          url: 'https://cdn.1998.media/spatial/photo/ChangshaSouthStation2.HEIC',
           type: 'photo',
         },
         // Tokyo
@@ -581,6 +793,18 @@ export default function Gallery(props) {
           id: 'sf-night-pano',
           title: 'San Francisco Night Panorama',
           url: 'https://cdn.1998.media/spatial/pano/SanFranciscoNight.HEIC',
+          type: 'photo',
+        },
+        {
+          id: 'san-francisco-bay-pano',
+          title: 'San Francisco Bay Panorama',
+          url: 'https://cdn.1998.media/spatial/pano/SanFranciscoBay.HEIC',
+          type: 'photo',
+        },
+        {
+          id: 'san-francisco-bay-bridge',
+          title: 'San Francisco Bay Bridge',
+          url: 'https://cdn.1998.media/spatial/photo/SanFranciscoBayBridge.HEIC',
           type: 'photo',
         },
         // Nagoya
@@ -624,6 +848,13 @@ export default function Gallery(props) {
           id: 'nagoya-station-day2',
           title: 'Nagoya Station Day',
           url: 'https://cdn.1998.media/spatial/photo/NagoyaStationDay2.HEIC',
+          type: 'photo',
+        },
+        // Unknown location
+        {
+          id: 'unknown-location-blue-light',
+          title: 'Blue Light (Unknown Location)',
+          url: 'https://cdn.1998.media/spatial/photo/UnknownLocationBlueLight.HEIC',
           type: 'photo',
         },
       ]
