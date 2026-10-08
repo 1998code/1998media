@@ -19,6 +19,130 @@ function ytFormatDuration(seconds) {
   return h > 0 ? `${h}:${pad(m)}:${pad(sec)}` : `${m}:${pad(sec)}`;
 }
 
+function SpatialCard({ photo, title, location, typeLabel, unavailableLabel, onOpen }) {
+  const cardRef = useRef(null);
+  const mediaRef = useRef(null);
+  const [shouldLoad, setShouldLoad] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [status, setStatus] = useState('loading');
+  const isVideo = photo.type === 'video';
+  const isPanorama = photo.id.includes('pano');
+  const variant = photo.url.match(/(\d+)\.(?:HEIC|MOV)$/)?.[1];
+
+  useEffect(() => {
+    if (!('IntersectionObserver' in window)) {
+      setShouldLoad(true);
+      setIsVisible(true);
+      return;
+    }
+    const observer = new IntersectionObserver(([entry]) => {
+      setIsVisible(entry.isIntersecting);
+      if (entry.isIntersecting) setShouldLoad(true);
+    }, { threshold: 0.01 });
+    observer.observe(cardRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const media = mediaRef.current;
+    if (!media || !shouldLoad) return;
+    if (!isVideo && media.complete) {
+      setStatus(media.naturalWidth > 0 ? 'loaded' : 'error');
+    } else if (isVideo && media.readyState >= 2) {
+      setStatus('loaded');
+    }
+  }, [shouldLoad, isVideo]);
+
+  useEffect(() => {
+    const video = mediaRef.current;
+    if (!isVideo || !video || !shouldLoad) return;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const updatePlayback = () => {
+      if (isVisible && !document.hidden && !reducedMotion.matches) {
+        video.play()?.catch(() => {});
+      } else {
+        video.pause();
+      }
+    };
+    updatePlayback();
+    document.addEventListener('visibilitychange', updatePlayback);
+    reducedMotion.addEventListener('change', updatePlayback);
+    return () => {
+      video.pause();
+      document.removeEventListener('visibilitychange', updatePlayback);
+      reducedMotion.removeEventListener('change', updatePlayback);
+    };
+  }, [isVideo, isVisible, shouldLoad]);
+
+  return (
+    <button
+      ref={cardRef}
+      type="button"
+      onClick={() => onOpen(photo)}
+      aria-label={`${title} — ${typeLabel}${variant ? ` ${variant}` : ''}`}
+      className="group min-w-0 w-full overflow-hidden rounded-2xl border border-gray-200 bg-white text-left shadow-sm transition-colors hover:border-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:border-gray-800 dark:bg-gray-900 dark:focus-visible:ring-offset-gray-950 xl:rounded-[25px]"
+    >
+      <span
+        className="relative block aspect-[4/3] w-full overflow-hidden bg-gray-200 dark:bg-gray-800"
+        aria-busy={status === 'loading'}
+      >
+        {status === 'loading' && (
+          <span className="absolute inset-0 bg-gray-200 dark:bg-gray-800 motion-safe:animate-pulse" aria-hidden="true" />
+        )}
+        {shouldLoad && (isVideo ? (
+          <video
+            ref={mediaRef}
+            src={photo.url}
+            muted
+            loop
+            playsInline
+            preload="auto"
+            controls={false}
+            onLoadedData={() => setStatus('loaded')}
+            onError={() => setStatus('error')}
+            aria-hidden="true"
+            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-300 motion-reduce:transition-none ${status === 'loaded' ? 'opacity-100' : 'opacity-0'}`}
+          />
+        ) : (
+          <img
+            ref={mediaRef}
+            src={photo.url}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            onLoad={() => setStatus('loaded')}
+            onError={() => setStatus('error')}
+            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-300 motion-reduce:transition-none ${status === 'loaded' ? 'opacity-100' : 'opacity-0'}`}
+          />
+        ))}
+        {status === 'error' && (
+          <span className="absolute inset-0 flex flex-col items-center justify-center gap-2 p-4 text-sm text-gray-500 dark:text-gray-400">
+            <i className="far fa-image text-2xl" aria-hidden="true" />
+            {unavailableLabel}
+          </span>
+        )}
+        {isVideo && status === 'loaded' && (
+          <span className="absolute bottom-3 right-3 flex h-9 w-9 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-sm" aria-hidden="true">
+            <i className="fas fa-play text-xs" />
+          </span>
+        )}
+      </span>
+      <span className="block p-4">
+        <span className="mb-2 flex items-center justify-between gap-2 text-xs text-gray-500 dark:text-gray-400">
+          <span className="min-w-0 truncate">{location}</span>
+          <span className="flex shrink-0 items-center gap-1.5">
+            <i className={`fal ${isVideo ? 'fa-video' : isPanorama ? 'fa-panorama' : 'fa-cube'}`} aria-hidden="true" />
+            {typeLabel}{variant ? ` · ${variant}` : ''}
+          </span>
+        </span>
+        <span className="block min-h-[2.5rem] text-sm font-semibold leading-5 text-gray-900 dark:text-gray-100" title={title}>
+          {title}
+        </span>
+      </span>
+    </button>
+  );
+}
+
 export default function Gallery(props) {
   function i18n(key) {
     if (props.i18n && props.i18n['gallery'] && !props.i18n['gallery'][key]) {
@@ -38,7 +162,12 @@ export default function Gallery(props) {
     isZhCN ? 'xiaohongshu' : 'unsplash'
   );
   const [spatialFilter, setSpatialFilter] = useState('all');
-  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [spatialLocation, setSpatialLocation] = useState('all');
+  const galleryScrollRef = useRef(null);
+
+  useEffect(() => {
+    galleryScrollRef.current?.scrollTo({ top: 0, behavior: 'auto' });
+  }, [activeTab]);
   const unsplashData = props.unsplashData || { stats: null, photos: [] };
 
   // YouTube (@MingsExplorer) data - fetched from /api/youtube via deferred load
@@ -480,60 +609,70 @@ export default function Gallery(props) {
         // Kaohsiung
         {
           id: 'kaohsiung-lotus-pond',
+          location: 'Kaohsiung',
           title: 'Kaohsiung Lotus Pond',
           url: 'https://cdn.1998.media/spatial/photo/KaohsiungLotusPond.HEIC',
           type: 'photo',
         },
         {
           id: 'kaohsiung-lotus-pond-pavilion',
+          location: 'Kaohsiung',
           title: 'Kaohsiung Lotus Pond Pavilion',
           url: 'https://cdn.1998.media/spatial/photo/KaohsiungLotusPondPavilion.HEIC',
           type: 'photo',
         },
         {
           id: 'kaohsiung-lotus-pond-beiji-pavilion',
+          location: 'Kaohsiung',
           title: 'Kaohsiung Lotus Pond Beiji Pavilion',
           url: 'https://cdn.1998.media/spatial/photo/KaohsiungLotusPondBeijiPavilion.HEIC',
           type: 'photo',
         },
         {
           id: 'kaohsiung-spring-autumn-pavilions1',
+          location: 'Kaohsiung',
           title: 'Kaohsiung Spring and Autumn Pavilions',
           url: 'https://cdn.1998.media/spatial/photo/KaohsiungSpringAutumnPavilions1.HEIC',
           type: 'photo',
         },
         {
           id: 'kaohsiung-spring-autumn-pavilions2',
+          location: 'Kaohsiung',
           title: 'Kaohsiung Spring and Autumn Pavilions',
           url: 'https://cdn.1998.media/spatial/photo/KaohsiungSpringAutumnPavilions2.HEIC',
           type: 'photo',
         },
         {
           id: 'kaohsiung-dragon-tiger-pagodas',
+          location: 'Kaohsiung',
           title: 'Kaohsiung Dragon and Tiger Pagodas',
           url: 'https://cdn.1998.media/spatial/photo/KaohsiungDragonTigerPagodas.HEIC',
           type: 'photo',
         },
         {
           id: 'kaohsiung-great-harbor-bridge-view-pano',
+          location: 'Kaohsiung',
           title: 'Kaohsiung Great Harbor Bridge Panorama',
           url: 'https://cdn.1998.media/spatial/pano/KaohsiungGreatHarborBridgeView.HEIC',
           type: 'photo',
         },
         {
           id: 'kaohsiung-great-harbor-bridge-view1',
+          location: 'Kaohsiung',
           title: 'Kaohsiung Great Harbor Bridge View',
           url: 'https://cdn.1998.media/spatial/photo/KaohsiungGreatHarborBridgeView1.HEIC',
           type: 'photo',
         },
         {
           id: 'kaohsiung-great-harbor-bridge-view2',
+          location: 'Kaohsiung',
           title: 'Kaohsiung Great Harbor Bridge View',
           url: 'https://cdn.1998.media/spatial/photo/KaohsiungGreatHarborBridgeView2.HEIC',
           type: 'photo',
         },
         {
           id: 'kaohsiung-great-harbor-bridge-structure',
+          location: 'Kaohsiung',
           title: 'Kaohsiung Great Harbor Bridge Structure',
           url: 'https://cdn.1998.media/spatial/photo/KaohsiungGreatHarborBridgeStructure.HEIC',
           type: 'photo',
@@ -541,30 +680,35 @@ export default function Gallery(props) {
         // Seoul (Conrad Seoul)
         {
           id: 'conrad-seoul-han-river-dawn',
+          location: 'Seoul',
           title: 'Conrad Seoul Han River Dawn',
           url: 'https://cdn.1998.media/spatial/photo/ConradSeoulHanRiverDawn.HEIC',
           type: 'photo',
         },
         {
           id: 'conrad-seoul-han-river-dawn1-video',
+          location: 'Seoul',
           title: 'Conrad Seoul Han River Dawn',
           url: 'https://cdn.1998.media/spatial/video/ConradSeoulHanRiverDawn1.MOV',
           type: 'video',
         },
         {
           id: 'conrad-seoul-han-river-dawn2-video',
+          location: 'Seoul',
           title: 'Conrad Seoul Han River Dawn',
           url: 'https://cdn.1998.media/spatial/video/ConradSeoulHanRiverDawn2.MOV',
           type: 'video',
         },
         {
           id: 'conrad-seoul-room-video',
+          location: 'Seoul',
           title: 'Conrad Seoul Room',
           url: 'https://cdn.1998.media/spatial/video/ConradSeoulRoom.MOV',
           type: 'video',
         },
         {
           id: 'conrad-seoul-minibar-video',
+          location: 'Seoul',
           title: 'Conrad Seoul Minibar',
           url: 'https://cdn.1998.media/spatial/video/ConradSeoulMinibar.MOV',
           type: 'video',
@@ -572,6 +716,7 @@ export default function Gallery(props) {
         // Kyoto
         {
           id: 'kyoto-national-museum',
+          location: 'Kyoto',
           title: 'Kyoto National Museum',
           url: 'https://cdn.1998.media/spatial/photo/KyotoNationalMuseum.HEIC',
           type: 'photo',
@@ -579,6 +724,7 @@ export default function Gallery(props) {
         // Nara
         {
           id: 'nara-todaiji-great-buddha-hall',
+          location: 'Nara',
           title: 'Nara Todaiji Great Buddha Hall',
           url: 'https://cdn.1998.media/spatial/photo/NaraTodaijiGreatBuddhaHall.HEIC',
           type: 'photo',
@@ -586,18 +732,21 @@ export default function Gallery(props) {
         // Las Vegas
         {
           id: 'las-vegas-strip',
+          location: 'Las Vegas',
           title: 'Las Vegas Strip',
           url: 'https://cdn.1998.media/spatial/photo/LasVegasStrip.HEIC',
           type: 'photo',
         },
         {
           id: 'las-vegas-strip-pano',
+          location: 'Las Vegas',
           title: 'Las Vegas Strip Panorama',
           url: 'https://cdn.1998.media/spatial/pano/LasVegasStrip.HEIC',
           type: 'photo',
         },
         {
           id: 'las-vegas-strip-video',
+          location: 'Las Vegas',
           title: 'Las Vegas Strip',
           url: 'https://cdn.1998.media/spatial/video/LasVegasStrip.MOV',
           type: 'video',
@@ -605,6 +754,7 @@ export default function Gallery(props) {
         // Shenzhen
         {
           id: 'shenzhen-bay-city-night-video',
+          location: 'Shenzhen',
           title: 'Shenzhen Bay City Night',
           url: 'https://cdn.1998.media/spatial/video/ShenzhenBayCityNight.MOV',
           type: 'video',
@@ -612,6 +762,7 @@ export default function Gallery(props) {
         // Guangzhou
         {
           id: 'guangzhou-city-view',
+          location: 'Guangzhou',
           title: 'Guangzhou City View',
           url: 'https://cdn.1998.media/spatial/photo/GuangzhouCityView.HEIC',
           type: 'photo',
@@ -619,72 +770,84 @@ export default function Gallery(props) {
         // Beijing
         {
           id: 'summer-palace-pano-1',
+          location: 'Beijing',
           title: 'Summer Palace Panorama',
           url: 'https://cdn.1998.media/spatial/pano/SummerPalace1.HEIC',
           type: 'photo',
         },
         {
           id: 'summer-palace-pano-2',
+          location: 'Beijing',
           title: 'Summer Palace Panorama',
           url: 'https://cdn.1998.media/spatial/pano/SummerPalace2.HEIC',
           type: 'photo',
         },
         {
           id: 'summer-palace-pano-3',
+          location: 'Beijing',
           title: 'Summer Palace Panorama',
           url: 'https://cdn.1998.media/spatial/pano/SummerPalace3.HEIC',
           type: 'photo',
         },
         {
           id: 'summer-palace-pano-4',
+          location: 'Beijing',
           title: 'Summer Palace Panorama',
           url: 'https://cdn.1998.media/spatial/pano/SummerPalace4.HEIC',
           type: 'photo',
         },
         {
           id: 'shichahai-pano-1',
+          location: 'Beijing',
           title: 'Shichahai Panorama',
           url: 'https://cdn.1998.media/spatial/pano/Shichahai1.HEIC',
           type: 'photo',
         },
         {
           id: 'shichahai-pano-2',
+          location: 'Beijing',
           title: 'Shichahai Panorama',
           url: 'https://cdn.1998.media/spatial/pano/Shichahai2.HEIC',
           type: 'photo',
         },
         {
           id: 'summer-palace-willows',
+          location: 'Beijing',
           title: 'Summer Palace Willows',
           url: 'https://cdn.1998.media/spatial/photo/SummerPalaceWillows.HEIC',
           type: 'photo',
         },
         {
           id: 'summer-palace-reeds',
+          location: 'Beijing',
           title: 'Summer Palace Reeds',
           url: 'https://cdn.1998.media/spatial/photo/SummerPalaceReeds.HEIC',
           type: 'photo',
         },
         {
           id: 'summer-palace-pavilion-video',
+          location: 'Beijing',
           title: 'Summer Palace Pavilion',
           url: 'https://cdn.1998.media/spatial/video/SummerPalacePavilion.MOV',
           type: 'video',
         },
         {
           id: 'summer-palace-willows1-video',
+          location: 'Beijing',
           title: 'Summer Palace Willows',
           url: 'https://cdn.1998.media/spatial/video/SummerPalaceWillows1.MOV',
           type: 'video',
         },
         {
           id: 'summer-palace-willows2-video',
+          location: 'Beijing',
           title: 'Summer Palace Willows',
           url: 'https://cdn.1998.media/spatial/video/SummerPalaceWillows2.MOV',
           type: 'video',
         },
         {
           id: 'summer-palace-reeds-video',
+          location: 'Beijing',
           title: 'Summer Palace Reeds',
           url: 'https://cdn.1998.media/spatial/video/SummerPalaceReeds.MOV',
           type: 'video',
@@ -692,42 +855,49 @@ export default function Gallery(props) {
         // Osaka
         {
           id: 'osaka-expo-pano',
+          location: 'Osaka',
           title: 'Osaka Expo Panorama',
           url: 'https://cdn.1998.media/spatial/pano/OsakaExpo.HEIC',
           type: 'photo',
         },
         {
           id: 'osaka-expo-east-gate',
+          location: 'Osaka',
           title: 'Osaka Expo East Gate',
           url: 'https://cdn.1998.media/spatial/photo/OsakaExpoEastGate.HEIC',
           type: 'photo',
         },
         {
           id: 'osaka-expo-water-plaza',
+          location: 'Osaka',
           title: 'Osaka Expo Water Plaza',
           url: 'https://cdn.1998.media/spatial/photo/OsakaExpoWaterPlaza.HEIC',
           type: 'photo',
         },
         {
           id: 'osaka-expo-east-gate2',
+          location: 'Osaka',
           title: 'Osaka Expo East Gate',
           url: 'https://cdn.1998.media/spatial/photo/OsakaExpoEastGate2.HEIC',
           type: 'photo',
         },
         {
           id: 'osaka-expo-water-plaza2',
+          location: 'Osaka',
           title: 'Osaka Expo Water Plaza',
           url: 'https://cdn.1998.media/spatial/photo/OsakaExpoWaterPlaza2.HEIC',
           type: 'photo',
         },
         {
           id: 'osaka-city-view',
+          location: 'Osaka',
           title: 'Osaka City View',
           url: 'https://cdn.1998.media/spatial/photo/OsakaCityView.HEIC',
           type: 'photo',
         },
         {
           id: 'osaka-umeda-sky-building-view',
+          location: 'Osaka',
           title: 'Osaka Umeda Sky Building View',
           url: 'https://cdn.1998.media/spatial/photo/OsakaUmedaSkyBuildingView.HEIC',
           type: 'photo',
@@ -735,30 +905,35 @@ export default function Gallery(props) {
         // Changsha
         {
           id: 'juzizhou-pano',
+          location: 'Changsha',
           title: 'Juzizhou Panorama',
           url: 'https://cdn.1998.media/spatial/pano/Juzizhou.HEIC',
           type: 'photo',
         },
         {
           id: 'juzizhou',
+          location: 'Changsha',
           title: 'Juzizhou',
           url: 'https://cdn.1998.media/spatial/photo/Juzizhou.HEIC',
           type: 'photo',
         },
         {
           id: 'changsha-south-station',
+          location: 'Changsha',
           title: 'Changsha South Station',
           url: 'https://cdn.1998.media/spatial/photo/ChangshaSouthStation.HEIC',
           type: 'photo',
         },
         {
           id: 'juzizhou2',
+          location: 'Changsha',
           title: 'Juzizhou',
           url: 'https://cdn.1998.media/spatial/photo/Juzizhou2.HEIC',
           type: 'photo',
         },
         {
           id: 'changsha-south-station2',
+          location: 'Changsha',
           title: 'Changsha South Station',
           url: 'https://cdn.1998.media/spatial/photo/ChangshaSouthStation2.HEIC',
           type: 'photo',
@@ -766,12 +941,14 @@ export default function Gallery(props) {
         // Tokyo
         {
           id: 'tokyo-tower-night-video',
+          location: 'Tokyo',
           title: 'Tokyo Tower Night',
           url: 'https://cdn.1998.media/spatial/video/TokyoTowerNight.MOV',
           type: 'video',
         },
         {
           id: 'akasaka-palace',
+          location: 'Tokyo',
           title: 'Akasaka Palace',
           url: 'https://cdn.1998.media/spatial/photo/AkasakaPalace.HEIC',
           type: 'photo',
@@ -779,30 +956,35 @@ export default function Gallery(props) {
         // San Francisco
         {
           id: 'golden-gate-bridge',
+          location: 'San Francisco',
           title: 'Golden Gate Bridge',
           url: 'https://cdn.1998.media/spatial/photo/GoldenGateBridge.HEIC',
           type: 'photo',
         },
         {
           id: 'sf-sea-video',
+          location: 'San Francisco',
           title: 'San Francisco Sea',
           url: 'https://cdn.1998.media/spatial/video/SanFranciscoSea.MOV',
           type: 'video',
         },
         {
           id: 'sf-night-pano',
+          location: 'San Francisco',
           title: 'San Francisco Night Panorama',
           url: 'https://cdn.1998.media/spatial/pano/SanFranciscoNight.HEIC',
           type: 'photo',
         },
         {
           id: 'san-francisco-bay-pano',
+          location: 'San Francisco',
           title: 'San Francisco Bay Panorama',
           url: 'https://cdn.1998.media/spatial/pano/SanFranciscoBay.HEIC',
           type: 'photo',
         },
         {
           id: 'san-francisco-bay-bridge',
+          location: 'San Francisco',
           title: 'San Francisco Bay Bridge',
           url: 'https://cdn.1998.media/spatial/photo/SanFranciscoBayBridge.HEIC',
           type: 'photo',
@@ -810,42 +992,49 @@ export default function Gallery(props) {
         // Nagoya
         {
           id: 'nagoya-rocket-video',
+          location: 'Nagoya',
           title: 'Nagoya Rocket',
           url: 'https://cdn.1998.media/spatial/video/NagoyaRocket.MOV',
           type: 'video',
         },
         {
           id: 'nagoya-station-day-video',
+          location: 'Nagoya',
           title: 'Nagoya Station Day',
           url: 'https://cdn.1998.media/spatial/video/NagoyaStationDay.MOV',
           type: 'video',
         },
         {
           id: 'nagoya-station-night-video',
+          location: 'Nagoya',
           title: 'Nagoya Station Night',
           url: 'https://cdn.1998.media/spatial/video/NagoyaStationNight.MOV',
           type: 'video',
         },
         {
           id: 'nagoya-night-pano',
+          location: 'Nagoya',
           title: 'Nagoya Station Night Panorama',
           url: 'https://cdn.1998.media/spatial/pano/NagoyaStationNight.HEIC',
           type: 'photo',
         },
         {
           id: 'nagoya-station-day1',
+          location: 'Nagoya',
           title: 'Nagoya Station Day',
           url: 'https://cdn.1998.media/spatial/photo/NagoyaStationDay1.HEIC',
           type: 'photo',
         },
         {
           id: 'nagoya-station-night1',
+          location: 'Nagoya',
           title: 'Nagoya Station Night',
           url: 'https://cdn.1998.media/spatial/photo/NagoyaStationNight1.HEIC',
           type: 'photo',
         },
         {
           id: 'nagoya-station-day2',
+          location: 'Nagoya',
           title: 'Nagoya Station Day',
           url: 'https://cdn.1998.media/spatial/photo/NagoyaStationDay2.HEIC',
           type: 'photo',
@@ -853,6 +1042,7 @@ export default function Gallery(props) {
         // Airplane
         {
           id: 'airplane-blue-light',
+          location: 'Airplane',
           title: 'Blue Light from Airplane',
           url: 'https://cdn.1998.media/spatial/photo/AirplaneBlueLight.HEIC',
           type: 'photo',
@@ -911,196 +1101,65 @@ export default function Gallery(props) {
     updateFilterTabStyles();
     const timeoutId = setTimeout(updateFilterTabStyles, 50);
     return () => clearTimeout(timeoutId);
-  }, [spatialFilter, props.i18n, isClient]);
+  }, [spatialFilter, spatialLocation, spatialPhotosReady, activeTab, props.i18n, isClient]);
 
-  // Handle spatial filter change with animation
+  const spatialLocations = [...new Set(spatialPhotos.map((photo) => photo.location))];
+  const locationPhotos = spatialPhotos.filter(
+    (photo) => spatialLocation === 'all' || photo.location === spatialLocation
+  );
+  const spatialCounts = {
+    all: locationPhotos.length,
+    photo: locationPhotos.filter((photo) => photo.type === 'photo' && !photo.id.includes('pano')).length,
+    video: locationPhotos.filter((photo) => photo.type === 'video').length,
+    panorama: locationPhotos.filter((photo) => photo.id.includes('pano')).length,
+  };
+
   const handleSpatialFilterChange = (newFilter) => {
-    if (newFilter === spatialFilter) return;
-
-    setIsTransitioning(true);
-    setTimeout(() => {
-      setSpatialFilter(newFilter);
-      setTimeout(() => setIsTransitioning(false), 50);
-    }, 250);
+    setSpatialFilter(newFilter);
+    galleryScrollRef.current?.scrollTo({ top: 0, behavior: 'auto' });
   };
 
-  // Filter spatial photos based on spatial filter
-  const getFilteredSpatialPhotos = () => {
-    const filtered = (() => {
-      switch (spatialFilter) {
-        case 'photo':
-          return spatialPhotos.filter(
-            (photo) =>
-              photo.type === 'photo' &&
-              (!photo.id || !photo.id.includes('pano'))
-          );
-        case 'video':
-          return spatialPhotos.filter((photo) => photo.type === 'video');
-        case 'panorama':
-          return spatialPhotos.filter(
-            (photo) =>
-              photo.type === 'photo' && photo.id && photo.id.includes('pano')
-          );
-        case 'all':
-        default:
-          return spatialPhotos;
-      }
-    })();
+  const getFilteredSpatialPhotos = () => locationPhotos.filter((photo) => {
+    if (spatialFilter === 'video') return photo.type === 'video';
+    if (spatialFilter === 'panorama') return photo.id.includes('pano');
+    if (spatialFilter === 'photo') return photo.type === 'photo' && !photo.id.includes('pano');
+    return true;
+  });
 
-    if (spatialFilter === 'panorama' || spatialFilter === 'all') {
-      const panos = filtered.filter(
-        (photo) => photo.id && photo.id.includes('pano')
-      );
-    }
-
-    return filtered;
-  };
-
-  // Render spatial tab content only for Safari on desktop
+  // Unmount previews when leaving Spatial so hidden videos stop loading/playing.
   const renderSpatialTab = () => {
-    if (!isClient || !isSafari || isMobile) return null;
+    if (activeTab !== 'spatial' || !isClient || !isSafari || isMobile) return null;
+    const filtered = getFilteredSpatialPhotos();
 
     return (
-      <div className="w-full px-1">
-        <div className="relative overflow-hidden">
-          <div
-            className="transition-all duration-500 ease-in-out"
-            style={{
-              transform: isTransitioning ? 'translateX(20px)' : 'translateX(0)',
-              opacity: isTransitioning ? 0 : 1,
-            }}
-          >
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {getFilteredSpatialPhotos().map((photo) => (
-                <div
-                  key={photo.id}
-                  className="group flex flex-col rounded-2xl overflow-hidden bg-white dark:bg-black transform transition duration-500 hover:scale-[0.98] border border-transparent hover:border-black dark:hover:border-white xl:rounded-[25px]"
-                >
-                  {photo.type === 'video' ? (
-                    <div
-                      className={`relative h-[25vh] w-full -mb-14 ${
-                        isSpatialPhoto &&
-                        selectedImage === photo.url &&
-                        isDialogOpen
-                          ? 'cursor-default'
-                          : 'cursor-pointer'
-                      }`}
-                      onClick={
-                        !(
-                          isSpatialPhoto &&
-                          selectedImage === photo.url &&
-                          isDialogOpen
-                        )
-                          ? () => handleClick(photo)
-                          : undefined
-                      }
-                    >
-                      <video
-                        src={photo.url}
-                        muted
-                        autoPlay
-                        loop
-                        playsInline
-                        controls={false}
-                        className="absolute inset-0 w-full h-full object-cover rounded-t-2xl"
-                        style={{ zIndex: 1 }}
-                      />
-                    </div>
-                  ) : (
-                    <div className="relative h-[25vh] w-full -mb-14 overflow-hidden">
-                      {photo.id && photo.id.includes('pano') ? (
-                        <div
-                          key={`pano-${photo.id}`}
-                          className={`flex h-full animate-pan-slow ${
-                            isSpatialPhoto &&
-                            selectedImage === photo.url &&
-                            isDialogOpen
-                              ? 'cursor-default'
-                              : 'cursor-pointer'
-                          }`}
-                          {...(!(
-                            isSpatialPhoto &&
-                            selectedImage === photo.url &&
-                            isDialogOpen
-                          ) && {
-                            onClick: () => handleClick(photo),
-                          })}
-                          onAnimationStart={() => {}}
-                        >
-                          <img
-                            loading="lazy"
-                            className="h-full min-w-full object-cover object-left flex-shrink-0"
-                            src={photo.url}
-                            alt={photo.title}
-                          />
-                          <img
-                            loading="lazy"
-                            className="h-full min-w-full object-cover object-center flex-shrink-0"
-                            src={photo.url}
-                            alt={photo.title}
-                          />
-                          <img
-                            loading="lazy"
-                            className="h-full min-w-full object-cover object-right flex-shrink-0"
-                            src={photo.url}
-                            alt={photo.title}
-                          />
-                        </div>
-                      ) : (
-                        <img
-                          loading="lazy"
-                          className={`h-full w-full object-cover ${
-                            isSpatialPhoto &&
-                            selectedImage === photo.url &&
-                            isDialogOpen
-                              ? 'cursor-default'
-                              : 'cursor-pointer'
-                          }`}
-                          src={photo.url}
-                          alt={photo.title}
-                          {...(!(
-                            isSpatialPhoto &&
-                            selectedImage === photo.url &&
-                            isDialogOpen
-                          ) && {
-                            onClick: () => handleClick(photo),
-                          })}
-                        />
-                      )}
-                    </div>
-                  )}
-                  <div className="p-1.5 z-[1]">
-                    <h3 className="text-sm font-medium text-gray-100 flex items-center justify-between w-full">
-                      <span className="flex-shrink-0 flex items-center">
-                        <span className="rounded-xl bg-white/50 dark:bg-black/40 backdrop-blur-sm px-1.5 py-0.5">
-                          {photo.type === 'video' ? (
-                            <i
-                              className="fal fa-video text-base dark:text-gray-400"
-                              title="Spatial Video"
-                            ></i>
-                          ) : photo.id && photo.id.includes('pano') ? (
-                            <i
-                              className="fal fa-panorama text-base dark:text-gray-400"
-                              title="Panorama"
-                            ></i>
-                          ) : (
-                            <i
-                              className="fal fa-cube text-base dark:text-gray-400"
-                              title="Spatial Photo"
-                            ></i>
-                          )}
-                        </span>
-                      </span>
-                      <span className="flex-1 text-right">
-                        {i18n(photo.title)}
-                      </span>
-                    </h3>
-                  </div>
-                </div>
-              ))}
-            </div>
+      <div className="w-full px-1 pt-1">
+        {filtered.length ? (
+          <div className="grid grid-cols-1 items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {filtered.map((photo) => (
+              <SpatialCard
+                key={photo.url}
+                photo={photo}
+                title={i18n(photo.title)}
+                location={i18n(photo.location)}
+                typeLabel={i18n(photo.type === 'video' ? 'Spatial Video' : photo.id.includes('pano') ? 'Panorama' : 'Spatial Photo')}
+                unavailableLabel={i18n('Preview unavailable')}
+                onOpen={handleClick}
+              />
+            ))}
           </div>
-        </div>
+        ) : (
+          <div className="flex min-h-[240px] flex-col items-center justify-center gap-4 text-center text-gray-500 dark:text-gray-400">
+            <i className="fal fa-images text-3xl" aria-hidden="true" />
+            <p>{i18n('No matching media')}</p>
+            <button
+              type="button"
+              className="rounded-xl border border-gray-300 px-4 py-2 text-sm font-medium text-gray-900 hover:border-emerald-500 dark:border-gray-700 dark:text-gray-100"
+              onClick={() => { setSpatialLocation('all'); handleSpatialFilterChange('all'); }}
+            >
+              {i18n('Reset filters')}
+            </button>
+          </div>
+        )}
       </div>
     );
   };
@@ -1228,8 +1287,8 @@ export default function Gallery(props) {
 
   return (
     <>
-      <div className="relative h-full w-full max-w-7xl mx-auto flex flex-col items-start px-4 sm:px-6 lg:px-8 pt-24 overflow-hidden">
-        <div id="gallery" className="w-full">
+      <div className="relative h-dvh min-h-0 w-full max-w-7xl mx-auto flex flex-col items-start px-4 sm:px-6 lg:px-8 pt-24 overflow-hidden">
+        <div className="w-full shrink-0">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <a
               className="text-3xl font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl"
@@ -1315,68 +1374,65 @@ export default function Gallery(props) {
               </button>
             </div>
           </div>
-          {/* Spatial Filter Tabs - Only show when Spatial tab is active, Safari is detected, and not mobile */}
           {activeTab === 'spatial' && isClient && isSafari && !isMobile && (
-            <div className="flex justify-center mt-4">
-              <div className="relative flex bg-white/30 dark:bg-black/30 backdrop-blur-md rounded-2xl p-1 border border-gray-200/50 dark:border-gray-700/50">
-                {/* Sliding Background */}
-                <div
-                  className="absolute top-1 bottom-1 bg-emerald-500 rounded-xl transition-all duration-300 ease-out shadow-sm pointer-events-none"
-                  style={filterTabStyles}
-                />
-                <button
-                  ref={(el) => (filterTabRefs.current['all'] = el)}
-                  onClick={() => handleSpatialFilterChange('all')}
-                  className={`relative z-10 px-3 py-1.5 text-xs font-medium rounded-xl transition-all duration-300 ${
-                    spatialFilter === 'all'
-                      ? 'text-white'
-                      : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
-                  }`}
-                >
-                  <i className="fas fa-th mr-1"></i>
-                  {i18n('ALL')}
-                </button>
-                <button
-                  ref={(el) => (filterTabRefs.current['photo'] = el)}
-                  onClick={() => handleSpatialFilterChange('photo')}
-                  className={`relative z-10 px-3 py-1.5 text-xs font-medium rounded-xl transition-all duration-300 ${
-                    spatialFilter === 'photo'
-                      ? 'text-white'
-                      : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
-                  }`}
-                >
-                  <i className="fal fa-cube mr-1"></i>
-                  {i18n('Spatial Photo')}
-                </button>
-                <button
-                  ref={(el) => (filterTabRefs.current['video'] = el)}
-                  onClick={() => handleSpatialFilterChange('video')}
-                  className={`relative z-10 px-3 py-1.5 text-xs font-medium rounded-xl transition-all duration-300 ${
-                    spatialFilter === 'video'
-                      ? 'text-white'
-                      : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
-                  }`}
-                >
-                  <i className="fal fa-video mr-1"></i>
-                  {i18n('Spatial Video')}
-                </button>
-                <button
-                  ref={(el) => (filterTabRefs.current['panorama'] = el)}
-                  onClick={() => handleSpatialFilterChange('panorama')}
-                  className={`relative z-10 px-3 py-1.5 text-xs font-medium rounded-xl transition-all duration-300 ${
-                    spatialFilter === 'panorama'
-                      ? 'text-white'
-                      : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
-                  }`}
-                >
-                  <i className="fal fa-panorama mr-1"></i>
-                  {i18n('Panorama')}
-                </button>
+            <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
+              <div className="max-w-full overflow-x-auto">
+                <div className="relative flex w-max rounded-2xl border border-gray-200 bg-gray-100 p-1 dark:border-gray-800 dark:bg-gray-900" role="group" aria-label={i18n('Media type')}>
+                  <div
+                    className="pointer-events-none absolute top-1 bottom-1 rounded-xl bg-emerald-500 shadow-sm transition-all duration-300 motion-reduce:transition-none"
+                    style={filterTabStyles}
+                  />
+                  {[
+                    ['all', 'ALL', 'fa-th'],
+                    ['photo', 'Spatial Photo', 'fa-cube'],
+                    ['video', 'Spatial Video', 'fa-video'],
+                    ['panorama', 'Panorama', 'fa-panorama'],
+                  ].map(([value, label, icon]) => (
+                    <button
+                      key={value}
+                      type="button"
+                      ref={(el) => (filterTabRefs.current[value] = el)}
+                      onClick={() => handleSpatialFilterChange(value)}
+                      aria-pressed={spatialFilter === value}
+                      className={`relative z-10 flex items-center gap-2 whitespace-nowrap rounded-xl px-3 py-2 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 ${spatialFilter === value ? 'text-white' : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100'}`}
+                    >
+                      <i className={`fal ${icon}`} aria-hidden="true" />
+                      {i18n(label)}
+                      <span className="rounded-md bg-black/10 px-1.5 py-0.5 tabular-nums dark:bg-white/10">{spatialCounts[value]}</span>
+                    </button>
+                  ))}
+                </div>
               </div>
+              <label className="relative flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                <i className="fal fa-map-marker-alt" aria-hidden="true" />
+                <span className="sr-only">{i18n('Location')}</span>
+                <select
+                  aria-label={i18n('Location')}
+                  value={spatialLocation}
+                  onChange={(event) => {
+                    setSpatialLocation(event.target.value);
+                    galleryScrollRef.current?.scrollTo({ top: 0, behavior: 'auto' });
+                  }}
+                  className="min-w-[160px] max-w-[220px] cursor-pointer appearance-none rounded-xl border border-gray-200 bg-white py-2.5 pl-3 pr-8 text-sm text-gray-900 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-100"
+                >
+                  <option value="all">{i18n('All locations')}</option>
+                  {spatialLocations.map((location) => (
+                    <option key={location} value={location}>{i18n(location)}</option>
+                  ))}
+                </select>
+                <i className="fal fa-chevron-down pointer-events-none absolute right-3 text-xs" aria-hidden="true" />
+              </label>
+              <span className="sr-only" role="status">{spatialCounts[spatialFilter]} {i18n('Results')}</span>
             </div>
           )}
         </div>
-        <div className="relative my-2 w-full">
+        <div
+          ref={galleryScrollRef}
+          tabIndex={0}
+          role="region"
+          aria-label={i18n('Gallery')}
+          className="relative mt-3 min-h-0 flex-1 w-full overflow-y-auto overflow-x-hidden pb-32 pr-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-emerald-500"
+        >
           <div className="relative overflow-hidden">
             {/* Xiaohongshu Tab - Only show for zh-CN locale */}
             {isZhCN && (

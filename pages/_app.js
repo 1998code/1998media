@@ -47,7 +47,7 @@ function MyApp({ Component, pageProps }) {
           try {
             const Darkmode = module.default;
             const options = {
-              bottom: '93.5vh',
+              bottom: 'auto',
               right: '25px',
               time: '1.5s',
               mixColor: '#fff',

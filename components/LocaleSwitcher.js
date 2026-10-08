@@ -129,58 +129,36 @@ export default function LocaleSwitcher() {
     }
   }, []);
 
-  // Adjust navigation and dark mode button position when banner is visible
+  // A shared offset also applies when the navigation/widget mounts later.
   useEffect(() => {
-    try {
-      if (isVisible && bannerRef.current) {
-        const bannerHeight = bannerRef.current.offsetHeight;
-        const nav = document.getElementById('navigation');
-        if (nav) {
-          nav.style.top = `${bannerHeight}px`;
-        }
-
-        // Keep dark mode button at 91vh when banner is visible
-        // Retry finding the button since it loads with delay
-        const adjustDarkModeButton = () => {
-          try {
-            const darkModeBtn = document.querySelector('.darkmode-toggle');
-            if (darkModeBtn) {
-              darkModeBtn.style.bottom = '91vh';
-            } else {
-              // Retry after a short delay if button not found
-              setTimeout(adjustDarkModeButton, 200);
-            }
-          } catch (error) {
-            console.error('Error adjusting dark mode button:', error);
-          }
-        };
-        adjustDarkModeButton();
-      } else {
-        // Reset dark mode button to original position when banner is hidden
-        try {
-          const darkModeBtn = document.querySelector('.darkmode-toggle');
-          if (darkModeBtn) {
-            darkModeBtn.style.bottom = '93.5vh';
-          }
-        } catch (error) {
-          console.error('Error resetting dark mode button:', error);
-        }
-      }
-    } catch (error) {
-      console.error('Error in banner visibility effect:', error);
+    const root = document.documentElement;
+    const banner = bannerRef.current;
+    if (!isVisible || !banner) {
+      root.style.removeProperty('--locale-banner-height');
+      return;
     }
+
+    const updateOffset = () => {
+      root.style.setProperty('--locale-banner-height', `${banner.offsetHeight}px`);
+    };
+    updateOffset();
+    const observer = typeof ResizeObserver !== 'undefined'
+      ? new ResizeObserver(updateOffset)
+      : null;
+    observer?.observe(banner);
+    window.addEventListener('resize', updateOffset);
+
+    return () => {
+      observer?.disconnect();
+      window.removeEventListener('resize', updateOffset);
+      root.style.removeProperty('--locale-banner-height');
+    };
   }, [isVisible]);
 
   const handleClose = () => {
     try {
       setIsVisible(false);
       sessionStorage.setItem('locale-switcher-dismissed', 'true');
-      // Remove padding from navigation
-      const nav = document.getElementById('navigation');
-      if (nav) nav.style.top = '0';
-      // Reset dark mode button position
-      const darkModeBtn = document.querySelector('.darkmode-toggle');
-      if (darkModeBtn) darkModeBtn.style.bottom = '93.5vh';
     } catch (error) {
       console.error('Error closing locale switcher:', error);
     }

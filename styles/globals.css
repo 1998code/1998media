@@ -33,8 +33,29 @@ a {
   display: block !important;
 }
 
+#navigation {
+  top: var(--locale-banner-height, 0px);
+}
+
 .darkmode-toggle {
   z-index: 10;
+}
+
+/* Anchor to the visible top edge; mobile Safari's vh can include its toolbars. */
+body .darkmode-toggle,
+body .darkmode-layer--button:not(.darkmode-layer--simple) {
+  top: calc(env(safe-area-inset-top, 0px) + var(--locale-banner-height, 0px) + 14px);
+  right: calc(env(safe-area-inset-right, 0px) + 14px);
+  bottom: auto;
+  left: auto;
+}
+
+@media (min-width: 640px) {
+  body .darkmode-toggle,
+  body .darkmode-layer--button:not(.darkmode-layer--simple) {
+    top: calc(env(safe-area-inset-top, 0px) + var(--locale-banner-height, 0px) + 20px);
+    right: calc(env(safe-area-inset-right, 0px) + 25px);
+  }
 }
 
 /* Legacy support for other hide classes */

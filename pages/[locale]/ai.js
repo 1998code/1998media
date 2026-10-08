@@ -1,5 +1,49 @@
 import { useState, useRef, useEffect } from 'react';
 
+function AIImage({ src, alt }) {
+  const [status, setStatus] = useState('loading');
+  const imageRef = useRef(null);
+
+  // Cached images may finish loading before React attaches event handlers.
+  useEffect(() => {
+    const image = imageRef.current;
+    if (image?.complete) {
+      setStatus(image.naturalWidth > 0 ? 'loaded' : 'error');
+    }
+  }, [src]);
+
+  return (
+    <div
+      className="relative h-full aspect-square bg-gray-200 dark:bg-gray-800"
+      aria-busy={status === 'loading'}
+    >
+      {status === 'loading' && (
+        <div
+          className="absolute inset-0 bg-gray-200 dark:bg-gray-800 motion-safe:animate-pulse"
+          aria-hidden="true"
+        />
+      )}
+      <img
+        ref={imageRef}
+        alt={alt}
+        loading="lazy"
+        src={src}
+        onLoad={() => setStatus('loaded')}
+        onError={() => setStatus('error')}
+        className={`h-full w-full aspect-square object-cover transition-opacity duration-300 motion-reduce:transition-none ${status === 'loaded' ? 'opacity-100' : 'opacity-0'}`}
+      />
+      {status === 'error' && (
+        <span
+          className="absolute inset-0 flex items-center justify-center text-3xl text-gray-400 dark:text-gray-500"
+          aria-hidden="true"
+        >
+          <i className="far fa-image" />
+        </span>
+      )}
+    </div>
+  );
+}
+
 export default function AI(props) {
   const [isPausedFeatured, setIsPausedFeatured] = useState(false);
   const [isPausedOther, setIsPausedOther] = useState(false);
@@ -173,11 +217,10 @@ export default function AI(props) {
                 key={`featured-${index}`}
               >
                 <div className="relative h-full">
-                  <img
-                    alt={item.prompt}
-                    loading="lazy"
+                  <AIImage
+                    key={item.output}
                     src={item.output}
-                    className="h-full w-auto aspect-square object-cover"
+                    alt={item.prompt}
                   />
                   {/* Hover Overlay */}
                   <div className="absolute inset-0 bg-black/80 dark:bg-black/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl xl:rounded-t-[25px] flex flex-col justify-center items-center p-4">
@@ -223,11 +266,10 @@ export default function AI(props) {
                 key={`other-${index}`}
               >
                 <div className="relative h-full">
-                  <img
-                    alt={item.prompt}
-                    loading="lazy"
+                  <AIImage
+                    key={item.output}
                     src={item.output}
-                    className="h-full w-auto aspect-square object-cover"
+                    alt={item.prompt}
                   />
                   {/* Hover Overlay */}
                   <div className="absolute inset-0 bg-black/80 dark:bg-black/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl xl:rounded-t-[25px] flex flex-col justify-center items-center p-4">
