@@ -139,12 +139,16 @@ export default function LocaleSwitcher() {
     }
 
     const updateOffset = () => {
-      root.style.setProperty('--locale-banner-height', `${banner.offsetHeight}px`);
+      root.style.setProperty(
+        '--locale-banner-height',
+        `${banner.offsetHeight}px`
+      );
     };
     updateOffset();
-    const observer = typeof ResizeObserver !== 'undefined'
-      ? new ResizeObserver(updateOffset)
-      : null;
+    const observer =
+      typeof ResizeObserver !== 'undefined'
+        ? new ResizeObserver(updateOffset)
+        : null;
     observer?.observe(banner);
     window.addEventListener('resize', updateOffset);
 

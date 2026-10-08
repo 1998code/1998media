@@ -19,7 +19,14 @@ function ytFormatDuration(seconds) {
   return h > 0 ? `${h}:${pad(m)}:${pad(sec)}` : `${m}:${pad(sec)}`;
 }
 
-function SpatialCard({ photo, title, location, typeLabel, unavailableLabel, onOpen }) {
+function SpatialCard({
+  photo,
+  title,
+  location,
+  typeLabel,
+  unavailableLabel,
+  onOpen,
+}) {
   const cardRef = useRef(null);
   const mediaRef = useRef(null);
   const [shouldLoad, setShouldLoad] = useState(false);
@@ -35,10 +42,13 @@ function SpatialCard({ photo, title, location, typeLabel, unavailableLabel, onOp
       setIsVisible(true);
       return;
     }
-    const observer = new IntersectionObserver(([entry]) => {
-      setIsVisible(entry.isIntersecting);
-      if (entry.isIntersecting) setShouldLoad(true);
-    }, { threshold: 0.01 });
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+        if (entry.isIntersecting) setShouldLoad(true);
+      },
+      { threshold: 0.01 }
+    );
     observer.observe(cardRef.current);
     return () => observer.disconnect();
   }, []);
@@ -87,34 +97,38 @@ function SpatialCard({ photo, title, location, typeLabel, unavailableLabel, onOp
         aria-busy={status === 'loading'}
       >
         {status === 'loading' && (
-          <span className="absolute inset-0 bg-gray-200 dark:bg-gray-800 motion-safe:animate-pulse" aria-hidden="true" />
-        )}
-        {shouldLoad && (isVideo ? (
-          <video
-            ref={mediaRef}
-            src={photo.url}
-            muted
-            loop
-            playsInline
-            preload="auto"
-            controls={false}
-            onLoadedData={() => setStatus('loaded')}
-            onError={() => setStatus('error')}
+          <span
+            className="absolute inset-0 bg-gray-200 dark:bg-gray-800 motion-safe:animate-pulse"
             aria-hidden="true"
-            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-300 motion-reduce:transition-none ${status === 'loaded' ? 'opacity-100' : 'opacity-0'}`}
           />
-        ) : (
-          <img
-            ref={mediaRef}
-            src={photo.url}
-            alt=""
-            loading="lazy"
-            decoding="async"
-            onLoad={() => setStatus('loaded')}
-            onError={() => setStatus('error')}
-            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-300 motion-reduce:transition-none ${status === 'loaded' ? 'opacity-100' : 'opacity-0'}`}
-          />
-        ))}
+        )}
+        {shouldLoad &&
+          (isVideo ? (
+            <video
+              ref={mediaRef}
+              src={photo.url}
+              muted
+              loop
+              playsInline
+              preload="auto"
+              controls={false}
+              onLoadedData={() => setStatus('loaded')}
+              onError={() => setStatus('error')}
+              aria-hidden="true"
+              className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-300 motion-reduce:transition-none ${status === 'loaded' ? 'opacity-100' : 'opacity-0'}`}
+            />
+          ) : (
+            <img
+              ref={mediaRef}
+              src={photo.url}
+              alt=""
+              loading="lazy"
+              decoding="async"
+              onLoad={() => setStatus('loaded')}
+              onError={() => setStatus('error')}
+              className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-300 motion-reduce:transition-none ${status === 'loaded' ? 'opacity-100' : 'opacity-0'}`}
+            />
+          ))}
         {status === 'error' && (
           <span className="absolute inset-0 flex flex-col items-center justify-center gap-2 p-4 text-sm text-gray-500 dark:text-gray-400">
             <i className="far fa-image text-2xl" aria-hidden="true" />
@@ -122,7 +136,10 @@ function SpatialCard({ photo, title, location, typeLabel, unavailableLabel, onOp
           </span>
         )}
         {isVideo && status === 'loaded' && (
-          <span className="absolute bottom-3 right-3 flex h-9 w-9 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-sm" aria-hidden="true">
+          <span
+            className="absolute bottom-3 right-3 flex h-9 w-9 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-sm"
+            aria-hidden="true"
+          >
             <i className="fas fa-play text-xs" />
           </span>
         )}
@@ -131,11 +148,18 @@ function SpatialCard({ photo, title, location, typeLabel, unavailableLabel, onOp
         <span className="mb-2 flex items-center justify-between gap-2 text-xs text-gray-500 dark:text-gray-400">
           <span className="min-w-0 truncate">{location}</span>
           <span className="flex shrink-0 items-center gap-1.5">
-            <i className={`fal ${isVideo ? 'fa-video' : isPanorama ? 'fa-panorama' : 'fa-cube'}`} aria-hidden="true" />
-            {typeLabel}{variant ? ` · ${variant}` : ''}
+            <i
+              className={`fal ${isVideo ? 'fa-video' : isPanorama ? 'fa-panorama' : 'fa-cube'}`}
+              aria-hidden="true"
+            />
+            {typeLabel}
+            {variant ? ` · ${variant}` : ''}
           </span>
         </span>
-        <span className="block min-h-[2.5rem] text-sm font-semibold leading-5 text-gray-900 dark:text-gray-100" title={title}>
+        <span
+          className="block min-h-[2.5rem] text-sm font-semibold leading-5 text-gray-900 dark:text-gray-100"
+          title={title}
+        >
           {title}
         </span>
       </span>
@@ -1101,17 +1125,29 @@ export default function Gallery(props) {
     updateFilterTabStyles();
     const timeoutId = setTimeout(updateFilterTabStyles, 50);
     return () => clearTimeout(timeoutId);
-  }, [spatialFilter, spatialLocation, spatialPhotosReady, activeTab, props.i18n, isClient]);
+  }, [
+    spatialFilter,
+    spatialLocation,
+    spatialPhotosReady,
+    activeTab,
+    props.i18n,
+    isClient,
+  ]);
 
-  const spatialLocations = [...new Set(spatialPhotos.map((photo) => photo.location))];
+  const spatialLocations = [
+    ...new Set(spatialPhotos.map((photo) => photo.location)),
+  ];
   const locationPhotos = spatialPhotos.filter(
     (photo) => spatialLocation === 'all' || photo.location === spatialLocation
   );
   const spatialCounts = {
     all: locationPhotos.length,
-    photo: locationPhotos.filter((photo) => photo.type === 'photo' && !photo.id.includes('pano')).length,
+    photo: locationPhotos.filter(
+      (photo) => photo.type === 'photo' && !photo.id.includes('pano')
+    ).length,
     video: locationPhotos.filter((photo) => photo.type === 'video').length,
-    panorama: locationPhotos.filter((photo) => photo.id.includes('pano')).length,
+    panorama: locationPhotos.filter((photo) => photo.id.includes('pano'))
+      .length,
   };
 
   const handleSpatialFilterChange = (newFilter) => {
@@ -1119,16 +1155,19 @@ export default function Gallery(props) {
     galleryScrollRef.current?.scrollTo({ top: 0, behavior: 'auto' });
   };
 
-  const getFilteredSpatialPhotos = () => locationPhotos.filter((photo) => {
-    if (spatialFilter === 'video') return photo.type === 'video';
-    if (spatialFilter === 'panorama') return photo.id.includes('pano');
-    if (spatialFilter === 'photo') return photo.type === 'photo' && !photo.id.includes('pano');
-    return true;
-  });
+  const getFilteredSpatialPhotos = () =>
+    locationPhotos.filter((photo) => {
+      if (spatialFilter === 'video') return photo.type === 'video';
+      if (spatialFilter === 'panorama') return photo.id.includes('pano');
+      if (spatialFilter === 'photo')
+        return photo.type === 'photo' && !photo.id.includes('pano');
+      return true;
+    });
 
   // Unmount previews when leaving Spatial so hidden videos stop loading/playing.
   const renderSpatialTab = () => {
-    if (activeTab !== 'spatial' || !isClient || !isSafari || isMobile) return null;
+    if (activeTab !== 'spatial' || !isClient || !isSafari || isMobile)
+      return null;
     const filtered = getFilteredSpatialPhotos();
 
     return (
@@ -1141,7 +1180,13 @@ export default function Gallery(props) {
                 photo={photo}
                 title={i18n(photo.title)}
                 location={i18n(photo.location)}
-                typeLabel={i18n(photo.type === 'video' ? 'Spatial Video' : photo.id.includes('pano') ? 'Panorama' : 'Spatial Photo')}
+                typeLabel={i18n(
+                  photo.type === 'video'
+                    ? 'Spatial Video'
+                    : photo.id.includes('pano')
+                      ? 'Panorama'
+                      : 'Spatial Photo'
+                )}
                 unavailableLabel={i18n('Preview unavailable')}
                 onOpen={handleClick}
               />
@@ -1154,7 +1199,10 @@ export default function Gallery(props) {
             <button
               type="button"
               className="rounded-xl border border-gray-300 px-4 py-2 text-sm font-medium text-gray-900 hover:border-emerald-500 dark:border-gray-700 dark:text-gray-100"
-              onClick={() => { setSpatialLocation('all'); handleSpatialFilterChange('all'); }}
+              onClick={() => {
+                setSpatialLocation('all');
+                handleSpatialFilterChange('all');
+              }}
             >
               {i18n('Reset filters')}
             </button>
@@ -1377,7 +1425,11 @@ export default function Gallery(props) {
           {activeTab === 'spatial' && isClient && isSafari && !isMobile && (
             <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
               <div className="max-w-full overflow-x-auto">
-                <div className="relative flex w-max rounded-2xl border border-gray-200 bg-gray-100 p-1 dark:border-gray-800 dark:bg-gray-900" role="group" aria-label={i18n('Media type')}>
+                <div
+                  className="relative flex w-max rounded-2xl border border-gray-200 bg-gray-100 p-1 dark:border-gray-800 dark:bg-gray-900"
+                  role="group"
+                  aria-label={i18n('Media type')}
+                >
                   <div
                     className="pointer-events-none absolute top-1 bottom-1 rounded-xl bg-emerald-500 shadow-sm transition-all duration-300 motion-reduce:transition-none"
                     style={filterTabStyles}
@@ -1398,7 +1450,9 @@ export default function Gallery(props) {
                     >
                       <i className={`fal ${icon}`} aria-hidden="true" />
                       {i18n(label)}
-                      <span className="rounded-md bg-black/10 px-1.5 py-0.5 tabular-nums dark:bg-white/10">{spatialCounts[value]}</span>
+                      <span className="rounded-md bg-black/10 px-1.5 py-0.5 tabular-nums dark:bg-white/10">
+                        {spatialCounts[value]}
+                      </span>
                     </button>
                   ))}
                 </div>
@@ -1411,18 +1465,28 @@ export default function Gallery(props) {
                   value={spatialLocation}
                   onChange={(event) => {
                     setSpatialLocation(event.target.value);
-                    galleryScrollRef.current?.scrollTo({ top: 0, behavior: 'auto' });
+                    galleryScrollRef.current?.scrollTo({
+                      top: 0,
+                      behavior: 'auto',
+                    });
                   }}
                   className="min-w-[160px] max-w-[220px] cursor-pointer appearance-none rounded-xl border border-gray-200 bg-white py-2.5 pl-3 pr-8 text-sm text-gray-900 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-100"
                 >
                   <option value="all">{i18n('All locations')}</option>
                   {spatialLocations.map((location) => (
-                    <option key={location} value={location}>{i18n(location)}</option>
+                    <option key={location} value={location}>
+                      {i18n(location)}
+                    </option>
                   ))}
                 </select>
-                <i className="fal fa-chevron-down pointer-events-none absolute right-3 text-xs" aria-hidden="true" />
+                <i
+                  className="fal fa-chevron-down pointer-events-none absolute right-3 text-xs"
+                  aria-hidden="true"
+                />
               </label>
-              <span className="sr-only" role="status">{spatialCounts[spatialFilter]} {i18n('Results')}</span>
+              <span className="sr-only" role="status">
+                {spatialCounts[spatialFilter]} {i18n('Results')}
+              </span>
             </div>
           )}
         </div>
